@@ -1,0 +1,7 @@
+.wrapper {
+  @apply flex m-0 p-0 space-x-2 w-full items-center relative z-10;
+}
+
+.icon {
+  @apply animate-spin leading-none h-[16px];
+}

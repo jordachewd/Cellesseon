@@ -1,0 +1,3 @@
+.section {
+  @apply flex w-full max-w-4xl min-w-[20rem] self-center bg-jwdDarkerBlue rounded p-2 bg-opacity-30 shadow-inner;
+}

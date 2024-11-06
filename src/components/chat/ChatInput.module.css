@@ -1,0 +1,11 @@
+.container {
+  @apply flex w-full px-2 py-1 relative justify-between items-center;
+}
+
+.prompt {
+  @apply border-0 bg-transparent outline-none w-11/12;
+}
+
+.send {
+  @apply cursor-pointer ease-in duration-100 hover:scale-125 text-base w-[24px] h-[24px] text-center;
+}

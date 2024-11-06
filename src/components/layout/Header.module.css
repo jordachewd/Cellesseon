@@ -1,0 +1,12 @@
+.section {
+  @apply flex w-full max-w-4xl min-w-[20rem] self-center justify-between items-center pt-3 pb-4  border-b border-dotted border-slate-800;
+}
+
+.left,
+.right {
+  @apply flex;
+}
+
+.right {
+  @apply items-center space-x-3;
+}
