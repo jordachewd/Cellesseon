@@ -12,8 +12,8 @@ export default function Logo({
 }: LogoProps) {
   return (
     <Typography variant={size || "h3"}>
+      {!noText && <span className="mr-3">wisea</span>}
       <i className="bi bi-chat-quote"></i>
-      {!noText && <span className="ml-3">chatly</span>}
     </Typography>
   );
 }
