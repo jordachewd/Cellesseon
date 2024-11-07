@@ -1,0 +1,11 @@
+.section {
+  @apply flex flex-col space-y-4;
+}
+
+.message {
+  @apply border-[#717f92] break-words border rounded-xl self-end px-4 max-w-[80%] py-2;
+}
+
+.aiReply {
+  @apply bg-white bg-opacity-10 backdrop-blur-lg mr-auto shadow-md;
+}
