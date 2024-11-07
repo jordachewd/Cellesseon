@@ -1,4 +1,5 @@
 "use client";
+
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import ChatWrapper from "@/components/layout/ChatWrapper";
