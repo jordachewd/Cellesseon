@@ -5,15 +5,11 @@ interface LogoProps {
   noText?: boolean;
 }
 
-export default function Logo({
-  size,
-
-  noText = false,
-}: LogoProps) {
+export default function Logo({ size, noText = false }: LogoProps) {
   return (
     <Typography variant={size || "h3"}>
-      {!noText && <span className="mr-3">wisea</span>}
-      <i className="bi bi-chat-quote"></i>
+      <i className="bi bi-robot"></i>
+      {!noText && <span className="ml-3">celeseon</span>}
     </Typography>
   );
 }
