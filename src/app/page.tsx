@@ -1,5 +1,4 @@
 "use client";
-
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import ChatWrapper from "@/components/layout/ChatWrapper";
@@ -10,7 +9,7 @@ import { Message } from "@/types";
 import { Typography } from "@mui/material";
 import { useState } from "react";
 
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -64,8 +63,6 @@ export default function Home() {
       </SignedOut>
 
       <SignedIn>
-        <UserButton />
-
         <ChatWrapper>
           <ChatBody messages={chat} />
         </ChatWrapper>
