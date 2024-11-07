@@ -14,6 +14,7 @@
     "react-dom": "^17.0.0 || ^18.0.0"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.2.1",
     "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
@@ -25,8 +26,12 @@
     "@mui/x-data-grid": "^7.22.1",
     "bootstrap-icons": "^1.11.3",
     "next": "15.0.2",
+    "openai": "^4.71.1",
+    "openapi-typescript": "^7.4.2",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {

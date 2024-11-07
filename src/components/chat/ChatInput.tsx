@@ -1,7 +1,7 @@
 import css from "./ChatInput.module.css";
 import { useState } from "react";
-import { Message } from "@/constants";
 import LoadingSpinner from "../shared/LoadingSpinner";
+import { Message } from "@/types";
 
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
@@ -13,7 +13,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
 
   const handleSubmit = () => {
     if (value === "") return;
-    sendMessage({ sender: "user", message: value });
+    sendMessage({ role: "user", content: value });
     setValue("");
   };
 

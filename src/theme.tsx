@@ -61,10 +61,8 @@ const theme = createTheme({
     },
     subtitle1: {
       fontFamily: albertsans.style.fontFamily,
-      fontSize: ".75rem",
-      fontWeight: 300,
-      lineHeight: 1,
-      color: "#94a3b8"
+      fontSize: ".725rem",
+      color: "#64748b",
     },
     subtitle2: {
       fontFamily: albertsans.style.fontFamily,
