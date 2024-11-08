@@ -13,7 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider appearance={{ variables: { colorPrimary: "#1b1e50" } }}>
+    <ClerkProvider
+      appearance={{
+        variables: { colorPrimary: "#26D0CE", colorText: "#1A2980" },
+      }}
+    >
       <html lang="en">
         <body className="antialiased">
           <AppRouterCacheProvider>

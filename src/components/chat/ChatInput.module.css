@@ -1,11 +1,13 @@
-.container {
-  @apply flex w-full px-2 py-1 relative justify-between items-center;
+.section {
+  @apply flex w-full py-3 px-4 relative justify-between items-center
+  bg-jwdAqua max-w-5xl mx-auto shadow-md rounded-md;
 }
 
 .prompt {
-  @apply border-0 bg-transparent outline-none w-11/12;
+  @apply border-0 bg-transparent outline-none w-11/12 text-jwdMarine placeholder-slate-600;
+  font-weight: 500;
 }
 
 .send {
-  @apply cursor-pointer ease-in duration-100 hover:scale-125 text-base w-[24px] h-[24px] text-center;
+  @apply cursor-pointer ease-in duration-100 hover:scale-125 text-xl text-center;
 }

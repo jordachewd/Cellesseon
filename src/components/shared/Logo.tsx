@@ -1,3 +1,4 @@
+import css from "./Logo.module.css";
 import { Typography } from "@mui/material";
 
 interface LogoProps {
@@ -7,9 +8,11 @@ interface LogoProps {
 
 export default function Logo({ size, noText = false }: LogoProps) {
   return (
-    <Typography variant={size || "h3"}>
-      <i className="bi bi-robot"></i>
-      {!noText && <span className="ml-3">celeseon</span>}
-    </Typography>
+    <div className={css.wrapper}>
+      <Typography variant={size || "h3"}>
+        <i className={`bi bi-robot ${css.logo}`}></i>
+      </Typography>
+      {!noText && <Typography variant={size || "h3"}>Celeseon</Typography>}
+    </div>
   );
 }

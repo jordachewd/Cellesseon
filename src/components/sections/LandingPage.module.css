@@ -1,0 +1,13 @@
+.section {
+  @apply flex flex-col w-full h-screen items-center justify-center space-y-10 bg-jwdHomeGradient p-6;
+}
+
+.head,
+.intro,
+.actions {
+  @apply flex flex-col w-full text-center items-center max-w-2xl;
+}
+
+.intro {
+  @apply space-y-8 lg:space-y-14;
+}

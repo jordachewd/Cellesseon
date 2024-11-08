@@ -1,0 +1,4 @@
+.wrapper {
+  @apply flex text-center self-center p-3 text-xs tracking-wide text-jwdAqua/70 font-normal;
+ 
+}

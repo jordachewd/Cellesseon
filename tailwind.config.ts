@@ -9,10 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        jwdOrangeLight: "#f26a3a",
-        jwdOrange: "#f05722",
-        jwdDarkBlue: "#1b1e50",
-        jwdDarkerBlue: "#03062e",
+        jwdAqua: "#26D0CE",
+        jwdMarine: "#1A2980",
       },
       screens: {
         "2xl": "1440px",
@@ -27,17 +25,13 @@ const config: Config = {
       fontSize: {
         xxs: "0.625rem",
       },
-
       backgroundImage: {
-        jwdGrayGradient:
-          "linear-gradient(290deg, rgba(148,163,184,1) 0%, rgba(203,213,225,1) 40%, rgba(226,232,240,1) 100%)",
-
-        jwdOrangeGradient:
-          "linear-gradient(290deg, rgba(240,87,34,1) 0%, rgba(255,100,45,1) 40%, rgba(255,222,0,1) 100%)",
-        jwdBlueGradient: "linear-gradient(0deg, rgba(27,30,80,1) 0%, rgba(2,4,36,1) 80%)",
+        jwdHomeGradient: "linear-gradient(to top, #26D0CE, #1A2980)",
+        jwdChatGradient: "linear-gradient(to bottom, #26D0CE, #1A2980)"
       },
     },
   },
   plugins: [],
 };
+
 export default config;

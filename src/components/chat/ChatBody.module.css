@@ -1,11 +1,84 @@
 .section {
-  @apply flex flex-col space-y-4;
+  @apply flex flex-col space-y-10 w-full max-w-5xl mx-auto overflow-y-auto 
+  h-[80%] py-4 mb-6
+  [&::-webkit-scrollbar]:w-[2px]
+  [&::-webkit-scrollbar-track]:rounded-full
+  [&::-webkit-scrollbar-track]:bg-jwdAqua/20
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-thumb]:bg-jwdAqua/60
+  dark:[&::-webkit-scrollbar-track]:bg-jwdAqua/20
+  dark:[&::-webkit-scrollbar-thumb]:bg-jwdAqua/60;
 }
 
 .message {
-  @apply border-[#717f92] break-words border rounded-xl self-end px-4 max-w-[80%] py-2;
+  @apply flex break-words space-x-5 items-start p-3 max-w-[98%];
 }
 
-.aiReply {
-  @apply bg-white bg-opacity-10 backdrop-blur-lg mr-auto shadow-md;
+.bot {
+  @apply bg-jwdMarine/20 shadow-md rounded-md;
+}
+
+.avatar {
+  @apply rounded-md shadow-md p-2 leading-none text-xl;
+}
+
+.content {
+  @apply pr-3 flex-1 overflow-hidden break-words;
+}
+
+.msg {
+  @apply flex flex-col py-2;
+}
+
+.msg p {
+  @apply relative my-2;
+}
+
+.msg code {
+  @apply inline-flex font-mono text-xs bg-gray-900 rounded p-1.5 py-0.5;
+}
+
+.msg pre {
+  @apply font-mono text-sm bg-gray-900 text-gray-100 p-4 rounded-lg overflow-auto whitespace-pre-wrap my-4 shadow-md;
+}
+
+.msg pre > code {
+  @apply bg-transparent p-0 text-sm overflow-auto;
+}
+
+.msg ul,
+.msg ol {
+  @apply p-4 space-y-2 list-inside;
+}
+
+.msg ul li::marker {
+  @apply font-semibold;
+}
+
+.msg ol {
+  @apply list-decimal;
+}
+
+.msg ol li::marker {
+  @apply font-semibold;
+}
+
+.msg table {
+  @apply min-w-full bg-jwdAqua/5 border border-jwdAqua/10 my-4 shadow-md;
+}
+
+.msg table thead tr {
+  @apply bg-jwdAqua/20;
+}
+
+.msg table th {
+  @apply py-2 px-4 border-b border-jwdAqua/10 text-left font-semibold;
+}
+
+.msg table tbody tr {
+  @apply hover:bg-jwdAqua/10 transition-all ease-in-out;
+}
+
+.msg table tbody td {
+  @apply py-2 px-4 border-b border-jwdAqua/10;
 }

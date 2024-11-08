@@ -17,13 +17,43 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #ffffff;
   }
 }
+
+/*  prevent iOS font size change */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+/*  all media elements set to block and full width */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  max-width: 100%;
+}
+
+/* reset heading style */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+
 
 body {
   color: var(--foreground);
   /* background: var(--background);*/
-  font-family: Arial, Helvetica, sans-serif;
-  @apply bg-jwdBlueGradient;
+  @apply antialiased w-full m-0 p-0;
 }

@@ -1,0 +1,12 @@
+.section {
+  @apply flex w-full max-w-5xl self-center justify-between items-center py-2 relative;
+}
+
+.left,
+.right {
+  @apply flex;
+}
+
+.right {
+  @apply items-center space-x-3;
+}

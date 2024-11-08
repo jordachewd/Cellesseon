@@ -14,7 +14,7 @@ const albertsans = Albert_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
-  variable: "--font-jwd-notosans",
+  variable: "--font-jwd-albertsans",
   display: "swap",
 });
 
@@ -30,10 +30,22 @@ declare module "@mui/material/styles" {
 
 const theme = createTheme({
   cssVariables: true,
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+    },
+  },
   palette: {
     mode: "dark",
     primary: {
-      main: "#f05722",
+      main: "#1A2980",
+    },
+    secondary: {
+      main: "#26D0CE",
     },
   },
   typography: {
@@ -45,7 +57,6 @@ const theme = createTheme({
     h2: {
       fontFamily: dosis.style.fontFamily,
       fontSize: "4rem",
-      fontWeight: 500,
     },
     h3: {
       fontFamily: dosis.style.fontFamily,
@@ -58,20 +69,25 @@ const theme = createTheme({
     },
     h6: {
       fontFamily: dosis.style.fontFamily,
+      fontSize: "1rem",
+      textTransform: "capitalize",
+      lineHeight: 1.5,
+      margin: ".4rem 0 .5rem",
     },
     subtitle1: {
       fontFamily: albertsans.style.fontFamily,
-      fontSize: ".725rem",
-      color: "#64748b",
+      fontSize: ".8rem",
+      fontWeight: 300,
     },
     subtitle2: {
       fontFamily: albertsans.style.fontFamily,
-      fontSize: "1.125rem",
+      fontSize: "1rem",
       fontWeight: 300,
+      color: "#cbd5e1",
     },
     body1: {
       fontFamily: albertsans.style.fontFamily,
-      fontSize: ".825rem",
+      fontSize: ".85rem",
     },
   },
   components: {
@@ -79,18 +95,23 @@ const theme = createTheme({
       styleOverrides: {
         sizeSmall: {
           minWidth: 0,
-          lineHeight: 1,
           fontSize: "12px",
-          padding: ".34rem .44rem",
-          textTransform: "capitalize",
+          letterSpacing: "0.5px",
+          padding: ".125rem .75rem",
+          fontFamily: dosis.style.fontFamily,
         },
         sizeMedium: {
           lineHeight: 1.36,
           padding: ".35rem 1.35rem",
+          fontFamily: dosis.style.fontFamily,
         },
         sizeLarge: {
           lineHeight: 1.6,
-          padding: ".725rem 4rem",
+          padding: ".5rem 5rem",
+          fontWeight: 500,
+          fontSize: "1.25rem",
+          fontFamily: dosis.style.fontFamily,
+          letterSpacing: "2px",
         },
         text: {
           backgroundColor: "white",
@@ -101,52 +122,6 @@ const theme = createTheme({
         },
         contained: {
           boxShadow: "0 1px 4px 0 rgb(0 0 0 / 0.25)",
-        },
-      },
-    },
-
-    MuiMenu: {
-      styleOverrides: {
-        paper: {
-          boxShadow: "0 1px 8px 0 rgb(0 0 0 / 0.1)",
-        },
-        list: {
-          padding: 0,
-        },
-      },
-    },
-    MuiMenuItem: {
-      styleOverrides: {
-        root: {
-          fontSize: "13px",
-          padding: "10px 16px",
-          transition: "all .5s ease-out",
-          "&:hover": {
-            backgroundColor: "#f8fafc",
-            color: "#f05722",
-          },
-        },
-      },
-    },
-    MuiChip: {
-      styleOverrides: {
-        sizeSmall: {
-          lineHeight: 1,
-          fontSize: "12px",
-          textTransform: "capitalize",
-          boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.15)",
-        },
-      },
-    },
-
-    MuiTab: {
-      styleOverrides: {
-        root: {
-          fontSize: ".825rem",
-          justifyContent: "flex-start",
-          textTransform: "capitalize",
-          textAlign: "left",
-          minHeight: 0,
         },
       },
     },

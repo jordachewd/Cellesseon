@@ -17,29 +17,30 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
     setValue("");
   };
 
-  return (
-    <div className={css.container}>
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <>
-          <input
-            className={css.prompt}
-            placeholder="Ask anything in your mind ..."
-            type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                handleSubmit();
-              }
-            }}
-          />
 
+  return (
+    <section className={css.section}>
+      <>
+        <input
+          disabled={loading}
+          className={css.prompt}
+          placeholder="Ask Celeseon ..."
+          type="text"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSubmit();
+            }
+          }}
+        />
+        {loading ? (
+          <LoadingSpinner text="" alignment="right" />
+        ) : (
           <i className={`bi bi-send ${css.send}`} onClick={handleSubmit}></i>
-        </>
-      )}
-    </div>
+        )}
+      </>
+    </section>
   );
 }
