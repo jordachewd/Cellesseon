@@ -26,6 +26,12 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+body {
+  color: var(--foreground);
+  /* background: var(--background);*/
+  @apply antialiased w-full m-0 p-0;
+}
+
 /*  all media elements set to block and full width */
 img,
 svg,
@@ -50,10 +56,6 @@ h6 {
   font-weight: inherit;
 }
 
-
-
-body {
-  color: var(--foreground);
-  /* background: var(--background);*/
-  @apply antialiased w-full m-0 p-0;
+a {
+  @apply hover:underline transition-all ease-in text-jwdAqua hover:text-white;
 }

@@ -1,5 +1,5 @@
 .section {
-  @apply flex w-full max-w-5xl self-center justify-between items-center py-2 relative;
+  @apply flex w-full max-w-5xl self-center justify-between items-center pt-3 pb-4 relative;
 }
 
 .left,

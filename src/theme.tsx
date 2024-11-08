@@ -66,6 +66,10 @@ const theme = createTheme({
     },
     h5: {
       fontFamily: dosis.style.fontFamily,
+      fontSize: "1.25rem",
+      textTransform: "capitalize",
+      lineHeight: 1.1,
+      margin: ".4rem 0 .5rem",
     },
     h6: {
       fontFamily: dosis.style.fontFamily,

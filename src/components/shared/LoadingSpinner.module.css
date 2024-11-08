@@ -1,7 +1,11 @@
 .wrapper {
-  @apply flex m-0 p-0 space-x-2 w-full items-center relative z-10;
+  @apply flex m-0 p-0;
+}
+
+.container {
+  @apply flex space-x-2 bg-jwdAqua/80 justify-center items-center px-3 py-0.5 rounded-md shadow transition-all ease-in-out;
 }
 
 .icon {
-  @apply animate-spin leading-none h-[16px];
+  @apply animate-spin;
 }

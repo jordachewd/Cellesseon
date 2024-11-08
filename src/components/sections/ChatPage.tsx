@@ -40,7 +40,7 @@ export default function ChatPage() {
           role: data.choices[0].message.role,
           content: data.choices[0].message.content,
         };
-        console.log("newChat: ", newChat);
+
         setChat((prev) => [...prev, newChat]);
       }
     } catch (error) {
@@ -53,9 +53,7 @@ export default function ChatPage() {
     <section className={css.section}>
       <Header />
       <ChatBody messages={chat} loading={isLoading} />
-   
-        <ChatInput sendMessage={sendMessage} loading={isLoading} />
-     
+      <ChatInput sendMessage={sendMessage} loading={isLoading} />
       <Footer />
     </section>
   );

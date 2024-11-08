@@ -28,7 +28,9 @@ export async function POST(req: Request) {
           role: "system",
           content:
             "You are a helpful assistant that answers questions kindly in a wise," +
-            "warm tone and keeps replies under 500 characters.",
+            "warm tone and keeps replies under 500 characters." +
+            "You provide a detailed explanation for each question and format the answer" +
+            "using a title and subtitles (when necessary).",
         },
         ...messages,
       ],

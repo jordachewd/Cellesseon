@@ -1,5 +1,5 @@
 .section {
-  @apply flex flex-col w-full h-screen items-center justify-center space-y-10 bg-jwdHomeGradient p-6;
+  @apply flex flex-col w-full h-screen items-center justify-center space-y-10 bg-jwdHomeGradient px-6;
 }
 
 .head,

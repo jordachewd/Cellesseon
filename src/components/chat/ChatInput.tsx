@@ -17,7 +17,6 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
     setValue("");
   };
 
-
   return (
     <section className={css.section}>
       <>
@@ -35,8 +34,9 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
             }
           }}
         />
+
         {loading ? (
-          <LoadingSpinner text="" alignment="right" />
+          <LoadingSpinner text="" alignment="right" iconSize="text-xl" />
         ) : (
           <i className={`bi bi-send ${css.send}`} onClick={handleSubmit}></i>
         )}

@@ -42,7 +42,7 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
             )}
 
             <div className={css.content}>
-              <Typography variant="h6">{isBot ? "Celeseon" : "You"}</Typography>
+              <Typography variant="h5">{isBot ? "Celeseon" : "You"}</Typography>
               <div className={css.msg}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {message.content}
@@ -53,7 +53,7 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
         );
       })}
 
-      {loading && <LoadingSpinner alignment="left" />}
+      {loading && <LoadingSpinner />}
       <div ref={bottomRef} className="h-1"></div>
     </section>
   );

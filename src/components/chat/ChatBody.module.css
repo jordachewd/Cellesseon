@@ -1,6 +1,6 @@
 .section {
   @apply flex flex-col space-y-10 w-full max-w-5xl mx-auto overflow-y-auto 
-  h-[80%] py-4 mb-6
+  h-[80%] py-6 mb-6
   [&::-webkit-scrollbar]:w-[2px]
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-jwdAqua/20
@@ -30,8 +30,36 @@
   @apply flex flex-col py-2;
 }
 
+.msg h1,
+.msg h2,
+.msg h3,
+.msg h4,
+.msg h5,
+.msg h6 {
+  @apply relative my-1 leading-normal;
+}
+
+.msg h1 {
+  @apply text-3xl;
+}
+.msg h2 {
+  @apply text-2xl;
+}
+.msg h3 {
+  @apply text-xl;
+}
+.msg h4 {
+  @apply text-lg;
+}
+.msg h5 {
+  @apply text-base;
+}
+.msg h6 {
+  @apply text-sm;
+}
+
 .msg p {
-  @apply relative my-2;
+  @apply relative mb-2;
 }
 
 .msg code {
@@ -48,23 +76,23 @@
 
 .msg ul,
 .msg ol {
-  @apply p-4 space-y-2 list-inside;
+  @apply p-4 space-y-1.5 list-inside;
 }
 
-.msg ul li::marker {
-  @apply font-semibold;
+.msg ul {
+  @apply list-disc;
 }
 
 .msg ol {
   @apply list-decimal;
 }
-
+.msg ul li::marker,
 .msg ol li::marker {
   @apply font-semibold;
 }
 
 .msg table {
-  @apply min-w-full bg-jwdAqua/5 border border-jwdAqua/10 my-4 shadow-md;
+  @apply min-w-full bg-jwdAqua/5 border border-jwdAqua/10 my-4 shadow-md overflow-auto;
 }
 
 .msg table thead tr {
@@ -81,4 +109,45 @@
 
 .msg table tbody td {
   @apply py-2 px-4 border-b border-jwdAqua/10;
+}
+
+.msg hr {
+  @apply flex w-full my-4 border-dashed border-jwdAqua/30;
+}
+
+@media (max-width: 640px) {
+  /* Apply flexbox to rows */
+  .msg table,
+  .msg table thead,
+  .msg table tbody,
+  .msg table tr,
+  .msg table th,
+  .msg table td {
+    @apply block;
+  }
+
+  .msg table {
+    @apply border-none bg-transparent;
+  }
+
+  /* Hide the header row */
+  .msg table thead {
+    @apply hidden;
+  }
+
+  /* Style each table row to look like a 'card' */
+  .msg table tbody tr {
+    @apply border border-jwdAqua/10 rounded mb-2 p-2 bg-jwdAqua/5;
+  }
+
+  /* Display each cell as a block with a label */
+  .msg table tbody td {
+    @apply flex py-1 px-2 border-none;
+  }
+
+  /* Use ::before to add labels for each column */
+  .msg table tbody td::before {
+    content: attr(data-label); /* Use the 'data-label' attribute as the label */
+    @apply font-semibold text-jwdAqua;
+  }
 }
