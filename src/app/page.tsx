@@ -6,10 +6,10 @@ import Header from "@/components/layout/Header";
 import PageWrapper from "@/components/layout/PageWrapper";
 import PromptWrapper from "@/components/layout/PromptWrapper";
 import { Message } from "@/types";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { useState } from "react";
 
-import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -59,7 +59,7 @@ export default function Home() {
       <Header />
 
       <SignedOut>
-        <SignInButton />
+        <Button href="/sign-in">Login</Button>
       </SignedOut>
 
       <SignedIn>
