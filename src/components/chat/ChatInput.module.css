@@ -1,21 +1,16 @@
 .section {
-  @apply flex flex-col w-full px-4 lg:px-0;
+  @apply flex w-full max-w-5xl self-center justify-between items-center space-x-8 py-6 px-4 lg:px-0;
 }
 
-.prompt {
-  @apply flex w-full py-3 px-4 relative justify-between items-center
-  bg-jwdAqua max-w-5xl mx-auto shadow-md rounded-md;
+.spinner,
+.send {
+  @apply text-xl text-center self-start;
 }
 
-.input {
-  @apply border-0 bg-transparent outline-none w-11/12 text-jwdMarine placeholder-slate-600;
-  font-weight: 500;
+.spinner {
+  @apply animate-spin;
 }
 
 .send {
-  @apply cursor-pointer ease-in duration-100 hover:scale-125 text-xl text-center;
-}
-
-.bottom {
-  @apply flex justify-center p-3 text-xs tracking-wide text-jwdAqua/70 font-normal w-full;
+  @apply cursor-pointer duration-100 hover:scale-125 ease-in;
 }

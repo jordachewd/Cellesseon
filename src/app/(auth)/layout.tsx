@@ -10,6 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <main className={css.section}>
       <div className={css.wrapper}>{children}</div>
+      <div className={css.background}></div>
     </main>
   );
 }

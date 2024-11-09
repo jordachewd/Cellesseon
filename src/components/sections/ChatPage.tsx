@@ -1,7 +1,7 @@
 "use client";
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
-import Header from "@/components/sections/Header";
+import Header from "@/components/layout/Header";
 import { Message } from "@/types";
 import { useState } from "react";
 
@@ -10,7 +10,7 @@ export default function ChatPage() {
   const [chat, setChat] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hello there! How can I help you today?",
+      content: "Hello there! How can I help you?",
     },
   ]);
 

@@ -1,5 +1,5 @@
 .section {
-  @apply flex flex-col space-y-10 w-full max-w-5xl mx-auto overflow-y-auto h-[80vh] my-4 p-4 lg:px-1.5
+  @apply flex flex-col space-y-10 w-full max-w-5xl mx-auto overflow-y-auto h-[70%] my-4 p-4 lg:px-1.5
   [&::-webkit-scrollbar]:w-[2px]
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-jwdAqua/20
@@ -14,7 +14,7 @@
 }
 
 .bot {
-  @apply bg-jwdMarine/20 shadow-md rounded-md;
+  @apply bg-jwdMarine/50 shadow-md rounded-md;
 }
 
 .avatar {
@@ -26,7 +26,7 @@
 }
 
 .msg {
-  @apply flex flex-col py-2;
+  @apply flex flex-col py-4;
 }
 
 .msg h1,

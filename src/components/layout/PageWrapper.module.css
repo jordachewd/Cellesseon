@@ -1,3 +1,14 @@
-.section {
-  @apply flex flex-col w-full h-full m-0 p-0 bg-jwdChatGradient;
+.main {
+  @apply flex flex-col w-full m-0 p-0 bg-jwdChatGradient relative;
+}
+
+.content {
+  @apply flex flex-col relative z-10 w-full h-screen;
+}
+
+.background {
+  @apply absolute flex inset-0 h-full w-full bg-jwdAqua z-0
+  bg-[radial-gradient(#1A298020_1px,transparent_1px)] 
+  [background-size:16px_16px] 
+  [mask-image:radial-gradient(ellipse_100%_80%_at_50%_10%,#000_40%,transparent_100%)];
 }

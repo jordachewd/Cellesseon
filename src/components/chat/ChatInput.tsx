@@ -1,7 +1,7 @@
 import css from "./ChatInput.module.css";
 import { useState } from "react";
-import LoadingSpinner from "../shared/LoadingSpinner";
 import { Message } from "@/types";
+import { TextField } from "@mui/material";
 
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
@@ -9,43 +9,38 @@ interface ChatInputProps {
 }
 
 export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
-  const [value, setValue] = useState("");
+  const [prompt, setPrompt] = useState("");
 
   const handleSubmit = () => {
-    if (value === "") return;
-    sendMessage({ role: "user", content: value });
-    setValue("");
+    if (prompt === "") return;
+    sendMessage({ role: "user", content: prompt });
+    setPrompt("");
   };
 
   return (
     <section className={css.section}>
+      <TextField
+        multiline
+        fullWidth
+        maxRows={4}
+        value={prompt}
+        disabled={loading}
+        label="Ask celeseon..."
+        helperText="Celeseon can make mistakes. So double-check it."
+        onChange={(e) => setPrompt(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit();
+          }
+        }}
+      />
 
-      <div className={css.prompt}>
-        <input
-          disabled={loading}
-          className={css.input}
-          placeholder="Ask Celeseon ..."
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleSubmit();
-            }
-          }}
-        />
-
-        {loading ? (
-          <LoadingSpinner text="" alignment="right" iconSize="text-xl" />
-        ) : (
-          <i className={`bi bi-send ${css.send}`} onClick={handleSubmit}></i>
-        )}
-      </div>
-
-      <div className={css.bottom}>
-        Celeseon can make mistakes. So double-check it.
-      </div>
+      {loading ? (
+        <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
+      ) : (
+        <i className={`bi bi-send ${css.send}`} onClick={handleSubmit}></i>
+      )}
     </section>
   );
 }

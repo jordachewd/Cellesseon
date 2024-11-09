@@ -1,4 +1,5 @@
 "use client";
+import { outlinedInputClasses } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { Dosis, Albert_Sans } from "next/font/google";
 
@@ -17,16 +18,6 @@ const albertsans = Albert_Sans({
   variable: "--font-jwd-albertsans",
   display: "swap",
 });
-
-declare module "@mui/material/styles" {
-  interface Components {
-    MuiDataGrid?: {
-      styleOverrides?: {
-        root?: React.CSSProperties;
-      };
-    };
-  }
-}
 
 const theme = createTheme({
   cssVariables: true,
@@ -69,14 +60,12 @@ const theme = createTheme({
     h5: {
       fontFamily: dosis.style.fontFamily,
       fontSize: "1.25rem",
-      textTransform: "capitalize",
-      lineHeight: 1.1,
-      margin: ".4rem 0 .5rem",
+      lineHeight: 1,
+      margin: ".3rem 0 .5rem",
     },
     h6: {
       fontFamily: dosis.style.fontFamily,
       fontSize: "1rem",
-      textTransform: "capitalize",
       lineHeight: 1.5,
       margin: ".4rem 0 .5rem",
     },
@@ -89,7 +78,6 @@ const theme = createTheme({
       fontFamily: albertsans.style.fontFamily,
       fontSize: "1rem",
       fontWeight: 300,
-      color: "#cbd5e1",
     },
     body1: {
       fontFamily: albertsans.style.fontFamily,
@@ -124,6 +112,45 @@ const theme = createTheme({
           boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.1)",
           "&:hover": {
             backgroundColor: "#26D0CE",
+            color: "white",
+          },
+        },
+      },
+    },
+
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          color: "#3e9695",
+        },
+      },
+    },
+
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "--TextField-brandBorderColor": "#E0E3E7",
+          "--TextField-brandBorderHoverColor": "#B2BAC2",
+          "--TextField-brandBorderFocusedColor": "#fff",
+          //  "--TextField-brandBackgroundColor": "#1A298080",
+          "& label.Mui-focused": {
+            color: "var(--TextField-brandBorderFocusedColor)",
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        notchedOutline: {
+          borderColor: "var(--TextField-brandBorderColor)",
+        },
+        root: {
+          // backgroundColor: "var(--TextField-brandBackgroundColor)",
+          [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
+            borderColor: "var(--TextField-brandBorderHoverColor)",
+          },
+          [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
+            borderColor: "var(--TextField-brandBorderFocusedColor)",
           },
         },
       },

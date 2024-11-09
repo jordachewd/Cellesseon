@@ -5,5 +5,10 @@ interface PageWrapperProps {
 }
 
 export default function PageWrapper({ children }: PageWrapperProps) {
-  return <section className={css.section}>{children}</section>;
+  return (
+    <main className={css.main}>
+      <div className={css.content}>{children}</div>
+      <div className={css.background}></div>
+    </main>
+  );
 }

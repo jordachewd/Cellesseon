@@ -27,10 +27,22 @@ const config: Config = {
       },
       backgroundImage: {
         jwdHomeGradient: "linear-gradient(to top, #26D0CE, #1A2980)",
-        jwdChatGradient: "linear-gradient(to bottom, #26D0CE, #1A2980)"
+        jwdChatGradient: "linear-gradient(to bottom, #26D0CE, #1A2980)",
+      },
+      animation: {
+        "text-reveal": "text-reveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s",
+      },
+      keyframes: {
+        "text-reveal": {
+          "0%": {
+            transform: "translate(0, 100%)",
+          },
+          "100%": {
+            transform: "translate(0, 0)",
+          },
+        },
       },
     },
-    
   },
   plugins: [],
 };

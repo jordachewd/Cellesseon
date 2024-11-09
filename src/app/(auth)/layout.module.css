@@ -1,7 +1,14 @@
 .section {
-  @apply flex flex-col w-screen h-screen m-0 p-0 items-center justify-center bg-jwdHomeGradient;
+  @apply flex flex-col w-screen h-screen m-0 p-0 items-center justify-center bg-jwdChatGradient;
 }
 
 .wrapper {
-  @apply flex mb-8;
+  @apply flex mb-8 relative z-10;
+}
+
+.background {
+  @apply absolute flex inset-0 h-full w-full bg-jwdAqua z-0
+  bg-[radial-gradient(#1A298020_1px,transparent_1px)] 
+  [background-size:16px_16px] 
+  [mask-image:radial-gradient(ellipse_100%_80%_at_50%_10%,#000_40%,transparent_100%)];
 }

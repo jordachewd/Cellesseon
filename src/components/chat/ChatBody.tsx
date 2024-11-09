@@ -6,6 +6,7 @@ import autoAnimate from "@formkit/auto-animate";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import LoadingSpinner from "../shared/LoadingSpinner";
+// import TextReveal from "../shared/TextReveal";
 
 interface ChatBodyProps {
   messages: Message[];
@@ -28,6 +29,10 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
 
   return (
     <section className={css.section} ref={parent}>
+{/*       {messages.length === 0 && (
+        <TextReveal text={`Hello there! How can I help you?`} />
+      )} */}
+
       {messages.map((message, i) => {
         const isBot = message.role !== "user";
         return (
@@ -42,7 +47,7 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
             )}
 
             <div className={css.content}>
-              <Typography variant="h5">{isBot ? "Celeseon" : "You"}</Typography>
+              <Typography variant="h5">{isBot ? "celeseon" : "you"}</Typography>
               <div className={css.msg}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {message.content}
