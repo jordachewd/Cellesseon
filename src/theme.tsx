@@ -53,6 +53,7 @@ const theme = createTheme({
     h1: {
       fontFamily: dosis.style.fontFamily,
       fontSize: "5rem",
+      fontWeight: 400,
     },
     h2: {
       fontFamily: dosis.style.fontFamily,
@@ -60,6 +61,7 @@ const theme = createTheme({
     },
     h3: {
       fontFamily: dosis.style.fontFamily,
+      fontWeight: 400,
     },
     h4: {
       fontFamily: dosis.style.fontFamily,
@@ -119,13 +121,10 @@ const theme = createTheme({
         },
         text: {
           backgroundColor: "white",
-          boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+          boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.1)",
           "&:hover": {
-            backgroundColor: "#f8fafc",
+            backgroundColor: "#26D0CE",
           },
-        },
-        contained: {
-          boxShadow: "0 1px 4px 0 rgb(0 0 0 / 0.25)",
         },
       },
     },

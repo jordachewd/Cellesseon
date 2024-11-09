@@ -19,10 +19,11 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
 
   return (
     <section className={css.section}>
-      <>
+
+      <div className={css.prompt}>
         <input
           disabled={loading}
-          className={css.prompt}
+          className={css.input}
           placeholder="Ask Celeseon ..."
           type="text"
           value={value}
@@ -40,7 +41,11 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
         ) : (
           <i className={`bi bi-send ${css.send}`} onClick={handleSubmit}></i>
         )}
-      </>
+      </div>
+
+      <div className={css.bottom}>
+        Celeseon can make mistakes. So double-check it.
+      </div>
     </section>
   );
 }

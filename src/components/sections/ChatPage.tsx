@@ -1,9 +1,7 @@
 "use client";
-import css from "./ChatPage.module.css";
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import Header from "@/components/sections/Header";
-import Footer from "@/components/sections/Footer";
 import { Message } from "@/types";
 import { useState } from "react";
 
@@ -50,11 +48,10 @@ export default function ChatPage() {
     setIsLoading(false);
   };
   return (
-    <section className={css.section}>
+    <>
       <Header />
       <ChatBody messages={chat} loading={isLoading} />
       <ChatInput sendMessage={sendMessage} loading={isLoading} />
-      <Footer />
-    </section>
+    </>
   );
 }

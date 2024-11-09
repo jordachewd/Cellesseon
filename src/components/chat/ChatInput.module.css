@@ -1,13 +1,21 @@
 .section {
+  @apply flex flex-col w-full px-4 lg:px-0;
+}
+
+.prompt {
   @apply flex w-full py-3 px-4 relative justify-between items-center
   bg-jwdAqua max-w-5xl mx-auto shadow-md rounded-md;
 }
 
-.prompt {
+.input {
   @apply border-0 bg-transparent outline-none w-11/12 text-jwdMarine placeholder-slate-600;
   font-weight: 500;
 }
 
 .send {
   @apply cursor-pointer ease-in duration-100 hover:scale-125 text-xl text-center;
+}
+
+.bottom {
+  @apply flex justify-center p-3 text-xs tracking-wide text-jwdAqua/70 font-normal w-full;
 }

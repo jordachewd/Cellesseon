@@ -1,12 +1,4 @@
 .section {
-  @apply flex w-full max-w-5xl self-center justify-between items-center pt-3 pb-4 relative;
+  @apply flex w-full max-w-5xl self-center justify-between items-center py-4 px-4 lg:px-0;
 }
-
-.left,
-.right {
-  @apply flex;
-}
-
-.right {
-  @apply items-center space-x-3;
-}
+ 

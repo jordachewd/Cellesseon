@@ -11,7 +11,7 @@ export default function LandingPage() {
   return (
     <section className={css.section}>
       <div className={css.head}>
-        <Logo size={`${isMobile ? "h3" : "h1"}`} />
+        <Logo width={360} height={90} />
       </div>
 
       <div className={css.intro}>

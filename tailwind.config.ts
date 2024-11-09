@@ -30,6 +30,7 @@ const config: Config = {
         jwdChatGradient: "linear-gradient(to bottom, #26D0CE, #1A2980)"
       },
     },
+    
   },
   plugins: [],
 };

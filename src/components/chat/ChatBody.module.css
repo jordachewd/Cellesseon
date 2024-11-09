@@ -1,6 +1,5 @@
 .section {
-  @apply flex flex-col space-y-10 w-full max-w-5xl mx-auto overflow-y-auto 
-  h-[80%] py-6 mb-6
+  @apply flex flex-col space-y-10 w-full max-w-5xl mx-auto overflow-y-auto h-[80vh] my-4 p-4 lg:px-1.5
   [&::-webkit-scrollbar]:w-[2px]
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-jwdAqua/20
@@ -11,7 +10,7 @@
 }
 
 .message {
-  @apply flex break-words space-x-5 items-start p-3 max-w-[98%];
+  @apply flex break-words space-x-5 items-start p-3;
 }
 
 .bot {
