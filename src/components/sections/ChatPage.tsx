@@ -31,13 +31,6 @@ export default function ChatPage() {
         body: JSON.stringify({ messages: [...chat.slice(1), prompt] }),
       });
 
-      if (!response.ok) {
-        setAlert({
-          text: "Error fetching OpenAI API!",
-        });
-        throw new Error("Network response was not ok!");
-      }
-
       if (!response.body) {
         setAlert({
           text: "ReadableStream not supported in response!",
