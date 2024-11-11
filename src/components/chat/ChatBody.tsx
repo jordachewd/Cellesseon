@@ -47,7 +47,7 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
                     width={480}
                     height={480}
                     className="mb-6"
-                     sizes="100vw"
+                    sizes="50vw"
                   />
                 )}
 

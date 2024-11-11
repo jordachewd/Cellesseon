@@ -27,12 +27,10 @@ export default function ChatPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: [...chat.slice(1), prompt],
-          model: "dall-e-3",
         }),
       });
 
       if (!response.ok) {
-        console.log("OpenAI response: ", response);
         setAlert({
           text: "Error fetching OpenAI API!",
         });
@@ -42,7 +40,6 @@ export default function ChatPage() {
       const data = await response.json();
       console.log("OpenAI Data: ", data);
 
-      // Check if data contains the expected structure
       if (data.error) {
         setAlert({
           text: data.error.message,
@@ -51,58 +48,20 @@ export default function ChatPage() {
       }
 
       if (data.data && data.data[0]?.url) {
-        try {
-          const imgMsg: Message = {
-            role: "user",
-            content: `Generate a short description of this; maximum 20 words: ${data.data[0].revised_prompt}`,
-          };
+        const dalleChat: Message = {
+          role: "assistant",
+          content: data.data[0].revised_prompt,
+          url: data.data[0].url,
+        };
 
-          const resp = await fetch("/api/openai", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              messages: [imgMsg],
-              model: "gpt-4o",
-            }),
-          });
-
-          if (!resp.ok) {
-            setAlert({
-              text: "Error fetching ImageData API!",
-            });
-            throw new Error("Network response was not ok!");
-          }
-
-          const imgData = await resp.json();
-          console.log("OpenAI imgData: ", imgData);
-
-          if (imgData.error) {
-            setAlert({
-              text: imgData.error.message,
-            });
-            throw new Error(imgData.error.message);
-          }
-
-          const newChat: Message = {
-            role: imgData.choices?.[0]?.message.role || "assistant",
-            content: imgData.choices?.[0]?.message.content || "",
-            url: data.data[0].url,
-          };
-
-          console.log("newChat: ", newChat);
-
-          setChat((prev) => [...prev, newChat]);
-
-
-        } catch (error) {
-          console.error(error);
-        }
+        setChat((prev) => [...prev, dalleChat]);
       } else if (data.choices && data.choices[0]?.message) {
-        const newChat: Message = {
+        const gptChat: Message = {
           role: data.choices[0].message.role,
           content: data.choices[0].message.content,
         };
-        setChat((prev) => [...prev, newChat]);
+
+        setChat((prev) => [...prev, gptChat]);
       }
     } catch (error) {
       console.error(error);

@@ -25,14 +25,13 @@ export async function POST(req: Request) {
   try {
     if (model === "dall-e-3") {
       const response = await openAiClient.images.generate({
-        prompt: messages[0].content,
+        prompt:
+          messages[0].content + " Return revised_prompt in maximum ten words.",
         model: "dall-e-3",
         size: "1024x1024",
         quality: "standard",
         n: 1,
       });
-
-      console.log("DALLE: ", messages);
 
       return NextResponse.json(response);
     } else {
@@ -41,9 +40,8 @@ export async function POST(req: Request) {
           {
             role: "system",
             content:
-              "You are a helpful assistant that answers questions kindly in a wise warm tone. " +
-              "Provide a detailed explanation for each question and format the answer " +
-              "using a title and subtitles (when necessary).",
+              "You are a helpful assistant that answers questions kindly in a wise warm tone. Use the supplied tools to assist the user." +
+              "Provide a detailed explanation for each question and format the answer using a title and subtitles (when necessary).",
           },
           ...messages,
         ],
@@ -51,11 +49,11 @@ export async function POST(req: Request) {
         temperature: 1,
       });
 
-      console.log("GPT 4o: ", messages);
-
       return NextResponse.json(response);
     }
   } catch (error) {
     return NextResponse.json(error);
   }
+
+  console.log("API messages: ", messages);
 }
