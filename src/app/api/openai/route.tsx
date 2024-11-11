@@ -47,7 +47,7 @@ export async function POST(req: Request) {
         },
         ...messages,
       ],
-      model: "gpt-4",
+      model: "gpt-4-turbo",
       temperature: 1,
       stream: true,
       functions: [dallEFunction], // Register the function with the OpenAI API
