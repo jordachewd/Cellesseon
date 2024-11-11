@@ -65,7 +65,12 @@ export default function ChatPage() {
             }),
           });
 
-          console.log("Send imgMsg: ", imgMsg);
+          if (!resp.ok) {
+            setAlert({
+              text: "Error fetching ImageData API!",
+            });
+            throw new Error("Network response was not ok!");
+          }
 
           const imgData = await resp.json();
           console.log("OpenAI imgData: ", imgData);
