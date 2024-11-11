@@ -32,6 +32,7 @@ export default function ChatPage() {
       });
 
       if (!response.ok) {
+        console.log("OpenAI response: ", response);
         setAlert({
           text: "Error fetching OpenAI API!",
         });
