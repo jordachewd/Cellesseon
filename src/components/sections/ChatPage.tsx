@@ -8,9 +8,7 @@ import { useState } from "react";
 
 export default function ChatPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const [alert, setAlert] = useState<AlertParams | null>(null);
-
   const [chat, setChat] = useState<Message[]>([
     {
       role: "assistant",
@@ -20,7 +18,6 @@ export default function ChatPage() {
 
   const sendMessage = async (prompt: Message) => {
     if (!prompt) return;
-
     setIsLoading(true);
     setChat((prev) => [...prev, prompt]);
 
@@ -28,7 +25,10 @@ export default function ChatPage() {
       const response = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [...chat.slice(1), prompt] }),
+        body: JSON.stringify({
+          messages: [...chat.slice(1), prompt],
+          model: "dall-e-3",
+        }),
       });
 
       if (!response.ok) {
@@ -39,30 +39,72 @@ export default function ChatPage() {
       }
 
       const data = await response.json();
+      console.log("OpenAI Data: ", data);
 
+      // Check if data contains the expected structure
       if (data.error) {
-        console.log("DATA: ", data.error);
         setAlert({
           text: data.error.message,
         });
+        throw new Error(data.error.message);
       }
 
-      if (data.choices && data.choices[0].message) {
+      if (data.data && data.data[0]?.url) {
+        try {
+          const imgMsg: Message = {
+            role: "user",
+            content: `Generate a short description of this; maximum 20 words: ${data.data[0].revised_prompt}`,
+          };
+
+          const resp = await fetch("/api/openai", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              messages: [imgMsg],
+              model: "gpt-4o",
+            }),
+          });
+
+          console.log("Send imgMsg: ", imgMsg);
+
+          const imgData = await resp.json();
+          console.log("OpenAI imgData: ", imgData);
+
+          if (imgData.error) {
+            setAlert({
+              text: imgData.error.message,
+            });
+            throw new Error(imgData.error.message);
+          }
+
+          const newChat: Message = {
+            role: imgData.choices?.[0]?.message.role || "assistant",
+            content: imgData.choices?.[0]?.message.content || "",
+            url: data.data[0].url,
+          };
+
+          console.log("newChat: ", newChat);
+
+          setChat((prev) => [...prev, newChat]);
+
+
+        } catch (error) {
+          console.error(error);
+        }
+      } else if (data.choices && data.choices[0]?.message) {
         const newChat: Message = {
           role: data.choices[0].message.role,
           content: data.choices[0].message.content,
         };
-
         setChat((prev) => [...prev, newChat]);
       }
-
-
     } catch (error) {
       console.error(error);
     }
 
     setIsLoading(false);
   };
+
   return (
     <>
       <Header />

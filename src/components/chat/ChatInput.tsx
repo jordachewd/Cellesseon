@@ -20,9 +20,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
   return (
     <section className={css.section}>
       <TextField
-        multiline
         fullWidth
-        maxRows={4}
         value={prompt}
         disabled={loading}
         label="Ask celeseon..."

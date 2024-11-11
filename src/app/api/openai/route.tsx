@@ -24,7 +24,6 @@ export async function POST(req: Request) {
 
   try {
     if (model === "dall-e-3") {
-      // DALL-E 3 image generation request
       const response = await openAiClient.images.generate({
         prompt: messages[0].content,
         model: "dall-e-3",
@@ -32,6 +31,9 @@ export async function POST(req: Request) {
         quality: "standard",
         n: 1,
       });
+
+      console.log("DALLE: ", messages);
+
       return NextResponse.json(response);
     } else {
       const response = await openAiClient.chat.completions.create({
@@ -48,6 +50,9 @@ export async function POST(req: Request) {
         model: model,
         temperature: 1,
       });
+
+      console.log("GPT 4o: ", messages);
+
       return NextResponse.json(response);
     }
   } catch (error) {
