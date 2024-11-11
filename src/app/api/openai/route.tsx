@@ -20,33 +20,37 @@ const openAiClient = new OpenAI({
 
 // The API call function
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  const { messages, model = "gpt-4o" } = await req.json();
+
   try {
-    const response = await openAiClient.chat.completions.create({
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a helpful assistant that answers questions kindly in a wise warm tone." +
-            "Provide a detailed explanation for each question and format the answer" +
-            "using a title and subtitles (when necessary).",
-        },
-        ...messages,
-      ],
-      model: "gpt-4o",
-      temperature: 1,
-
-    });
-
-    // Return the OpenAI response as JSON
-    return NextResponse.json(response);
+    if (model === "dall-e-3") {
+      // DALL-E 3 image generation request
+      const response = await openAiClient.images.generate({
+        prompt: messages[0].content,
+        model: "dall-e-3",
+        size: "1024x1024",
+        quality: "standard",
+        n: 1,
+      });
+      return NextResponse.json(response);
+    } else {
+      const response = await openAiClient.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a helpful assistant that answers questions kindly in a wise warm tone. " +
+              "Provide a detailed explanation for each question and format the answer " +
+              "using a title and subtitles (when necessary).",
+          },
+          ...messages,
+        ],
+        model: model,
+        temperature: 1,
+      });
+      return NextResponse.json(response);
+    }
   } catch (error) {
-    console.error("OpenAI API Error:", error);
-
-    // Return an error response in case of failure
-    return NextResponse.json(
-      { message: "Failed to fetch response from OpenAI API.", error },
-      { status: 500 }
-    );
+    return NextResponse.json(error);
   }
 }
