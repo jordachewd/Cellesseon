@@ -5,9 +5,13 @@
 .head,
 .intro,
 .actions {
-  @apply flex flex-col w-full text-center items-center max-w-2xl;
+  @apply flex flex-col w-full text-center items-center max-w-2xl animate-fade-up animate-once;
 }
 
 .intro {
-  @apply space-y-8 lg:space-y-14;
+  @apply space-y-8 lg:space-y-14 animate-delay-300;
+}
+
+.actions {
+  @apply animate-fade-up animate-once animate-delay-700;
 }

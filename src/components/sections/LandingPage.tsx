@@ -7,6 +7,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function LandingPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  
 
   return (
     <section className={css.section}>

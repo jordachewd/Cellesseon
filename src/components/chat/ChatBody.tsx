@@ -6,7 +6,6 @@ import autoAnimate from "@formkit/auto-animate";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import LoadingSpinner from "../shared/LoadingSpinner";
-// import TextReveal from "../shared/TextReveal";
 
 interface ChatBodyProps {
   messages: Message[];
@@ -21,25 +20,15 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
     if (parent.current) {
       autoAnimate(parent.current);
     }
-  }, [parent]);
-
-  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [parent, messages]);
 
   return (
     <section className={css.section} ref={parent}>
-{/*       {messages.length === 0 && (
-        <TextReveal text={`Hello there! How can I help you?`} />
-      )} */}
-
       {messages.map((message, i) => {
         const isBot = message.role !== "user";
         return (
-          <div
-            key={`message-${i}`}
-            className={`${css.message} ${isBot ? css.bot : ""}`}
-          >
+          <div key={i} className={`${css.message} ${isBot ? css.bot : ""}`}>
             {isBot ? (
               <i className={`bi bi-robot bg-jwdAqua ${css.avatar}`}></i>
             ) : (
