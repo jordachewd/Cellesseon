@@ -9,6 +9,7 @@ import { useState } from "react";
 export default function ChatPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
+
   const [chat, setChat] = useState<Message[]>([
     {
       role: "assistant",
@@ -21,53 +22,49 @@ export default function ChatPage() {
     setIsLoading(true);
     setChat((prev) => [...prev, prompt]);
 
-    const newMessage: Message = { role: "assistant", content: "" };
-    setChat((prev) => [...prev, newMessage]);
-
     try {
       const response = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: [...chat.slice(1), prompt] }),
+        body: JSON.stringify({
+          messages: [...chat.slice(1), prompt],
+        }),
       });
 
-      if (!response.body) {
+      if (!response.ok) {
         setAlert({
-          text: "ReadableStream not supported in response!",
+          text: "Error fetching OpenAI API!",
         });
-        throw new Error("ReadableStream not supported in response");
+        throw new Error("Network response was not ok!");
       }
 
-      console.log("response: ", response);
+      const data = await response.json();
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder("utf-8");
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value, { stream: true });
-
-        if (chunk.includes("[DONE]")) {
-          setIsLoading(false);
-          break;
-        }
-
-        newMessage.content += chunk;
-        setChat((prev) => {
-          const updatedChat = [...prev];
-          updatedChat[updatedChat.length - 1] = { ...newMessage };
-          return updatedChat;
+      if (data.error) {
+        setAlert({
+          text:
+            typeof data.error === "string"
+              ? data.error
+              : "Unknown error occurred",
         });
+        throw new Error(data.error);
+      }
+
+   //   const respMsg = data.choices[0]?.message;
+   //   console.log("AI Response Data: ", respMsg);
+
+      if (data.choices && data.choices[0]?.message) {
+        const newChat: Message = {
+          role: data.choices[0].message.role,
+          content: data.choices[0].message.content,
+        };
+        setChat((prev) => [...prev, newChat]);
       }
     } catch (error) {
       console.error(error);
-      setAlert({
-        text: "Error streaming OpenAI API response!",
-      });
-      setIsLoading(false);
     }
+
+    setIsLoading(false);
   };
 
   return (

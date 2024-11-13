@@ -39,21 +39,35 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
             <div className={css.content}>
               <Typography variant="h5">{isBot ? "celeseon" : "you"}</Typography>
               <div className={css.msg}>
-                {message.url && (
-                  <Image
-                    priority
-                    src={message.url}
-                    alt={message.content || "OpenAI generated image"}
-                    width={480}
-                    height={480}
-                    className="mb-6"
-                    sizes="50vw"
-                  />
+                {Array.isArray(message.content) ? (
+                  message.content.map((contentItem, idx) => {
+                    if (contentItem.type === "text") {
+                      return (
+                        <ReactMarkdown key={idx} remarkPlugins={[remarkGfm]}>
+                          {contentItem.text}
+                        </ReactMarkdown>
+                      );
+                    } else if (contentItem.type === "image_url") {
+                      return (
+                        <Image
+                          key={idx}
+                          priority
+                          src={contentItem.image_url.url}
+                          alt="OpenAI generated image"
+                          width={480}
+                          height={480}
+                          className="mb-6"
+                          sizes="50vw"
+                        />
+                      );
+                    }
+                    return null;
+                  })
+                ) : (
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {message.content}
+                  </ReactMarkdown>
                 )}
-
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {message.content}
-                </ReactMarkdown>
               </div>
             </div>
           </div>

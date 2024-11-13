@@ -1,29 +1,96 @@
 import css from "./ChatInput.module.css";
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { Message } from "@/types";
-import { TextField } from "@mui/material";
+import { styled, TextField, Button } from "@mui/material";
 
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
   loading: boolean;
 }
 
+const UploadFileInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+
 export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
   const [prompt, setPrompt] = useState("");
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
-  const handleSubmit = () => {
-    if (prompt === "") return;
-    sendMessage({ role: "user", content: prompt });
+  const handleSubmit = async () => {
+    if (prompt === "" && !selectedImage) return;
+
+    const content: Message["content"] = [
+      {
+        type: "text",
+        text: prompt,
+      },
+    ];
+
+    if (selectedImage) {
+      const base64Image = await convertToBase64(selectedImage);
+      content.push({
+        type: "image_url",
+        image_url: {
+          url: `data:image/jpeg;base64,${base64Image}`,
+        },
+      });
+    }
+
+    sendMessage({
+      role: "user",
+      content,
+    });
+
     setPrompt("");
+    setSelectedImage(null);
+  };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setSelectedImage(file);
+  };
+
+  const convertToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64String = (reader.result as string).split(",")[1];
+        resolve(base64String);
+      };
+      reader.onerror = (error) => reject(error);
+    });
   };
 
   return (
     <section className={css.section}>
+      <div className={css.uploadBtn}>
+        <Button component="label" size="small">
+          <i className={`bi bi-images text-2xl`}></i>
+          <UploadFileInput
+            id="addFile"
+            type="file"
+            accept="image/*"
+            disabled={loading}
+            onChange={handleImageChange}
+          />
+        </Button>
+
+        {selectedImage && <span>{selectedImage.name}</span>}
+      </div>
       <TextField
         fullWidth
         value={prompt}
         disabled={loading}
-        label="Ask celeseon..."
+        label="Ask Celeseon..."
         helperText="Celeseon can make mistakes. So double-check it."
         onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={(e) => {
@@ -34,11 +101,13 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
         }}
       />
 
-      {loading ? (
-        <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
-      ) : (
-        <i className={`bi bi-send ${css.send}`} onClick={handleSubmit}></i>
-      )}
+      <div className={css.sendBtn}>
+        {loading ? (
+          <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
+        ) : (
+          <i className={`bi bi-send ${css.send}`} onClick={handleSubmit}></i>
+        )}
+      </div>
     </section>
   );
 }

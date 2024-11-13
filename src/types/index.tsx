@@ -1,17 +1,20 @@
-export interface Message {
-  role: "user" | "assistant" | "system";
-  content?: string;
-  url?: string;
+export type MessageRoles = "user" | "assistant" | "system";
+
+interface TextContent {
+  type: "text";
+  text: string;
 }
 
-
-export interface ChoiceWithFunctionCall {
-  delta: {
-    content?: string;
-    function_call?: {
-      name: string;
-      arguments: string;
-    };
+interface ImageContent {
+  type: "image_url";
+  image_url: {
+    url: string;
   };
-  finish_reason?: string;
+}
+
+export type ContentType = TextContent | ImageContent;
+
+export interface Message {
+  role: MessageRoles;
+  content: string | ContentType[]; 
 }
