@@ -1,4 +1,6 @@
-export type MessageRoles = "user" | "assistant" | "system";
+import { Uploadable } from "openai/uploads.mjs";
+
+export type MessageRole = "user" | "assistant" | "system";
 
 interface TextContent {
   type: "text";
@@ -15,6 +17,18 @@ interface ImageContent {
 export type ContentType = TextContent | ImageContent;
 
 export interface Message {
-  role: MessageRoles;
-  content: string | ContentType[]; 
+  role: MessageRole;
+  content: string | ContentType[];
+}
+
+export interface Messages {
+  messages: Message[];
+}
+
+export interface GenerateImage {
+  prompt: string;
+}
+
+export interface VariateImage {
+  image: Uploadable;
 }

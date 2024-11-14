@@ -22,6 +22,8 @@ export default function ChatPage() {
     setIsLoading(true);
     setChat((prev) => [...prev, prompt]);
 
+    console.log("SEND: ", [...chat.slice(1), prompt]);
+
     try {
       const response = await fetch("/api/openai", {
         method: "POST",
@@ -41,23 +43,44 @@ export default function ChatPage() {
       const data = await response.json();
 
       if (data.error) {
+        console.log("Data ERROR: ", data);
         setAlert({
           text:
             typeof data.error === "string"
               ? data.error
               : "Unknown error occurred",
         });
-        throw new Error(data.error);
+        setIsLoading(false);
+        return;
       }
 
-   //   const respMsg = data.choices[0]?.message;
-   //   console.log("AI Response Data: ", respMsg);
+      console.log("data: ", data);
 
       if (data.choices && data.choices[0]?.message) {
+        const gpt4o = data.choices[0].message;
+        const dalle = data.dalle?.data[0];
+
+        const newContent: Message["content"] = [
+          {
+            type: "text",
+            text: gpt4o.content || dalle.revised_prompt,
+          },
+        ];
+
+        if (dalle) {
+          newContent.push({
+            type: "image_url",
+            image_url: {
+              url: dalle.url,
+            },
+          });
+        }
+
         const newChat: Message = {
-          role: data.choices[0].message.role,
-          content: data.choices[0].message.content,
+          role: dalle ? "user" : gpt4o.role,
+          content: newContent,
         };
+
         setChat((prev) => [...prev, newChat]);
       }
     } catch (error) {
