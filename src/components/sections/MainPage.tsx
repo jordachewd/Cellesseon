@@ -35,13 +35,14 @@ export default function MainPage() {
       });
 
       if (!response.ok) {
+        const errStatus = response.status;
+        const errText = response.statusText;
         setAlert({
-          title: "Error fetching OpenAI API!",
-          text: `Status code: ${response.status}${
-            response.statusText ? "; " + response.statusText : ""
-          }`,
+          title: `Error ${errStatus}`,
+          text: `${errText ? errText : "Error fetching OpenAI API!"}`,
         });
-        console.log("Network response was not ok: ", response);
+        
+        setIsLoading(false);
         return;
       }
 
