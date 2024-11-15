@@ -6,7 +6,7 @@ import AlertMessage, { AlertParams } from "../shared/AlertMessage";
 import { Message } from "@/types";
 import { useState } from "react";
 
-export default function ChatPage() {
+export default function MainPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
 
@@ -34,6 +34,7 @@ export default function ChatPage() {
       });
 
       if (!response.ok) {
+        console.log("Response: ", response);
         setAlert({
           text: "Error fetching OpenAI API!",
         });

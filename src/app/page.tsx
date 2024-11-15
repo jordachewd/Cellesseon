@@ -1,7 +1,7 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import PageWrapper from "@/components/layout/PageWrapper";
 import LandingPage from "@/components/sections/LandingPage";
-import ChatPage from "@/components/sections/ChatPage";
+import MainPage from "@/components/sections/MainPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function Home() {
         <LandingPage />
       </SignedOut>
       <SignedIn>
-        <ChatPage />
+        <MainPage />
       </SignedIn>
     </PageWrapper>
   );
