@@ -22,6 +22,8 @@ export async function dalleGenerateImage({ prompt }: GenerateImage) {
     prompt: prompt,
     model: "dall-e-3",
     size: "1024x1024",
+    style: "natural",
+    user: "celeseon_user",
     n: 1,
   });
 
@@ -35,6 +37,7 @@ export async function dalleCreateVariation({ image }: VariateImage) {
     image: image,
     model: "dall-e-2",
     size: "1024x1024",
+    user: "celeseon_user",
     n: 1,
   });
 

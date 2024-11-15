@@ -23,10 +23,11 @@ export async function POST(req: Request) {
     }
 
     const gpt4oResp = await openAiClient.chat.completions.create({
-      n: 1,
+      user: "celeseon_user",
       model: "gpt-4o",
       temperature: 0.5,
       messages: [...messagesConfig, ...messages],
+      n: 1,
       tools: [
         {
           type: "function",
