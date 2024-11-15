@@ -1,5 +1,6 @@
 import {
   Alert,
+  AlertTitle,
   Slide,
   SlideProps,
   Snackbar,
@@ -9,6 +10,7 @@ import {
 import { useEffect, useState } from "react";
 
 export interface AlertParams {
+  title?: string;
   text: string;
   severity?: "info" | "error" | "success" | "warning";
   variant?: "filled" | "outlined";
@@ -23,7 +25,7 @@ function SlideTransition(props: SlideProps) {
 }
 
 export default function AlertMessage({ message }: AlertMessageProps) {
-  const { text, severity = "error", variant = "filled" } = message;
+  const { title, text, severity = "error", variant = "filled" } = message;
   const [openAlert, setOpenAlert] = useState(false);
 
   const handleClose = (
@@ -48,12 +50,13 @@ export default function AlertMessage({ message }: AlertMessageProps) {
     <Snackbar
       open={openAlert}
       onClose={handleClose}
-    //  autoHideDuration={10000}
+      //  autoHideDuration={10000}
       TransitionComponent={SlideTransition}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
       sx={{ zIndex: "100" }}
     >
       <Alert onClose={handleClose} variant={variant} severity={severity}>
+        {title && <AlertTitle>{title}</AlertTitle>}
         {text}
       </Alert>
     </Snackbar>

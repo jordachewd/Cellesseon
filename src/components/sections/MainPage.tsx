@@ -36,7 +36,8 @@ export default function MainPage() {
       if (!response.ok) {
         console.log("Response: ", response);
         setAlert({
-          text: "Error fetching OpenAI API!",
+          title: "Error fetching OpenAI API!",
+          text: `Error status code: ${response.status}; ${response.statusText}`,
         });
         throw new Error("Network response was not ok!");
       }
@@ -46,6 +47,7 @@ export default function MainPage() {
       if (data.error) {
         console.log("Data ERROR: ", data);
         setAlert({
+          title: data.title,
           text:
             typeof data.error === "string"
               ? data.error

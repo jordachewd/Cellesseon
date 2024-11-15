@@ -103,7 +103,8 @@ export async function POST(req: Request) {
               ? error.message
               : "An unexpected DALL·E 3 error occurred.";
           return NextResponse.json({
-            error: "Dall-E-3 Error: " + errMsg,
+            title: "Dall-E-3 Error!",
+            error: errMsg,
             status: 500,
           });
         }
@@ -135,7 +136,8 @@ export async function POST(req: Request) {
         ? error.message
         : "An unexpected GPT-4o error occurred";
     return NextResponse.json({
-      error: "Gpt-4o Error: " + errMsg,
+      title: "Gpt-4o Error",
+      error: errMsg,
       status: 500,
     });
   }
