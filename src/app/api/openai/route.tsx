@@ -11,9 +11,10 @@ import { Uploadable } from "openai/uploads.mjs";
 
 
 // Required for the Edge Runtime
-export const config = {
+export const runtime = "edge";
+/* export const config = {
   runtime: "edge",
-};
+}; */
 
 export async function POST(req: Request) {
   try {

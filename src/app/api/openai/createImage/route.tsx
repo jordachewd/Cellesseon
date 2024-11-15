@@ -4,6 +4,12 @@ import { NextResponse } from "next/server";
 
 const OPENAI_API_KEY = process.env.OPENAI_KEY;
 
+// Required for the Edge Runtime
+export const runtime = "edge";
+/* export const config = {
+  runtime: "edge",
+}; */
+
 export async function POST(req: Request) {
   console.log("\x1b[42m ------------------ \x1b[0m");
   console.log("\x1b[42m API createImage \x1b[0m");

@@ -7,6 +7,14 @@ const OPENAIKEY = process.env.OPENAI_KEY;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const BASEURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
+// Required for the Edge Runtime
+export const runtime = "edge";
+/* export const config = {
+  runtime: "edge",
+}; */
+
+
+
 export async function POST(req: Request) {
   console.log("\x1b[33m ------------------ \x1b[0m");
   console.log("\x1b[43m API chatCompletion \x1b[0m");
