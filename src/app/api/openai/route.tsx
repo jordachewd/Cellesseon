@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
+
 import {
   openAiClient,
   dalleGenerateImage,
@@ -11,7 +12,7 @@ import { Uploadable } from "openai/uploads.mjs";
 
 
 // Required for the Edge Runtime
-export const runtime = "edge";
+// export const runtime = "edge";
 /* export const config = {
   runtime: "edge",
 }; */
