@@ -26,7 +26,15 @@ export default function MainPage() {
     console.log("SEND: ", [...chat.slice(1), prompt]);
 
     try {
-      const response = await fetch("/api/openai", {
+      /*       const response = await fetch("/api/openai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...chat.slice(1), prompt],
+        }),
+      }); */
+
+      const response = await fetch("/api/openai/chatCompletion", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -41,7 +49,7 @@ export default function MainPage() {
           title: `Error ${errStatus}`,
           text: `${errText ? errText : "Error fetching OpenAI API!"}`,
         });
-        
+
         setIsLoading(false);
         return;
       }
@@ -49,7 +57,7 @@ export default function MainPage() {
       const data = await response.json();
 
       if (data.error) {
-        console.log("Data ERROR: ", data);
+        console.log("MainPage data ERROR: ", data);
         setAlert({
           title: data.title,
           text:
@@ -61,11 +69,14 @@ export default function MainPage() {
         return;
       }
 
-      console.log("data: ", data);
+      console.log("MainPage DATA: ", data);
 
       if (data.choices && data.choices[0]?.message) {
         const gpt4o = data.choices[0].message;
         const dalle = data.dalle?.data[0];
+
+        console.log("MainPage dalle: ", dalle);
+
 
         const newContent: Message["content"] = [
           {

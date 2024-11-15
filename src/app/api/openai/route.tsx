@@ -9,6 +9,7 @@ import messagesConfig from "./messagesConfig";
 import { NextResponse } from "next/server";
 import { Uploadable } from "openai/uploads.mjs";
 
+
 // Required for the Edge Runtime
 export const config = {
   runtime: "edge",
@@ -21,6 +22,10 @@ export async function POST(req: Request) {
     if (!Array.isArray(messages) || messages.length === 0) {
       throw new Error("Invalid or empty messages array.");
     }
+
+    console.log("API messages: ", messages);
+
+    
 
     const gpt4oResp = await openAiClient.chat.completions.create({
       user: "celeseon_user",

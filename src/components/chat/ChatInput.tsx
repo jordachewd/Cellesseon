@@ -29,6 +29,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
         type: "image_url",
         image_url: {
           url: `data:image/jpeg;base64,${base64Image}`,
+          selectedImage: selectedImage,
         },
       });
     }
@@ -37,6 +38,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
       whois: "user",
       role: "user",
       content,
+      selectedImg: selectedImage,
     });
 
     setPrompt("");

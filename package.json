@@ -25,6 +25,7 @@
     "@mui/styled-engine-sc": "^6.1.6",
     "@mui/styles": "^6.1.6",
     "@mui/x-data-grid": "^7.22.1",
+    "axios": "^1.7.7",
     "bootstrap-icons": "^1.11.3",
     "next": "^15.0.3",
     "openai": "^4.71.1",

@@ -11,6 +11,7 @@ interface ImageContent {
   type: "image_url";
   image_url: {
     url: string;
+    selectedImage?: File;
   };
 }
 
@@ -20,6 +21,7 @@ export interface Message {
   whois: string;
   role: MessageRole;
   content: string | ContentType[];
+  selectedImg?: File | null;
 }
 
 export interface Messages {
