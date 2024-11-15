@@ -12,6 +12,7 @@ export default function MainPage() {
 
   const [chat, setChat] = useState<Message[]>([
     {
+      whois: "assistant",
       role: "assistant",
       content: "Hello there! How can I help you?",
     },
@@ -34,12 +35,14 @@ export default function MainPage() {
       });
 
       if (!response.ok) {
-        console.log("Response: ", response);
         setAlert({
           title: "Error fetching OpenAI API!",
-          text: `Error status code: ${response.status}; ${response.statusText}`,
+          text: `Status code: ${response.status}${
+            response.statusText ? "; " + response.statusText : ""
+          }`,
         });
-        throw new Error("Network response was not ok!");
+        console.log("Network response was not ok: ", response);
+        return;
       }
 
       const data = await response.json();
@@ -80,6 +83,7 @@ export default function MainPage() {
         }
 
         const newChat: Message = {
+          whois: gpt4o.role,
           role: dalle ? "user" : gpt4o.role,
           content: newContent,
         };

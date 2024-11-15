@@ -17,6 +17,7 @@ interface ImageContent {
 export type ContentType = TextContent | ImageContent;
 
 export interface Message {
+  whois: string;
   role: MessageRole;
   content: string | ContentType[];
 }

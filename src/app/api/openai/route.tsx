@@ -1,10 +1,18 @@
+import fs from "fs";
+import path from "path";
+import sharp from "sharp";
 import {
-  // dalleCreateVariation,
-  dalleGenerateImage,
-  //gptChatCompletition,
   openAiClient,
-} from "@/utils";
+  dalleGenerateImage,
+} from "@/app/api/openai/openAiClient";
+import messagesConfig from "./messagesConfig";
 import { NextResponse } from "next/server";
+import { Uploadable } from "openai/uploads.mjs";
+
+// Required for the Edge Runtime
+export const config = {
+  runtime: "edge",
+};
 
 export async function POST(req: Request) {
   try {
@@ -14,20 +22,11 @@ export async function POST(req: Request) {
       throw new Error("Invalid or empty messages array.");
     }
 
-    // const gpt4oResp = await gptChatCompletition({ messages });
-
     const gpt4oResp = await openAiClient.chat.completions.create({
+      n: 1,
       model: "gpt-4o",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are a helpful assistant that answers questions kindly in a wise warm tone." +
-            "You can generate images using DALL-E based on the user prompt." +
-            "Provide expert-level writing explanation for each question.",
-        },
-        ...messages,
-      ],
+      temperature: 0.5,
+      messages: [...messagesConfig, ...messages],
       tools: [
         {
           type: "function",
@@ -63,21 +62,18 @@ export async function POST(req: Request) {
             parameters: {
               type: "object",
               properties: {
-                image: {
+                image_url: {
                   type: "string",
-                  description: "The image to create variations for.",
+                  description: "The url of the image to create variations for.",
                 },
               },
-              required: ["image"],
+              required: ["image_url"],
               additionalProperties: false,
             },
           },
         },
       ],
-      tool_choice: "auto",
     });
-
-    console.log("gpt4oResp: ", gpt4oResp);
 
     const choices = gpt4oResp.choices[0];
     const stopReason = choices.finish_reason;
@@ -86,7 +82,6 @@ export async function POST(req: Request) {
     if (gpt4oResp && stopReason === "tool_calls" && toolCalls) {
       const fnName = toolCalls[0].function.name;
 
-      console.log("toolCalls: ", toolCalls);
       console.log("fnName: ", fnName);
 
       if (fnName === "generateImage") {
@@ -103,27 +98,57 @@ export async function POST(req: Request) {
               ? error.message
               : "An unexpected DALL·E 3 error occurred.";
           return NextResponse.json({
-            title: "Dall-E-3 Error!",
+            title: "DALL·E 3 Error!",
             error: errMsg,
             status: 500,
           });
         }
       } else if (fnName === "variateImage") {
-        console.log("dalleCreateVariation: ", gpt4oResp, toolCalls);
+        const parsedArgs = JSON.parse(toolCalls[0].function.arguments);
+        const varImage = parsedArgs.image_url;
 
-        return NextResponse.json({
-          fnName: "dalleCreateVariation",
-          gpt4oResp,
-          toolCalls,
-        });
+        console.log("parsedArgs: ", parsedArgs);
+        console.log("variateImage (received): ", varImage);
 
-        /* 
-        const dalleVariate = await dalleCreateVariation({
-          image: image,
-        });
+        try {
+          // Decode base64 image and save it to a temporary file
+          const base64Data = varImage.replace(/^data:image\/\w+;base64,/, "");
+          const buffer = Buffer.from(base64Data, "base64");
 
-        return NextResponse.json({ dalleVariate }); 
-        */
+          // Convert to PNG and ensure it's less than 1024x1024
+          const processedImage = await sharp(buffer)
+            .resize(1024, 1024, { fit: "inside" })
+            .toFormat("png")
+            .toBuffer();
+          const tempFilePath = path.join(process.cwd(), "temp.png");
+          fs.writeFileSync(tempFilePath, processedImage);
+
+          // console.log("processedImage: ", processedImage);
+
+          const dalleVariate = await openAiClient.images.createVariation({
+            image: fs.createReadStream(tempFilePath) as Uploadable,
+            model: "dall-e-2",
+            size: "1024x1024",
+            n: 1,
+          });
+
+          // Remove temporary file
+          fs.unlinkSync(tempFilePath);
+          return NextResponse.json({
+            ...gpt4oResp,
+            dalleVariate: dalleVariate,
+          });
+        } catch (error) {
+          const errMsg =
+            error instanceof Error
+              ? error.message
+              : "An unexpected DALL·E 2 error occurred.";
+          return NextResponse.json({
+            title: "DALL·E 2 Error!",
+            error: errMsg,
+            status: 500,
+          });
+        }
       } else {
         return NextResponse.json(gpt4oResp);
       }

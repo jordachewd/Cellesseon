@@ -1,24 +1,13 @@
 import css from "./ChatInput.module.css";
 import { useState, ChangeEvent } from "react";
 import { Message } from "@/types";
-import { styled, TextField, Button } from "@mui/material";
+import { TextField, Button } from "@mui/material";
+import { UploadFileInput } from "../shared/UploadFileInput";
 
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
   loading: boolean;
 }
-
-const UploadFileInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
 
 export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
   const [prompt, setPrompt] = useState("");
@@ -45,6 +34,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
     }
 
     sendMessage({
+      whois: "user",
       role: "user",
       content,
     });

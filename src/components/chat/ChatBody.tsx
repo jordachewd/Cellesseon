@@ -27,7 +27,7 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
   return (
     <section className={css.section} ref={parent}>
       {messages.map((message, i) => {
-        const isBot = message.role !== "user";
+        const isBot = message.whois !== "user";
         return (
           <div key={i} className={`${css.message} ${isBot ? css.bot : ""}`}>
             {isBot ? (
@@ -53,10 +53,10 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
                           key={idx}
                           priority
                           src={contentItem.image_url.url}
-                          alt="OpenAI generated image"
+                          alt="Generated image"
                           width={480}
                           height={480}
-                          className="mb-6"
+                          className="my-4"
                           sizes="50vw"
                         />
                       );
