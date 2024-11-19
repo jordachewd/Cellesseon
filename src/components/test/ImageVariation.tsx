@@ -29,7 +29,7 @@ export default function ImageVariation() {
       formData.append("file", selectedFile);
 
       // Upload image to the server
-      const uploadRes = await fetch("/api/tests/uploads", {
+      const uploadRes = await fetch("/api/uploadFiles", {
         method: "POST",
         body: formData,
       });

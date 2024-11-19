@@ -6,16 +6,10 @@ import {
   openAiClient,
   dalleGenerateImage,
 } from "@/app/api/openai/openAiClient";
-import messagesConfig from "./messagesConfig";
+
 import { NextResponse } from "next/server";
 import { Uploadable } from "openai/uploads.mjs";
-
-
-// Required for the Edge Runtime
-// export const runtime = "edge";
-/* export const config = {
-  runtime: "edge",
-}; */
+import { systemMsg } from "@/constants";
 
 export async function POST(req: Request) {
   try {
@@ -27,13 +21,11 @@ export async function POST(req: Request) {
 
     console.log("API messages: ", messages);
 
-    
-
     const gpt4oResp = await openAiClient.chat.completions.create({
       user: "celeseon_user",
       model: "gpt-4o",
       temperature: 0.5,
-      messages: [...messagesConfig, ...messages],
+      messages: [...systemMsg, ...messages],
       n: 1,
       tools: [
         {

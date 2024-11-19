@@ -3,12 +3,8 @@ import fs from "fs";
 import path from "path";
 
 export async function POST(request: Request) {
-  console.log("\x1b[42m api/tests/uploads \x1b[0m");
-
   try {
     const formData = await request.formData();
-
-    console.log("\x1b[32m API formData:  \x1b[0m", formData);
 
     const file = formData.get("file") as File | null;
 
@@ -23,7 +19,7 @@ export async function POST(request: Request) {
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    const fileName = `uploaded_image_${Date.now()}.png`;
+    const fileName = `uploaded_file_${Date.now()}.png`;
     const filePath = path.join(uploadsDir, fileName);
 
     const buffer = Buffer.from(await file.arrayBuffer());

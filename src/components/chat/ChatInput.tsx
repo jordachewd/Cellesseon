@@ -11,10 +11,10 @@ interface ChatInputProps {
 
 export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
   const [prompt, setPrompt] = useState("");
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleSubmit = async () => {
-    if (prompt === "" && !selectedImage) return;
+    if (prompt === "" && !selectedFile) return;
 
     const content: Message["content"] = [
       {
@@ -23,13 +23,36 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
       },
     ];
 
-    if (selectedImage) {
-      const base64Image = await convertToBase64(selectedImage);
+    if (selectedFile) {
+      /*      try {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+
+        // Upload image to the server
+        const uploadRes = await fetch("/api/uploadFiles", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!uploadRes.ok) {
+          throw new Error("Failed to upload image.");
+        }
+
+        const uploadResp = await uploadRes.json();
+        console.log("uploadResp: ", uploadResp);
+
+        const { fileName } = uploadResp;
+
+        return;
+      } catch (error) {}
+    } */
+
+      const base64Image = await convertToBase64(selectedFile);
       content.push({
         type: "image_url",
         image_url: {
           url: `data:image/jpeg;base64,${base64Image}`,
-          selectedImage: selectedImage,
+          // url: selectedFile,
         },
       });
     }
@@ -38,16 +61,15 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
       whois: "user",
       role: "user",
       content,
-      selectedImg: selectedImage,
     });
 
     setPrompt("");
-    setSelectedImage(null);
+    setSelectedFile(null);
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
-    setSelectedImage(file);
+    setSelectedFile(file);
   };
 
   const convertToBase64 = (file: File): Promise<string> => {
@@ -76,7 +98,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
           />
         </Button>
 
-        {selectedImage && <span>{selectedImage.name}</span>}
+        {selectedFile && <span>{selectedFile.name}</span>}
       </div>
       <TextField
         fullWidth

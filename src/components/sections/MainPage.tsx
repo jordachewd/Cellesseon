@@ -26,14 +26,6 @@ export default function MainPage() {
     console.log("SEND: ", [...chat.slice(1), prompt]);
 
     try {
-      /*       const response = await fetch("/api/openai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [...chat.slice(1), prompt],
-        }),
-      }); */
-
       const response = await fetch("/api/openai/chatCompletion", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,19 +61,18 @@ export default function MainPage() {
         return;
       }
 
-      console.log("MainPage DATA: ", data);
+      console.log("MainPage Full DATA: ", data);
 
       if (data.choices && data.choices[0]?.message) {
         const gpt4o = data.choices[0].message;
         const dalle = data.dalle?.data[0];
 
-        console.log("MainPage dalle: ", dalle);
-
+        console.log("MainPage DALLE: ", dalle);
 
         const newContent: Message["content"] = [
           {
             type: "text",
-            text: gpt4o.content || dalle.revised_prompt,
+            text: gpt4o.content || dalle.revised_prompt || "",
           },
         ];
 

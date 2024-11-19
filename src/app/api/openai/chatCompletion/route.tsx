@@ -1,19 +1,15 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
-import messagesConfig from "../messagesConfig";
 import { Messages } from "@/types";
-
-const OPENAIKEY = process.env.OPENAI_KEY;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const BASEURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+import {
+  apiHeaders,
+  chatPayload,
+  createImgPayload,
+  systemMsg,
+} from "@/constants";
 
 // Required for the Edge Runtime
 export const runtime = "edge";
-/* export const config = {
-  runtime: "edge",
-}; */
-
-
 
 export async function POST(req: Request) {
   console.log("\x1b[33m ------------------ \x1b[0m");
@@ -30,47 +26,10 @@ export async function POST(req: Request) {
   }
 
   try {
-    const payload = {
-      user: "celeseon_user",
-      model: "gpt-4o",
-      temperature: 0.5,
-      messages: [...messagesConfig, ...messages],
-      n: 1,
-      tools: [
-        {
-          type: "function",
-          function: {
-            name: "generateImage",
-            description:
-              "Generates an image when requested by the user. Use this function if the user asks for an image," +
-              "e.g., when prompted with 'generate image ...', 'create image ...' or anything related." +
-              "USE PREVIOUS PROMPTS for generating images as well. Trim prompts to maximum 4000 characters.",
-            strict: true,
-            parameters: {
-              type: "object",
-              properties: {
-                prompt: {
-                  type: "string",
-                  description: "Description of the image to generate",
-                },
-              },
-              required: ["prompt"],
-              additionalProperties: false,
-            },
-          },
-        },
-      ],
-    };
-
     const chatResponse = await axios.post(
       "https://api.openai.com/v1/chat/completions",
-      payload,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${OPENAIKEY}`,
-        },
-      }
+      { ...chatPayload, messages: [...systemMsg, ...messages] },
+      apiHeaders
     );
 
     if (!chatResponse.data) {
@@ -90,84 +49,96 @@ export async function POST(req: Request) {
         const parsedArgs = JSON.parse(toolCalls[0].function.arguments);
 
         try {
-          /*           const createImgResp = await fetch(
-            `${BASEURL}/api/openai/createImage`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                prompt: parsedArgs.prompt,
-              }),
-            }
-          ); */
-
-          /*           const createImgResp = await axios.post(
-            `${BASEURL}/api/openai/createImage`,
-            {
-              prompt: parsedArgs.prompt,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          ); */
-
           const createImgResp = await axios.post(
             "https://api.openai.com/v1/images/generations",
-            {
-              prompt: parsedArgs.prompt,
-              user: "celeseon_user",
-              model: "dall-e-3",
-              size: "1024x1024",
-              style: "natural",
-              n: 1,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${OPENAIKEY}`,
-              },
-            }
+            { ...createImgPayload, prompt: parsedArgs.prompt },
+            apiHeaders
           );
 
           if (!createImgResp.data) {
             throw new Error("OpenAI Server does not respond.");
           }
 
-          console.log("\x1b[43m createImgResp:  \x1b[0m", createImgResp.data);
-
           return NextResponse.json({
             ...chatResponse.data,
             dalle: createImgResp.data,
           });
         } catch (error) {
-          const errMsg =
-            error instanceof Error
-              ? error.message
-              : "An unexpected createImageerror occurred.";
+          const defaultErr = "An unexpected createImage API error occurred.";
+          const errMsg = error instanceof Error ? error.message : defaultErr;
+
           return NextResponse.json({
             title: "createImage Error!",
             error: errMsg,
             status: 500,
           });
         }
+      } else if (fnName === "variateImage") {
+
+
+
+
+
+        
+        const parsedArgs = JSON.parse(toolCalls[0].function.arguments);
+        const varImage = parsedArgs.image;
+
+        console.log("\x1b[43m parsedArgs: \x1b[0m", parsedArgs);
+        console.log("\x1b[43m variateImage (received): \x1b[0m", varImage);
+
+        /*         
+        try {
+          // Decode base64 image and save it to a temporary file
+          const base64Data = varImage.replace(/^data:image\/\w+;base64,/, "");
+          const buffer = Buffer.from(base64Data, "base64");
+
+          // Convert to PNG and ensure it's less than 1024x1024
+          const processedImage = await sharp(buffer)
+            .resize(1024, 1024, { fit: "inside" })
+            .toFormat("png")
+            .toBuffer();
+          const tempFilePath = path.join(process.cwd(), "temp.png");
+          fs.writeFileSync(tempFilePath, processedImage);
+
+          // console.log("processedImage: ", processedImage);
+
+          const dalleVariate = await openAiClient.images.createVariation({
+            image: fs.createReadStream(tempFilePath) as Uploadable,
+            model: "dall-e-2",
+            size: "1024x1024",
+            n: 1,
+          });
+
+          // Remove temporary file
+          fs.unlinkSync(tempFilePath);
+          return NextResponse.json({
+            ...gpt4oResp,
+            dalleVariate: dalleVariate,
+          });
+        } catch (error) {
+          const errMsg =
+            error instanceof Error
+              ? error.message
+              : "An unexpected DALL·E 2 error occurred.";
+          return NextResponse.json({
+            title: "DALL·E 2 Error!",
+            error: errMsg,
+            status: 500,
+          });
+        } 
+      */
       } else {
         return NextResponse.json(chatResponse.data);
       }
     }
 
-    console.log("\x1b[33m ------------------ \x1b[0m");
     return NextResponse.json(chatResponse.data);
   } catch (error) {
-    const errMsg =
-      error instanceof Error
-        ? error.message
-        : "An unexpected OpenAI chatCompletion API error occurred.";
-    console.log("\x1b[33m OpenAI chatCompletion API error:  \x1b[0m", error);
+    const defaultErr = "An unexpected chatCompletion API error occurred.";
+    const errMsg = error instanceof Error ? error.message : defaultErr;
 
     return NextResponse.json({
-      title: "OpenAI chatCompletion API Error",
+      title: "Chat completion API Error",
       error: errMsg,
       status: 500,
     });
