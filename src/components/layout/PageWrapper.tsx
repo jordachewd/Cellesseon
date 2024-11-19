@@ -8,7 +8,6 @@ export default function PageWrapper({ children }: PageWrapperProps) {
   return (
     <main className={css.main}>
       <div className={css.content}>{children}</div>
-      <div className={css.background}></div>
     </main>
   );
 }

@@ -1,12 +1,12 @@
 .section {
-  @apply flex flex-col w-full overflow-y-auto h-[70%] px-4 lg:px-0
+  @apply flex flex-col w-full overflow-y-auto h-full px-4 lg:px-0
   [&::-webkit-scrollbar]:w-[2px]
   [&::-webkit-scrollbar-track]:rounded-full
-  [&::-webkit-scrollbar-track]:bg-jwdAqua/20
+  [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
   [&::-webkit-scrollbar-thumb]:rounded-full
-  [&::-webkit-scrollbar-thumb]:bg-jwdAqua/60
-  dark:[&::-webkit-scrollbar-track]:bg-jwdAqua/20
-  dark:[&::-webkit-scrollbar-thumb]:bg-jwdAqua/60;
+  [&::-webkit-scrollbar-thumb]:bg-jwdAqua-500
+  dark:[&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
+  dark:[&::-webkit-scrollbar-thumb]:bg-jwdAqua-500;
 }
 
 .wrapper {
@@ -18,7 +18,7 @@
 }
 
 .bot {
-  @apply bg-jwdMarine/50 shadow-md rounded-md;
+  @apply bg-jwdMarine-400/20 shadow-md rounded-md;
 }
 
 .avatar {
@@ -95,27 +95,27 @@
 }
 
 .msg table {
-  @apply min-w-full bg-jwdAqua/5 border border-jwdAqua/10 my-4 shadow-md overflow-auto;
+  @apply min-w-full bg-jwdAqua-100 border border-jwdAqua-100 my-4 shadow-md overflow-auto;
 }
 
 .msg table thead tr {
-  @apply bg-jwdAqua/20;
+  @apply bg-jwdAqua-200;
 }
 
 .msg table th {
-  @apply py-2 px-4 border-b border-jwdAqua/10 text-left font-semibold;
+  @apply py-2 px-4 border-b border-jwdAqua-200 text-left font-semibold;
 }
 
 .msg table tbody tr {
-  @apply hover:bg-jwdAqua/10 transition-all ease-in-out;
+  @apply hover:bg-jwdAqua-200 transition-all ease-in-out;
 }
 
 .msg table tbody td {
-  @apply py-2 px-4 border-b border-jwdAqua/10;
+  @apply py-2 px-4 border-b border-jwdAqua-200;
 }
 
 .msg hr {
-  @apply flex w-full my-4 border-dashed border-jwdAqua/30;
+  @apply flex w-full my-4 border-dashed border-jwdAqua-300;
 }
 
 @media (max-width: 640px) {
@@ -140,7 +140,7 @@
 
   /* Style each table row to look like a 'card' */
   .msg table tbody tr {
-    @apply border border-jwdAqua/10 rounded mb-2 p-2 bg-jwdAqua/5;
+    @apply border border-jwdAqua-200 rounded mb-2 p-2 bg-jwdAqua-100;
   }
 
   /* Display each cell as a block with a label */
@@ -151,6 +151,6 @@
   /* Use ::before to add labels for each column */
   .msg table tbody td::before {
     content: attr(data-label); /* Use the 'data-label' attribute as the label */
-    @apply font-semibold text-jwdAqua;
+    @apply font-semibold text-jwdAqua-500;
   }
 }
