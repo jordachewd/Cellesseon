@@ -7,6 +7,13 @@ import theme from "@/theme";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./globals.css";
 
+import type { Viewport } from "next";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  userScalable: false,
+};
+
 export default function RootLayout({
   children,
 }: {
