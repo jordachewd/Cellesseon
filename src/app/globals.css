@@ -11,25 +11,23 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #1A2980;
+  --foreground: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #1A2980;
+    --background: #000000;
     --foreground: #ffffff;
   }
 }
 
 /*  prevent iOS font size change */
-html {
-  -webkit-text-size-adjust: 100%;
-}
-
+html,
 body {
+  -webkit-text-size-adjust: 100%;
   color: var(--foreground);
-   background: var(--background);
-  @apply antialiased w-full m-0 p-0;
+  background: var(--background);
+  @apply antialiased w-full min-h-full m-0 p-0;
 }
 
 /*  all media elements set to block and full width */
@@ -59,4 +57,3 @@ h6 {
 a {
   @apply hover:underline transition-all ease-in text-jwdAqua-500 hover:text-white;
 }
- 

@@ -1,5 +1,5 @@
 .section {
-  @apply flex w-screen justify-center px-4 lg:px-0 py-6;
+  @apply flex w-full justify-center px-4 lg:px-0 py-6;
 }
 
 .wrapper {

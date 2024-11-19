@@ -1,11 +1,10 @@
 .section {
-  @apply flex flex-col w-screen h-screen m-0 p-0 items-center justify-center bg-jwdChatGradient;
+  @apply flex flex-col w-full h-screen m-0 p-0 items-center justify-center bg-jwdMarine-500;
 }
 
 .wrapper {
-  @apply flex mb-8 relative z-10 animate-fade-up animate-once animate-delay-500;
+  @apply flex relative z-10 animate-fade-up animate-once animate-delay-500;
 }
-
 
 .background {
   @apply absolute flex inset-0 h-full w-full bg-jwdAqua-500 z-0

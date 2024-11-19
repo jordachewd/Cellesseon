@@ -1,7 +1,12 @@
+.main,
+.content {
+  @apply flex flex-col w-full relative;
+}
+
 .main {
-  @apply flex flex-col w-full m-0 p-0 relative bg-jwdMarine-900;
+  @apply bg-jwdMarine-900;
 }
 
 .content {
-  @apply flex flex-col relative z-10 w-screen h-screen;
+  @apply h-screen;
 }
