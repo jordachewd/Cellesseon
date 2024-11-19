@@ -6,13 +6,7 @@ import { CssBaseline } from "@mui/material";
 import theme from "@/theme";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./globals.css";
-
-import type { Viewport } from "next";
-
-export const viewport: Viewport = {
-  width: "device-width",
-  userScalable: false,
-};
+import Head from "next/head";
 
 export default function RootLayout({
   children,
@@ -26,6 +20,12 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no"
+          />
+        </Head>
         <body className="antialiased">
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
