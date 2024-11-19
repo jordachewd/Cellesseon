@@ -13,143 +13,151 @@
   @apply flex flex-col space-y-10 w-full max-w-5xl mx-auto;
 }
 
-.message {
-  @apply flex break-words space-x-5 items-start p-3;
+.article {
+  @apply flex flex-col space-y-2 items-end;
 }
 
-.bot {
-  @apply bg-jwdMarine-400/20 shadow-md rounded-md;
+.botArticle {
+  @apply items-start;
 }
+
+.title {
+  @apply flex flex-row-reverse items-center space-x-5 space-x-reverse;
+}
+
+.content {
+  @apply overflow-hidden break-words px-4 py-2 rounded-md shadow-md mr-10 bg-jwdAqua-500/50;
+}
+
+.botTitle {
+  @apply flex-row space-x-5;
+}
+
+ .botContent {
+  @apply ml-10 mr-0 bg-jwdMarine-500/50;
+} 
 
 .avatar {
   @apply rounded-md shadow-md p-2 leading-none text-xl;
 }
 
-.content {
-  @apply pr-3 flex-1 overflow-hidden break-words;
-}
-
-.msg {
-  @apply flex flex-col py-4;
-}
-
-.msg h1,
-.msg h2,
-.msg h3,
-.msg h4,
-.msg h5,
-.msg h6 {
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
   @apply relative my-1 leading-normal;
 }
 
-.msg h1 {
+.content h1 {
   @apply text-3xl;
 }
-.msg h2 {
+.content h2 {
   @apply text-2xl;
 }
-.msg h3 {
+.content h3 {
   @apply text-xl;
 }
-.msg h4 {
+.content h4 {
   @apply text-lg;
 }
-.msg h5 {
+.content h5 {
   @apply text-base;
 }
-.msg h6 {
+.content h6 {
   @apply text-sm;
 }
 
-.msg p {
-  @apply relative mb-2;
+.content p {
+  @apply relative my-1;
 }
 
-.msg code {
+.content code {
   @apply inline-flex font-mono text-xs bg-gray-900 rounded p-1.5 py-0.5;
 }
 
-.msg pre {
+.content pre {
   @apply font-mono text-sm bg-gray-900 text-gray-100 p-4 rounded-lg overflow-auto whitespace-pre-wrap my-4 shadow-md;
 }
 
-.msg pre > code {
+.content pre > code {
   @apply bg-transparent p-0 text-sm overflow-auto;
 }
 
-.msg ul,
-.msg ol {
+.content ul,
+.content ol {
   @apply p-4 space-y-1.5 list-inside;
 }
 
-.msg ul {
+.content ul {
   @apply list-disc;
 }
 
-.msg ol {
+.content ol {
   @apply list-decimal;
 }
-.msg ul li::marker,
-.msg ol li::marker {
+.content ul li::marker,
+.content ol li::marker {
   @apply font-semibold;
 }
 
-.msg table {
+.content table {
   @apply min-w-full bg-jwdAqua-100 border border-jwdAqua-100 my-4 shadow-md overflow-auto;
 }
 
-.msg table thead tr {
+.content table thead tr {
   @apply bg-jwdAqua-200;
 }
 
-.msg table th {
+.content table th {
   @apply py-2 px-4 border-b border-jwdAqua-200 text-left font-semibold;
 }
 
-.msg table tbody tr {
+.content table tbody tr {
   @apply hover:bg-jwdAqua-200 transition-all ease-in-out;
 }
 
-.msg table tbody td {
+.content table tbody td {
   @apply py-2 px-4 border-b border-jwdAqua-200;
 }
 
-.msg hr {
+.content hr {
   @apply flex w-full my-4 border-dashed border-jwdAqua-300;
 }
 
 @media (max-width: 640px) {
   /* Apply flexbox to rows */
-  .msg table,
-  .msg table thead,
-  .msg table tbody,
-  .msg table tr,
-  .msg table th,
-  .msg table td {
+  .content table,
+  .content table thead,
+  .content table tbody,
+  .content table tr,
+  .content table th,
+  .content table td {
     @apply block;
   }
 
-  .msg table {
+  .content table {
     @apply border-none bg-transparent;
   }
 
   /* Hide the header row */
-  .msg table thead {
+  .content table thead {
     @apply hidden;
   }
 
   /* Style each table row to look like a 'card' */
-  .msg table tbody tr {
+  .content table tbody tr {
     @apply border border-jwdAqua-200 rounded mb-2 p-2 bg-jwdAqua-100;
   }
 
   /* Display each cell as a block with a label */
-  .msg table tbody td {
+  .content table tbody td {
     @apply flex py-1 px-2 border-none;
   }
 
   /* Use ::before to add labels for each column */
-  .msg table tbody td::before {
+  .content table tbody td::before {
     content: attr(data-label); /* Use the 'data-label' attribute as the label */
     @apply font-semibold text-jwdAqua-500;
   }

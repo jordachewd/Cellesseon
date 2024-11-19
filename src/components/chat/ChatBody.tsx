@@ -30,55 +30,63 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
         {messages.map((message, i) => {
           const isBot = message.whois !== "user";
           return (
-            <div key={i} className={`${css.message} ${isBot ? css.bot : ""}`}>
-              {isBot ? (
-                <i className={`bi bi-robot bg-jwdAqua ${css.avatar}`}></i>
-              ) : (
-                <i className={`bi bi-person bg-jwdMarine ${css.avatar}`}></i>
-              )}
+            <article
+              key={i}
+              className={`${css.article} ${isBot ? css.botArticle : ""}`}
+            >
+              <div className={`${css.title} ${isBot ? css.botTitle : ""}`}>
+                {isBot ? (
+                  <i
+                    className={`bi bi-robot bg-jwdMarine-500 ${css.avatar}`}
+                  ></i>
+                ) : (
+                  <i
+                    className={`bi bi-person bg-jwdAqua-500 ${css.avatar}`}
+                  ></i>
+                )}
 
-              <div className={css.content}>
                 <Typography variant="h5">
                   {isBot ? "celeseon" : "you"}
                 </Typography>
-                <div className={css.msg}>
-                  {Array.isArray(message.content) ? (
-                    message.content.map((contentItem, idx) => {
-                      if (contentItem.type === "text") {
-                        return (
-                          <ReactMarkdown key={idx} remarkPlugins={[remarkGfm]}>
-                            {contentItem.text}
-                          </ReactMarkdown>
-                        );
-                      } else if (contentItem.type === "image_url") {
-                        return (
-                          <Image
-                            key={idx}
-                            priority
-                            src={contentItem.image_url.url}
-                            alt="Generated image"
-                            width={480}
-                            height={480}
-                            className="my-4"
-                            sizes="50vw"
-                          />
-                        );
-                      }
-                      return null;
-                    })
-                  ) : (
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {message.content}
-                    </ReactMarkdown>
-                  )}
-                </div>
               </div>
-            </div>
+
+              <div className={`${css.content} ${isBot ? css.botContent : ""}`}>
+                {Array.isArray(message.content) ? (
+                  message.content.map((contentItem, idx) => {
+                    if (contentItem.type === "text") {
+                      return (
+                        <ReactMarkdown key={idx} remarkPlugins={[remarkGfm]}>
+                          {contentItem.text}
+                        </ReactMarkdown>
+                      );
+                    } else if (contentItem.type === "image_url") {
+                      return (
+                        <Image
+                          key={idx}
+                          priority
+                          src={contentItem.image_url.url}
+                          alt="Generated image"
+                          width={480}
+                          height={480}
+                          className="my-4"
+                          sizes="50vw"
+                        />
+                      );
+                    }
+                    return null;
+                  })
+                ) : (
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {message.content}
+                  </ReactMarkdown>
+                )}
+              </div>
+            </article>
           );
         })}
 
         {loading && <LoadingSpinner />}
-        <div ref={bottomRef} className="h-1"></div>
+        <div ref={bottomRef}></div>
       </div>
     </section>
   );
