@@ -2,10 +2,17 @@ import { SignedIn, SignedOut } from "@clerk/nextjs";
 import PageWrapper from "@/components/layout/PageWrapper";
 import LandingPage from "@/components/sections/LandingPage";
 import MainPage from "@/components/sections/MainPage";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 export const metadata: Metadata = {
   title: "Celeseon Smart Assistent",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function Home() {
