@@ -1,24 +1,38 @@
 .section {
-  @apply flex w-full max-w-5xl self-center justify-between space-x-8 py-6 px-4 lg:px-0;
+  @apply flex w-screen justify-center px-4 lg:px-0 py-6;
 }
+
+.wrapper {
+  @apply flex flex-col w-full max-w-5xl bg-jwdAqua-500/10 px-2 py-1 rounded-md border border-jwdAqua-100/10 space-y-1.5;
+}
+
+.wrapper > div {
+  @apply flex;
+}
+
+.AboveField {
+  @apply items-center space-x-2 justify-start;
+}
+
+.FieldRow {
+  @apply relative z-0;
+}
+
+.sendBtn {
+  @apply absolute right-1 top-1 z-10;
+}
+
+/* icons */
 
 .spinner,
 .send {
-  @apply text-xl text-center self-start;
+  @apply text-xl;
 }
 
 .spinner {
   @apply animate-spin;
 }
 
-.uploadBtn {
-  @apply flex flex-col;
-}
-
-.sendBtn {
-  @apply flex;
-}
-
 .send {
-  @apply cursor-pointer duration-100 hover:scale-125 ease-in;
+  @apply cursor-pointer;
 }

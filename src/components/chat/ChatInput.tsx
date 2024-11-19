@@ -1,7 +1,7 @@
 import css from "./ChatInput.module.css";
 import { useState, ChangeEvent } from "react";
 import { Message } from "@/types";
-import { TextField, Button } from "@mui/material";
+import { TextField, IconButton } from "@mui/material";
 import { UploadFileInput } from "../shared/UploadFileInput";
 
 interface ChatInputProps {
@@ -86,41 +86,52 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
 
   return (
     <section className={css.section}>
-      <div className={css.uploadBtn}>
-        <Button component="label" size="small">
-          <i className={`bi bi-images text-2xl`}></i>
-          <UploadFileInput
-            id="addFile"
-            type="file"
-            accept="image/*"
+      <div className={css.wrapper}>
+        <div className={css.AboveField}>
+          <IconButton component="label" size="small">
+            <i className={`bi bi-images text-xl`}></i>
+            <UploadFileInput
+              id="addFile"
+              type="file"
+              accept="image/*"
+              disabled={loading}
+              onChange={handleImageChange}
+            />
+            {selectedFile && <span className="ml-2">{selectedFile.name}</span>}
+          </IconButton>
+
+          <IconButton component="label" size="small">
+            <i className={`bi bi-brilliance text-xl`}></i>
+          </IconButton>
+
+          <IconButton size="small" className="!ml-auto">
+            {loading ? (
+              <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
+            ) : (
+              <i
+                className={`bi bi-send ${css.send}`}
+                onClick={handleSubmit}
+              ></i>
+            )}
+          </IconButton>
+        </div>
+
+        <div className={css.FieldRow}>
+          <TextField
+            fullWidth
+            value={prompt}
             disabled={loading}
-            onChange={handleImageChange}
+            label="Ask Celeseon..."
+            helperText="Celeseon can make mistakes. So double-check it."
+            onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit();
+              }
+            }}
           />
-        </Button>
-
-        {selectedFile && <span>{selectedFile.name}</span>}
-      </div>
-      <TextField
-        fullWidth
-        value={prompt}
-        disabled={loading}
-        label="Ask Celeseon..."
-        helperText="Celeseon can make mistakes. So double-check it."
-        onChange={(e) => setPrompt(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            handleSubmit();
-          }
-        }}
-      />
-
-      <div className={css.sendBtn}>
-        {loading ? (
-          <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
-        ) : (
-          <i className={`bi bi-send ${css.send}`} onClick={handleSubmit}></i>
-        )}
+        </div>
       </div>
     </section>
   );

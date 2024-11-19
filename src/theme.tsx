@@ -91,7 +91,7 @@ const theme = createTheme({
           minWidth: 0,
           fontSize: "12px",
           letterSpacing: "0.5px",
-          padding: ".125rem .75rem",
+          padding: ".125rem .875rem",
           fontFamily: dosis.style.fontFamily,
         },
         sizeMedium: {
@@ -118,10 +118,28 @@ const theme = createTheme({
       },
     },
 
+    MuiIconButton: {
+      styleOverrides: {
+        sizeSmall: {
+          padding: ".5rem .75rem",
+          fontSize: "0.75rem",
+          backgroundColor: "transparent",
+          transition: "all 0.25s ease",
+          color: "rgb(38 208 206 / 0.85)",
+          "&:hover": {
+            // backgroundColor: "transparent",
+            color: "white",
+          },
+        },
+      },
+    },
+
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          color: "#3e9695",
+          color: "rgb(38 208 206 / 0.6)",
+          textAlign: "center",
+           marginRight: 0,
         },
       },
     },
@@ -129,10 +147,10 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          "--TextField-brandBorderColor": "#E0E3E7",
-          "--TextField-brandBorderHoverColor": "#B2BAC2",
-          "--TextField-brandBorderFocusedColor": "#fff",
-          //  "--TextField-brandBackgroundColor": "#1A298080",
+          "--TextField-brandBorderColor": "transparent",
+          "--TextField-brandBorderHoverColor": "transparent",
+          "--TextField-brandBorderFocusedColor": "rgb(38 208 206 / 0.75)",
+          "--TextField-brandBackgroundColor": "rgb(38 208 206 / 0.15)",
           "& label.Mui-focused": {
             color: "var(--TextField-brandBorderFocusedColor)",
           },
@@ -145,7 +163,8 @@ const theme = createTheme({
           borderColor: "var(--TextField-brandBorderColor)",
         },
         root: {
-          // backgroundColor: "var(--TextField-brandBackgroundColor)",
+          //  paddingRight: "4em",
+          backgroundColor: "var(--TextField-brandBackgroundColor)",
           [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
             borderColor: "var(--TextField-brandBorderHoverColor)",
           },
