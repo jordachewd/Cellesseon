@@ -1,5 +1,5 @@
 .section {
-  @apply flex flex-col flex-1 w-full overflow-y-auto p-6 lg:px-0  
+  @apply flex flex-col flex-1 w-full overflow-y-auto p-6 xl:px-0  
   [&::-webkit-scrollbar]:w-[2px]
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
@@ -10,35 +10,35 @@
 }
 
 .wrapper {
-  @apply flex flex-col space-y-10 w-full max-w-5xl mx-auto;
+  @apply flex flex-col space-y-4 w-full max-w-[60rem] mx-auto;
 }
 
 .article {
-  @apply flex flex-col space-y-2 items-end;
+  @apply flex items-start space-x-4 flex-row-reverse space-x-reverse;
 }
 
 .botArticle {
-  @apply items-start;
-}
-
-.title {
-  @apply flex flex-row-reverse items-center space-x-5 space-x-reverse;
+  @apply flex-row space-x-4;
 }
 
 .content {
-  @apply overflow-hidden break-words px-4 py-2 rounded-md shadow-md mr-10 bg-jwdAqua-500/50;
+  @apply overflow-hidden break-words px-4 py-2 mt-6 shadow-md max-w-[90%];
 }
 
-.botTitle {
-  @apply flex-row space-x-5;
+.article .content {
+  @apply bg-jwdAqua-500/50 rounded-l-xl rounded-b-xl;
 }
 
- .botContent {
-  @apply ml-10 mr-0 bg-jwdMarine-500/50;
-} 
+.botArticle .content {
+  @apply bg-jwdAqua-500/5 rounded-none rounded-tr-xl rounded-br-xl rounded-bl-xl;
+}
 
 .avatar {
-  @apply rounded-md shadow-md p-2 leading-none text-xl;
+  @apply bg-jwdAqua-500/50 leading-none text-xl p-1.5 rounded-full;
+}
+
+.botArticle .avatar {
+  @apply bg-jwdAqua-500/10 ;
 }
 
 .content h1,
@@ -103,15 +103,15 @@
 }
 
 .content table {
-  @apply min-w-full bg-jwdAqua-100 border border-jwdAqua-100 my-4 shadow-md overflow-auto;
+  @apply min-w-full bg-jwdMarine-500/10 border border-jwdAqua-100/10 my-4 shadow-md overflow-auto;
 }
 
 .content table thead tr {
-  @apply bg-jwdAqua-200;
+  @apply bg-jwdAqua-100/10;
 }
 
 .content table th {
-  @apply py-2 px-4 border-b border-jwdAqua-200 text-left font-semibold;
+  @apply py-2 px-4 border-b border-jwdAqua-100/10 text-left font-semibold;
 }
 
 .content table tbody tr {
@@ -119,11 +119,11 @@
 }
 
 .content table tbody td {
-  @apply py-2 px-4 border-b border-jwdAqua-200;
+  @apply py-2 px-4 border-b border-jwdAqua-100/10;
 }
 
 .content hr {
-  @apply flex w-full my-4 border-dashed border-jwdAqua-300;
+  @apply flex w-full my-4 border-dashed border-jwdAqua-100/10;
 }
 
 @media (max-width: 640px) {

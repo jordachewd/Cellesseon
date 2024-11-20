@@ -1,4 +1,5 @@
 "use client";
+import css from "./MainPage.module.css";
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import Header from "@/components/layout/Header";
@@ -102,10 +103,13 @@ export default function MainPage() {
 
   return (
     <>
-      <Header />
-      {alert && <AlertMessage message={alert} />}
-      <ChatBody messages={chat} loading={isLoading} />
-      <ChatInput sendMessage={sendMessage} loading={isLoading} />
+      <section className={css.section}>
+        <Header />
+        {alert && <AlertMessage message={alert} />}
+        <ChatBody messages={chat} loading={isLoading} />
+        <ChatInput sendMessage={sendMessage} loading={isLoading} />
+      </section>
+      <div className={css.background}></div>
     </>
   );
 }

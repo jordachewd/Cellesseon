@@ -34,23 +34,13 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
               key={i}
               className={`${css.article} ${isBot ? css.botArticle : ""}`}
             >
-              <div className={`${css.title} ${isBot ? css.botTitle : ""}`}>
-                {isBot ? (
-                  <i
-                    className={`bi bi-robot bg-jwdMarine-500 ${css.avatar}`}
-                  ></i>
-                ) : (
-                  <i
-                    className={`bi bi-person bg-jwdAqua-500 ${css.avatar}`}
-                  ></i>
-                )}
+              {isBot ? (
+                <i className={`bi bi-robot ${css.avatar}`}></i>
+              ) : (
+                <i className={`bi bi-person ${css.avatar}`}></i>
+              )}
 
-                <Typography variant="h5">
-                  {isBot ? "celeseon" : "you"}
-                </Typography>
-              </div>
-
-              <div className={`${css.content} ${isBot ? css.botContent : ""}`}>
+              <div className={css.content}>
                 {Array.isArray(message.content) ? (
                   message.content.map((contentItem, idx) => {
                     if (contentItem.type === "text") {
@@ -80,12 +70,12 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
                     {message.content}
                   </ReactMarkdown>
                 )}
-                {loading && <LoadingSpinner alignment="left" />}
               </div>
             </article>
           );
         })}
-        <div ref={bottomRef}></div>
+        {loading && <LoadingSpinner />}
+        <div className="flex w-full" ref={bottomRef}></div>
       </div>
     </section>
   );

@@ -1,23 +1,23 @@
 .section {
-  @apply flex w-full justify-center px-4 lg:px-0 py-6 sticky bottom-0 z-10;
+  @apply flex w-full justify-center p-4 xl:px-0 sticky bottom-0 z-10;
 }
 
-
 .wrapper {
-  @apply flex flex-col w-full max-w-5xl bg-jwdMarine-900/90 backdrop-blur-sm 
-  px-2 py-1 rounded-md border border-jwdAqua-100/10 space-y-1.5 shadow-lg;
+  @apply flex w-full max-w-5xl bg-jwdMarine-900/90 backdrop-blur-sm 
+  p-2 rounded-md border border-jwdAqua-100/10 shadow-lg 
+  justify-between items-start space-x-3;
 }
 
 .wrapper > div {
   @apply flex;
 }
 
-.AboveField {
-  @apply items-center space-x-2 justify-start;
+.FieldRow {
+  @apply relative flex-1;
 }
 
-.FieldRow {
-  @apply relative z-0;
+.Buttons {
+  @apply items-center space-x-2 py-1;
 }
 
 .sendBtn {
@@ -28,7 +28,7 @@
 
 .spinner,
 .send {
-  @apply text-xl;
+  @apply text-lg;
 }
 
 .spinner {

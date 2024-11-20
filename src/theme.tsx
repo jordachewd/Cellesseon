@@ -137,9 +137,7 @@ const theme = createTheme({
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          color: "rgb(38 208 206 / 0.6)",
-          textAlign: "center",
-           marginRight: 0,
+          color: "rgb(38 208 206 / 0.5)",
         },
       },
     },

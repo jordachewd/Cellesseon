@@ -87,35 +87,6 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
   return (
     <section className={css.section}>
       <div className={css.wrapper}>
-        <div className={css.AboveField}>
-          <IconButton component="label" size="small">
-            <i className={`bi bi-images text-xl`}></i>
-            <UploadFileInput
-              id="addFile"
-              type="file"
-              accept="image/*"
-              disabled={loading}
-              onChange={handleImageChange}
-            />
-            {selectedFile && <span className="ml-2">{selectedFile.name}</span>}
-          </IconButton>
-
-          <IconButton component="label" size="small">
-            <i className={`bi bi-brilliance text-xl`}></i>
-          </IconButton>
-
-          <IconButton size="small" className="!ml-auto">
-            {loading ? (
-              <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
-            ) : (
-              <i
-                className={`bi bi-send ${css.send}`}
-                onClick={handleSubmit}
-              ></i>
-            )}
-          </IconButton>
-        </div>
-
         <div className={css.FieldRow}>
           <TextField
             fullWidth
@@ -131,6 +102,34 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
               }
             }}
           />
+        </div>
+        <div className={css.Buttons}>
+          <IconButton component="label" size="small">
+            <i className={`bi bi-images text-lg`}></i>
+            <UploadFileInput
+              id="addFile"
+              type="file"
+              accept="image/*"
+              disabled={loading}
+              onChange={handleImageChange}
+            />
+            {selectedFile && <span className="ml-2">{selectedFile.name}</span>}
+          </IconButton>
+
+          <IconButton component="label" size="small">
+            <i className={`bi bi-brilliance text-lg`}></i>
+          </IconButton>
+
+          <IconButton size="small">
+            {loading ? (
+              <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
+            ) : (
+              <i
+                className={`bi bi-send ${css.send}`}
+                onClick={handleSubmit}
+              ></i>
+            )}
+          </IconButton>
         </div>
       </div>
     </section>

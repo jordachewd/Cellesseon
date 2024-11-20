@@ -1,7 +1,7 @@
 .section {
-  @apply flex sticky top-0 z-10 bg-jwdMarine-900/70 backdrop-blur-sm border-b border-jwdAqua-100/10;
+  @apply flex sticky top-0 z-10 bg-jwdMarine-900/90 backdrop-blur-sm border-b border-jwdAqua-100/10;
 }
 
 .wrapper {
-  @apply flex w-full max-w-5xl justify-between items-center p-4 lg:px-0 mx-auto;
+  @apply flex w-full max-w-5xl justify-between items-center p-4 xl:px-0 mx-auto;
 }
