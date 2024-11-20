@@ -1,9 +1,11 @@
 .section {
-  @apply flex w-full justify-center px-4 lg:px-0 py-6;
+  @apply flex w-full justify-center px-4 lg:px-0 py-6 sticky bottom-0 z-10;
 }
 
+
 .wrapper {
-  @apply flex flex-col w-full max-w-5xl bg-jwdAqua-500/10 px-2 py-1 rounded-md border border-jwdAqua-100/10 space-y-1.5;
+  @apply flex flex-col w-full max-w-5xl bg-jwdMarine-900/90 backdrop-blur-sm 
+  px-2 py-1 rounded-md border border-jwdAqua-100/10 space-y-1.5 shadow-lg;
 }
 
 .wrapper > div {

@@ -9,11 +9,15 @@ export default function Header() {
   const { signOut } = useClerk();
   return (
     <section className={css.section}>
-      <Logo />
-      <Link href="/playground" className="text-jwdMarine"> PlayGround</Link>
-      <Button size="small" onClick={() => signOut({ redirectUrl: "/" })}>
-        Logout
-      </Button>
+      <div className={css.wrapper}>
+        <Logo />
+        <Link href="/playground" className="text-jwdMarine">
+          PlayGround
+        </Link>
+        <Button size="small" onClick={() => signOut({ redirectUrl: "/" })}>
+          Logout
+        </Button>
+      </div>
     </section>
   );
 }

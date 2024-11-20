@@ -80,12 +80,11 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
                     {message.content}
                   </ReactMarkdown>
                 )}
+                {loading && <LoadingSpinner alignment="left" />}
               </div>
             </article>
           );
         })}
-
-        {loading && <LoadingSpinner />}
         <div ref={bottomRef}></div>
       </div>
     </section>
