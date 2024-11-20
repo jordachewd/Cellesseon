@@ -1,6 +1,5 @@
 import css from "./ChatBody.module.css";
 import { Message } from "@/types";
-import { Typography } from "@mui/material";
 import { useEffect, useRef } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import ReactMarkdown from "react-markdown";
@@ -53,13 +52,14 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
                       return (
                         <Image
                           key={idx}
-                          priority
+                          priority={idx === 0}
                           src={contentItem.image_url.url}
                           alt="Generated image"
-                          width={480}
-                          height={480}
-                          className="my-4"
-                          sizes="50vw"
+                          width={400}
+                          height={400}
+                          className="my-4 rounded-xl"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                          loading={idx === 0 ? "eager" : "lazy"}
                         />
                       );
                     }

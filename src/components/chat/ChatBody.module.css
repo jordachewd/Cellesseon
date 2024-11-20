@@ -103,27 +103,27 @@
 }
 
 .content table {
-  @apply min-w-full bg-jwdMarine-500/10 border border-jwdAqua-100/10 my-4 shadow-md overflow-auto;
+  @apply min-w-full bg-jwdAqua-500/5 border border-jwdAqua-100/5 my-4 shadow-md overflow-auto;
 }
 
 .content table thead tr {
-  @apply bg-jwdAqua-100/10;
+  @apply bg-jwdAqua-100/20;
 }
 
 .content table th {
-  @apply py-2 px-4 border-b border-jwdAqua-100/10 text-left font-semibold;
+  @apply py-2 px-4 border-b border-jwdAqua-100/5 text-left font-semibold;
 }
 
 .content table tbody tr {
-  @apply hover:bg-jwdAqua-200 transition-all ease-in-out;
+  @apply hover:bg-jwdAqua-100/5 transition-all ease-in-out;
 }
 
 .content table tbody td {
-  @apply py-2 px-4 border-b border-jwdAqua-100/10;
+  @apply py-2 px-4 border-b border-jwdAqua-100/5;
 }
 
 .content hr {
-  @apply flex w-full my-4 border-dashed border-jwdAqua-100/10;
+  @apply flex w-full my-4 border-dashed border-jwdAqua-100/5;
 }
 
 @media (max-width: 640px) {
@@ -148,7 +148,7 @@
 
   /* Style each table row to look like a 'card' */
   .content table tbody tr {
-    @apply border border-jwdAqua-200 rounded mb-2 p-2 bg-jwdAqua-100;
+    @apply border border-jwdAqua-100/5 rounded mb-2 p-2 bg-jwdAqua-500/5;
   }
 
   /* Display each cell as a block with a label */
@@ -159,6 +159,6 @@
   /* Use ::before to add labels for each column */
   .content table tbody td::before {
     content: attr(data-label); /* Use the 'data-label' attribute as the label */
-    @apply font-semibold text-jwdAqua-500;
+    @apply font-semibold bg-jwdAqua-500/5;
   }
 }
