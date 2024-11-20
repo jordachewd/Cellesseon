@@ -11,9 +11,9 @@ export default function Header() {
     <section className={css.section}>
       <div className={css.wrapper}>
         <Logo />
-        <Link href="/playground" className="text-jwdMarine">
+{/*         <Link href="/playground" className="text-jwdMarine">
           PlayGround
-        </Link>
+        </Link> */}
         <Button size="small" onClick={() => signOut({ redirectUrl: "/" })}>
           Logout
         </Button>
