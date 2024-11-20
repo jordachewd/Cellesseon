@@ -55,10 +55,12 @@ export default function ChatBody({ messages, loading }: ChatBodyProps) {
                           priority={idx === 0}
                           src={contentItem.image_url.url}
                           alt="Generated image"
-                          width={400}
-                          height={400}
-                          className="my-4 rounded-xl"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                          width={isBot ? 400 : 60}
+                          height={isBot ? 400 : 60}
+                          className={`my-4 ${isBot ? 'rounded-xl': 'rounded-lg'}`}
+                          sizes={`(max-width: 768px) 100vw, (max-width: 1200px) 50vw, ${
+                            isBot ? "400px" : "60px"
+                          }`}
                           loading={idx === 0 ? "eager" : "lazy"}
                         />
                       );
