@@ -1,11 +1,11 @@
 .section {
-  @apply flex w-full justify-center p-4 xl:px-0 sticky bottom-0 z-10;
+  @apply flex flex-col w-full items-center px-4 xl:px-0 sticky bottom-0 z-10;
 }
 
 .wrapper {
-  @apply flex w-full max-w-5xl bg-jwdMarine-900/90 backdrop-blur-sm 
-  p-2 rounded-md border border-jwdAqua-100/10 shadow-lg 
-  justify-between items-start space-x-3;
+  @apply flex flex-col md:flex-row w-full max-w-5xl bg-jwdMarine-900/90 
+  backdrop-blur-sm rounded-md border border-jwdAqua-100/10 shadow-lg 
+  justify-between items-start md:space-x-3 p-2;
 }
 
 .wrapper > div {
@@ -13,15 +13,11 @@
 }
 
 .FieldRow {
-  @apply relative flex-1;
+  @apply relative w-full md:w-auto flex-1;
 }
 
 .Buttons {
-  @apply items-center space-x-2 py-1;
-}
-
-.sendBtn {
-  @apply absolute right-1 top-1 z-10;
+  @apply items-center w-full md:w-auto pt-2 md:py-1 space-x-1;
 }
 
 /* icons */
@@ -37,4 +33,10 @@
 
 .send {
   @apply cursor-pointer;
+}
+
+/* bottom */
+
+.disclaimer {
+  @apply flex text-xs font-light text-jwdAqua-500/50 tracking-wide py-1;
 }

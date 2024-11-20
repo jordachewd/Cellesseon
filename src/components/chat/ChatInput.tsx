@@ -24,35 +24,11 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
     ];
 
     if (selectedFile) {
-      /*      try {
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-
-        // Upload image to the server
-        const uploadRes = await fetch("/api/uploadFiles", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!uploadRes.ok) {
-          throw new Error("Failed to upload image.");
-        }
-
-        const uploadResp = await uploadRes.json();
-        console.log("uploadResp: ", uploadResp);
-
-        const { fileName } = uploadResp;
-
-        return;
-      } catch (error) {}
-    } */
-
       const base64Image = await convertToBase64(selectedFile);
       content.push({
         type: "image_url",
         image_url: {
           url: `data:image/jpeg;base64,${base64Image}`,
-          // url: selectedFile,
         },
       });
     }
@@ -93,7 +69,6 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
             value={prompt}
             disabled={loading}
             label="Ask Celeseon..."
-            helperText="Celeseon can make mistakes. So double-check it."
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
@@ -116,11 +91,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
             {selectedFile && <span className="ml-2">{selectedFile.name}</span>}
           </IconButton>
 
-          <IconButton component="label" size="small">
-            <i className={`bi bi-brilliance text-lg`}></i>
-          </IconButton>
-
-          <IconButton size="small">
+          <IconButton size="small" className="!ml-auto md:!ml-1">
             {loading ? (
               <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
             ) : (
@@ -131,6 +102,9 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
             )}
           </IconButton>
         </div>
+      </div>
+      <div className={css.disclaimer}>
+        Celeseon can make mistakes. So double-check it.
       </div>
     </section>
   );

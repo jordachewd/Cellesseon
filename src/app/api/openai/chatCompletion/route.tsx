@@ -74,12 +74,6 @@ export async function POST(req: Request) {
           });
         }
       } else if (fnName === "variateImage") {
-
-
-
-
-
-        
         const parsedArgs = JSON.parse(toolCalls[0].function.arguments);
         const varImage = parsedArgs.image;
 
