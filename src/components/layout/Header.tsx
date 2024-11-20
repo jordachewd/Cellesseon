@@ -3,7 +3,7 @@ import css from "./Header.module.css";
 import { useClerk } from "@clerk/nextjs";
 import { Button } from "@mui/material";
 import Logo from "../shared/Logo";
-import Link from "next/link";
+//import Link from "next/link";
 
 export default function Header() {
   const { signOut } = useClerk();
