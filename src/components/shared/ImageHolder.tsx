@@ -19,7 +19,10 @@ export default function ImageHolder({
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   return (
-    <div className={`${css.wrapper} w-[320px] h-[320px]`}>
+    <div
+      className={css.wrapper}
+      style={{ width: width + "px", height: height + "px" }}
+    >
       {isLoading && <SpinnerGrow />}
       <Image
         priority

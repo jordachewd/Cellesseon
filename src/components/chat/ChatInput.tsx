@@ -77,6 +77,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
         <div className={css.FieldRow}>
           <TextField
             fullWidth
+            multiline
             value={prompt}
             disabled={loading}
             label="Ask Celeseon..."
