@@ -6,7 +6,3 @@
 .main {
   @apply bg-jwdMarine-900/40;
 }
-
-.content {
-  @apply min-h-screen;
-}

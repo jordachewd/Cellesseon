@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import Image from "next/image";
 import SpinnerGrow from "../shared/SpinnerGrow";
+import ImageHolder from "../shared/ImageHolder";
 
 interface ChatBodyProps {
   messages: Message[];
@@ -49,18 +49,11 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                       );
                     } else if (reply.type === "image_url") {
                       return (
-                        <Image
+                        <ImageHolder
                           key={idx}
-                          priority={idx === 0}
                           src={reply.image_url.url}
-                          alt="Generated image"
-                          width={isBot ? 400 : 60}
-                          height={isBot ? 400 : 60}
-                          className={`rounded ${isBot ? " mt-4 mb-2" : "my-3"}`}
-                          sizes={`(max-width: 768px) 100vw, (max-width: 1200px) 50vw, ${
-                            isBot ? "400px" : "60px"
-                          }`}
-                          loading={idx === 0 ? "eager" : "lazy"}
+                          width={isBot ? 320 : 60}
+                          height={isBot ? 320 : 60}
                         />
                       );
                     } else if (reply.type === "temp") {
@@ -77,8 +70,8 @@ export default function ChatBody({ messages }: ChatBodyProps) {
             </article>
           );
         })}
-
         <div className="flex w-full" ref={bottomRef}></div>
+      {/*   <SpinnerGrow  /> */}
       </div>
     </section>
   );

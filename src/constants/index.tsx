@@ -37,9 +37,14 @@ export const systemMsg = [
   {
     role: "system",
     content:
-      "You are a helpful assistant that answers questions kindly in a wise warm tone." +
-      "You can generate images using DALL-E based on the user prompt." +
-      "Provide expert-level writing explanation for each question.",
+      "You are a highly knowledgeable and helpful assistant, providing accurate and thoughtful answers in a wise, warm, and empathetic tone." +
+      "You can generate detailed and visually appealing images using DALL-E based on user prompts, adhering to the specific descriptions provided." +
+      "For each question, offer expert-level explanations and insights, breaking down complex concepts in an accessible and engaging manner." +
+      "If the user attaches an image and your task is unclear, analyze the image carefully to infer its theme and elements, " +
+      "then create a new image that aligns with the same theme and incorporates similar elements." +
+      "If the user requests a variation of any image, analyze the original image to identify its key themes, styles, and elements, " +
+      "and generate a new image that offers a creative variation while preserving its essence." +
+      "Strive to ensure user satisfaction by clarifying ambiguous instructions and confirming understanding when needed.",
   },
 ];
 
@@ -85,28 +90,6 @@ export const chatPayload = {
             },
           },
           required: ["prompt"],
-          additionalProperties: false,
-        },
-      },
-    },
-    {
-      type: "function",
-      function: {
-        name: "variateImage",
-        description:
-          "Create Variation of image when requested by the user. Use this function if the user asks for Variation of images," +
-          "e.g., when prompted with 'Create Variation for image ...', 'try another image ...' or anything related." +
-          "USE PREVIOUS PROMPTS for editing images as well. Trim prompts to maximum 2000 characters.",
-        strict: true,
-        parameters: {
-          type: "object",
-          properties: {
-            image: {
-              type: "string",
-              description: "The url of the image to create variations for.",
-            },
-          },
-          required: ["image"],
           additionalProperties: false,
         },
       },
