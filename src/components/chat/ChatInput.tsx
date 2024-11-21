@@ -1,8 +1,10 @@
 import css from "./ChatInput.module.css";
-import { useState, ChangeEvent } from "react";
+import Image from "next/image";
+import { useState, ChangeEvent, useEffect } from "react";
 import { Message } from "@/types";
 import { TextField, IconButton } from "@mui/material";
 import { UploadFileInput } from "../shared/UploadFileInput";
+import CloseButton from "react-bootstrap/CloseButton";
 
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
@@ -12,6 +14,15 @@ interface ChatInputProps {
 export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
   const [prompt, setPrompt] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (selectedFile) {
+      convertToBase64(selectedFile).then((url) => setFileUrl(url));
+    } else {
+      setFileUrl(null);
+    }
+  }, [selectedFile]);
 
   const handleSubmit = async () => {
     if (prompt === "" && !selectedFile) return;
@@ -79,17 +90,35 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
           />
         </div>
         <div className={css.Buttons}>
-          <IconButton component="label" size="small">
-            <i className={`bi bi-images text-lg`}></i>
-            <UploadFileInput
-              id="addFile"
-              type="file"
-              accept="image/*"
-              disabled={loading}
-              onChange={handleImageChange}
-            />
-            {selectedFile && <span className="ml-2">{selectedFile.name}</span>}
-          </IconButton>
+          {!selectedFile ? (
+            <IconButton component="label" size="small">
+              <i className={`bi bi-images text-lg`}></i>
+              <UploadFileInput
+                id="addFile"
+                type="file"
+                accept="image/*"
+                disabled={loading}
+                onChange={handleImageChange}
+              />
+            </IconButton>
+          ) : fileUrl ? (
+            <div
+              className="flex cursor-pointer relative"
+              onClick={() => setSelectedFile(null)}
+            >
+              <CloseButton className={css.removeImg} />
+              <Image
+                priority
+                width={42}
+                height={42}
+                loading="eager"
+                className="rounded"
+                alt="Selected image"
+                src={`data:image/jpeg;base64,${fileUrl}`}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 42px"
+              />
+            </div>
+          ) : null}
 
           <IconButton size="small" className="!ml-auto md:!ml-1">
             {loading ? (

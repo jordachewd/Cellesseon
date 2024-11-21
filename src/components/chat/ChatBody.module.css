@@ -14,11 +14,12 @@
 }
 
 .article {
-  @apply flex items-start space-x-3 flex-row-reverse space-x-reverse;
+  @apply flex items-start space-x-3 flex-row-reverse space-x-reverse
+  animate-fade-up animate-once animate-duration-500;
 }
 
 .botArticle {
-  @apply flex-row space-x-3;
+  @apply flex-row space-x-3 animate-delay-300;
 }
 
 .content {

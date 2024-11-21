@@ -13,7 +13,7 @@
 }
 
 .actions {
-  @apply animate-fade-up animate-once animate-delay-700;
+  @apply animate-delay-700;
 }
 
 .background {

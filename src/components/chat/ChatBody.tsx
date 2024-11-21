@@ -56,9 +56,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                           alt="Generated image"
                           width={isBot ? 400 : 60}
                           height={isBot ? 400 : 60}
-                          className={`my-4 ${
-                            isBot ? "rounded-xl" : "rounded-lg"
-                          }`}
+                          className={`rounded ${isBot ? " mt-4 mb-2" : "my-3"}`}
                           sizes={`(max-width: 768px) 100vw, (max-width: 1200px) 50vw, ${
                             isBot ? "400px" : "60px"
                           }`}
