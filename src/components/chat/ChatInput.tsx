@@ -5,7 +5,6 @@ import { Message } from "@/types";
 import { TextField, IconButton } from "@mui/material";
 import { UploadFileInput } from "../shared/UploadFileInput";
 
-
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
   loading: boolean;
@@ -77,8 +76,8 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
         <div className={css.FieldRow}>
           <TextField
             fullWidth
-            multiline         
-            size="small"  
+            multiline
+            size="small"
             value={prompt}
             disabled={loading}
             label="Ask Celeseon..."
@@ -108,16 +107,14 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
               className="flex cursor-pointer relative"
               onClick={() => setSelectedFile(null)}
             >
-            {/*   <CloseButton className={css.removeImg} /> */}
+              <i className={`bi bi-x ${css.removeImg}`}></i>
               <Image
                 priority
-                width={42}
-                height={42}
-                loading="eager"
+                width={36}
+                height={36}
                 className="rounded"
                 alt="Selected image"
                 src={`data:image/jpeg;base64,${fileUrl}`}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 42px"
               />
             </div>
           ) : null}

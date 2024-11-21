@@ -42,5 +42,5 @@
 }
 
 .removeImg {
-  @apply bg-jwdAqua-400 p-1 text-[8px] absolute -top-1.5 -right-1.5;
+  @apply bg-jwdAqua-500/60 hover:bg-jwdAqua-500 pt-0.5 absolute -top-1.5 -right-1.5 rounded-full leading-none transition-all;
 }
