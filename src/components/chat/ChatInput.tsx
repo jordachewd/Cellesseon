@@ -4,7 +4,7 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { Message } from "@/types";
 import { TextField, IconButton } from "@mui/material";
 import { UploadFileInput } from "../shared/UploadFileInput";
-import CloseButton from "react-bootstrap/CloseButton";
+
 
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
@@ -77,7 +77,8 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
         <div className={css.FieldRow}>
           <TextField
             fullWidth
-            multiline
+            multiline         
+            size="small"  
             value={prompt}
             disabled={loading}
             label="Ask Celeseon..."
@@ -93,7 +94,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
         <div className={css.Buttons}>
           {!selectedFile ? (
             <IconButton component="label" size="small">
-              <i className={`bi bi-images text-lg`}></i>
+              <i className={`bi bi-images text-base`}></i>
               <UploadFileInput
                 id="addFile"
                 type="file"
@@ -107,7 +108,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
               className="flex cursor-pointer relative"
               onClick={() => setSelectedFile(null)}
             >
-              <CloseButton className={css.removeImg} />
+            {/*   <CloseButton className={css.removeImg} /> */}
               <Image
                 priority
                 width={42}
