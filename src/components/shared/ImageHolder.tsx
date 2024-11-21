@@ -23,7 +23,7 @@ export default function ImageHolder({
       className={css.wrapper}
       style={{ width: width + "px", height: height + "px" }}
     >
-      {isLoading && <SpinnerGrow />}
+      {isLoading && <SpinnerGrow className="mx-auto self-center" />}
       <Image
         priority
         src={src}

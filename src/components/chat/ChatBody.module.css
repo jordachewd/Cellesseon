@@ -23,7 +23,7 @@
 
 .content {
   @apply bg-jwdAqua-500/50 rounded-l-xl rounded-b-xl overflow-hidden
-  break-words px-3 py-1 mt-6 shadow-md max-w-[70%];
+  break-words px-4 py-2 mt-6 shadow-md max-w-[70%];
 }
 
 .botArticle .content {
