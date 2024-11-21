@@ -3,7 +3,7 @@ import { Uploadable } from "openai/uploads.mjs";
 export type MessageRole = "user" | "assistant" | "system";
 
 interface TextContent {
-  type: "text";
+  type: "text" | "temp";
   text: string;
 }
 

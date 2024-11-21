@@ -3,7 +3,7 @@
 }
 
 .container {
-  @apply flex space-x-2 bg-jwdMarine-500 justify-center items-center px-3 py-0.5 rounded-md shadow transition-all ease-in-out;
+  @apply flex space-x-2 bg-jwdAqua-500/50 justify-center items-center px-3 py-0.5 rounded-md shadow transition-all ease-in-out;
 }
 
 .icon {

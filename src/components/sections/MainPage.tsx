@@ -4,13 +4,13 @@ import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import Header from "@/components/layout/Header";
 import AlertMessage, { AlertParams } from "../shared/AlertMessage";
+import getOpenAiApi from "@/utils/getOpenAi";
 import { Message } from "@/types";
 import { useState } from "react";
 
 export default function MainPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
-
   const [chat, setChat] = useState<Message[]>([
     {
       whois: "assistant",
@@ -22,35 +22,35 @@ export default function MainPage() {
   const sendMessage = async (prompt: Message) => {
     if (!prompt) return;
     setIsLoading(true);
-    setChat((prev) => [...prev, prompt]);
 
-    console.log("SEND: ", [...chat.slice(1), prompt]);
+    // Add a temporary chat message
+    const tempChat: Message = {
+      whois: "assistant",
+      role: "user",
+      content: [{ type: "temp", text: "Thinking ..." }],
+    };
+    setChat((prev) => [...prev, prompt, tempChat]);
 
     try {
-      const response = await fetch("/api/openai/chatCompletion", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [...chat.slice(1), prompt],
-        }),
+      const response = await getOpenAiApi({
+        messages: [...chat.slice(1), prompt],
       });
 
       if (!response.ok) {
-        const errStatus = response.status;
         const errText = response.statusText;
         setAlert({
-          title: `Error ${errStatus}`,
+          title: `Error ${response.status}`,
           text: `${errText ? errText : "Error fetching OpenAI API!"}`,
         });
-
         setIsLoading(false);
+
+        // Remove the temporary message on error
+        setChat((prev) => prev.slice(0, -1));
         return;
       }
 
       const data = await response.json();
-
       if (data.error) {
-        console.log("MainPage data ERROR: ", data);
         setAlert({
           title: data.title,
           text:
@@ -59,24 +59,21 @@ export default function MainPage() {
               : "Unknown error occurred",
         });
         setIsLoading(false);
+
+        // Remove the temporary message on error
+        setChat((prev) => prev.slice(0, -1));
         return;
       }
-
-      console.log("MainPage Full DATA: ", data);
 
       if (data.choices && data.choices[0]?.message) {
         const gpt4o = data.choices[0].message;
         const dalle = data.dalle?.data[0];
-
-        console.log("MainPage DALLE: ", dalle);
-
         const newContent: Message["content"] = [
           {
             type: "text",
-            text: gpt4o.content || dalle.revised_prompt || "",
+            text: gpt4o.content || dalle?.revised_prompt || "",
           },
         ];
-
         if (dalle) {
           newContent.push({
             type: "image_url",
@@ -85,19 +82,21 @@ export default function MainPage() {
             },
           });
         }
-
         const newChat: Message = {
           whois: gpt4o.role,
           role: dalle ? "user" : gpt4o.role,
           content: newContent,
         };
 
-        setChat((prev) => [...prev, newChat]);
+        // Replace the temporary message with the final one
+        setChat((prev) => [...prev.slice(0, -1), newChat]);
       }
     } catch (error) {
       console.error(error);
-    }
 
+      // Remove the temporary message on error
+      setChat((prev) => prev.slice(0, -1));
+    }
     setIsLoading(false);
   };
 
@@ -106,7 +105,7 @@ export default function MainPage() {
       <section className={css.section}>
         <Header />
         {alert && <AlertMessage message={alert} />}
-        <ChatBody messages={chat} loading={isLoading} />
+        <ChatBody messages={chat} />
         <ChatInput sendMessage={sendMessage} loading={isLoading} />
       </section>
       <div className={css.background}></div>
