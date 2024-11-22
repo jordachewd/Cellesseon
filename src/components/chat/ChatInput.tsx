@@ -4,6 +4,7 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { Message } from "@/types";
 import { IconButton, Input } from "@mui/material";
 import { UploadFileInput } from "../shared/UploadFileInput";
+import SpinnerGrow from "../shared/SpinnerGrow";
 
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
@@ -90,20 +91,16 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
             }}
           />
 
-          <IconButton size="small">
-            {loading ? (
-              <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
-            ) : (
-              <i
-                className={`bi bi-send ${css.send}`}
-                onClick={handleSubmit}
-              ></i>
-            )}
+          <IconButton size="small" disabled={loading}>
+            <i
+              className={`bi bi-send ${css.sendBtn}`}
+              onClick={handleSubmit}
+            ></i>
           </IconButton>
         </div>
         <div className={css.Buttons}>
           {!selectedFile ? (
-            <IconButton component="label" size="small">
+            <IconButton component="label" size="small" disabled={loading}>
               <i className={`bi bi-images text-base`}></i>
               <UploadFileInput
                 id="addFile"

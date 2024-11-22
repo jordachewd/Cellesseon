@@ -15,8 +15,6 @@ export default function ChatBody({ messages }: ChatBodyProps) {
   const parent = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  console.log("messages: ", messages.length);
-
   useEffect(() => {
     if (messages.length > 1) {
       if (parent.current) {
@@ -61,7 +59,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                         />
                       );
                     } else if (reply.type === "temp") {
-                      return <SpinnerGrow styles="py-1" key={idx} />;
+                      return <SpinnerGrow styles="p-1" key={idx} />;
                     }
                     return null;
                   })

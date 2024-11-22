@@ -21,19 +21,8 @@
   @apply items-center w-full md:w-auto pt-1 md:p-0 space-x-1;
 }
 
-/* icons */
-
-.spinner,
-.send {
-  @apply text-base;
-}
-
-.spinner {
-  @apply animate-spin;
-}
-
-.send {
-  @apply cursor-pointer;
+.sendBtn {
+  @apply text-base cursor-pointer;
 }
 
 /* bottom */

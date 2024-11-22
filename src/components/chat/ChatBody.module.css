@@ -3,8 +3,7 @@
 }
 
 .wrapper {
-  @apply flex flex-col space-y-4 w-full max-w-[60rem] 
-  mx-auto overflow-y-auto min-h-32
+  @apply flex flex-col space-y-4 w-full max-w-[60rem] mx-auto 
   [&::-webkit-scrollbar]:w-[2px]
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
