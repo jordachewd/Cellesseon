@@ -1,9 +1,10 @@
 .section {
-  @apply flex flex-col flex-1 w-full overflow-y-auto p-6 xl:px-0;
+  @apply flex flex-col flex-1 w-full p-6 xl:px-0;
 }
 
 .wrapper {
-  @apply flex flex-col space-y-4 w-full max-w-[60rem] mx-auto   
+  @apply flex flex-col space-y-4 w-full max-w-[60rem] 
+  mx-auto overflow-y-auto min-h-32
   [&::-webkit-scrollbar]:w-[2px]
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
