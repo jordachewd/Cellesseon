@@ -15,11 +15,15 @@ export default function ChatBody({ messages }: ChatBodyProps) {
   const parent = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
+  console.log("messages: ", messages.length);
+
   useEffect(() => {
-    if (parent.current) {
-      autoAnimate(parent.current);
+    if (messages.length > 1) {
+      if (parent.current) {
+        autoAnimate(parent.current);
+      }
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [parent, messages]);
 
   return (
