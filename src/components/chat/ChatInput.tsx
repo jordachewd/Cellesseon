@@ -4,6 +4,7 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { Message } from "@/types";
 import { IconButton, Input } from "@mui/material";
 import { UploadFileInput } from "../shared/UploadFileInput";
+import { TooltipArrow } from "../shared/TooltipArrow";
 
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
@@ -91,29 +92,25 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
           />
 
           <IconButton size="small" disabled={loading}>
-            <i
-              className={`bi bi-send ${css.sendBtn}`}
-              onClick={handleSubmit}
-            ></i>
+            <i className={`bi bi-send ${css.icon}`} onClick={handleSubmit}></i>
           </IconButton>
         </div>
         <div className={css.Buttons}>
           {!selectedFile ? (
-            <IconButton component="label" size="small" disabled={loading}>
-              <i className={`bi bi-images text-base`}></i>
-              <UploadFileInput
-                id="addFile"
-                type="file"
-                accept="image/*"
-                disabled={loading}
-                onChange={handleImageChange}
-              />
-            </IconButton>
+            <TooltipArrow title="Add image" placement="top">
+              <IconButton component="label" size="small" disabled={loading}>
+                <i className={`bi bi-cloud-upload ${css.icon}`}></i>
+                <UploadFileInput
+                  id="addFile"
+                  type="file"
+                  accept="image/*"
+                  disabled={loading}
+                  onChange={handleImageChange}
+                />
+              </IconButton>
+            </TooltipArrow>
           ) : fileUrl ? (
-            <div
-              className="flex cursor-pointer relative"
-              onClick={() => setSelectedFile(null)}
-            >
+            <div className={css.image} onClick={() => setSelectedFile(null)}>
               <i className={`bi bi-x ${css.removeImg}`}></i>
               <Image
                 priority

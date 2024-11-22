@@ -1,8 +1,8 @@
 .main,
 .content {
-  @apply flex flex-col w-full relative;
+  @apply flex flex-col w-full relative min-h-screen;
 }
 
 .main {
-  @apply bg-jwdMarine-900/40;
+  @apply bg-jwdMarine-900/30;
 }

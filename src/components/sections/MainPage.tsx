@@ -12,11 +12,11 @@ export default function MainPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
   const [chat, setChat] = useState<Message[]>([
-    {
+    /*     {
       whois: "assistant",
       role: "assistant",
       content: "Hello there! How can I help you?",
-    },
+    }, */
   ]);
 
   const sendMessage = async (prompt: Message) => {

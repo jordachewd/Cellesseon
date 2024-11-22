@@ -3,9 +3,9 @@
 }
 
 .wrapper {
-  @apply flex flex-col md:flex-row w-full max-w-5xl bg-jwdMarine-900/90 
-  backdrop-blur-sm rounded-md border border-jwdAqua-100/10 shadow-lg 
-  justify-between items-end md:space-x-3 p-2 pb-1 md:pb-2;
+  @apply flex w-full max-w-4xl bg-jwdAqua-600/10 
+  backdrop-blur-sm rounded-md border border-jwdAqua-100/10 shadow-md
+  justify-between items-end space-x-2 p-2;
 }
 
 .wrapper > div {
@@ -13,24 +13,28 @@
 }
 
 .FieldRow {
-  @apply relative w-full md:w-auto flex-1 space-x-2 md:px-2 items-end
-  border-jwdAqua-100/20 border-dotted border-b md:!border-b-0 md:border-r;
+  @apply relative w-full flex-1 space-x-2 px-2 items-end
+  border-jwdAqua-100/20 border-dotted border-r;
 }
 
 .Buttons {
-  @apply items-center w-full md:w-auto pt-1 md:p-0 space-x-1;
+  @apply w-auto;
 }
 
-.sendBtn {
-  @apply text-base cursor-pointer;
+.icon {
+  @apply text-base;
 }
 
 /* bottom */
 
 .disclaimer {
-  @apply flex text-xs font-light text-jwdAqua-500/50 tracking-wide py-1;
+  @apply flex text-xs font-light text-jwdAqua-900 tracking-wide py-1;
+}
+
+.image {
+  @apply flex cursor-pointer relative;
 }
 
 .removeImg {
-  @apply bg-jwdAqua-500/60 hover:bg-jwdAqua-500 pt-0.5 absolute -top-1.5 -right-1.5 rounded-full leading-none transition-all;
+  @apply bg-amber-600 hover:bg-orange-600 absolute -top-1.5 -right-1.5 rounded-full leading-none transition-all pt-[1px] shadow-sm;
 }

@@ -1,0 +1,18 @@
+.wrapper {
+  @apply flex flex-col justify-center w-full items-center space-y-4 mb-4 md:mb-0;
+}
+
+.title,
+.chips,
+.subtitle {
+  @apply animate-fade-up animate-once animate-duration-700;
+}
+
+.subtitle {
+  @apply animate-delay-500;
+}
+
+.chips {
+  @apply flex w-full justify-center items-center pt-4 animate-delay-700
+  flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4 md:pt-10;
+}

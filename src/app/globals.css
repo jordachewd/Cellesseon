@@ -10,14 +10,14 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
+  --background: #fff;
+  --foreground: #000;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000000;
-    --foreground: #ffffff;
+    --background: #000;
+    --foreground: #fff;
   }
 }
 
@@ -26,7 +26,7 @@ html,
 body {
   -webkit-text-size-adjust: 100%;
   color: var(--foreground);
-  background: var(--background);
+  background-color: var(--background)!important;
   @apply antialiased w-full m-0 p-0;
 }
 
