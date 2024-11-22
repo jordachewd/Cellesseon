@@ -1,5 +1,5 @@
 .section {
-  @apply flex flex-col flex-1 w-full p-6 xl:px-0;
+  @apply flex flex-col flex-1 w-full p-6 xl:px-0 overflow-hidden;
 }
 
 .wrapper {
