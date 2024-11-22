@@ -155,6 +155,20 @@ const theme = createTheme({
         },
       },
     },
+
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          "&:before": {
+            display: "none",
+          },
+          "&:after": {
+            display: "none",
+          },
+        },
+      },
+    },
+
     MuiOutlinedInput: {
       styleOverrides: {
         notchedOutline: {

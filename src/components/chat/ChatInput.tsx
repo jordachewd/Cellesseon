@@ -80,6 +80,7 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
             size="small"
             value={prompt}
             disabled={loading}
+            variant="standard"
             label="Ask Celeseon..."
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={(e) => {
@@ -89,6 +90,17 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
               }
             }}
           />
+
+          <IconButton size="small">
+            {loading ? (
+              <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
+            ) : (
+              <i
+                className={`bi bi-send ${css.send}`}
+                onClick={handleSubmit}
+              ></i>
+            )}
+          </IconButton>
         </div>
         <div className={css.Buttons}>
           {!selectedFile ? (
@@ -110,25 +122,14 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
               <i className={`bi bi-x ${css.removeImg}`}></i>
               <Image
                 priority
-                width={36}
-                height={36}
+                width={40}
+                height={40}
                 className="rounded"
                 alt="Selected image"
                 src={`data:image/jpeg;base64,${fileUrl}`}
               />
             </div>
           ) : null}
-
-          <IconButton size="small" className="!ml-auto md:!ml-1">
-            {loading ? (
-              <i className={`bi bi-arrow-repeat ${css.spinner}`}></i>
-            ) : (
-              <i
-                className={`bi bi-send ${css.send}`}
-                onClick={handleSubmit}
-              ></i>
-            )}
-          </IconButton>
         </div>
       </div>
       <div className={css.disclaimer}>
