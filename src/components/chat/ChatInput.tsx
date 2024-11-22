@@ -4,7 +4,6 @@ import { useState, ChangeEvent, useEffect } from "react";
 import { Message } from "@/types";
 import { IconButton, Input } from "@mui/material";
 import { UploadFileInput } from "../shared/UploadFileInput";
-import SpinnerGrow from "../shared/SpinnerGrow";
 
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
