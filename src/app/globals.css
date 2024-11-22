@@ -27,7 +27,7 @@ body {
   -webkit-text-size-adjust: 100%;
   color: var(--foreground);
   background-color: var(--background)!important;
-  @apply antialiased w-full m-0 p-0;
+  @apply antialiased w-full m-0 p-0 overflow-hidden;
 }
 
 /*  all media elements set to block and full width */
