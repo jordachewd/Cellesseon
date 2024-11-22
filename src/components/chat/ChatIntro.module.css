@@ -3,16 +3,19 @@
 }
 
 .title,
-.chips,
+.chip,
 .subtitle {
   @apply animate-fade-up animate-once animate-duration-700;
 }
 
 .subtitle {
-  @apply animate-delay-500;
+  @apply animate-delay-[300ms];
 }
 
 .chips {
-  @apply flex w-full justify-center items-center pt-4 animate-delay-700
-  flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4 md:pt-10;
+  @apply flex flex-wrap w-full justify-center items-center pt-4 md:pt-10;
+}
+
+.chip {
+  @apply !m-2;
 }

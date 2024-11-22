@@ -1,5 +1,5 @@
 .section {
-  @apply flex flex-col w-full min-h-screen z-10;
+  @apply flex flex-col w-full min-h-screen z-10 overflow-hidden;
 }
 
 .background {

@@ -17,33 +17,38 @@ export default function ChatIntro() {
 
       <div className={css.chips}>
         <Chip
+          variant="outlined"
           label="Ask anything"
-          variant="outlined"
           onClick={handleClick}
+          className={`${css.chip} !animate-delay-500`}
           icon={<i className="bi bi-brilliance"></i>}
         />
         <Chip
+          variant="outlined"
           label="Create image"
-          variant="outlined"
           onClick={handleClick}
+          className={`${css.chip} !animate-delay-[600ms]`}
           icon={<i className="bi bi-brilliance"></i>}
         />
         <Chip
+          variant="outlined"
           label="Analyze images"
-          variant="outlined"
           onClick={handleClick}
+          className={`${css.chip} !animate-delay-700`}
           icon={<i className="bi bi-brilliance"></i>}
         />
         <Chip
+          variant="outlined"
           label="Summarize text"
-          variant="outlined"
           onClick={handleClick}
+          className={`${css.chip} !animate-delay-[800ms]`}
           icon={<i className="bi bi-brilliance"></i>}
         />
         <Chip
-          label="Fix code errors"
           variant="outlined"
+          label="Fix code errors"
           onClick={handleClick}
+          className={`${css.chip} !animate-delay-[900ms]`}
           icon={<i className="bi bi-brilliance"></i>}
         />
       </div>
