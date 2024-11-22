@@ -2,7 +2,7 @@ import css from "./ChatInput.module.css";
 import Image from "next/image";
 import { useState, ChangeEvent, useEffect } from "react";
 import { Message } from "@/types";
-import { TextField, IconButton } from "@mui/material";
+import { IconButton, Input } from "@mui/material";
 import { UploadFileInput } from "../shared/UploadFileInput";
 
 interface ChatInputProps {
@@ -74,14 +74,13 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
     <section className={css.section}>
       <div className={css.wrapper}>
         <div className={css.FieldRow}>
-          <TextField
+          <Input
             fullWidth
             multiline
-            size="small"
             value={prompt}
             disabled={loading}
-            variant="standard"
-            label="Ask Celeseon..."
+            className="mb-[0.55rem] !pb-0"
+            placeholder="Ask Celeseon..."
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {

@@ -16,7 +16,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (parent.current && messages) {
+    if (parent.current) {
       autoAnimate(parent.current);
     }
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

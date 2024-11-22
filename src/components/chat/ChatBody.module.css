@@ -39,7 +39,7 @@
 }
 
 .bottomRef {
-  @apply flex w-full h-1;
+  @apply flex w-full;
 }
 
 .content h1,

@@ -1,5 +1,5 @@
 .wrapper {
-  @apply flex bg-jwdAqua-500/10 justify-center items-center rounded mt-3 mb-2 overflow-hidden;
+  @apply flex bg-jwdAqua-500/10 justify-center items-center rounded mt-3 mb-2 overflow-hidden max-w-full max-h-max;
 }
 
 .showImg {
