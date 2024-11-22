@@ -23,7 +23,7 @@ export default function ImageHolder({
       className={css.wrapper}
       style={{ width: width + "px", height: height + "px" }}
     >
-      {isLoading && <SpinnerGrow className="mx-auto self-center" />}
+      {isLoading && <SpinnerGrow />}
       <Image
         priority
         src={src}
@@ -33,6 +33,7 @@ export default function ImageHolder({
         alt={alt || "Generated image"}
         sizes={`(max-width: 768px) 100vw, (max-width: 1200px) 50vw, ${width}px`}
         onLoadingComplete={() => setIsLoading(false)}
+        className={`${isLoading ? "hidden" : css.showImg}`}
       />
     </div>
   );

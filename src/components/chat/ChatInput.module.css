@@ -14,7 +14,7 @@
 
 .FieldRow {
   @apply relative w-full md:w-auto flex-1 space-x-2 md:pr-2 items-end
-  border-jwdAqua-100/10 border-dotted border-b md:!border-b-0 md:border-r;
+  border-jwdAqua-100/20 border-dotted border-b md:!border-b-0 md:border-r;
 }
 
 .Buttons {

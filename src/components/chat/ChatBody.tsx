@@ -23,8 +23,8 @@ export default function ChatBody({ messages }: ChatBodyProps) {
   }, [parent, messages]);
 
   return (
-    <section className={css.section} ref={parent}>
-      <div className={css.wrapper}>
+    <section className={css.section}>
+      <div className={css.wrapper} ref={parent}>
         {messages.map((message, i) => {
           const isBot = message.whois !== "user";
           return (
@@ -57,7 +57,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                         />
                       );
                     } else if (reply.type === "temp") {
-                      return <SpinnerGrow key={idx} />;
+                      return <SpinnerGrow styles="py-1" key={idx} />;
                     }
                     return null;
                   })
@@ -70,8 +70,8 @@ export default function ChatBody({ messages }: ChatBodyProps) {
             </article>
           );
         })}
+        <div className={css.bottomRef} ref={bottomRef}></div>
       </div>
-      <div className={css.bottomRef} ref={bottomRef}></div>
     </section>
   );
 }

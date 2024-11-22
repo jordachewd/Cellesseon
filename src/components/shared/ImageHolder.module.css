@@ -1,3 +1,7 @@
 .wrapper {
-  @apply flex bg-jwdAqua-500/10 justify-center items-center rounded overflow-hidden mt-3 mb-2;
+  @apply flex bg-jwdAqua-500/10 justify-center items-center rounded mt-3 mb-2 overflow-hidden;
+}
+
+.showImg {
+  @apply animate-fade animate-once animate-duration-500 animate-delay-300 animate-ease-in-out;
 }

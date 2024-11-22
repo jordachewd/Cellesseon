@@ -1,11 +1,11 @@
 import css from "./SpinnerGrow.module.css";
 interface SpinnerGrowProps {
-  className?: string;
+  styles?: string;
 }
 
-export default function SpinnerGrow({ className }: SpinnerGrowProps) {
+export default function SpinnerGrow({ styles }: SpinnerGrowProps) {
   return (
-    <div className={`${css.wrapper} ${className}`}>
+    <div className={`${css.wrapper} ${styles || ""}`}>
       <div className={`${css.bubble} w-2 h-2 bg-jwdAqua-500/50`}></div>
       <div
         className={`${css.bubble} w-2.5 h-2.5 bg-jwdAqua-500/35 animate-delay-100`}
