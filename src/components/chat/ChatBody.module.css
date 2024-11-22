@@ -10,7 +10,7 @@
 }
 
 .startChat {
-  @apply flex-1 mt-10 md:mt-0;
+  @apply flex-1 mt-14 md:mt-0;
 }
 
 .wrapper {
