@@ -1,6 +1,6 @@
 .main,
 .content {
-  @apply flex flex-col w-full relative min-h-screen overflow-hidden;
+  @apply flex flex-col w-full relative min-h-full overflow-hidden;
 }
 
 .main {
