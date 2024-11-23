@@ -1,5 +1,5 @@
 .section {
-  @apply flex flex-col w-full p-6 xl:px-0 overflow-y-auto transition-all duration-500 mt-[30%] md:mt-[12%]
+  @apply flex flex-1 flex-col w-full p-6 xl:px-0 overflow-y-auto transition-all duration-500 mt-[30%] md:mt-[12%]
   max-h-[70vh] [&::-webkit-scrollbar]:w-[2px] 
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
@@ -10,7 +10,7 @@
 }
 
 .startChat {
-  @apply flex-1 mt-14 md:mt-0;
+ /* @apply flex-1 mt-14 md:mt-0;*/
 }
 
 .wrapper {
