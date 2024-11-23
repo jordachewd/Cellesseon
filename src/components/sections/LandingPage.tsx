@@ -22,9 +22,13 @@ export default function LandingPage() {
 
           <Typography variant="subtitle2">
             Start chatting with <b>Celeseon</b> to spark creativity, organize
-            plans, and learn something new every day. Your smart assistant is
-            here to make it all easy!
+            plans, and learn something new every day.
           </Typography>
+
+          <Typography variant="subtitle2">
+            Your smart assistant is here to make it all easy!
+          </Typography>
+
         </div>
 
         <div className={css.actions}>
