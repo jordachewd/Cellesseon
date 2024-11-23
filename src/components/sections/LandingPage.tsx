@@ -12,7 +12,7 @@ export default function LandingPage() {
     <>
       <section className={css.section}>
         <div className={css.head}>
-          <Logo width={360} height={90} />
+          <Logo width={280} height={70} />
         </div>
 
         <div className={css.intro}>
