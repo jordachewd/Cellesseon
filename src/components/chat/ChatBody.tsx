@@ -27,7 +27,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
   }, [parent, messages]);
 
   return (
-    <section className={`${css.section} ${isChat && css.startChat}`}>
+    <section className={css.section}>
       {!isChat && <ChatIntro />}
       {isChat && (
         <div className={css.wrapper} ref={parent}>
@@ -76,7 +76,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
               </article>
             );
           })}
-          <div className={css.bottomRef} ref={bottomRef}></div>
+          <div className={css.bottomRef} ref={bottomRef}>&nbsp;</div>
         </div>
       )}
     </section>

@@ -1,3 +1,4 @@
+import PageWrapper from "@/components/layout/PageWrapper";
 import css from "./layout.module.css";
 import type { Metadata } from "next";
 
@@ -8,9 +9,8 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <main className={css.section}>
-      <div className={css.wrapper}>{children}</div>
-      <div className={css.background}></div>
-    </main>
+    <PageWrapper>
+      <main className={css.section}>{children}</main>
+    </PageWrapper>
   );
 }

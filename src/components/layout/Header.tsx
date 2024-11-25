@@ -8,12 +8,10 @@ export default function Header() {
   const { signOut } = useClerk();
   return (
     <section className={css.section}>
-      <div className={css.wrapper}>
-        <Logo />
-        <Button size="small" onClick={() => signOut({ redirectUrl: "/" })}>
-          Logout
-        </Button>
-      </div>
+      <Logo />
+      <Button size="small" onClick={() => signOut({ redirectUrl: "/" })}>
+        Logout
+      </Button>
     </section>
   );
 }

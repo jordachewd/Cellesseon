@@ -15,9 +15,3 @@
 .actions {
   @apply animate-delay-700;
 }
-
-.background {
-  @apply absolute flex inset-0 h-full w-full bg-jwdAqua-500 z-0
-  [background-size:16px_16px] bg-[radial-gradient(#1A298020_1px,transparent_1px)]   
-  [mask-image:radial-gradient(ellipse_100%_96%_at_50%_0%,#000_40%,transparent_100%)];
-}

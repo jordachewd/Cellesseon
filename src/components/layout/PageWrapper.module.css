@@ -1,8 +1,15 @@
-.main,
-.content {
-  @apply flex flex-col w-full relative overflow-hidden;
+.main {
+  @apply flex flex-col w-full relative bg-jwdMarine-900/30 h-screen;
 }
 
-.main {
-  @apply bg-jwdMarine-900/30;
+.chatBackground {
+  @apply absolute flex inset-0 h-full w-full z-0 
+    [background-size:16px_16px] bg-[radial-gradient(#26D0CE10_1px,transparent_1px)]    
+    [mask-image:radial-gradient(ellipse_100%_80%_at_50%_10%,#1A2980_40%,transparent_100%)];
+}
+
+.lpBackground {
+  @apply absolute flex inset-0 h-full w-full bg-jwdAqua-500/90 z-0
+  [background-size:16px_16px] bg-[radial-gradient(#1A298020_1px,transparent_1px)]   
+  [mask-image:radial-gradient(ellipse_100%_96%_at_50%_0%,#000_40%,transparent_100%)];
 }

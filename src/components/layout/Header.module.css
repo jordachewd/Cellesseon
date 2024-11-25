@@ -1,7 +1,5 @@
 .section {
-  @apply flex sticky top-0 z-10 backdrop-blur-sm border-b border-jwdAqua-100/20 bg-jwdAqua-500/60;
-}
-
-.wrapper {
-  @apply flex w-full justify-between items-center px-4 py-3;
+  @apply flex w-full justify-between items-center px-4 py-3 
+  sticky top-[env(safe-area-inset-top)] z-10 backdrop-blur-sm border-b 
+  border-jwdAqua-100/20 bg-jwdAqua-500/60;
 }

@@ -9,35 +9,33 @@ export default function LandingPage() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <>
-      <section className={css.section}>
-        <div className={css.head}>
-          <Logo width={280} height={70} />
-        </div>
+    <section className={css.section}>
+      <div className={css.head}>
+        <Logo width={280} height={70} />
+      </div>
 
-        <div className={css.intro}>
-          <Typography variant={`${isMobile ? "h5" : "h4"}`}>
-            Unleash your ideas, simplify tasks, and get more done effortlessly.
-          </Typography>
+      <div className={css.intro}>
+        <Typography variant={`${isMobile ? "h5" : "h4"}`}>
+          Unleash your ideas, simplify tasks, and get more done effortlessly.
+        </Typography>
 
-          <Typography variant="subtitle2">
-            Start chatting with <b>Celeseon</b> to spark creativity, organize
-            plans, and learn something new every day.
-          </Typography>
+        <Typography variant="subtitle2">
+          Start chatting with <b>Celeseon</b> to spark creativity, organize
+          plans, and learn something new every day.
+        </Typography>
 
-          <Typography variant="subtitle2">
-            Your smart assistant is here to make it all easy!
-          </Typography>
+        <Typography variant="h5">
+          Your smart assistant is here to make it all easy!
+        </Typography>
+      </div>
 
-        </div>
+      <div className={css.actions}>
+        <Button size="large" href="/sign-in">
+          Login
+        </Button>
+      </div>
 
-        <div className={css.actions}>
-          <Button size="large" href="/sign-in">
-            Login
-          </Button>
-        </div>
-      </section>
-      <div className={css.background}></div>
-    </>
+      
+    </section>
   );
 }

@@ -1,5 +1,5 @@
 .section {
-  @apply flex flex-col w-full items-center px-4 xl:px-0 sticky bottom-0 z-10;
+  @apply flex flex-col w-full items-center px-4 xl:px-0 sticky bottom-[env(safe-area-inset-bottom)] z-10;
 }
 
 .wrapper {
