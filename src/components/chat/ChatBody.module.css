@@ -1,5 +1,5 @@
 .section {
-  @apply flex flex-1 flex-col w-full transition-all duration-500 z-10 overflow-hidden;
+  @apply flex flex-1 flex-col w-full transition-all duration-500 z-10 overflow-hidden max-h-[calc(100vh-137px)];
 }
 
 .wrapper {
