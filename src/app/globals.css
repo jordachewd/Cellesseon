@@ -31,7 +31,7 @@ body {
   background-color: var(--background) !important;
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
-  @apply antialiased w-full m-0 p-0 overflow-hidden;
+  @apply antialiased w-full m-0 p-0;
 }
 
 /*  all media elements set to block and full width */
