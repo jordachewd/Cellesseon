@@ -1,5 +1,5 @@
 .main {
-  @apply flex flex-col w-full relative bg-jwdMarine-900/30 h-screen;
+  @apply flex flex-col w-full h-screen relative bg-jwdMarine-900/30 z-0;
 }
 
 .chatBackground {
