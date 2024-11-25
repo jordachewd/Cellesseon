@@ -1,5 +1,5 @@
 .wrapper {
-  @apply flex flex-col justify-center w-full h-full items-center space-y-4;
+  @apply flex flex-col justify-center w-full h-full items-center space-y-4 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
 }
 
 .title,
