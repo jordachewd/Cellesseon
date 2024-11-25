@@ -25,9 +25,12 @@
 html,
 body {
   overscroll-behavior: none;
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   color: var(--foreground);
   background-color: var(--background) !important;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
   @apply antialiased w-full m-0 p-0;
 }
 
