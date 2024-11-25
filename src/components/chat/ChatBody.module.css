@@ -1,10 +1,11 @@
 .section {
-  @apply flex flex-1 flex-col w-full transition-all duration-500 z-10 overflow-hidden max-h-[calc(100vh-137px)];
+  @apply flex flex-1 flex-col w-full transition-all duration-500 z-10 overflow-hidden;
 }
 
 .wrapper {
-  @apply flex flex-col space-y-4 w-full h-fit max-w-4xl mx-auto 
-  px-6 xl:px-0 pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]
+  @apply flex flex-col space-y-4 w-full max-w-4xl mx-auto 
+  h-full max-h-[calc(100vh-137px)] px-6 xl:px-0 
+  pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]
   [&::-webkit-scrollbar]:w-[2px] overflow-y-auto
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
