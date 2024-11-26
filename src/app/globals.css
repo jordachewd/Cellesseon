@@ -21,15 +21,17 @@
   }
 }
 
-/*  prevent iOS font size change */
-html,
+html {
+  @apply w-dvw h-dvh m-0 p-0;
+}
+
 body {
   overscroll-behavior: none;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   color: var(--foreground);
   background-color: var(--background) !important;
-  @apply antialiased w-full m-0 p-0;
+  @apply antialiased w-full m-0 p-0 flex pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
 }
 
 /*  all media elements set to block and full width */

@@ -1,4 +1,4 @@
 .section {
-  @apply flex flex-col w-full h-full items-center justify-center z-10 overflow-hidden;
+  @apply flex flex-col w-full flex-1 items-center justify-center z-10 overflow-hidden;
 }
  
