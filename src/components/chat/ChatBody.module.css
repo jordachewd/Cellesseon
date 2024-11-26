@@ -1,7 +1,7 @@
 .section {
   @apply flex flex-1 flex-col w-full transition-all duration-500 z-10 relative
   pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]  
-  max-h-[calc(100vh-146px)] overflow-y-auto
+  max-h-[calc(100dvh-146px)] overflow-y-auto
   [&::-webkit-scrollbar]:w-[2px] 
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20

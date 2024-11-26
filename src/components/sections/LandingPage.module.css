@@ -1,6 +1,5 @@
 .section {
   @apply flex flex-col flex-1 w-full items-center justify-center space-y-12 px-4 z-10;
- /* max-h-[calc(100vh-146px)]; */
 }
 
 .head,
@@ -16,4 +15,3 @@
 .actions {
   @apply animate-delay-700;
 }
-
