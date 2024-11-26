@@ -28,8 +28,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
 
   return (
     <section className={css.section}>
-      {!isChat && <ChatIntro />}
-      {isChat && (
+      {isChat ? (
         <div className={css.wrapper} ref={parent}>
           {messages.map((message, i) => {
             const isBot = message.whois !== "user";
@@ -76,9 +75,11 @@ export default function ChatBody({ messages }: ChatBodyProps) {
               </article>
             );
           })}
-          <div className={css.bottomRef} ref={bottomRef}>&nbsp;</div>
         </div>
+      ) : (
+        <ChatIntro />
       )}
+      <div className={css.bottomRef} ref={bottomRef}></div>
     </section>
   );
 }
