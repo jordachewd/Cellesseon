@@ -1,16 +1,14 @@
 .section {
   @apply flex flex-1 flex-col w-full transition-all duration-500 z-10 relative
- /* pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] */
-  
- max-h-[calc(100vh-146px)] overflow-y-auto
-
- [&::-webkit-scrollbar]:w-[2px] 
- [&::-webkit-scrollbar-track]:rounded-full
- [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
- [&::-webkit-scrollbar-thumb]:rounded-full
- [&::-webkit-scrollbar-thumb]:bg-jwdAqua-500
- dark:[&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
- dark:[&::-webkit-scrollbar-thumb]:bg-jwdAqua-500;
+  pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]  
+  max-h-[calc(100vh-146px)] overflow-y-auto
+  [&::-webkit-scrollbar]:w-[2px] 
+  [&::-webkit-scrollbar-track]:rounded-full
+  [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-thumb]:bg-jwdAqua-500
+  dark:[&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
+  dark:[&::-webkit-scrollbar-thumb]:bg-jwdAqua-500;
 }
 
 .wrapper {
