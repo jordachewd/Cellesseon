@@ -131,7 +131,6 @@ const theme = createTheme({
           transition: "all 0.25s ease",
           color: "rgb(38 208 206 / 0.85)",
           "&:hover": {
-            // backgroundColor: "transparent",
             color: "white",
           },
         },
@@ -179,7 +178,6 @@ const theme = createTheme({
           borderColor: "var(--TextField-brandBorderColor)",
         },
         root: {
-          //  paddingRight: "4em",
           backgroundColor: "var(--TextField-brandBackgroundColor)",
           [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
             borderColor: "var(--TextField-brandBorderHoverColor)",
@@ -187,6 +185,23 @@ const theme = createTheme({
           [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
             borderColor: "var(--TextField-brandBorderFocusedColor)",
           },
+        },
+      },
+    },
+
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderColor: "#5ADBD8",
+          color: "#5ADBD8",
+        },
+
+        icon: {
+          color: "#5ADBD8",
+          paddingLeft: "0.5rem",
+        },
+        label: {
+          padding: "1rem",
         },
       },
     },

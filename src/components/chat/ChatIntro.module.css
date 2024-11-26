@@ -1,6 +1,5 @@
 .wrapper {
-  @apply flex flex-col flex-1 justify-center w-full items-center space-y-4 
-  pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
+  @apply flex flex-col flex-1 justify-center w-full items-center space-y-4;
 }
 
 .title,
@@ -14,9 +13,21 @@
 }
 
 .chips {
-  @apply flex flex-wrap w-full justify-center items-center pt-4 md:pt-10;
+  @apply flex flex-wrap w-full justify-center items-center pt-6;
 }
 
 .chip {
   @apply !m-2;
+}
+
+.options {
+  @apply flex flex-col   bg-jwdAqua-600/10
+  backdrop-blur-sm rounded-md border border-jwdAqua-100/10 shadow-md;
+}
+
+.option {
+  @apply flex w-full px-3 py-2.5 cursor-pointer
+  border-jwdAqua-100/5 border-dotted border-b last:border-none
+  
+  hover:bg-jwdAqua-100/5 transition-all ease-in-out;
 }

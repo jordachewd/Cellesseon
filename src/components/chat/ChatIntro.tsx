@@ -1,10 +1,11 @@
 import css from "./ChatIntro.module.css";
+import { IntroChips } from "@/constants/introChipsData";
 import { Chip, Typography } from "@mui/material";
+import { useState } from "react";
 
 export default function ChatIntro() {
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
-  };
+  const [chipSet, setChipSet] = useState<number>(-1);
+
   return (
     <div className={css.wrapper}>
       <Typography variant="h2" className={css.title}>
@@ -16,42 +17,26 @@ export default function ChatIntro() {
       </Typography>
 
       <div className={css.chips}>
-        <Chip
-          variant="outlined"
-          label="Ask anything"
-          onClick={handleClick}
-          className={`${css.chip} !animate-delay-500`}
-          icon={<i className="bi bi-brilliance"></i>}
-        />
-        <Chip
-          variant="outlined"
-          label="Create image"
-          onClick={handleClick}
-          className={`${css.chip} !animate-delay-[600ms]`}
-          icon={<i className="bi bi-brilliance"></i>}
-        />
-        <Chip
-          variant="outlined"
-          label="Analyze images"
-          onClick={handleClick}
-          className={`${css.chip} !animate-delay-700`}
-          icon={<i className="bi bi-brilliance"></i>}
-        />
-        <Chip
-          variant="outlined"
-          label="Summarize text"
-          onClick={handleClick}
-          className={`${css.chip} !animate-delay-[800ms]`}
-          icon={<i className="bi bi-brilliance"></i>}
-        />
-        <Chip
-          variant="outlined"
-          label="Fix code errors"
-          onClick={handleClick}
-          className={`${css.chip} !animate-delay-[900ms]`}
-          icon={<i className="bi bi-brilliance"></i>}
-        />
+        {IntroChips.map((chip) => (
+          <Chip
+            key={chip.id}
+            variant="outlined"
+            label={chip.label}
+            onClick={() => setChipSet(chip.id)}
+            className={`${css.chip} !animate-delay-[600ms]`}
+            icon={<i className={chip.icon}></i>}
+          />
+        ))}
       </div>
+      {chipSet >= 0 && (
+        <div className={css.options}>
+          {IntroChips[chipSet].options.map((opt) => (
+            <div key={opt.id} className={css.option}>
+              {opt.label}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

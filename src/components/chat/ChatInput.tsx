@@ -90,10 +90,19 @@ export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
               }
             }}
           />
-
-          <IconButton size="small" disabled={loading}>
-            <i className={`bi bi-send ${css.icon}`} onClick={handleSubmit}></i>
-          </IconButton>
+          <TooltipArrow
+            title={prompt === "" ? "No message yet" : "Send message"}
+            placement="top"
+          >
+            <span>
+              <IconButton size="small" disabled={prompt === "" || loading}>
+                <i
+                  className={`bi bi-send ${css.icon}`}
+                  onClick={handleSubmit}
+                ></i>
+              </IconButton>
+            </span>
+          </TooltipArrow>
         </div>
         <div className={css.Buttons}>
           {!selectedFile ? (

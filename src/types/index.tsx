@@ -33,3 +33,18 @@ export interface GenerateImage {
 export interface VariateImage {
   image: Uploadable;
 }
+
+
+export type Option = {
+  id: number;
+  label: string;
+};
+
+export type Chip = {
+  id: number;
+  label: string;
+  icon: string;
+  options: Option[];
+};
+
+ 
