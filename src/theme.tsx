@@ -189,6 +189,22 @@ const theme = createTheme({
       },
     },
 
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          width: 30,
+          height: 30,
+          bgcolor: "#1DA5A4",
+          color: "white",
+          border: "2px solid #5ADBD8",
+          fontSize: "14px",
+        },
+        circular: {
+          boxShadow: "0px 0px 5px 0px rgba(13, 20, 74, 0.3)",  
+        },
+      },
+    },
+
     MuiChip: {
       styleOverrides: {
         root: {

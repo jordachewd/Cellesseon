@@ -1,21 +1,32 @@
 import css from "./ChatIntro.module.css";
 import { IntroChips } from "@/constants/introChipsData";
 import { Chip, Typography } from "@mui/material";
+import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
+import SpinnerGrow from "../shared/SpinnerGrow";
 
 interface ChatIntroProps {
   sendPrompt: (prompt: string) => void;
 }
 
 export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
+  const { user, isLoaded } = useUser();
   const [chipSet, setChipSet] = useState<number>(-1);
+
+  if (!isLoaded) {
+    return (
+      <section className={css.section}>
+        <SpinnerGrow size="large" />
+      </section>
+    );
+  }
 
   return (
     <section className={css.section}>
       {chipSet < 0 ? (
         <>
           <Typography variant="h2" className={css.title}>
-            Hello there!
+            Hello {user?.firstName || "there"}!
           </Typography>
 
           <Typography variant="h5" className={css.subtitle}>

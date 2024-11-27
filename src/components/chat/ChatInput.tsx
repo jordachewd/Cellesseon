@@ -2,7 +2,7 @@ import css from "./ChatInput.module.css";
 import Image from "next/image";
 import { useState, ChangeEvent, useEffect } from "react";
 import { Message } from "@/types";
-import { IconButton, Input } from "@mui/material";
+import { IconButton, Input, Zoom } from "@mui/material";
 import { UploadFileInput } from "../shared/UploadFileInput";
 import { TooltipArrow } from "../shared/TooltipArrow";
 
@@ -22,18 +22,18 @@ export default function ChatInput({
   const [fileUrl, setFileUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    if (startPrompt) {
-      setPrompt(startPrompt);
-    }
-  }, [startPrompt]);
-
-  useEffect(() => {
     if (selectedFile) {
       convertToBase64(selectedFile).then((url) => setFileUrl(url));
     } else {
       setFileUrl(null);
     }
-  }, [selectedFile]);
+
+    if (startPrompt) {
+      setPrompt(startPrompt);
+    } else {
+      setPrompt("");
+    }
+  }, [selectedFile, startPrompt]);
 
   const handleSubmit = async () => {
     if (prompt === "" && !selectedFile) return;
@@ -104,6 +104,9 @@ export default function ChatInput({
           <TooltipArrow
             title={prompt === "" ? "No message yet" : "Send message"}
             placement="top"
+            slots={{
+              transition: Zoom,
+            }}
           >
             <span>
               <IconButton size="small" disabled={prompt === "" || loading}>
@@ -117,7 +120,13 @@ export default function ChatInput({
         </div>
         <div className={css.Buttons}>
           {!selectedFile ? (
-            <TooltipArrow title="Add image" placement="top">
+            <TooltipArrow
+              title="Attach media"
+              placement="top"
+              slots={{
+                transition: Zoom,
+              }}
+            >
               <IconButton component="label" size="small" disabled={loading}>
                 <i className={`bi bi-cloud-upload ${css.icon}`}></i>
                 <UploadFileInput
