@@ -17,6 +17,7 @@ export default function MainPage() {
   const sendMessage = async (prompt: Message) => {
     if (!prompt) return;
     setIsLoading(true);
+    setStartMsg("");
 
     // Add a temporary chat message
     const tempChat: Message = {
