@@ -6,17 +6,13 @@ import AlertMessage, { AlertParams } from "../shared/AlertMessage";
 import getOpenAiApi from "@/utils/getOpenAi";
 import { Message } from "@/types";
 import { useState } from "react";
+import ChatIntro from "../chat/ChatIntro";
 
 export default function MainPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
-  const [chat, setChat] = useState<Message[]>([
-    /*     {
-      whois: "assistant",
-      role: "assistant",
-      content: "Hello there! How can I help you?",
-    }, */
-  ]);
+  const [startMsg, setStartMsg] = useState<string>("");
+  const [chat, setChat] = useState<Message[]>([]);
 
   const sendMessage = async (prompt: Message) => {
     if (!prompt) return;
@@ -43,7 +39,6 @@ export default function MainPage() {
         });
         setIsLoading(false);
 
-        // Remove the temporary message on error
         setChat((prev) => prev.slice(0, -1));
         return;
       }
@@ -59,7 +54,6 @@ export default function MainPage() {
         });
         setIsLoading(false);
 
-        // Remove the temporary message on error
         setChat((prev) => prev.slice(0, -1));
         return;
       }
@@ -87,13 +81,10 @@ export default function MainPage() {
           content: newContent,
         };
 
-        // Replace the temporary message with the final one
         setChat((prev) => [...prev.slice(0, -1), newChat]);
       }
     } catch (error) {
       console.error(error);
-
-      // Remove the temporary message on error
       setChat((prev) => prev.slice(0, -1));
     }
     setIsLoading(false);
@@ -103,8 +94,16 @@ export default function MainPage() {
     <>
       <Header />
       {alert && <AlertMessage message={alert} />}
-      <ChatBody messages={chat} />
-      <ChatInput sendMessage={sendMessage} loading={isLoading} />
+      {chat.length ? (
+        <ChatBody messages={chat} />
+      ) : (
+        <ChatIntro sendPrompt={(prompt) => setStartMsg(prompt)} />
+      )}
+      <ChatInput
+        sendMessage={sendMessage}
+        loading={isLoading}
+        startPrompt={startMsg}
+      />
     </>
   );
 }

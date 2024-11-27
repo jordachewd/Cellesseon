@@ -6,6 +6,7 @@ import Logo from "../shared/Logo";
 
 export default function Header() {
   const { signOut } = useClerk();
+
   return (
     <section className={css.section}>
       <Logo />

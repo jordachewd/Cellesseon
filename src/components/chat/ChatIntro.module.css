@@ -1,5 +1,5 @@
-.wrapper {
-  @apply flex flex-col flex-1 justify-center w-full items-center space-y-4;
+.section {
+  @apply flex flex-col flex-1 justify-center w-full items-center space-y-4 z-10 px-4;
 }
 
 .title,
@@ -9,25 +9,42 @@
 }
 
 .subtitle {
-  @apply animate-delay-[300ms];
+  @apply animate-delay-[200ms];
 }
 
 .chips {
-  @apply flex flex-wrap w-full justify-center items-center pt-6;
+  @apply flex flex-wrap w-full justify-center items-center !mt-6;
 }
 
 .chip {
   @apply !m-2;
 }
 
-.options {
-  @apply flex flex-col   bg-jwdAqua-600/10
-  backdrop-blur-sm rounded-md border border-jwdAqua-100/10 shadow-md;
+.chip_0 {
+  @apply !animate-delay-[300ms];
 }
 
-.option {
-  @apply flex w-full px-3 py-2.5 cursor-pointer
-  border-jwdAqua-100/5 border-dotted border-b last:border-none
-  
-  hover:bg-jwdAqua-100/5 transition-all ease-in-out;
+.chip_1 {
+  @apply !animate-delay-[400ms];
+}
+
+.chip_2 {
+  @apply !animate-delay-[500ms];
+}
+
+.chip_3 {
+  @apply !animate-delay-[600ms];
+}
+
+.chip_4 {
+  @apply !animate-delay-[700ms];
+}
+
+.chip_x {
+  @apply !animate-delay-[800ms] text-3xl text-jwdMarine-200/50 
+  cursor-pointer hover:text-jwdMarine-200/80 !mt-6 transition-all;
+}
+
+.options {
+  @apply flex flex-col w-full justify-center items-center;
 }

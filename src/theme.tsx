@@ -202,6 +202,7 @@ const theme = createTheme({
         },
         label: {
           padding: "1rem",
+          fontSize: "0.875rem",
         },
       },
     },

@@ -6,7 +6,6 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import SpinnerGrow from "../shared/SpinnerGrow";
 import ImageHolder from "../shared/ImageHolder";
-import ChatIntro from "./ChatIntro";
 
 interface ChatBodyProps {
   messages: Message[];
@@ -15,7 +14,6 @@ interface ChatBodyProps {
 export default function ChatBody({ messages }: ChatBodyProps) {
   const parent = useRef<HTMLDivElement | null>(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
-  const isChat = messages.length > 0;
 
   useEffect(() => {
     if (messages.length > 1) {
@@ -28,57 +26,54 @@ export default function ChatBody({ messages }: ChatBodyProps) {
 
   return (
     <section className={css.section}>
-      {isChat ? (
-        <div className={css.wrapper} ref={parent}>
-          {messages.map((message, i) => {
-            const isBot = message.whois !== "user";
-            return (
-              <article
-                key={i}
-                className={`${css.article} ${isBot ? css.botArticle : ""}`}
-              >
-                {isBot ? (
-                  <i className={`bi bi-robot ${css.avatar}`}></i>
-                ) : (
-                  <i className={`bi bi-person ${css.avatar}`}></i>
-                )}
+      <div className={css.wrapper} ref={parent}>
+        {messages.map((message, i) => {
+          const isBot = message.whois !== "user";
+          return (
+            <article
+              key={i}
+              className={`${css.article} ${isBot ? css.botArticle : ""}`}
+            >
+              {isBot ? (
+                <i className={`bi bi-robot ${css.avatar}`}></i>
+              ) : (
+                <i className={`bi bi-person ${css.avatar}`}></i>
+              )}
 
-                <div className={css.content}>
-                  {Array.isArray(message.content) ? (
-                    message.content.map((reply, idx) => {
-                      if (reply.type === "text") {
-                        return (
-                          <ReactMarkdown key={idx} remarkPlugins={[remarkGfm]}>
-                            {reply.text}
-                          </ReactMarkdown>
-                        );
-                      } else if (reply.type === "image_url") {
-                        return (
-                          <ImageHolder
-                            key={idx}
-                            src={reply.image_url.url}
-                            width={isBot ? 320 : 60}
-                            height={isBot ? 320 : 60}
-                          />
-                        );
-                      } else if (reply.type === "temp") {
-                        return <SpinnerGrow styles="p-1" key={idx} />;
-                      }
-                      return null;
-                    })
-                  ) : (
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {message.content}
-                    </ReactMarkdown>
-                  )}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      ) : (
-        <ChatIntro />
-      )}
+              <div className={css.content}>
+                {Array.isArray(message.content) ? (
+                  message.content.map((reply, idx) => {
+                    if (reply.type === "text") {
+                      return (
+                        <ReactMarkdown key={idx} remarkPlugins={[remarkGfm]}>
+                          {reply.text}
+                        </ReactMarkdown>
+                      );
+                    } else if (reply.type === "image_url") {
+                      return (
+                        <ImageHolder
+                          key={idx}
+                          src={reply.image_url.url}
+                          width={isBot ? 320 : 60}
+                          height={isBot ? 320 : 60}
+                        />
+                      );
+                    } else if (reply.type === "temp") {
+                      return <SpinnerGrow styles="p-1" key={idx} />;
+                    }
+                    return null;
+                  })
+                ) : (
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {message.content}
+                  </ReactMarkdown>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
       <div className={css.bottomRef} ref={bottomRef}></div>
     </section>
   );

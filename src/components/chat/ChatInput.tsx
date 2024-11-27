@@ -9,12 +9,23 @@ import { TooltipArrow } from "../shared/TooltipArrow";
 interface ChatInputProps {
   sendMessage: (message: Message) => void;
   loading: boolean;
+  startPrompt?: string;
 }
 
-export default function ChatInput({ sendMessage, loading }: ChatInputProps) {
-  const [prompt, setPrompt] = useState("");
+export default function ChatInput({
+  sendMessage,
+  loading,
+  startPrompt,
+}: ChatInputProps) {
+  const [prompt, setPrompt] = useState(startPrompt || "");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (startPrompt) {
+      setPrompt(startPrompt);
+    }
+  }, [startPrompt]);
 
   useEffect(() => {
     if (selectedFile) {
