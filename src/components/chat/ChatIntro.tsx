@@ -1,6 +1,6 @@
 import css from "./ChatIntro.module.css";
 import { IntroChips } from "@/constants/introChipsData";
-import { Button, Chip, Typography } from "@mui/material";
+import { Chip, Typography } from "@mui/material";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 import SpinnerGrow from "../shared/SpinnerGrow";
