@@ -88,35 +88,51 @@ const theme = createTheme({
       fontSize: ".85rem",
     },
   },
+
   components: {
     MuiButton: {
       styleOverrides: {
-        sizeSmall: {
+        root: {
+          minHeight: 0,
           minWidth: 0,
-          fontSize: "12px",
-          letterSpacing: "0.5px",
-          padding: ".125rem .875rem",
           fontFamily: dosis.style.fontFamily,
+          color: "#26D0CE",
+          letterSpacing: "1px",
+          transition: "all 500ms ease",
+          "&:hover": {
+            color: "white",
+          },
+        },
+        sizeSmall: {
+          fontSize: "12px",
+          padding: ".35rem .75rem",
+          lineHeight: 1,
         },
         sizeMedium: {
-          lineHeight: 1.36,
-          padding: ".35rem 1.35rem",
-          fontFamily: dosis.style.fontFamily,
+          fontSize: "16px",
+          padding: ".6rem 1rem",
+          lineHeight: 1.2,
         },
         sizeLarge: {
-          lineHeight: 1.6,
-          padding: ".5rem 5rem",
-          fontWeight: 500,
-          fontSize: "1.25rem",
-          fontFamily: dosis.style.fontFamily,
-          letterSpacing: "2px",
+          fontSize: "24px",
+          lineHeight: 1.4,
+          padding: ".5rem 1.5rem",
         },
-        text: {
-          backgroundColor: "white",
-          boxShadow: "0 1px 2px 0 rgb(0 0 0 / 0.1)",
+
+        contained: {
+          color: "white",
+          backgroundColor: "#147978",
           "&:hover": {
             backgroundColor: "#26D0CE",
-            color: "white",
+          },
+        },
+
+        outlined: {
+          borderColor: "#1DA5A4",
+          borderRadius: "0.375rem",
+          color: "#26D0CE",
+          "&:hover": {
+            borderColor: "white",
           },
         },
       },
@@ -200,7 +216,18 @@ const theme = createTheme({
           fontSize: "14px",
         },
         circular: {
-          boxShadow: "0px 0px 5px 0px rgba(13, 20, 74, 0.3)",  
+          boxShadow: "0px 0px 5px 0px rgba(13, 20, 74, 0.3)",
+        },
+      },
+    },
+
+    MuiTooltip: {
+      styleOverrides: {
+        arrow: {
+          color: "#0D144A",
+        },
+        tooltip: {
+          backgroundColor: "#0D144A",
         },
       },
     },
@@ -208,6 +235,7 @@ const theme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
+          borderRadius: "0.375rem",
           borderColor: "#5ADBD8",
           color: "#5ADBD8",
         },

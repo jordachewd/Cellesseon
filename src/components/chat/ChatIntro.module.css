@@ -1,5 +1,5 @@
 .section {
-  @apply flex flex-col flex-1 justify-center w-full items-center space-y-4 z-10 px-4;
+  @apply flex flex-col flex-1 justify-center items-center space-y-4 z-10 px-4 -mt-14;
 }
 
 .title,
@@ -13,7 +13,7 @@
 }
 
 .chips {
-  @apply flex flex-wrap w-full justify-center items-center !mt-6;
+  @apply flex flex-wrap w-full justify-center items-center !mt-8;
 }
 
 .chip {

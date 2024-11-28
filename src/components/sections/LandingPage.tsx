@@ -30,12 +30,10 @@ export default function LandingPage() {
       </div>
 
       <div className={css.actions}>
-        <Button size="large" href="/sign-in">
+        <Button size="large" variant="contained" href="/sign-in" className="!px-12">
           Login
         </Button>
       </div>
-
-      
     </section>
   );
 }

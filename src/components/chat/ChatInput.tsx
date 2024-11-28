@@ -89,6 +89,8 @@ export default function ChatInput({
           <Input
             fullWidth
             multiline
+            id="chatInput"
+            name="chatInput"
             value={prompt}
             disabled={loading}
             className="mb-[0.55rem] !pb-0"

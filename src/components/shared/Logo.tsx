@@ -23,8 +23,8 @@ export default function Logo({
     <Link href={href || "/"} title={title || ""} className={className || ""}>
       {symbol ? (
         <svg
-          width={width || 64}
-          height={height || 64}
+          width={width || 30}
+          height={height || 30}
           viewBox="0 0 16.933332 16.933332"
         >
           <path

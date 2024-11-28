@@ -1,6 +1,6 @@
 import css from "./ChatIntro.module.css";
 import { IntroChips } from "@/constants/introChipsData";
-import { Chip, Typography } from "@mui/material";
+import { Button, Chip, Typography } from "@mui/material";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 import SpinnerGrow from "../shared/SpinnerGrow";
@@ -25,11 +25,11 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
     <section className={css.section}>
       {chipSet < 0 ? (
         <>
-          <Typography variant="h2" className={css.title}>
+          <Typography variant="h5" className={css.title}>
             Hello {user?.firstName || "there"}!
           </Typography>
 
-          <Typography variant="h5" className={css.subtitle}>
+          <Typography variant="h3" className={css.subtitle}>
             How can I help you?
           </Typography>
           <div className={css.chips}>

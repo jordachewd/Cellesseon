@@ -12,13 +12,17 @@ import { TooltipArrow } from "./TooltipArrow";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import SpinnerGrow from "./SpinnerGrow";
 
+interface AvatarMenuProps {
+  className?: string;
+}
+
 function stringAvatar(name: string) {
   return {
     children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
   };
 }
 
-export default function AvatarMenu() {
+export default function AvatarMenu({ className }: AvatarMenuProps) {
   const { signOut } = useClerk();
   const { user, isLoaded } = useUser();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -33,14 +37,18 @@ export default function AvatarMenu() {
   };
 
   if (!isLoaded) {
-    return <SpinnerGrow />;
+    return (
+      <div className={`flex ${className}`}>
+        <SpinnerGrow />
+      </div>
+    );
   }
 
   const userName = user?.firstName + " " + user?.lastName;
   console.log("user: ", user);
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <div className={`flex ${className}`}>
       <TooltipArrow title="My account" placement="left">
         <IconButton
           onClick={handleOpenUserMenu}
@@ -85,6 +93,6 @@ export default function AvatarMenu() {
           <Typography>Logout</Typography>
         </MenuItem>
       </Menu>
-    </Box>
+    </div>
   );
 }

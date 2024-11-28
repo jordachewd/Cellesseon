@@ -1,12 +1,14 @@
 "use client";
-import ChatBody from "@/components/chat/ChatBody";
-import ChatInput from "@/components/chat/ChatInput";
-import Header from "@/components/layout/Header";
-import AlertMessage, { AlertParams } from "../shared/AlertMessage";
-import getOpenAiApi from "@/utils/getOpenAi";
+import css from "./MainPage.module.css";
 import { Message } from "@/types";
 import { useState } from "react";
+import getOpenAiApi from "@/utils/getOpenAi";
+import Header from "@/components/layout/Header";
 import ChatIntro from "../chat/ChatIntro";
+import ChatSidebar from "../chat/ChatSidebar";
+import ChatBody from "@/components/chat/ChatBody";
+import ChatInput from "@/components/chat/ChatInput";
+import AlertMessage, { AlertParams } from "../shared/AlertMessage";
 
 export default function MainPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -19,7 +21,6 @@ export default function MainPage() {
     setIsLoading(true);
     setStartMsg("");
 
-    // Add a temporary chat message
     const tempChat: Message = {
       whois: "assistant",
       role: "user",
@@ -92,19 +93,23 @@ export default function MainPage() {
   };
 
   return (
-    <>
-      <Header />
-      {alert && <AlertMessage message={alert} />}
-      {chat.length ? (
-        <ChatBody messages={chat} />
-      ) : (
-        <ChatIntro sendPrompt={(prompt) => setStartMsg(prompt)} />
-      )}
-      <ChatInput
-        sendMessage={sendMessage}
-        loading={isLoading}
-        startPrompt={startMsg}
-      />
-    </>
+    <div className={css.wrapper}>
+      <ChatSidebar newChat={() => setChat([])} loading={isLoading} />
+      <div className={css.section}>
+        <Header />
+        {alert && <AlertMessage message={alert} />}
+        {chat.length ? (
+          <ChatBody messages={chat} />
+        ) : (
+          <ChatIntro sendPrompt={(prompt) => setStartMsg(prompt)} />
+        )}
+
+        <ChatInput
+          sendMessage={sendMessage}
+          loading={isLoading}
+          startPrompt={startMsg}
+        />
+      </div>
+    </div>
   );
 }
