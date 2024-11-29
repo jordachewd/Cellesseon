@@ -1,9 +1,18 @@
 "use client";
-import { createContext, useState, useContext, ReactNode } from "react";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 
 interface SidebarContextType {
   isSbOpen: boolean;
-  updateSb: () => void;
+  toggleSidebar: () => void;
+  setSidebarOpen: (isOpen: boolean) => void;
 }
 
 interface ChatContextType {
@@ -12,8 +21,9 @@ interface ChatContextType {
 
 const defaultContextValue: ChatContextType = {
   sidebarCtx: {
-    isSbOpen: true,
-    updateSb: () => {},
+    isSbOpen: false,
+    toggleSidebar: () => {},
+    setSidebarOpen: () => {},
   },
 };
 
@@ -24,12 +34,19 @@ interface ChatContextProviderProps {
 }
 
 export function ChatContextProvider({ children }: ChatContextProviderProps) {
-  const [openNav, setOpenNav] = useState<boolean>(false);
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setSidebarOpen(isLargeScreen);
+  }, [isLargeScreen]);
 
   const context: ChatContextType = {
     sidebarCtx: {
-      isSbOpen: openNav,
-      updateSb: () => setOpenNav((prevOpenNav) => !prevOpenNav),
+      isSbOpen: isSidebarOpen,
+      toggleSidebar: () => setSidebarOpen((prev) => !prev),
+      setSidebarOpen,
     },
   };
 

@@ -12,46 +12,41 @@ interface ChatSidebarProps {
 
 export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
   const { sidebarCtx } = useChatContext();
+
   return (
-    <aside className={`${css.wrapper} ${sidebarCtx.isSbOpen && css.narrow}`}>
+    <aside className={`${css.wrapper} ${!sidebarCtx.isSbOpen && css.narrow}`}>
       <div className={css.topbar}>
-        <Logo symbol={sidebarCtx.isSbOpen} />
-        <SidebarToggle
-          icon="bi-arrow-left-short"
-          show={!sidebarCtx.isSbOpen}
-          title="Hide Menu"
-        />
+        <Logo />
+        <SidebarToggle icon="bi-arrow-left-short" title="Hide Menu" />
       </div>
 
       <nav className={css.navigation}>
-        <Button variant="outlined" disabled={loading} onClick={() => newChat()}>
+        <Button size="small" className="!py-2.5" disabled={loading} onClick={() => newChat()}>
           <i className="bi bi-plus-lg"></i>
-          {!sidebarCtx.isSbOpen && <span className="ml-3">New Chat</span>}
+          <span className="ml-3">New Chat</span>
         </Button>
         <div className={css.chats}>
-          {!sidebarCtx.isSbOpen && (
-            <Typography variant="h6">History</Typography>
-          )}
+          <Typography variant="body2">History</Typography>
 
           <Link href="/">
             <i className="bi bi-chat-dots text-lg"></i>
-            {!sidebarCtx.isSbOpen && <span className="ml-3">Chat #1</span>}
+            <span className="ml-3">Chat #1</span>
           </Link>
 
           <Link href="/">
             <i className="bi bi-chat-dots text-lg"></i>
-            {!sidebarCtx.isSbOpen && <span className="ml-3">Chat #2</span>}
+            <span className="ml-3">Chat #2</span>
           </Link>
           <Link href="/">
             <i className="bi bi-chat-dots text-lg"></i>
-            {!sidebarCtx.isSbOpen && <span className="ml-3">Chat #3</span>}
+            <span className="ml-3">Chat #3</span>
           </Link>
         </div>
       </nav>
 
       <div className={css.bottom}>
-        <i className="bi bi-shield-check text-lg"></i>
-        {!sidebarCtx.isSbOpen && <span className="ml-3">Bottom </span>}
+        <i className="bi bi-shield text-lg"></i>
+        <span className="ml-3">Bottom</span>
       </div>
     </aside>
   );

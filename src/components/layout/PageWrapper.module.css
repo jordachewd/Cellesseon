@@ -1,21 +1,20 @@
 .main {
-  @apply flex flex-col flex-1 w-full h-dvh relative bg-jwdMarine-900/30
-  pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
-}
-
-.chatBackground {
-  @apply absolute flex inset-0 h-full w-full z-0 
-  bg-[radial-gradient(#26D0CE10_1px,transparent_1px)];
-  background-size: 16px 16px;
-  mask-image: radial-gradient(ellipse 100% 80% at 50% 10%, #1A2980 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 10%, #1A2980 40%, transparent 100%);
+  @apply flex flex-col flex-1 w-full h-dvh relative
+  pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]
+  dark:bg-jwdMarine-900/30;
 }
 
 .lpBackground {
-  @apply absolute flex inset-0 h-full w-full z-0
-  bg-[radial-gradient(#1A298020_1px,transparent_1px)];
-  background-size: 16px 16px;
-  background-color: rgba(0, 211, 211, 0.9);  
-  mask-image: radial-gradient(ellipse 100% 96% at 50% 0%, #000 40%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 100% 96% at 50% 0%, #000 40%, transparent 100%);
+  @apply absolute flex inset-0 h-full w-full z-0 bg-white/90 dark:bg-jwdAqua-600/90
+  bg-[length:16px_16px] bg-[radial-gradient(#1A298020_1px,transparent_1px)]  
+  [mask-image:radial-gradient(ellipse_100%_96%_at_50%_0%,_#000000_40%,_transparent_100%)] 
+  [--webkit-mask-image:radial-gradient(ellipse_100%_96%_at_50%_0%,_#000000_40%,_transparent_100%)];
+}
+
+.chatBackground {
+  @apply absolute flex inset-0 h-full w-full z-0 bg-white/90 dark:bg-transparent
+  dark:bg-[radial-gradient(#1A298050_1px,transparent_1px)] 
+  bg-[length:16px_16px] bg-[radial-gradient(#1A298015_1px,transparent_1px)]   
+  [mask-image:radial-gradient(ellipse_100%_96%_at_50%_0%,_#000000_40%,_transparent_100%)] 
+  [--webkit-mask-image:radial-gradient(ellipse_100%_96%_at_50%_0%,_#000000_40%,_transparent_100%)];
 }

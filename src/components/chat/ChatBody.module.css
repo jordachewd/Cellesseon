@@ -1,8 +1,12 @@
 .section {
-  @apply flex flex-1 flex-col w-full z-10 relative max-h-[calc(100dvh-146px)] overflow-y-auto
-  [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar-track]:rounded-full
-  [&::-webkit-scrollbar-track]:bg-jwdAqua-100/20 [&::-webkit-scrollbar-thumb]:rounded-full
-  [&::-webkit-scrollbar-thumb]:bg-jwdAqua-500 dark:[&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
+  @apply flex flex-1 flex-col w-full relative 
+  max-h-[calc(100dvh-146px)] overflow-y-auto 
+  [&::-webkit-scrollbar]:w-[2px] z-10
+  [&::-webkit-scrollbar-track]:rounded-full
+  [&::-webkit-scrollbar-thumb]:rounded-full
+  [&::-webkit-scrollbar-track]:bg-slate-300
+  [&::-webkit-scrollbar-thumb]:bg-jwdMarine-500  
+  dark:[&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
   dark:[&::-webkit-scrollbar-thumb]:bg-jwdAqua-500;
 }
 
@@ -19,20 +23,24 @@
 }
 
 .content {
-  @apply bg-jwdAqua-500/50 rounded-l-xl rounded-b-xl
-  break-words px-4 py-2 mt-6 shadow-md max-w-[70%] flex flex-col;
+  @apply flex flex-col rounded-l-xl rounded-b-xl
+  break-words px-4 py-2 mt-6 max-w-[70%] shadow
+  bg-jwdAqua-100/80 dark:bg-jwdAqua-500/50 dark:shadow-md;
 }
 
 .botArticle .content {
-  @apply bg-jwdAqua-900/20 rounded-none rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[88%];
+  @apply rounded-none rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[88%]
+  bg-slate-100 dark:bg-jwdAqua-900/20 py-3;
 }
 
 .avatar {
-  @apply bg-jwdAqua-500/50 border-jwdAqua-500/60 border leading-none text-base p-2 rounded-full text-white/80;
+  @apply leading-none text-base p-2 rounded-full border
+  bg-jwdAqua-100/80 border-jwdAqua-100 text-jwdMarine-500 shadow
+  dark:bg-jwdAqua-500/50 dark:border-jwdAqua-500/60 dark:text-white/80;
 }
 
 .botArticle .avatar {
-  @apply bg-jwdAqua-900/20 border-jwdAqua-900/30;
+  @apply bg-slate-100 border-slate-100 dark:bg-jwdAqua-900/20 dark:border-jwdAqua-900/30;
 }
 
 .bottomRef {
@@ -72,7 +80,7 @@
 }
 
 .content code {
-  @apply inline-flex font-mono text-xs bg-gray-900 rounded p-1.5 py-0.5;
+  @apply inline-flex font-mono text-xs bg-gray-900 text-gray-200 rounded p-1.5 py-0.5;
 }
 
 .content pre {
@@ -85,7 +93,7 @@
 
 .content ul,
 .content ol {
-  @apply p-4 space-y-1.5 list-inside;
+  @apply flex flex-col space-y-2 px-4 py-3;
 }
 
 .content ul {
@@ -101,23 +109,26 @@
 }
 
 .content table {
-  @apply min-w-full bg-jwdAqua-500/5 border border-jwdAqua-100/5 my-4 shadow-md overflow-auto;
-}
-
-.content table thead tr {
-  @apply bg-jwdAqua-100/20;
+  @apply min-w-full my-4 shadow overflow-auto  
+  bg-slate-200 dark:bg-jwdAqua-500/5;
 }
 
 .content table th {
-  @apply py-2 px-4 border-b border-jwdAqua-100/5 text-left font-semibold;
+  @apply p-2 border-b text-left font-semibold  
+  dark:bg-jwdAqua-100/20 bg-slate-300 
+  dark:border-jwdAqua-100/5 border-slate-300;
+}
+
+.content table th strong {
+  @apply text-sm font-medium;
 }
 
 .content table tbody tr {
-  @apply hover:bg-jwdAqua-100/5 transition-all ease-in-out;
+  @apply dark:hover:bg-jwdAqua-100/5 hover:bg-slate-100 transition-all ease-in-out;
 }
 
-.content table tbody td {
-  @apply py-2 px-4 border-b border-jwdAqua-100/5;
+.content table td {
+  @apply p-2 text-xs border border-slate-300 dark:border-jwdAqua-100/5;
 }
 
 .content hr {
@@ -125,7 +136,6 @@
 }
 
 @media (max-width: 640px) {
-  /* Apply flexbox to rows */
   .content table,
   .content table thead,
   .content table tbody,
@@ -135,9 +145,10 @@
     @apply block;
   }
 
-  .content table {
-    @apply border-none bg-transparent;
-  }
+   .content table {
+    @apply border-none bg-transparent shadow-none 
+    dark:border-none dark:bg-transparent;
+  } 
 
   /* Hide the header row */
   .content table thead {
@@ -145,13 +156,15 @@
   }
 
   /* Style each table row to look like a 'card' */
-  .content table tbody tr {
-    @apply border border-jwdAqua-100/5 rounded mb-2 p-2 bg-jwdAqua-500/5;
+  .content table tr {
+    @apply border rounded mb-2 p-2
+    border-slate-300 bg-slate-200 shadow
+     dark:border-jwdAqua-100/10 dark:bg-jwdAqua-500/10;
   }
 
   /* Display each cell as a block with a label */
-  .content table tbody td {
-    @apply flex py-1 px-2 border-none;
+  .content table td {
+    @apply flex py-1 px-2 border-none first:font-bold first:text-sm first:pb-1.5;
   }
 
   /* Use ::before to add labels for each column */

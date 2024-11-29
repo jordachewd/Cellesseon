@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import { TooltipArrow } from "./TooltipArrow";
 import { useChatContext } from "@/context/ChatContext";
@@ -15,41 +14,14 @@ export default function SidebarToggle({
   icon,
 }: SidebarToggleProps) {
   const { sidebarCtx } = useChatContext();
-  const [opacity, setOpacity] = useState("opacity-100");
-  const [isVisible, setIsVisible] = useState(show);
 
-  useEffect(() => {
-    if (!show) {
-      setIsVisible(false);
-      const timeout = setTimeout(() => {
-        setOpacity("opacity-0");
-      }, 100);
-
-      return () => {
-        clearTimeout(timeout);
-      };
-    } else {
-      setIsVisible(true);
-      const timeout1 = setTimeout(() => {
-        setOpacity("opacity-100");
-      }, 100);
-
-      return () => {
-        clearTimeout(timeout1);
-      };
-    }
-  }, [show]);
-
-  return isVisible ? (
+  return show ? (
     <TooltipArrow
       placement="right"
       title={show ? title : null}
-      className={`!transition-all ${show && opacity}`}
+      className="!transition-all"
     >
-      <IconButton
-        onClick={() => sidebarCtx.updateSb()}
-        sx={{ p: 0, paddingX: "5px" }}
-      >
+      <IconButton size="small" onClick={() => sidebarCtx.toggleSidebar()}>
         <i className={`bi text-lg ${icon}`}></i>
       </IconButton>
     </TooltipArrow>

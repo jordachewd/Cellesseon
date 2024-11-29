@@ -9,29 +9,11 @@
   scroll-behavior: smooth;
 }
 
-:root {
-  --background: #fff;
-  --foreground: #000;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000;
-    --foreground: #fff;
-  }
-}
-
-html {
-  @apply w-dvw h-dvh m-0 p-0;
-}
-
 body {
-  overscroll-behavior: none;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  color: var(--foreground);
-  background-color: var(--background) !important;
-  @apply antialiased w-full m-0 p-0 flex pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
+  @apply w-full p-0 flex overscroll-none
+  pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
 }
 
 /*  all media elements set to block and full width */
@@ -43,8 +25,7 @@ audio,
 iframe,
 embed,
 object {
-  display: block;
-  max-width: 100%;
+  @apply block max-w-full;
 }
 
 /* reset heading style */

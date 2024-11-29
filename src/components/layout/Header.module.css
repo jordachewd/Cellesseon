@@ -1,3 +1,16 @@
 .section {
   @apply flex w-full justify-between items-center px-4 py-3 sticky z-20;
 }
+
+.left,
+.right {
+  @apply flex items-center;
+}
+
+.left {
+  @apply space-x-4;
+}
+
+.right {
+  @apply space-x-2 ml-auto;
+}

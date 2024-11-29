@@ -44,7 +44,6 @@ export default function AvatarMenu({ className }: AvatarMenuProps) {
   }
 
   const userName = user?.firstName + " " + user?.lastName;
-  console.log("user: ", user);
 
   return (
     <div className={`flex ${className}`}>

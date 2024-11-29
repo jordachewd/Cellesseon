@@ -1,9 +1,8 @@
 "use client";
 import { ClerkProvider } from "@clerk/nextjs";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
-import { ThemeProvider } from "@emotion/react";
-import { CssBaseline } from "@mui/material";
-import theme from "@/theme";
+import { AppContextProvider } from "@/context/AppContext";
+import CeleseonThemeProvider from "@/themes/themeProvider";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./globals.css";
 
@@ -21,10 +20,9 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>
-              <CssBaseline />
-              {children}
-            </ThemeProvider>
+            <AppContextProvider>
+              <CeleseonThemeProvider>{children}</CeleseonThemeProvider>
+            </AppContextProvider>
           </AppRouterCacheProvider>
         </body>
       </html>
