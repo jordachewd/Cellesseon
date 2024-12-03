@@ -6,26 +6,34 @@ import {
   ReactNode,
   useEffect,
 } from "react";
+
 interface ThemeContextType {
   themeMode: "light" | "dark";
   toggleThemeMode: () => void;
   setThemeMode: (mode: "light" | "dark") => void;
 }
-interface AppContextType {
+
+interface CeleseonContextType {
   themeCtx: ThemeContextType;
 }
-const defaultContextValue: AppContextType = {
+
+const defaultContextValue: CeleseonContextType = {
   themeCtx: {
     themeMode: "light",
     toggleThemeMode: () => {},
     setThemeMode: () => {},
   },
 };
-const AppContext = createContext<AppContextType>(defaultContextValue);
-interface AppContextProviderProps {
+
+const CeleseonContext = createContext<CeleseonContextType>(defaultContextValue);
+
+interface CeleseonContextProviderProps {
   children: ReactNode;
 }
-export function AppContextProvider({ children }: AppContextProviderProps) {
+
+export function CeleseonContextProvider({
+  children,
+}: CeleseonContextProviderProps) {
   const [themeMode, setThemeMode] = useState<"light" | "dark">("light");
 
   useEffect(() => {
@@ -42,15 +50,17 @@ export function AppContextProvider({ children }: AppContextProviderProps) {
       }
     }
   }, []);
+  
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("themeMode", themeMode);
+      /* for Tailwind CSS */
       document.documentElement.setAttribute("data-mode", themeMode);
     }
   }, [themeMode]);
 
-  const context: AppContextType = {
+  const context: CeleseonContextType = {
     themeCtx: {
       themeMode,
       toggleThemeMode: () =>
@@ -58,7 +68,12 @@ export function AppContextProvider({ children }: AppContextProviderProps) {
       setThemeMode,
     },
   };
-  return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
+  return (
+    <CeleseonContext.Provider value={context}>
+      {children}
+    </CeleseonContext.Provider>
+  );
 }
-export const useAppContext = () => useContext(AppContext);
-export default AppContext;
+
+export const useCeleseonContext = () => useContext(CeleseonContext);
+export default CeleseonContext;

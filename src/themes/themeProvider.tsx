@@ -1,20 +1,20 @@
 "use client";
-import { useAppContext } from "@/context/AppContext";
 import { ThemeProvider, CssBaseline } from "@mui/material";
-import { FC, ReactNode, useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import darkTheme from "./darkTheme";
 import lightTheme from "./lightTheme";
+import { useCeleseonContext } from "@/context/CeleseonContext";
 
 interface CeleseonThemeProviderProps {
   children: ReactNode;
 }
 
-const CeleseonThemeProvider: FC<CeleseonThemeProviderProps> = ({
+export default function CeleseonThemeProvider({
   children,
-}) => {
+}: CeleseonThemeProviderProps) {
   const {
     themeCtx: { themeMode },
-  } = useAppContext();
+  } = useCeleseonContext();
 
   const theme = useMemo(
     () => (themeMode === "dark" ? darkTheme : lightTheme),
@@ -27,6 +27,4 @@ const CeleseonThemeProvider: FC<CeleseonThemeProviderProps> = ({
       {children}
     </ThemeProvider>
   );
-};
-
-export default CeleseonThemeProvider;
+}

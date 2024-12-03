@@ -1,7 +1,7 @@
 import { styled } from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
-import { useAppContext } from "@/context/AppContext";
 import { TooltipArrow } from "./TooltipArrow";
+import { useCeleseonContext } from "@/context/CeleseonContext";
 
 const StyledThemeSwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -62,7 +62,7 @@ const StyledThemeSwitch = styled(Switch)(({ theme }) => ({
 export default function ThemeSwitch() {
   const {
     themeCtx: { themeMode, toggleThemeMode },
-  } = useAppContext();
+  } = useCeleseonContext();
 
   return (
     <TooltipArrow title="Switch mode" placement="left">

@@ -1,5 +1,5 @@
 import css from "./PageWrapper.module.css";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedOut } from "@clerk/nextjs";
 import { ReactNode } from "react";
 import BgAnimation from "../shared/BgAnimation";
 
@@ -12,12 +12,9 @@ export default function PageWrapper({ children }: PageWrapperProps) {
     <main className={css.main}>
       {children}
       <SignedOut>
-         <BgAnimation />
-        <div className={css.lpBackground}></div>
+        <BgAnimation />
       </SignedOut>
-      <SignedIn>
-        <div className={css.chatBackground}></div>
-      </SignedIn>
+      <div className={css.background}></div>
     </main>
   );
 }

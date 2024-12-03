@@ -21,7 +21,13 @@ export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
       </div>
 
       <nav className={css.navigation}>
-        <Button size="small" className="!py-2.5" disabled={loading} onClick={() => newChat()}>
+        <Button
+          size="small"
+          variant="outlined"
+          className="!py-2.5"
+          disabled={loading}
+          onClick={() => newChat()}
+        >
           <i className="bi bi-plus-lg"></i>
           <span className="ml-3">New Chat</span>
         </Button>

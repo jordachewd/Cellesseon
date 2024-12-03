@@ -30,9 +30,21 @@ interface BgAnimationProps {
 
 export default function BgAnimation({
   colors = {
-    gradient1: ["rgba(255, 0, 255, 1)", "rgba(255, 0, 255, 0)"],
-    gradient2: ["rgba(255, 255, 0, 1)", "rgba(255, 255, 0, 0)"],
-    gradient3: ["rgba(0, 255, 255, 1)", "rgba(0, 255, 255, 0)"],
+    // gradient1: ["rgba(255, 0, 255, 1)", "rgba(255, 0, 255, 0)"],
+    // gradient2: ["rgba(255, 255, 0, 1)", "rgba(255, 255, 0, 0)"],
+    //  gradient3: ["rgba(0, 255, 255, 1)", "rgba(0, 255, 255, 0)"],
+    gradient1: [
+      "rgba(var(--mui-palette-primary-mainChannel) / 1)",
+      "rgba(var(--mui-palette-primary-mainChannel) / 0)",
+    ],
+    gradient2: [
+      "rgba(var(--mui-palette-action-activeChannel) / 1)",
+      "rgba(var(--mui-palette-action-activeChannel) / 0)",
+    ],
+    gradient3: [
+      "rgba(var(--mui-palette-secondary-mainChannel) / 1)",
+      "rgba(var(--mui-palette-secondary-mainChannel) / 0)",
+    ],
   },
   speeds = {
     gradient1: { fx: "51s", x: "30s", y: "32s", rotation: "11s" },

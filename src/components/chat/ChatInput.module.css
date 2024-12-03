@@ -3,11 +3,12 @@
 }
 
 .wrapper {
-  @apply flex w-full max-w-4xl space-x-2 p-2
-  bg-slate-100 border-slate-200/50 border
-  dark:bg-jwdAqua-600/10 dark:border-jwdAqua-100/10
-  dark:backdrop-blur-sm rounded-md shadow-md
-  justify-between items-end;
+  @apply flex w-full max-w-4xl space-x-2 p-2 border 
+  justify-between items-end rounded-md shadow-md
+  bg-lightBackground-100 border-lightAccent-500
+  
+ 
+  dark:bg-jwdAqua-600/10 dark:border-jwdAqua-100/10;
 }
 
 .wrapper > div {

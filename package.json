@@ -16,11 +16,7 @@
   "dependencies": {
     "@clerk/nextjs": "^6.2.1",
     "@emotion/cache": "^11.13.1",
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
     "@formkit/auto-animate": "^0.8.2",
-    "@mui/icons-material": "^6.1.6",
-    "@mui/material": "^6.1.6",
     "@mui/material-nextjs": "^6.1.6",
     "@mui/styled-engine-sc": "^6.1.6",
     "@mui/styles": "^6.1.6",

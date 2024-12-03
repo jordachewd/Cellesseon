@@ -31,6 +31,7 @@ export default function LandingPage() {
         <Button>Login</Button>
         <Button size="large">Login</Button>
       </div>
+
       <div className={`${css.actions} !flex-row space-x-6 justify-center`}>
         <Button size="small" variant="outlined">
           Login

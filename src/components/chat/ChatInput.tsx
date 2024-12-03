@@ -147,7 +147,7 @@ export default function ChatInput({
                 priority
                 width={40}
                 height={40}
-                className="rounded"
+                className="rounded max-w-[40px] max-h-[40px]"
                 alt="Selected image"
                 src={`data:image/jpeg;base64,${fileUrl}`}
               />

@@ -18,6 +18,7 @@ export const albertsans = Albert_Sans({
 });
 
 const baseTheme: ThemeOptions = {
+  
   breakpoints: {
     values: {
       xs: 0,
@@ -30,6 +31,7 @@ const baseTheme: ThemeOptions = {
 
   typography: {
     fontFamily: albertsans.style.fontFamily,
+    
     h1: {
       fontSize: "4rem",
       fontFamily: dosis.style.fontFamily,
@@ -40,6 +42,7 @@ const baseTheme: ThemeOptions = {
         fontSize: "5rem",
       },
     },
+
     h2: {
       fontSize: "3rem",
       fontFamily: dosis.style.fontFamily,
@@ -50,6 +53,7 @@ const baseTheme: ThemeOptions = {
         fontSize: "4rem",
       },
     },
+
     h3: {
       fontSize: "2.5rem",
       fontFamily: dosis.style.fontFamily,
@@ -60,6 +64,7 @@ const baseTheme: ThemeOptions = {
         fontSize: "3rem",
       },
     },
+
     h4: {
       fontSize: "2rem",
       fontFamily: dosis.style.fontFamily,
@@ -70,6 +75,7 @@ const baseTheme: ThemeOptions = {
         fontSize: "2.5rem",
       },
     },
+
     h5: {
       fontSize: "1.5rem",
       fontWeight: 600,
@@ -81,6 +87,7 @@ const baseTheme: ThemeOptions = {
         fontSize: "2rem",
       },
     },
+
     h6: {
       fontSize: "1rem",
       fontWeight: 600,
@@ -92,6 +99,7 @@ const baseTheme: ThemeOptions = {
         fontSize: "1.5rem",
       },
     },
+
     subtitle1: {
       fontSize: "2rem",
       lineHeight: 1.4,
@@ -103,6 +111,7 @@ const baseTheme: ThemeOptions = {
         fontSize: "3rem",
       },
     },
+
     subtitle2: {
       fontSize: "1.5rem",
       lineHeight: 1.4,
@@ -114,10 +123,12 @@ const baseTheme: ThemeOptions = {
         fontSize: "2rem",
       },
     },
+
     body1: {
       fontSize: "1.25rem",
       fontFamily: albertsans.style.fontFamily,
     },
+
     body2: {
       fontSize: ".85rem",
       fontFamily: albertsans.style.fontFamily,
