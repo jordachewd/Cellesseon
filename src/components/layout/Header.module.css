@@ -1,5 +1,5 @@
 .section {
-  @apply flex w-full justify-between items-center px-4 py-3 sticky z-20;
+  @apply flex w-full justify-between items-center px-4 py-3 sticky lg:absolute top-0 left-0 right-0 z-20;
 }
 
 .left,

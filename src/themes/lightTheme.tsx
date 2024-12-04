@@ -17,6 +17,7 @@ const lightTheme = createTheme({
     action: {
       active: "#50C878", // Emerald Green
       hover: "#74D490", // Slightly lighter
+      disabled: "#5D70AA" // Marine (300)
     },
     background: {
       default: "#F9F5F1", // Soft Beige
@@ -25,7 +26,7 @@ const lightTheme = createTheme({
     text: {
       primary: "#0D144A", // Marine Dark (900)
       secondary: "#6D6D6D", // Slightly lighter
-      disabled: "#9E9E9E", // A gray tone for disabled text
+      disabled: "#3E995F", // A gray tone for disabled text
     },
     divider: "#D1D1D1", // Cool Gray for dividers, borders, and lines
     tertiary: {
@@ -114,8 +115,7 @@ const lightTheme = createTheme({
         input: {
           fontSize: "1rem",
           lineHeight: 1.1,
-          // color: "var(--mui-palette-tertiary-dark)",
-           color: "var(--mui-palette-action-active)",
+          color: "var(--mui-palette-common-white)",
           "&::placeholder": {
             fontSize: ".875rem",
           },

@@ -17,6 +17,7 @@ const darkTheme = createTheme({
     action: {
       active: "#E8A87C", // Rose Gold
       hover: "#F1B99C", // Slightly lighter shade
+      disabled: "#5D70AA", // Marine (300)
     },
     background: {
       default: "#020519", // Marine Dark (2000)
@@ -114,7 +115,7 @@ const darkTheme = createTheme({
         input: {
           fontSize: "1rem",
           lineHeight: 1.1,
-          color: "var(--mui-palette-action-active)",
+          color: "var(--mui-palette-common-white)",
           "&::placeholder": {
             fontSize: ".875rem",
           },

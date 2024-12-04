@@ -1,13 +1,12 @@
 .section {
-  @apply flex flex-1 flex-col w-full relative 
-  max-h-[calc(100dvh-146px)] overflow-y-auto 
+  @apply flex flex-1 flex-col w-full relative overflow-y-auto 
   [&::-webkit-scrollbar]:w-[2px] z-10
   [&::-webkit-scrollbar-track]:rounded-full
   [&::-webkit-scrollbar-thumb]:rounded-full
-  [&::-webkit-scrollbar-track]:bg-slate-300
-  [&::-webkit-scrollbar-thumb]:bg-jwdMarine-500  
-  dark:[&::-webkit-scrollbar-track]:bg-jwdAqua-100/20
-  dark:[&::-webkit-scrollbar-thumb]:bg-jwdAqua-500;
+  [&::-webkit-scrollbar-track]:bg-lightBorders-500
+  [&::-webkit-scrollbar-thumb]:bg-lightSecondary-800
+  dark:[&::-webkit-scrollbar-track]:bg-darkBorders-500
+  dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
 }
 
 .wrapper {
@@ -24,23 +23,24 @@
 
 .content {
   @apply flex flex-col rounded-l-xl rounded-b-xl
-  break-words px-4 py-2 mt-6 max-w-[70%] shadow
-  bg-jwdAqua-100/80 dark:bg-jwdAqua-500/50 dark:shadow-md;
+  break-words px-4 py-2 mt-6 max-w-[70%] shadow 
+  text-lightText-500 dark:text-darkText-500
+  bg-lightSecondary-100 dark:bg-darkSecondary-700 dark:shadow-md;
 }
 
 .botArticle .content {
   @apply rounded-none rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[88%]
-  bg-slate-100 dark:bg-jwdAqua-900/20 py-3;
+  bg-lightPrimary-100 dark:bg-darkPrimary-800 py-3;
 }
 
 .avatar {
   @apply leading-none text-base p-2 rounded-full border
-  bg-jwdAqua-100/80 border-jwdAqua-100 text-jwdMarine-500 shadow
-  dark:bg-jwdAqua-500/50 dark:border-jwdAqua-500/60 dark:text-white/80;
+  bg-lightSecondary-100 border-lightSecondary-100 text-lightText-500/80 shadow
+  dark:bg-darkSecondary-700 dark:border-darkSecondary-500 dark:text-white/80;
 }
 
 .botArticle .avatar {
-  @apply bg-slate-100 border-slate-100 dark:bg-jwdAqua-900/20 dark:border-jwdAqua-900/30;
+  @apply bg-lightPrimary-100 border-lightPrimary-100 dark:bg-jwdAqua-900/20 dark:border-jwdAqua-900/30;
 }
 
 .bottomRef {
