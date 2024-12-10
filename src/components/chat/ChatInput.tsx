@@ -1,4 +1,4 @@
-import css from "./ChatInput.module.css";
+import css from "@/styles/chat/ChatInput.module.css";
 import Image from "next/image";
 import { useState, ChangeEvent, useEffect } from "react";
 import { Message } from "@/types";

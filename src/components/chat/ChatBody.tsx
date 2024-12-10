@@ -1,4 +1,4 @@
-import css from "./ChatBody.module.css";
+import css from "@/styles/chat/ChatBody.module.css";
 import { Message } from "@/types";
 import { useEffect, useRef } from "react";
 import autoAnimate from "@formkit/auto-animate";

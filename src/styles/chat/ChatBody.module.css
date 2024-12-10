@@ -10,7 +10,7 @@
 }
 
 .wrapper {
-  @apply flex flex-col flex-1 space-y-4 w-full max-w-4xl mx-auto p-6 lg:px-0;
+  @apply flex flex-col flex-1 space-y-4 w-full max-w-4xl mx-auto p-6 lg:px-0 lg:py-10;
 }
 
 .article {
@@ -23,24 +23,24 @@
 
 .content {
   @apply flex flex-col rounded-l-xl rounded-b-xl
-  break-words px-4 py-2 mt-6 max-w-[70%] shadow 
+  break-words px-3 py-1 mt-6 max-w-[70%] shadow 
   text-lightText-500 dark:text-darkText-500
-  bg-lightSecondary-100 dark:bg-darkSecondary-700 dark:shadow-md;
+  bg-lightSecondary-100 dark:bg-darkSecondary-600 dark:shadow-md;
 }
 
 .botArticle .content {
-  @apply rounded-none rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[88%]
-  bg-lightPrimary-100 dark:bg-darkPrimary-800 py-3;
+  @apply rounded-none rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[89%]
+  bg-lightPrimary-100 dark:bg-darkPrimary-900 p-4;
 }
 
 .avatar {
-  @apply leading-none text-base p-2 rounded-full border
-  bg-lightSecondary-100 border-lightSecondary-100 text-lightText-500/80 shadow
-  dark:bg-darkSecondary-700 dark:border-darkSecondary-500 dark:text-white/80;
+  @apply leading-none text-base p-2 rounded-full 
+  bg-lightSecondary-100 text-lightText-500/80 shadow
+  dark:bg-darkSecondary-600 dark:text-white/80;
 }
 
 .botArticle .avatar {
-  @apply bg-lightPrimary-100 border-lightPrimary-100 dark:bg-jwdAqua-900/20 dark:border-jwdAqua-900/30;
+  @apply bg-lightPrimary-100 border-lightPrimary-100 dark:bg-darkPrimary-700;
 }
 
 .bottomRef {
@@ -145,10 +145,10 @@
     @apply block;
   }
 
-   .content table {
+  .content table {
     @apply border-none bg-transparent shadow-none 
     dark:border-none dark:bg-transparent;
-  } 
+  }
 
   /* Hide the header row */
   .content table thead {

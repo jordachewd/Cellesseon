@@ -1,19 +1,8 @@
-import {
-  IconButton,
-  Avatar,
-  Menu,
-  MenuItem,
-  Typography,
-  Divider,
-} from "@mui/material";
+import { IconButton, Avatar, Menu, MenuItem, Divider } from "@mui/material";
 import { useState } from "react";
 import { TooltipArrow } from "./TooltipArrow";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import SpinnerGrow from "./SpinnerGrow";
-
-interface AvatarMenuProps {
-  className?: string;
-}
 
 function stringAvatar(name: string) {
   return {
@@ -21,32 +10,27 @@ function stringAvatar(name: string) {
   };
 }
 
-export default function AvatarMenu({ className }: AvatarMenuProps) {
+export default function AvatarMenu() {
   const { signOut } = useClerk();
   const { user, isLoaded } = useUser();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorElUser);
+  const userName = user?.firstName + " " + user?.lastName;
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   if (!isLoaded) {
     return (
-      <div className={`flex ${className}`}>
+      <div className="flex">
         <SpinnerGrow />
       </div>
     );
   }
 
-  const userName = user?.firstName + " " + user?.lastName;
-
   return (
-    <div className={`flex ${className}`}>
+    <div className="flex">
       <TooltipArrow title="My account" placement="left">
         <IconButton
           onClick={handleOpenUserMenu}
@@ -62,9 +46,10 @@ export default function AvatarMenu({ className }: AvatarMenuProps) {
           />
         </IconButton>
       </TooltipArrow>
+
       <Menu
         keepMounted
-        sx={{ mt: "1.5rem" }}
+        sx={{ mt: "1rem" }}
         anchorEl={anchorElUser}
         anchorOrigin={{
           vertical: "bottom",
@@ -75,20 +60,23 @@ export default function AvatarMenu({ className }: AvatarMenuProps) {
           horizontal: "right",
         }}
         open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
+        onClose={() => setAnchorElUser(null)}
       >
-        <MenuItem onClick={handleCloseUserMenu}>
-          <i className="bi bi-graph-up text-xs mr-3"></i>
-          <Typography>My plan</Typography>
+        <MenuItem onClick={() => setAnchorElUser(null)}>
+          <i className="bi bi-graph-up mr-4"></i>
+          My plan
         </MenuItem>
-        <MenuItem onClick={handleCloseUserMenu}>
-          <i className="bi bi-sliders2-vertical text-xs mr-3"></i>
-          <Typography>Settings</Typography>
+
+        <MenuItem onClick={() => setAnchorElUser(null)}>
+          <i className="bi bi-sliders2-vertical mr-4"></i>
+          Settings
         </MenuItem>
-        <Divider />
+
+        <Divider  />
+
         <MenuItem onClick={() => signOut({ redirectUrl: "/" })}>
-          <i className="bi bi-box-arrow-right text-sm mr-3"></i>
-          <Typography>Logout</Typography>
+          <i className="bi bi-box-arrow-right mr-4"></i>
+          Logout
         </MenuItem>
       </Menu>
     </div>

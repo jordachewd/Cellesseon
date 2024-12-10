@@ -1,8 +1,6 @@
-"use client";
 import Logo from "../shared/Logo";
-import css from "./LandingPage.module.css";
+import css from "@/styles/sections/LandingPage.module.css";
 import { Button, Typography } from "@mui/material";
-import ThemeSwitch from "../shared/ThemeSwitch";
 
 export default function LandingPage() {
   return (
@@ -25,8 +23,8 @@ export default function LandingPage() {
           Your smart assistant is here to make it all easy!
         </Typography>
       </div>
-
-{/*       <div className={`${css.actions} !flex-row space-x-6 justify-center`}>
+      {/* 
+      <div className={`${css.actions} !flex-row space-x-6 justify-center`}>
         <Button size="small">Login</Button>
         <Button>Login</Button>
         <Button size="large">Login</Button>
@@ -60,10 +58,6 @@ export default function LandingPage() {
         >
           Login
         </Button>
-      </div>
-
-      <div className={`${css.actions} !animate-delay-[900ms]`}>
-        <ThemeSwitch />
       </div>
     </section>
   );

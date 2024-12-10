@@ -1,12 +1,13 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
-import { Messages } from "@/types";
+
 import {
   apiHeaders,
   chatPayload,
   createImgPayload,
   systemMsg,
 } from "@/constants";
+import { Messages } from "@/types";
 
 /* Required for the Edge Runtime */
 export const runtime = "edge";

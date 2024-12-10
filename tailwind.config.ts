@@ -1,9 +1,9 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimated from "tailwindcss-animated";
-import plugin from "tailwindcss/plugin";
 
 const config: Config = {
-  darkMode: ["class", '[data-mode="dark"]'],
+  darkMode: ["class", '[data-celeseon-theme="dark"]'],
+
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -167,6 +167,7 @@ const config: Config = {
           800: "#198F8E",
           900: "#147978",
         },
+
         jwdMarine: {
           100: "#B0BAD7",
           200: "#8695C0",
@@ -185,64 +186,21 @@ const config: Config = {
         "2xl": "1440px",
         "3xl": "1600px",
       },
+
       maxWidth: {
         edge: "96%",
       },
+
       maxHeight: {
         edge: "92%",
       },
+
       fontSize: {
         xxs: "0.625rem",
-      },
-      backgroundImage: {
-        jwdHomeGradient: "linear-gradient(to top, #26D0CE, #1A2980)",
-        jwdChatGradient: "linear-gradient(to bottom, #26D0CE, #1A2980)",
       },
     },
   },
   plugins: [tailwindcssAnimated],
-  /*   plugins: [
-    tailwindcssAnimated,
-
-    // Custom plugin for global CSS variables
-
-    plugin(function ({
-      addBase,
-      theme,
-    }: {
-      addBase: Function;
-      theme: Function;
-    }) {
-      const lightThemeVariables = Object.entries(theme("colors") || {}).reduce(
-        (acc: Record<string, string>, [colorName, colorShades]) => {
-          if (typeof colorShades === "object" && colorShades !== null) {
-            Object.entries(colorShades).forEach(([shade, value]) => {
-              acc[`--${colorName}-${shade}`] = value as string;
-            });
-          }
-          return acc;
-        },
-        {}
-      );
-
-      const darkThemeVariables = Object.entries(theme("colors") || {}).reduce(
-        (acc: Record<string, string>, [colorName, colorShades]) => {
-          if (typeof colorShades === "object" && colorShades !== null) {
-            Object.entries(colorShades).forEach(([shade, value]) => {
-              acc[`--dark-${colorName}-${shade}`] = value as string;
-            });
-          }
-          return acc;
-        },
-        {}
-      );
-
-      addBase({
-        ":root": lightThemeVariables,
-        ".dark-theme": darkThemeVariables,
-      });
-    }),
-  ], */
 };
 
 export default config;

@@ -17,8 +17,7 @@ export const albertsans = Albert_Sans({
   display: "swap",
 });
 
-const baseTheme: ThemeOptions = {
-  
+const base: ThemeOptions = {
   breakpoints: {
     values: {
       xs: 0,
@@ -31,10 +30,11 @@ const baseTheme: ThemeOptions = {
 
   typography: {
     fontFamily: albertsans.style.fontFamily,
-    
+
     h1: {
       fontSize: "4rem",
       fontFamily: dosis.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
       "@media (min-width:768px)": {
         fontSize: "4.5rem",
       },
@@ -46,6 +46,7 @@ const baseTheme: ThemeOptions = {
     h2: {
       fontSize: "3rem",
       fontFamily: dosis.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
       "@media (min-width:768px)": {
         fontSize: "3.5rem",
       },
@@ -57,6 +58,7 @@ const baseTheme: ThemeOptions = {
     h3: {
       fontSize: "2.5rem",
       fontFamily: dosis.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
       "@media (min-width:768px)": {
         fontSize: "2.75rem",
       },
@@ -68,6 +70,7 @@ const baseTheme: ThemeOptions = {
     h4: {
       fontSize: "2rem",
       fontFamily: dosis.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
       "@media (min-width:768px)": {
         fontSize: "2.25rem",
       },
@@ -80,6 +83,7 @@ const baseTheme: ThemeOptions = {
       fontSize: "1.5rem",
       fontWeight: 600,
       fontFamily: dosis.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
       "@media (min-width:768px)": {
         fontSize: "1.75rem",
       },
@@ -92,6 +96,7 @@ const baseTheme: ThemeOptions = {
       fontSize: "1rem",
       fontWeight: 600,
       fontFamily: dosis.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
       "@media (min-width:768px)": {
         fontSize: "1.25rem",
       },
@@ -104,6 +109,7 @@ const baseTheme: ThemeOptions = {
       fontSize: "2rem",
       lineHeight: 1.4,
       fontFamily: albertsans.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
       "@media (min-width:768px)": {
         fontSize: "2.5rem",
       },
@@ -116,6 +122,7 @@ const baseTheme: ThemeOptions = {
       fontSize: "1.5rem",
       lineHeight: 1.4,
       fontFamily: albertsans.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
       "@media (min-width:768px)": {
         fontSize: "1.75rem",
       },
@@ -127,13 +134,15 @@ const baseTheme: ThemeOptions = {
     body1: {
       fontSize: "1.25rem",
       fontFamily: albertsans.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
     },
 
     body2: {
       fontSize: ".85rem",
       fontFamily: albertsans.style.fontFamily,
+      color: "var(--mui-palette-text-primary)",
     },
   },
 };
 
-export default baseTheme;
+export default base;

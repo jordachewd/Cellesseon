@@ -1,9 +1,10 @@
-import css from "./ChatSidebar.module.css";
+import css from "@/styles/chat/ChatSidebar.module.css";
 import Logo from "../shared/Logo";
 import SidebarToggle from "../shared/SidebarToggle";
 import { useChatContext } from "@/context/ChatContext";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
+import ToggleMode from "../shared/ToggleMode";
 
 interface ChatSidebarProps {
   loading: boolean;
@@ -51,8 +52,9 @@ export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
       </nav>
 
       <div className={css.bottom}>
-        <i className="bi bi-shield text-lg"></i>
-        <span className="ml-3">Bottom</span>
+        <ToggleMode />
+        {/*        <i className="bi bi-shield text-lg"></i>
+        <span className="ml-3">Bottom</span> */}
       </div>
     </aside>
   );

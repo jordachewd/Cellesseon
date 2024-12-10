@@ -1,5 +1,5 @@
 "use client";
-import css from "./MainPage.module.css";
+import css from "@/styles/sections/MainPage.module.css";
 import { Message } from "@/types";
 import { useState } from "react";
 import getOpenAiApi from "@/utils/getOpenAi";

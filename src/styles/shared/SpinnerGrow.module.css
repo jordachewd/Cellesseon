@@ -1,0 +1,20 @@
+.wrapper {
+  @apply flex items-center space-x-1;
+}
+
+.bubble {
+  @apply flex rounded-full -mb-0.5 animate-bounce;
+  @apply animate-infinite animate-duration-700 animate-ease-in;
+}
+
+.bubble1 {
+  @apply dark:bg-darkPrimary-400/60 bg-lightPrimary-600;
+}
+
+.bubble2 {
+  @apply dark:bg-darkPrimary-400/50 bg-lightPrimary-600 animate-delay-100;
+}
+
+.bubble3 {
+  @apply dark:bg-darkPrimary-400/40 bg-lightPrimary-600 animate-delay-200;
+}

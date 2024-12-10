@@ -11,11 +11,12 @@
   scroll-behavior: smooth;
 }
 
-body {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  @apply w-full p-0 flex overscroll-none
-  pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
+@layer base {
+  body {
+    @apply leading-tight text-[0.85rem] scroll-smooth font-sans;
+    @apply bg-lightBackground-500 dark:bg-jwdMarine-1000;
+    @apply pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
+  }
 }
 
 /*  all media elements set to block and full width */

@@ -1,4 +1,4 @@
-import css from "./ChatIntro.module.css";
+import css from "@/styles/chat/ChatIntro.module.css";
 import { IntroChips } from "@/constants/introChipsData";
 import { Chip, Typography } from "@mui/material";
 import { useUser } from "@clerk/clerk-react";

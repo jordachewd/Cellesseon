@@ -52,11 +52,9 @@ export default function BgAnimation({
     gradient3: { fx: "32s", x: "38s", y: "18s", rotation: "14s" },
   },
 }: BgAnimationProps) {
+  const style = "absolute top-0 left-0 w-full h-full overflow-hidden z-0";
   return (
-    <div
-      id="BgAnimation"
-      className="absolute top-0 left-0 w-full h-full overflow-hidden"
-    >
+    <div className={style}>
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="xMidYMid slice"

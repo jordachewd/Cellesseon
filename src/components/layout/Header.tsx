@@ -1,10 +1,9 @@
 "use client";
-import css from "./Header.module.css";
+import css from "@/styles/layout/Header.module.css";
 import AvatarMenu from "../shared/AvatarMenu";
 import SidebarToggle from "../shared/SidebarToggle";
 import { useChatContext } from "@/context/ChatContext";
 import Logo from "../shared/Logo";
-import ThemeSwitch from "../shared/ThemeSwitch";
 
 export default function Header() {
   const { sidebarCtx } = useChatContext();
@@ -15,7 +14,6 @@ export default function Header() {
         <SidebarToggle title="Show Menu" icon="bi-layout-sidebar" />
       </div>
       <div className={css.right}>
-        <ThemeSwitch />
         <AvatarMenu />
       </div>
     </section>

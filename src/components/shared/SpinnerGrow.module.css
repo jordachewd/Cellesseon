@@ -1,7 +1,0 @@
-.wrapper {
-  @apply flex items-center space-x-1;
-}
-
-.bubble {
-  @apply flex rounded-full animate-bounce animate-infinite animate-duration-700 animate-ease-in -mb-0.5;
-}

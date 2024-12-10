@@ -1,8 +1,8 @@
+import type { Metadata, Viewport } from "next";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import PageWrapper from "@/components/layout/PageWrapper";
 import LandingPage from "@/components/sections/LandingPage";
 import MainPage from "@/components/sections/MainPage";
-import type { Metadata, Viewport } from "next";
 import { ChatContextProvider } from "@/context/ChatContext";
 
 export const metadata: Metadata = {

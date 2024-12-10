@@ -1,4 +1,4 @@
-import css from "./ImageHolder.module.css";
+import css from "@/styles/shared/ImageHolder.module.css";
 import SpinnerGrow from "./SpinnerGrow";
 import { useState } from "react";
 import Image from "next/image";

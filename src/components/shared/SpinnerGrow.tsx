@@ -1,4 +1,5 @@
-import css from "./SpinnerGrow.module.css";
+import css from "@/styles/shared/SpinnerGrow.module.css";
+
 interface SpinnerGrowProps {
   styles?: string;
   size?: "small" | "medium" | "large";
@@ -28,13 +29,9 @@ export default function SpinnerGrow({
 }: SpinnerGrowProps) {
   return (
     <div className={`${css.wrapper} ${styles || ""}`}>
-      <div className={`${css.bubble} ${bubble1[size]} bg-jwdAqua-500/50`}></div>
-      <div
-        className={`${css.bubble} ${bubble2[size]} bg-jwdAqua-500/35 animate-delay-100`}
-      ></div>
-      <div
-        className={`${css.bubble} ${bubble3[size]} bg-jwdAqua-500/25 animate-delay-200`}
-      ></div>
+      <div className={`${css.bubble} ${css.bubble1} ${bubble1[size]}`}></div>
+      <div className={`${css.bubble} ${css.bubble2} ${bubble2[size]}`}></div>
+      <div className={`${css.bubble} ${css.bubble3} ${bubble3[size]}`}></div>
     </div>
   );
 }

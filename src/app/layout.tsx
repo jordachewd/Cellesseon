@@ -1,9 +1,10 @@
 "use client";
 import { ClerkProvider } from "@clerk/nextjs";
-import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
-import { CeleseonContextProvider } from "@/context/CeleseonContext";
-import CeleseonThemeProvider from "@/themes/themeProvider";
+import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
+import muiTheme from "@/themes/muiTheme";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./globals.css";
 
@@ -21,10 +22,11 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body>
           <AppRouterCacheProvider>
-            <CeleseonContextProvider>
-              <InitColorSchemeScript attribute="class" />
-              <CeleseonThemeProvider>{children}</CeleseonThemeProvider>
-            </CeleseonContextProvider>
+            <InitColorSchemeScript attribute="data-celeseon-theme" />
+            <ThemeProvider theme={muiTheme}>
+              <CssBaseline />
+              {children}
+            </ThemeProvider>
           </AppRouterCacheProvider>
         </body>
       </html>

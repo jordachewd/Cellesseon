@@ -48,3 +48,4 @@ export type Chip = {
 };
 
  
+export type PrefersColorScheme = "system" | "light" | "dark";
