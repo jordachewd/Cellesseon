@@ -6,7 +6,6 @@ _Smart chat assistant based on OpenAI._
 
 :point_right: [See it in action](https://celeseon.vercel.app/)
 
-<br />
 <hr />
 
 ### Strategy
