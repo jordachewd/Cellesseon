@@ -22,25 +22,27 @@
 }
 
 .content {
-  @apply flex flex-col rounded-l-xl rounded-b-xl
-  break-words px-3 py-1 mt-6 max-w-[70%] shadow 
-  text-lightText-500 dark:text-darkText-500
-  bg-lightSecondary-100 dark:bg-darkSecondary-600 dark:shadow-md;
+  @apply flex flex-col rounded-l-xl rounded-b-xl;
+  @apply break-words px-3 py-1 mt-6 max-w-[80%] shadow;
+
+  @apply text-lightText-500 bg-lightSecondary-200;
+  @apply dark:text-darkText-500 dark:bg-darkSecondary-500;
 }
 
 .botArticle .content {
-  @apply rounded-none rounded-tr-xl rounded-br-xl rounded-bl-xl max-w-[89%]
-  bg-lightPrimary-100 dark:bg-darkPrimary-900 p-4;
+  @apply max-w-[90%] p-4;
+  @apply rounded-none rounded-tr-xl rounded-br-xl rounded-bl-xl;
+  @apply bg-lightPrimary-100 dark:bg-darkPrimary-500/40;
 }
 
 .avatar {
-  @apply leading-none text-base p-2 rounded-full 
-  bg-lightSecondary-100 text-lightText-500/80 shadow
-  dark:bg-darkSecondary-600 dark:text-white/80;
+  @apply leading-none text-base p-2 rounded-full shadow;
+  @apply bg-lightSecondary-200 text-lightText-500;
+  @apply dark:bg-darkSecondary-500 dark:text-darkText-500;
 }
 
 .botArticle .avatar {
-  @apply bg-lightPrimary-100 border-lightPrimary-100 dark:bg-darkPrimary-700;
+  @apply bg-lightPrimary-100 dark:bg-darkPrimary-500/40;
 }
 
 .bottomRef {
@@ -109,14 +111,13 @@
 }
 
 .content table {
-  @apply min-w-full my-4 shadow overflow-auto  
-  bg-slate-200 dark:bg-jwdAqua-500/5;
+  @apply min-w-full my-4 shadow overflow-auto;
+  @apply bg-slate-200 dark:bg-jwdAqua-500/5;
 }
 
 .content table th {
-  @apply p-2 border-b text-left font-semibold  
-  dark:bg-jwdAqua-100/20 bg-slate-300 
-  dark:border-jwdAqua-100/5 border-slate-300;
+  @apply p-2 text-left font-semibold;
+  @apply dark:bg-jwdAqua-100/10 bg-slate-300/70;
 }
 
 .content table th strong {
@@ -124,11 +125,13 @@
 }
 
 .content table tbody tr {
-  @apply dark:hover:bg-jwdAqua-100/5 hover:bg-slate-100 transition-all ease-in-out;
+  @apply transition-all ease-in-out last-of-type:border-none;
+  @apply dark:hover:bg-jwdAqua-100/5 hover:bg-slate-100;
+  @apply border-slate-300/50 dark:border-jwdAqua-100/5 border-b;
 }
 
 .content table td {
-  @apply p-2 text-xs border border-slate-300 dark:border-jwdAqua-100/5;
+  @apply p-2 text-xs;
 }
 
 .content hr {
@@ -146,8 +149,8 @@
   }
 
   .content table {
-    @apply border-none bg-transparent shadow-none 
-    dark:border-none dark:bg-transparent;
+    @apply border-none bg-transparent shadow-none;
+    @apply dark:border-none dark:bg-transparent;
   }
 
   /* Hide the header row */
@@ -157,9 +160,9 @@
 
   /* Style each table row to look like a 'card' */
   .content table tr {
-    @apply border rounded mb-2 p-2
-    border-slate-300 bg-slate-200 shadow
-     dark:border-jwdAqua-100/10 dark:bg-jwdAqua-500/10;
+    @apply border rounded mb-2 p-2 shadow;
+    @apply border-slate-300 bg-slate-200;
+    @apply dark:border-jwdAqua-100/10 dark:bg-jwdAqua-500/10;
   }
 
   /* Display each cell as a block with a label */

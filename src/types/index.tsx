@@ -1,7 +1,5 @@
 import { Uploadable } from "openai/uploads.mjs";
 
-export type MessageRole = "user" | "assistant" | "system";
-
 interface TextContent {
   type: "text" | "temp";
   text: string;
@@ -14,6 +12,8 @@ interface ImageContent {
   };
 }
 
+export type PrefersColorScheme = "system" | "light" | "dark";
+export type MessageRole = "user" | "assistant" | "system";
 export type ContentType = TextContent | ImageContent;
 
 export interface Message {
@@ -23,6 +23,7 @@ export interface Message {
 }
 
 export interface Messages {
+  taskId?: string;
   messages: Message[];
 }
 
@@ -33,7 +34,6 @@ export interface GenerateImage {
 export interface VariateImage {
   image: Uploadable;
 }
-
 
 export type Option = {
   id: number;
@@ -46,6 +46,3 @@ export type Chip = {
   icon: string;
   options: Option[];
 };
-
- 
-export type PrefersColorScheme = "system" | "light" | "dark";

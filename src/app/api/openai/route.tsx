@@ -40,10 +40,8 @@ export async function POST(req: Request) {
 
     if (stopReason === "tool_calls" && toolCalls) {
       const fnName = toolCalls[0].function.name;
-
+      const parsedArgs = JSON.parse(toolCalls[0].function.arguments);
       if (fnName === "generateImage") {
-        const parsedArgs = JSON.parse(toolCalls[0].function.arguments);
-
         try {
           const createImgResp = await axios.post(
             "https://api.openai.com/v1/images/generations",
@@ -69,6 +67,11 @@ export async function POST(req: Request) {
             status: 500,
           });
         }
+      } else if (fnName === "generateTitle") {
+        return NextResponse.json({
+          ...chatResponse.data,
+          taskTitle: parsedArgs.title,
+        });
       } else {
         return NextResponse.json(chatResponse.data);
       }

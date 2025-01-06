@@ -30,31 +30,31 @@ export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
           onClick={() => newChat()}
         >
           <i className="bi bi-plus-lg"></i>
-          <span className="ml-3">New Chat</span>
+          <span className="ml-3">New Task</span>
         </Button>
+
         <div className={css.chats}>
           <Typography variant="body2">History</Typography>
 
           <Link href="/">
             <i className="bi bi-chat-dots text-lg"></i>
-            <span className="ml-3">Chat #1</span>
+            <span className="ml-3">Task #1</span>
           </Link>
 
           <Link href="/">
             <i className="bi bi-chat-dots text-lg"></i>
-            <span className="ml-3">Chat #2</span>
+            <span className="ml-3">Task #2</span>
           </Link>
           <Link href="/">
             <i className="bi bi-chat-dots text-lg"></i>
-            <span className="ml-3">Chat #3</span>
+            <span className="ml-3">Task #3</span>
           </Link>
         </div>
+        
       </nav>
 
       <div className={css.bottom}>
         <ToggleMode />
-        {/*        <i className="bi bi-shield text-lg"></i>
-        <span className="ml-3">Bottom</span> */}
       </div>
     </aside>
   );

@@ -94,5 +94,26 @@ export const chatPayload = {
         },
       },
     },
+    {
+      type: "function",
+      function: {
+        name: "generateTitle",
+        description:
+          "Generate title for conversation: a concise maximum five-word title for the entire discussion.",
+        strict: true,
+        parameters: {
+          type: "object",
+          properties: {
+            title: {
+              type: "string",
+              description:
+                "The first completion response to generate a title from.",
+            },
+          },
+          required: ["title"],
+          additionalProperties: false,
+        },
+      },
+    },
   ],
 };

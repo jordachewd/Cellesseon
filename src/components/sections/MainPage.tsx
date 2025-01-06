@@ -2,13 +2,13 @@
 import css from "@/styles/sections/MainPage.module.css";
 import { Message } from "@/types";
 import { useState } from "react";
-import getOpenAiApi from "@/utils/getOpenAi";
 import Header from "@/components/layout/Header";
 import ChatIntro from "../chat/ChatIntro";
 import ChatSidebar from "../chat/ChatSidebar";
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import AlertMessage, { AlertParams } from "../shared/AlertMessage";
+import getAiCompletition from "@/lib/utils/getAiCompletition";
 
 export default function MainPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -26,69 +26,34 @@ export default function MainPage() {
       role: "user",
       content: [{ type: "temp", text: "Thinking ..." }],
     };
+
     setChat((prev) => [...prev, prompt, tempChat]);
 
     try {
-      const response = await getOpenAiApi({
+      const response = await getAiCompletition({
         messages: [...chat.slice(1), prompt],
       });
 
-      if (!response.ok) {
-        const errText = response.statusText;
+      console.log("response: ", response);
+
+      if (response.data.error) {
         setAlert({
-          title: `Error ${response.status}`,
-          text: `${errText ? errText : "Error fetching OpenAI API!"}`,
+          title: response.data.error,
+          text: `Error status: ${response.data.status}`,
         });
         setIsLoading(false);
-
         setChat((prev) => prev.slice(0, -1));
         return;
       }
 
-      const data = await response.json();
-      if (data.error) {
-        setAlert({
-          title: data.title,
-          text:
-            typeof data.error === "string"
-              ? data.error
-              : "Unknown error occurred",
-        });
-        setIsLoading(false);
-
-        setChat((prev) => prev.slice(0, -1));
-        return;
-      }
-
-      if (data.choices && data.choices[0]?.message) {
-        const gpt4o = data.choices[0].message;
-        const dalle = data.dalle?.data[0];
-        const newContent: Message["content"] = [
-          {
-            type: "text",
-            text: gpt4o.content || dalle?.revised_prompt || "",
-          },
-        ];
-        if (dalle) {
-          newContent.push({
-            type: "image_url",
-            image_url: {
-              url: dalle.url,
-            },
-          });
-        }
-        const newChat: Message = {
-          whois: gpt4o.role,
-          role: dalle ? "user" : gpt4o.role,
-          content: newContent,
-        };
-
-        setChat((prev) => [...prev.slice(0, -1), newChat]);
+      if (response.openai) {
+        setChat((prev) => [...prev.slice(0, -1), response.openai]);
       }
     } catch (error) {
       console.error(error);
       setChat((prev) => prev.slice(0, -1));
     }
+
     setIsLoading(false);
   };
 
@@ -98,6 +63,7 @@ export default function MainPage() {
       <div className={css.section}>
         <Header />
         {alert && <AlertMessage message={alert} />}
+
         {chat.length ? (
           <ChatBody messages={chat} />
         ) : (
