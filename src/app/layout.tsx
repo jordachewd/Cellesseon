@@ -17,8 +17,8 @@ export default function RootLayout({
     <ClerkProvider
       appearance={{
         variables: {
-          colorPrimary: muiTheme.palette.primary.main,
-          colorText: muiTheme.palette.text.primary,
+          colorPrimary: "#6A0DAD",
+          colorText: "#EAEAEA",
         },
       }}
     >
