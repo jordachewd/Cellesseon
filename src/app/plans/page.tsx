@@ -1,12 +1,12 @@
 "use client";
-import css from "@/styles/pages/plans.module.css";
+import css from "@/styles/sections/Plans.module.css";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Button, IconButton, Switch, Typography } from "@mui/material";
 import { plans } from "@/constants/plans";
 import { useRouter } from "next/navigation";
 import { TooltipArrow } from "@/components/shared/TooltipArrow";
 import { useState } from "react";
-import ToggleMode from "@/components/shared/ToggleMode";
+import Faqs from "@/components/shared/Faqs";
 
 export default function PlansPage() {
   const router = useRouter();
@@ -34,9 +34,9 @@ export default function PlansPage() {
         </IconButton>
       </TooltipArrow>
 
-      <div className={css.section}>
+      <section className={css.section}>
         <div className={css.head}>
-          <Typography variant="h3">Choose a plan</Typography>
+          <Typography variant="h2">Choose a plan</Typography>
           <Typography variant="body1">
             Select the plan that suits your needs!
           </Typography>
@@ -62,6 +62,8 @@ export default function PlansPage() {
               <div className={css.planHead}>
                 <Typography variant="h5">{plan.name}</Typography>
                 <i className={`bi ${plan.icon} text-4xl`}></i>
+              </div>
+              <div className={css.planPrice}>
                 <Typography variant="h6">
                   $
                   {plan.price === 0
@@ -73,8 +75,7 @@ export default function PlansPage() {
                     : plan.price + oddpricing + " /mo"}
                 </Typography>
               </div>
-
-              <div className={css.inclusions}>
+              <div className={css.planFeatures}>
                 {plan.inclusions.map((inclusion) => (
                   <li
                     key={plan.name + inclusion.label}
@@ -90,27 +91,35 @@ export default function PlansPage() {
                   </li>
                 ))}
               </div>
-              <SignedOut>
-                <Button size="large" variant="contained" href="/sign-up">
-                  Go {plan.name}
-                </Button>
-              </SignedOut>
-              <SignedIn>
-                {plan.name === "Free" ? (
-                  <Button size="large" variant="outlined" disabled>
-                    Current Plan
+              <div className={css.planActions}>
+                <SignedOut>
+                  <Button
+                    href="/sign-up"
+                    variant={plan.highlight ? "contained" : "outlined"}
+                  >
+                    Go {plan.name}
                   </Button>
-                ) : (
-                  <Button size="large" variant="contained">
-                    Get Started
-                  </Button>
-                )}
-              </SignedIn>
+                </SignedOut>
+                <SignedIn>
+                  {plan.name === "Free" ? (
+                    <Button
+                      disabled
+                      variant={plan.highlight ? "contained" : "outlined"}
+                    >
+                      Current Plan
+                    </Button>
+                  ) : (
+                    <Button variant={plan.highlight ? "contained" : "outlined"}>
+                      Get Started
+                    </Button>
+                  )}
+                </SignedIn>
+              </div>
             </div>
           ))}
         </div>
-        <ToggleMode />
-      </div>
+      </section>
+      <Faqs />
     </div>
   );
 }

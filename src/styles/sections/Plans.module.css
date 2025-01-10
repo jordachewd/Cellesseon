@@ -1,9 +1,9 @@
 .wrapper {
-  @apply flex w-full h-dvh m-0 p-0 z-10 relative;
+  @apply flex flex-col w-full m-0 py-8 md:py-14 z-10 relative gap-10;
 }
 
 .section {
-  @apply flex flex-col w-full max-w-6xl mx-auto p-4;
+  @apply flex flex-col w-full max-w-6xl mx-auto px-4 gap-4;
 }
 
 .backBtn {
@@ -11,7 +11,7 @@
 }
 
 .head {
-  @apply flex flex-col gap-4 justify-center items-center mt-10;
+  @apply flex flex-col gap-4 justify-center items-center;
 }
 
 .switch {
@@ -32,11 +32,15 @@
 }
 
 .plans {
-  @apply flex w-full justify-between gap-4 my-6 items-center;
+  @apply flex w-full justify-between gap-6 my-6 items-center flex-col md:flex-row;
 }
 
 .planHead {
-  @apply flex flex-col gap-4 justify-center items-center;
+  @apply flex gap-4 justify-between items-center;
+}
+
+.planPrice {
+  @apply flex justify-between items-center;
 }
 
 .plan {
@@ -46,11 +50,15 @@
 }
 
 .highlight {
-  @apply py-8 border-none;
+  @apply md:py-10 border-none;
   color: var(--mui-palette-tertiary-contrastText);
-  background-color: rgb(var(--mui-palette-tertiary-mainChannel) / 0.95);
+  background-color: var(--mui-palette-tertiary-main);
 }
 
-.inclusions {
-  @apply flex flex-col gap-4 w-full my-8;
+.planFeatures {
+  @apply flex flex-col gap-3 w-full my-8;
+}
+
+.planActions {
+  @apply flex justify-center items-center my-4;
 }

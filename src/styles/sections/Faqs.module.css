@@ -1,0 +1,11 @@
+.section {
+  @apply flex flex-col w-full max-w-6xl mx-auto px-4 gap-10;
+}
+
+.head{
+  @apply flex flex-col gap-2;
+}
+
+.faqs {
+  @apply flex flex-col gap-2;
+}

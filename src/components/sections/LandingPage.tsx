@@ -29,13 +29,13 @@ export default function LandingPage() {
       <div className={css.actions}>
         <Button
           size="large"
-          variant="contained"
+          variant="outlined"
           href="/plans"
-          className="!px-10"
+          className="!px-16"
         >
           Get Started
         </Button>
-        <Button  variant="text" href="/sign-in" className="!px-10">
+        <Button size="small" href="/sign-in" className="!px-10">
           Login
         </Button>
       </div>

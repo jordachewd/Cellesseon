@@ -18,18 +18,23 @@ export const muiComponents: ThemeOptions = {
           letterSpacing: "1px",
           fontFamily: dosis.style.fontFamily,
           transition: "all 0.35s ease-in-out",
+          borderRadius: "0.5rem",
         },
         text: {
           color: "var(--mui-palette-tertiary-main)",
           "&:hover": {
-            color: "var(--mui-palette-tertiary-dark)",
+            color: "var(--mui-palette-tertiary-dark)!important",
           },
         },
         outlined: {
+          borderColor: "var(--mui-palette-tertiary-main)",
+          color: "var(--mui-palette-tertiary-main)",
           "&:hover": {
-            borderColor: "var(--mui-palette-primary-light)",
+            borderColor: "var(--mui-palette-tertiary-dark)",
+            color: "var(--mui-palette-tertiary-dark)!important",
           },
         },
+
         contained: {
           color: "var(--mui-palette-common-white)",
           backgroundColor: "var(--mui-palette-secondary-dark)",
@@ -42,9 +47,11 @@ export const muiComponents: ThemeOptions = {
               "0px 1px 4px 0px rgba(var(--mui-palette-secondary-darkChannel) / 0.4)",
           },
         },
-    
+        sizeSmall: {
+          fontSize: "1rem",
+        },
         sizeMedium: {
-          fontSize: "1.125rem",
+          fontSize: "1.25rem",
         },
         sizeLarge: {
           fontSize: "1.5rem",

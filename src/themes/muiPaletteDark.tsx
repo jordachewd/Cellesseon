@@ -12,12 +12,13 @@ export const muiPaletteDark: ThemeOptions = {
       light: "#F3CBB3", // Rose Gold (lighter)
       main: "#E8A87C", // Rose Gold
       dark: "#C17B5B", // Rose Gold (dark)
-      contrastText: "#8A543D", // Rose Gold (darker)
+      contrastText: "#5C3B28", // Rose Gold (darker)
     },
     action: {
       active: "#E8A87C", // Rose Gold
-      hover: "#F1B99C", // Slightly lighter shade
-      disabled: "#5D70AA", // Marine (300)
+      hover: "#C17B5B", // Slightly darker shade
+      disabled: "#6A0DAD", // Deep Plum
+      disabledBackground: "#6A0DAD", // Deep Plum
     },
     background: {
       default: "#020519", // Marine Dark Blue
