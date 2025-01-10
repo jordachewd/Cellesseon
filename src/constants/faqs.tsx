@@ -11,7 +11,7 @@ export const faqs = [
     id: 1,
     question: "Who should I reach out to for assistance or inquiries?",
     answer:
-      "For any questions or support needs, please contact our customer support team at office@jordachewd.com.",
+      "For any questions or support needs, please contact our customer support team at [email address to be added soon].",
   },
   {
     id: 2,
