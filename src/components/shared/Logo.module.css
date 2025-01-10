@@ -1,7 +1,0 @@
-.wrapper {
-  @apply flex items-center space-x-[8%];
-}
-
-.logo {
-  @apply text-[120%];
-}

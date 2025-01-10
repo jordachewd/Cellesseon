@@ -16,7 +16,10 @@ export default function RootLayout({
   return (
     <ClerkProvider
       appearance={{
-        variables: { colorPrimary: "#26D0CE", colorText: "#1A2980" },
+        variables: {
+          colorPrimary: muiTheme.palette.primary.main,
+          colorText: muiTheme.palette.text.primary,
+        },
       }}
     >
       <html lang="en" suppressHydrationWarning>

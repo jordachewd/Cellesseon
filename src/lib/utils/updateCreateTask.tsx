@@ -1,7 +1,5 @@
 import { Message } from "@/types";
-//import { UserParams } from "@/types/UserData.d";
 import { CreateTaskParams, TokenUsage } from "@/types/TaskData.d";
-//import { currentUser } from "@clerk/nextjs/server";
 import getOpenAiApi from "./getOpenAiApi";
 
 interface StoreChatParams {
@@ -13,11 +11,15 @@ export default async function updateCreateTask({
   messages,
   usage,
 }: StoreChatParams) {
-  // const user = await currentUser();
   const getTitle: Message = {
     whois: "user",
     role: "user",
-    content: [{ type: "text", text: "Generate title for conversation. Maximum four words." }],
+    content: [
+      {
+        type: "text",
+        text: "Generate title for conversation. Maximum four words.",
+      },
+    ],
   };
 
   try {
@@ -49,9 +51,6 @@ export default async function updateCreateTask({
     };
 
     return createNewTask;
-
-    // const createdTask = await createTask(createNewTask);
-    // return createdTask;
   } catch (error) {
     console.error("Error in updateCreateTask:", error);
 
@@ -60,6 +59,4 @@ export default async function updateCreateTask({
       status: 500,
     };
   }
-
-  return null;
 }
