@@ -3,18 +3,16 @@ import { ThemeOptions } from "@mui/material";
 export const muiPaletteDark: ThemeOptions = {
   palette: {
     primary: {
-      main: "#26D0CE", // Aqua
-      dark: "#198F8E", // Aqua Dark (800)
+      main: "#6A0DAD", // Deep Plum
     },
     secondary: {
-      main: "#1A2980", // Marine
-      dark: "#0D144A", // Marine Dark (900)
+      main: "#008080", // Teal Green
     },
     tertiary: {
-      light: "#FFC6B3", // Rose Gold (300)
-      main: "#E8A87C", // Rose Gold (500)
-      dark: "#BC8B63", // Rose Gold (700)
-      contrastText: "#5C3B28", // Rose Gold (1200)
+      light: "#F3CBB3", // Rose Gold (lighter)
+      main: "#E8A87C", // Rose Gold
+      dark: "#C17B5B", // Rose Gold (dark)
+      contrastText: "#8A543D", // Rose Gold (darker)
     },
     action: {
       active: "#E8A87C", // Rose Gold
@@ -22,13 +20,13 @@ export const muiPaletteDark: ThemeOptions = {
       disabled: "#5D70AA", // Marine (300)
     },
     background: {
-      default: "#020519", // Marine Dark (1000)
-      paper: "#020519", // Marine Dark (1000)
+      default: "#020519", // Marine Dark Blue
+      paper: "#020519", // Marine Dark Blue
     },
     text: {
-      primary: "#EAEAEA", // Soft White for main text
+      primary: "#EAEAEA", // Soft White
       secondary: "#BEBEBE", // Muted light gray for secondary text
     },
-    divider: "#3A3A3A", // Muted Gray for dividers, borders, and lines
+    divider: "#3A3A3A", // Muted Gray
   },
 };

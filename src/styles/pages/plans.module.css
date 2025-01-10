@@ -1,0 +1,56 @@
+.wrapper {
+  @apply flex w-full h-dvh m-0 p-0 z-10 relative;
+}
+
+.section {
+  @apply flex flex-col w-full max-w-6xl mx-auto p-4;
+}
+
+.backBtn {
+  @apply !absolute top-4 left-2;
+}
+
+.head {
+  @apply flex flex-col gap-4 justify-center items-center mt-10;
+}
+
+.switch {
+  @apply flex gap-2 items-center font-semibold text-xs;
+}
+
+.switch p {
+  @apply opacity-60 transition-all duration-500;
+}
+
+.bubble {
+  @apply text-xxs bg-orange-600 text-white rounded p-1 leading-none shadow-sm;
+}
+
+.switched {
+  color: var(--mui-palette-tertiary-main);
+  @apply !opacity-100;
+}
+
+.plans {
+  @apply flex w-full justify-between gap-4 my-6 items-center;
+}
+
+.planHead {
+  @apply flex flex-col gap-4 justify-center items-center;
+}
+
+.plan {
+  @apply flex flex-col w-full p-6 rounded-lg shadow-xl border;
+  border-color: var(--mui-palette-primary-main);
+  background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.3);
+}
+
+.highlight {
+  @apply py-8 border-none;
+  color: var(--mui-palette-tertiary-contrastText);
+  background-color: rgb(var(--mui-palette-tertiary-mainChannel) / 0.95);
+}
+
+.inclusions {
+  @apply flex flex-col gap-4 w-full my-8;
+}

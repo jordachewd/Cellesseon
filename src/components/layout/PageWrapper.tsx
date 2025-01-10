@@ -1,7 +1,7 @@
 import css from "@/styles/layout/PageWrapper.module.css";
 import { ReactNode } from "react";
-//import { SignedOut } from "@clerk/nextjs";
-//import BgAnimation from "../shared/BgAnimation";
+// import { SignedOut } from "@clerk/nextjs";
+// import BgAnimation from "../shared/BgAnimation";
 
 interface PageWrapperProps {
   children: ReactNode;

@@ -13,5 +13,5 @@
 }
 
 .actions {
-  @apply animate-delay-700;
+  @apply animate-delay-700 gap-4;
 }

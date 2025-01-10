@@ -13,8 +13,7 @@
 
 @layer base {
   body {
-    @apply leading-tight text-[0.85rem] scroll-smooth font-sans;
-    @apply bg-lightBackground-500 dark:bg-jwdMarine-1000;
+    @apply scroll-smooth antialiased;
     @apply pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
   }
 }

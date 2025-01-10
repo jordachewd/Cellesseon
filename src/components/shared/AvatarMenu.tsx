@@ -3,6 +3,7 @@ import { useState } from "react";
 import { TooltipArrow } from "./TooltipArrow";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import SpinnerGrow from "./SpinnerGrow";
+import Link from "next/link";
 
 function stringAvatar(name: string) {
   return {
@@ -62,9 +63,15 @@ export default function AvatarMenu() {
         open={Boolean(anchorElUser)}
         onClose={() => setAnchorElUser(null)}
       >
-        <MenuItem onClick={() => setAnchorElUser(null)}>
-          <i className="bi bi-graph-up mr-4"></i>
-          My plan
+        <MenuItem
+          onClick={() => {
+            setAnchorElUser(null);
+          }}
+        >
+          <Link href="/plans">
+            <i className="bi bi-graph-up mr-4"></i>
+            My plan
+          </Link>
         </MenuItem>
 
         <MenuItem onClick={() => setAnchorElUser(null)}>
@@ -72,7 +79,7 @@ export default function AvatarMenu() {
           Settings
         </MenuItem>
 
-        <Divider  />
+        <Divider />
 
         <MenuItem onClick={() => signOut({ redirectUrl: "/" })}>
           <i className="bi bi-box-arrow-right mr-4"></i>

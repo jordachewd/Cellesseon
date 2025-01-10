@@ -30,9 +30,12 @@ export default function LandingPage() {
         <Button
           size="large"
           variant="contained"
-          href="/sign-in"
-          className="!px-20"
+          href="/plans"
+          className="!px-10"
         >
+          Get Started
+        </Button>
+        <Button  variant="text" href="/sign-in" className="!px-10">
           Login
         </Button>
       </div>

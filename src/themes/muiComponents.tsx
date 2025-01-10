@@ -15,22 +15,22 @@ export const muiComponents: ThemeOptions = {
       styleOverrides: {
         root: {
           minWidth: 0,
-          lineHeight: 1.4,
-          fontWeight: 400,
-          letterSpacing: "0.5px",
+          letterSpacing: "1px",
           fontFamily: dosis.style.fontFamily,
+          transition: "all 0.35s ease-in-out",
+        },
+        text: {
+          color: "var(--mui-palette-tertiary-main)",
           "&:hover": {
-            color: "var(--mui-palette-primary-light)",
+            color: "var(--mui-palette-tertiary-dark)",
           },
         },
         outlined: {
-          transition: "all 0.35s ease-in-out",
           "&:hover": {
             borderColor: "var(--mui-palette-primary-light)",
           },
         },
         contained: {
-          transition: "all 0.35s ease-in-out",
           color: "var(--mui-palette-common-white)",
           backgroundColor: "var(--mui-palette-secondary-dark)",
           boxShadow:
@@ -42,11 +42,12 @@ export const muiComponents: ThemeOptions = {
               "0px 1px 4px 0px rgba(var(--mui-palette-secondary-darkChannel) / 0.4)",
           },
         },
+    
         sizeMedium: {
           fontSize: "1.125rem",
         },
         sizeLarge: {
-          fontSize: "1.35rem",
+          fontSize: "1.5rem",
         },
       },
     },
