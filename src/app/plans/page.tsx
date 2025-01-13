@@ -86,13 +86,15 @@ export default function PlansPage() {
                     {plan.name}
                   </Typography>
 
-                  <div className="flex opacity-60 text-xs -mt-2 mb-3">{plan.desc}</div>
+                  <div className="flex opacity-60 text-xs -mt-2 mb-3">
+                    {plan.desc}
+                  </div>
 
                   <Typography
                     variant="h5"
                     sx={{
                       display: "flex",
-                      alignItems: "end",
+                      alignItems: "center",
                       lineHeight: "1",
                       color: plan.highlight
                         ? "var(--mui-palette-tertiary-contrastText)"
@@ -100,7 +102,7 @@ export default function PlansPage() {
                     }}
                   >
                     {yearly && plan.price !== 0 && (
-                      <span className="flex pr-5 text-[60%] opacity-70 line-through font-light">
+                      <span className="flex pr-4 text-[60%] opacity-70 line-through font-light">
                         ${plan.price * 12}
                       </span>
                     )}
@@ -109,9 +111,11 @@ export default function PlansPage() {
                       {plan.price !== 0 ? "$" + planFee : "free"}
                     </span>
 
-                    <span className="flex text-sm opacity-80">
-                      {plan.price !== 0 ? (yearly ? "/Yr" : "/Mo") : ""}
-                    </span>
+                    {plan.price !== 0 && (
+                      <span className="flex text-sm opacity-80 self-end">
+                        {yearly ? "/Yr" : "/Mo"}
+                      </span>
+                    )}
                   </Typography>
                 </div>
                 <div className={css.planFeatures}>
