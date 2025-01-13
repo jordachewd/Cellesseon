@@ -22,7 +22,7 @@ export const muiPaletteLight: ThemeOptions = {
     },
     background: {
       default: "#F9F5F1", // Soft Beige
-      paper: "#F9F5F1", // Soft Beige
+      paper: "#f5ebe1", // Darker Beige
     },
     text: {
       primary: "#4A4A4A", // Charcoal Gray

@@ -24,7 +24,7 @@ export default function Faqs() {
               aria-controls={`panel${faq.id}-content`}
               id={`panel${faq.id}-header`}
             >
-              <Typography component="span">{faq.question}</Typography>
+              <Typography component="span" variant="h6">{faq.question}</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography variant="body2">{faq.answer}</Typography>

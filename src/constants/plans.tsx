@@ -1,34 +1,31 @@
 export const plans = [
   {
     _id: 0,
-    name: "Free",
+    name: "Lite",
+    desc: "Free trial for 3 days",
     icon: "bi-gift",
     highlight: false,
     price: 0,
     inclusions: [
       {
-        label: "Limited AI model",
+        label: "Full AI model",
         isIncluded: true,
       },
       {
-        label: "Limited messaging",
+        label: "Messaging and file uploads (limited)",
         isIncluded: true,
       },
       {
-        label: "File uploads and image generation",
-        isIncluded: false,
+        label: "Web browsing and data analysis (limited)",
+        isIncluded: true,
       },
       {
-        label: "Web browsing and data analysis",
-        isIncluded: false,
+        label: "3 image and/or audio generation (limited)",
+        isIncluded: true,
       },
       {
-        label: "Voice and video inputs",
-        isIncluded: false,
-      },
-      {
-        label: "Opportunities to test new features",
-        isIncluded: false,
+        label: "3 text to speach and/or voice inputs (limited)",
+        isIncluded: true,
       },
       {
         label: "Secure and private",
@@ -36,6 +33,10 @@ export const plans = [
       },
       {
         label: "Email support",
+        isIncluded: false,
+      },
+      {
+        label: "Opportunities to test new features",
         isIncluded: false,
       },
     ],
@@ -43,33 +44,30 @@ export const plans = [
   {
     _id: 1,
     name: "Pro",
-    icon: "bi-star",
+    desc: "Best for personal projects",
+    icon: "bi-stars",
     highlight: true,
-    price: 9,
+    price: 19,
     inclusions: [
       {
         label: "Full AI model",
         isIncluded: true,
       },
       {
-        label: "Messaging and file uploads",
+        label: "Messaging and file uploads (unlimited)",
         isIncluded: true,
       },
       {
-        label: "File uploads and image generation",
+        label: "Web browsing and data analysis (unlimited)",
         isIncluded: true,
       },
       {
-        label: "Web browsing and data analysis",
+        label: "20/Mo image and/or audio generation",
         isIncluded: true,
       },
       {
-        label: "Voice and video inputs",
-        isIncluded: false,
-      },
-      {
-        label: "Opportunities to test new features",
-        isIncluded: false,
+        label: "20/Mo text to speach and/or voice inputs",
+        isIncluded: true,
       },
       {
         label: "Secure and private",
@@ -79,37 +77,38 @@ export const plans = [
         label: "Email support",
         isIncluded: true,
       },
+      {
+        label: "Opportunities to test new features",
+        isIncluded: false,
+      },
     ],
   },
   {
     _id: 2,
     name: "Premium",
+    desc: "Best for businesses",
     icon: "bi-gem",
     highlight: false,
-    price: 29,
+    price: 49,
     inclusions: [
       {
-        label: "Full AI model",
+        label: "Multiple AI model selection",
         isIncluded: true,
       },
       {
-        label: "Unlimited messaging and file uploads",
+        label: "Messaging and file uploads (unlimited)",
         isIncluded: true,
       },
       {
-        label: "File uploads and image generation",
+        label: "Web browsing and data analysis (unlimited)",
         isIncluded: true,
       },
       {
-        label: "Web browsing and data analysis",
+        label: "Image and audio generation (unlimited)",
         isIncluded: true,
       },
       {
-        label: "Voice and video inputs",
-        isIncluded: true,
-      },
-      {
-        label: "Opportunities to test new features",
+        label: "Text to speach and voice inputs (unlimited)",
         isIncluded: true,
       },
       {
@@ -118,6 +117,10 @@ export const plans = [
       },
       {
         label: "Priority email support",
+        isIncluded: true,
+      },
+      {
+        label: "Opportunities to test new features",
         isIncluded: true,
       },
     ],

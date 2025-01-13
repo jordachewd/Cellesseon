@@ -10,12 +10,10 @@ import Faqs from "@/components/shared/Faqs";
 
 export default function PlansPage() {
   const router = useRouter();
-  const [checked, setChecked] = useState(false);
-  const save = 0.3; // Save 30%
-  const oddpricing = 0.99;
-
+  const [yearly, setYearly] = useState(false);
+  const save = 0.4; // Save 40% on yearly plans
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
+    setYearly(event.target.checked);
   };
 
   return (
@@ -42,81 +40,120 @@ export default function PlansPage() {
           </Typography>
 
           <div className={css.switch}>
-            <p className={`${!checked && css.switched}`}>Monthly</p>
+            <p className={`${!yearly && css.switched}`}>Monthly</p>
             <Switch
-              checked={checked}
+              checked={yearly}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
             />
-            <p className={`${checked && css.switched}`}>Yearly</p>
+            <p className={`${yearly && css.switched}`}>Yearly</p>
             <span className={css.bubble}>Save {save * 100}%+</span>
           </div>
         </div>
 
         <div className={css.plans}>
-          {plans.map((plan) => (
-            <div
-              key={plan._id}
-              className={`${css.plan} ${plan.highlight && css.highlight}`}
-            >
-              <div className={css.planHead}>
-                <Typography variant="h5">{plan.name}</Typography>
-                <i className={`bi ${plan.icon} text-4xl`}></i>
-              </div>
-              <div className={css.planPrice}>
-                <Typography variant="h6">
-                  $
-                  {plan.price === 0
-                    ? plan.price
-                    : checked
-                    ? Math.round(plan.price * 12 * (1 - save)) +
-                      oddpricing +
-                      " /yr"
-                    : plan.price + oddpricing + " /mo"}
-                </Typography>
-              </div>
-              <div className={css.planFeatures}>
-                {plan.inclusions.map((inclusion) => (
-                  <li
-                    key={plan.name + inclusion.label}
-                    className="flex items-center gap-4"
-                  >
-                    <i
-                      className={`bi ${
-                        inclusion.isIncluded ? "bi-check2" : "bi-x"
-                      }`}
-                    ></i>
+          {plans.map((plan) => {
+            const planFee =
+              plan.price === 0
+                ? plan.price
+                : yearly
+                ? Math.round(plan.price * 12 * (1 - save))
+                : plan.price;
 
-                    <p>{inclusion.label}</p>
-                  </li>
-                ))}
-              </div>
-              <div className={css.planActions}>
-                <SignedOut>
-                  <Button
-                    href="/sign-up"
-                    variant={plan.highlight ? "contained" : "outlined"}
+            return (
+              <div
+                key={plan._id}
+                className={`${css.plan} ${plan.highlight && css.highlight}`}
+              >
+                {plan.highlight && <div className={css.planBadge}>Popular</div>}
+
+                <div className={css.planTop}>
+                  <i
+                    className={`bi ${plan.icon} mb-3 ${
+                      plan.highlight
+                        ? "md:-mt-5 text-6xl md:text-7xl"
+                        : "text-5xl"
+                    }`}
+                  ></i>
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      color: plan.highlight
+                        ? "var(--mui-palette-tertiary-contrastText)"
+                        : "var(--mui-palette-text-primary)",
+                    }}
                   >
-                    Go {plan.name}
-                  </Button>
-                </SignedOut>
-                <SignedIn>
-                  {plan.name === "Free" ? (
+                    {plan.name}
+                  </Typography>
+
+                  <div className="flex opacity-60 text-xs -mt-2 mb-3">{plan.desc}</div>
+
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      display: "flex",
+                      alignItems: "end",
+                      lineHeight: "1",
+                      color: plan.highlight
+                        ? "var(--mui-palette-tertiary-contrastText)"
+                        : "var(--mui-palette-text-primary)",
+                    }}
+                  >
+                    {yearly && plan.price !== 0 && (
+                      <span className="flex pr-5 text-[60%] opacity-70 line-through font-light">
+                        ${plan.price * 12}
+                      </span>
+                    )}
+
+                    <span className="flex">
+                      {plan.price !== 0 ? "$" + planFee : "free"}
+                    </span>
+
+                    <span className="flex text-sm opacity-80">
+                      {plan.price !== 0 ? (yearly ? "/Yr" : "/Mo") : ""}
+                    </span>
+                  </Typography>
+                </div>
+                <div className={css.planFeatures}>
+                  {plan.inclusions.map((inclusion) => (
+                    <div
+                      key={plan.name + inclusion.label}
+                      className={css.planFeaturesItem}
+                    >
+                      <i
+                        className={`bi ${
+                          inclusion.isIncluded ? "bi-check2" : "bi-x"
+                        }`}
+                      ></i>
+
+                      <p>{inclusion.label}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className={css.planActions}>
+                  <SignedOut>
                     <Button
-                      disabled
+                      href="/sign-up"
+                      sx={{ minWidth: "200px" }}
                       variant={plan.highlight ? "contained" : "outlined"}
                     >
-                      Current Plan
+                      {plan.price === 0 ? "Try Now" : "Go " + plan.name}
                     </Button>
-                  ) : (
-                    <Button variant={plan.highlight ? "contained" : "outlined"}>
-                      Get Started
+                  </SignedOut>
+
+                  <SignedIn>
+                    <Button
+                      sx={{ minWidth: "200px" }}
+                      disabled={plan.price === 0}
+                      variant={plan.highlight ? "contained" : "outlined"}
+                    >
+                      {plan.price === 0 ? "Current Plan" : "Upgrade"}
                     </Button>
-                  )}
-                </SignedIn>
+                  </SignedIn>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
       <Faqs />

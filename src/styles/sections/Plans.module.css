@@ -1,5 +1,5 @@
 .wrapper {
-  @apply flex flex-col w-full m-0 py-8 md:py-14 z-10 relative gap-10;
+  @apply flex flex-col w-full m-0 py-8 md:py-10 z-10 relative gap-10;
 }
 
 .section {
@@ -11,7 +11,7 @@
 }
 
 .head {
-  @apply flex flex-col gap-4 justify-center items-center;
+  @apply flex flex-col gap-2 justify-center items-center;
 }
 
 .switch {
@@ -32,33 +32,39 @@
 }
 
 .plans {
-  @apply flex w-full justify-between gap-6 my-6 items-center flex-col md:flex-row;
-}
-
-.planHead {
-  @apply flex gap-4 justify-between items-center;
-}
-
-.planPrice {
-  @apply flex justify-between items-center;
+  @apply flex flex-col w-full justify-between items-center gap-6 md:gap-4 lg:gap-8 md:flex-row;
 }
 
 .plan {
-  @apply flex flex-col w-full p-6 rounded-lg shadow-xl border;
+  @apply flex flex-col w-full rounded-lg shadow-xl;
+  @apply relative overflow-hidden border px-4 lg:px-6 py-10 gap-8;
   border-color: var(--mui-palette-primary-main);
   background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.3);
 }
 
+.planTop {
+  @apply flex flex-col justify-between items-center gap-2;
+}
+
+.planBadge {
+  @apply flex bg-red-600 text-white leading-none shadow-md uppercase;
+  @apply text-[8px] font-bold absolute top-3.5 -left-8 p-1 px-8 -rotate-45 tracking-widest;
+}
+
 .highlight {
-  @apply md:py-10 border-none;
+  @apply md:py-12 border-none font-medium;
   color: var(--mui-palette-tertiary-contrastText);
   background-color: var(--mui-palette-tertiary-main);
 }
 
 .planFeatures {
-  @apply flex flex-col gap-3 w-full my-8;
+  @apply flex flex-col gap-2.5 w-full;
+}
+
+.planFeaturesItem {
+  @apply flex items-center gap-4;
 }
 
 .planActions {
-  @apply flex justify-center items-center my-4;
+  @apply flex justify-center items-center mt-4;
 }

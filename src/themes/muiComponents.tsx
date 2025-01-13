@@ -179,5 +179,19 @@ export const muiComponents: ThemeOptions = {
         }),
       },
     },
+
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+          "&:not(:last-child)": {
+            borderBottom: 0,
+          },
+          "&:before": {
+            display: "none",
+          },
+        },
+      },
+    },
   },
 };
