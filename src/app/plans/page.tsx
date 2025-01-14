@@ -1,6 +1,6 @@
 "use client";
 import css from "@/styles/sections/Plans.module.css";
-import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { Button, IconButton, Switch, Typography } from "@mui/material";
 import { plans } from "@/constants/plans";
 import { useRouter } from "next/navigation";
@@ -8,12 +8,12 @@ import { TooltipArrow } from "@/components/shared/TooltipArrow";
 import { useState } from "react";
 import Faqs from "@/components/shared/Faqs";
 import Checkout from "@/components/shared/Checkout";
-import SpinnerGrow from "@/components/shared/SpinnerGrow";
 
 export default function PlansPage() {
   const router = useRouter();
   const { user } = useUser();
   const [yearly, setYearly] = useState(false);
+
   const save = 0.4; // Save 40% on yearly plans
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setYearly(event.target.checked);
