@@ -12,20 +12,12 @@ import SpinnerGrow from "@/components/shared/SpinnerGrow";
 
 export default function PlansPage() {
   const router = useRouter();
-  const { user, isLoaded } = useUser();
+  const { user } = useUser();
   const [yearly, setYearly] = useState(false);
   const save = 0.4; // Save 40% on yearly plans
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setYearly(event.target.checked);
   };
-
-  if (!isLoaded || !user) {
-    return (
-      <div className="flex">
-        <SpinnerGrow />
-      </div>
-    );
-  }
 
   return (
     <div className={css.wrapper}>
@@ -147,17 +139,7 @@ export default function PlansPage() {
                   ))}
                 </div>
                 <div className={css.planActions}>
-                  <SignedOut>
-                    <Button
-                      href="/sign-up"
-                      sx={{ minWidth: "200px" }}
-                      variant={plan.highlight ? "contained" : "outlined"}
-                    >
-                      {plan.price === 0 ? "Try Now" : "Go " + plan.name}
-                    </Button>
-                  </SignedOut>
-
-                  <SignedIn>
+                  {user ? (
                     <Checkout
                       plan={plan.name}
                       amount={planFee}
@@ -166,7 +148,15 @@ export default function PlansPage() {
                       btnName={plan.price === 0 ? "Current Plan" : "Upgrade"}
                       btnVariant={plan.highlight ? "contained" : "outlined"}
                     />
-                  </SignedIn>
+                  ) : (
+                    <Button
+                      href="/sign-up"
+                      sx={{ minWidth: "200px" }}
+                      variant={plan.highlight ? "contained" : "outlined"}
+                    >
+                      {plan.price === 0 ? "Try Now" : "Go " + plan.name}
+                    </Button>
+                  )}
                 </div>
               </div>
             );
