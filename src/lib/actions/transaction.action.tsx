@@ -29,8 +29,8 @@ export async function checkoutCredits(transaction: CheckoutTransactionParams) {
       userId: transaction.userId,
     },
     mode: "payment",
-    success_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/plans`,
-    cancel_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/`,
+    success_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/profile`,
+    cancel_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/plans`,
   });
 
   redirect(session.url!);

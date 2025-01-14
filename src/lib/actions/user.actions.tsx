@@ -11,7 +11,6 @@ export async function createUser(user: CreateUserParams) {
     await connectToDatabase();
 
     const newUser = await User.create(user);
-    revalidatePath("/admin/users", "page");
 
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
@@ -80,7 +79,6 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     if (!updatedUser)
       throw new Error("User update failed. Check: 'user.action'.");
 
-    revalidatePath(`/admin/users/${user.username}`, "page");
     return JSON.parse(
       JSON.stringify({
         mongoResponse: updatedUser,
@@ -107,15 +105,13 @@ export async function deleteUser(clerkId: string) {
 
     // Delete user & AWS folder
     const deletedUser = await User.findByIdAndDelete(userToDelete._id);
-
-    revalidatePath("/admin/users", "page");
+    revalidatePath("/");
 
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
   } catch (error) {
     handleError(error);
   }
 }
-
 
 // USE CREDITS
 export async function updateCredits(userId: string, plan: string) {

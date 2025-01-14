@@ -22,18 +22,6 @@ const Checkout = ({
 }) => {
   useEffect(() => {
     loadStripe(`${process.env.STRIPE_PUBLISHABLE_KEY!}`);
-
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      alert("Order placed!\nYou will receive an email confirmation");
-    }
-
-    if (query.get("canceled")) {
-      alert(
-        "Order canceled!\nContinue to shop around and checkout when you're ready"
-      );
-    }
   }, []);
 
   const onCheckout = async () => {

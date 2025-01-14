@@ -68,9 +68,20 @@ export default function AvatarMenu() {
             setAnchorElUser(null);
           }}
         >
+          <Link href="/profile">
+            <i className="bi bi-person mr-4"></i>
+            Profile
+          </Link>
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            setAnchorElUser(null);
+          }}
+        >
           <Link href="/plans">
             <i className="bi bi-graph-up mr-4"></i>
-            My plan
+            Plans
           </Link>
         </MenuItem>
 
