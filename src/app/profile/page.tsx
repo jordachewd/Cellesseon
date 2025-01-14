@@ -33,7 +33,7 @@ export default function ProfilePage() {
         <div className="flex w-full">
           <Typography variant="h6">
             {user?.firstName} {user?.lastName}
-            Other user details
+          
           </Typography>
         </div>
       </section>
