@@ -7,13 +7,19 @@ import { checkoutCredits } from "@/lib/actions/transaction.action";
 const Checkout = ({
   plan,
   amount,
-  credits,
+  btnName,
+  btnVariant,
+  isDisabled,
+  // credits,
   buyerId,
 }: {
   plan: string;
   amount: number;
-  credits: number;
+  btnName: string;
+  btnVariant?: "text" | "outlined" | "contained";
+  // credits: number;
   buyerId: string;
+  isDisabled?: boolean;
 }) => {
   useEffect(() => {
     loadStripe(process.env.STRIPE_PUBLISHABLE_KEY!);
@@ -47,7 +53,7 @@ const Checkout = ({
     const transaction = {
       plan,
       amount,
-      credits,
+      // credits,
       buyerId,
     };
 
@@ -56,11 +62,15 @@ const Checkout = ({
 
   return (
     <form action={onCheckout}>
-      <section>
-        <Button type="submit" role="link" sx={{ minWidth: "200px" }}>
-          Buy Credit
-        </Button>
-      </section>
+      <Button
+        role="link"
+        type="submit"
+        disabled={isDisabled}
+        variant={btnVariant || "outlined"}
+        sx={{ minWidth: "200px" }}
+      >
+        {btnName}
+      </Button>
     </form>
   );
 };

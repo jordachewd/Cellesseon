@@ -25,7 +25,7 @@ export async function checkoutCredits(transaction: CheckoutTransactionParams) {
     ],
     metadata: {
       plan: transaction.plan,
-      credits: transaction.credits,
+    //  credits: transaction.credits,
       buyerId: transaction.buyerId,
     },
     mode: "payment",
@@ -45,7 +45,7 @@ export async function createTransaction(transaction: CreateTransactionParams) {
       buyer: transaction.buyerId,
     });
 
-    await updateCredits(transaction.buyerId, transaction.credits);
+    await updateCredits(transaction.buyerId, transaction.plan);
 
     return JSON.parse(JSON.stringify(newTransaction));
   } catch (error) {
