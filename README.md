@@ -15,6 +15,7 @@ Software as a service (SaaS)
 ### Technologies
 
 - [OpenAI](https://openai.com/)
+- [Stripe](https://stripe.com)
 - [Clerk](https://clerk.com/)
 - [Vercel](https://vercel.com/)
 - [NextJS](https://nextjs.org/)
