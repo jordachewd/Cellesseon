@@ -6,19 +6,19 @@ export const muiPaletteLight: ThemeOptions = {
       main: "#FADADD", // Blush Pink
     },
     secondary: {
-      main: "#D4BFFF", // Levender
+      main: "#9A5DFF", // Regal Violet
     },
     tertiary: {
       light: "#A9E6BB", // Emerald Green (lighter)
-      main: "#50C878", // Emerald Green
+      main: "#46b86c", // Emerald Green
       dark: "#3E995F", // Emerald Green (darker)
       contrastText: "#ffffff", // White
     },
     action: {
       active: "#50C878", // Emerald Green
       hover: "#3E995F", // Slightly darker shade
-      disabled: "#FADADD", // Blush Pink
-      disabledBackground: "#FADADD", // Blush Pink
+      disabled: "#f0c9cd", // Blush Pink
+      disabledBackground: "#f0c9cd", // Blush Pink
     },
     background: {
       default: "#F9F5F1", // Soft Beige

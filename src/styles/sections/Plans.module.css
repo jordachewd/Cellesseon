@@ -1,5 +1,12 @@
 .wrapper {
-  @apply flex flex-col w-full m-0 py-8 md:py-10 z-10 relative gap-10;
+  @apply flex flex-1 flex-col w-full relative overflow-y-auto 
+[&::-webkit-scrollbar]:w-[2px] z-10 py-8 md:py-10 gap-10
+[&::-webkit-scrollbar-track]:rounded-full
+[&::-webkit-scrollbar-thumb]:rounded-full
+[&::-webkit-scrollbar-track]:bg-lightBorders-500
+[&::-webkit-scrollbar-thumb]:bg-lightSecondary-800
+dark:[&::-webkit-scrollbar-track]:bg-darkBorders-500
+dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
 }
 
 .section {
@@ -7,7 +14,7 @@
 }
 
 .backBtn {
-  @apply !absolute top-4 left-2;
+  @apply !fixed top-4 left-2;
 }
 
 .head {
@@ -46,9 +53,17 @@
   @apply flex flex-col justify-between items-center gap-2;
 }
 
+.planTitle {
+  @apply flex items-center justify-between w-full;
+}
+
+.planDesc {
+  @apply flex items-center justify-between opacity-70 text-xs pl-0.5 w-full -mt-2;
+}
+
 .planBadge {
   @apply flex bg-red-600 text-white leading-none shadow-md uppercase;
-  @apply text-[8px] font-bold absolute top-3.5 -left-8 p-1 px-8 -rotate-45 tracking-widest;
+  @apply text-[8px] font-bold absolute top-3.5 -left-8 p-1.5 px-8 -rotate-45 tracking-widest;
 }
 
 .highlight {

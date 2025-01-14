@@ -6,7 +6,7 @@ export const muiPaletteDark: ThemeOptions = {
       main: "#6A0DAD", // Deep Plum
     },
     secondary: {
-      main: "#008080", // Teal Green
+      main: "#1A9393", // Serene Tide
     },
     tertiary: {
       light: "#F3CBB3", // Rose Gold (lighter)

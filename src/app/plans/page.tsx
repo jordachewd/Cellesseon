@@ -16,6 +16,7 @@ export default function PlansPage() {
     setYearly(event.target.checked);
   };
 
+  
   return (
     <div className={css.wrapper}>
       <TooltipArrow
@@ -69,54 +70,55 @@ export default function PlansPage() {
 
                 <div className={css.planTop}>
                   <i
-                    className={`bi ${plan.icon} mb-3 ${
+                    className={`bi ${plan.icon} mb-2 ${
                       plan.highlight
                         ? "md:-mt-5 text-6xl md:text-7xl"
                         : "text-5xl"
                     }`}
                   ></i>
-                  <Typography
-                    variant="h3"
-                    sx={{
-                      color: plan.highlight
-                        ? "var(--mui-palette-tertiary-contrastText)"
-                        : "var(--mui-palette-text-primary)",
-                    }}
-                  >
-                    {plan.name}
-                  </Typography>
 
-                  <div className="flex opacity-60 text-xs -mt-2 mb-3">
-                    {plan.desc}
+                  <div className={css.planTitle}>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        color: plan.highlight
+                          ? "var(--mui-palette-tertiary-contrastText)"
+                          : "var(--mui-palette-text-primary)",
+                      }}
+                    >
+                      {plan.name}
+                    </Typography>
+
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        lineHeight: "1",
+                        color: plan.highlight
+                          ? "var(--mui-palette-tertiary-contrastText)"
+                          : "var(--mui-palette-text-primary)",
+                      }}
+                    >
+                      <span className="flex">
+                        {plan.price !== 0 ? "$" + planFee : "Free"}
+                      </span>
+
+                      {plan.price !== 0 && (
+                        <span className="flex text-sm opacity-80 self-end">
+                          {yearly ? "/Yr" : "/Mo"}
+                        </span>
+                      )}
+                    </Typography>
                   </div>
-
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      lineHeight: "1",
-                      color: plan.highlight
-                        ? "var(--mui-palette-tertiary-contrastText)"
-                        : "var(--mui-palette-text-primary)",
-                    }}
-                  >
+                  <div className={css.planDesc}>
+                    <span className="flex">{plan.desc}</span>
                     {yearly && plan.price !== 0 && (
-                      <span className="flex pr-4 text-[60%] opacity-70 line-through font-light">
-                        ${plan.price * 12}
+                      <span className="flex line-through">
+                        ${plan.price * 12} /Yr
                       </span>
                     )}
-
-                    <span className="flex">
-                      {plan.price !== 0 ? "$" + planFee : "free"}
-                    </span>
-
-                    {plan.price !== 0 && (
-                      <span className="flex text-sm opacity-80 self-end">
-                        {yearly ? "/Yr" : "/Mo"}
-                      </span>
-                    )}
-                  </Typography>
+                  </div>
                 </div>
                 <div className={css.planFeatures}>
                   {plan.inclusions.map((inclusion) => (
