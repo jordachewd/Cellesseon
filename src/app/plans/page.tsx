@@ -161,7 +161,7 @@ export default function PlansPage() {
                     <Checkout
                       plan={plan.name}
                       amount={planFee}
-                      buyerId={user.id}
+                      userId={user.id}
                       isDisabled={plan.price === 0}
                       btnName={plan.price === 0 ? "Current Plan" : "Upgrade"}
                       btnVariant={plan.highlight ? "contained" : "outlined"}

@@ -5,8 +5,7 @@ export interface ITransaction extends Document {
   stripeId: string;
   amount: number;
   plan?: string;
- // credits?: number;
-  buyer?: ObjectId | string;
+  user?: ObjectId | string;
 }
 
 const TransactionSchema = new Schema({
@@ -26,10 +25,7 @@ const TransactionSchema = new Schema({
   plan: {
     type: String,
   },
-/*   credits: {
-    type: Number,
-  }, */
-  buyer: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },

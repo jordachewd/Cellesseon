@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Button } from "@mui/material";
 import { loadStripe } from "@stripe/stripe-js";
 import { checkoutCredits } from "@/lib/actions/transaction.action";
+import { CheckoutTransactionParams } from "@/types/TransactionData.d";
 
 const Checkout = ({
   plan,
@@ -10,15 +11,13 @@ const Checkout = ({
   btnName,
   btnVariant,
   isDisabled,
-  // credits,
-  buyerId,
+  userId,
 }: {
   plan: string;
   amount: number;
   btnName: string;
   btnVariant?: "text" | "outlined" | "contained";
-  // credits: number;
-  buyerId: string;
+  userId: string;
   isDisabled?: boolean;
 }) => {
   useEffect(() => {
@@ -28,33 +27,20 @@ const Checkout = ({
     const query = new URLSearchParams(window.location.search);
     if (query.get("success")) {
       alert("Order placed!\nYou will receive an email confirmation");
-      /*       toast({
-            title: "Order placed!",
-            description: "You will receive an email confirmation",
-            duration: 5000,
-            className: "success-toast",
-          }); */
     }
 
     if (query.get("canceled")) {
       alert(
         "Order canceled!\nContinue to shop around and checkout when you're ready"
       );
-      /*       toast({
-            title: "Order canceled!",
-            description: "Continue to shop around and checkout when you're ready",
-            duration: 5000,
-            className: "error-toast",
-          }); */
     }
   }, []);
 
   const onCheckout = async () => {
-    const transaction = {
+    const transaction: CheckoutTransactionParams = {
       plan,
       amount,
-      // credits,
-      buyerId,
+      userId,
     };
 
     await checkoutCredits(transaction);
