@@ -21,7 +21,7 @@ const Checkout = ({
   isDisabled?: boolean;
 }) => {
   useEffect(() => {
-    loadStripe(process.env.STRIPE_PUBLISHABLE_KEY!);
+    loadStripe(`${process.env.STRIPE_PUBLISHABLE_KEY!}`);
 
     // Check to see if this is a redirect back from Checkout
     const query = new URLSearchParams(window.location.search);
