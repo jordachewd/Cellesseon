@@ -140,9 +140,9 @@ export default function Plans() {
             size="large"
             variant="outlined"
             href="/sign-up"
-            sx={{ minWidth: "260px", marginTop: "1rem" }}
+            sx={{ minWidth: 280, marginTop: "1rem" }}
           >
-            Try it for free
+            Subscribe now
           </Button>
         </div>
       )}

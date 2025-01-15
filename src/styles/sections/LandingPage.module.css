@@ -1,25 +1,30 @@
 .wrapper {
   @apply flex flex-col flex-1 w-full items-center;
-  @apply gap-10 p-4 z-10 py-12 relative overflow-y-auto;
+  @apply gap-10 p-0 m-0 z-10 relative overflow-y-auto;
+
   @apply [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full;
   @apply [&::-webkit-scrollbar-track]:bg-lightBorders-500 [&::-webkit-scrollbar-thumb]:bg-lightSecondary-800;
   @apply dark:[&::-webkit-scrollbar-track]:bg-darkBorders-500 dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
 }
 
 .hero {
-  @apply flex flex-col w-full max-w-6xl justify-center items-center gap-6;
+  @apply flex w-full justify-between items-center px-5 lg:px-10 lg:pt-12;
+  @apply bg-white/40 dark:bg-darkPrimary-900/30 shadow-sm;
 }
 
-.head,
-.intro,
-.actions {
-  @apply flex flex-col w-full text-center items-center max-w-2xl animate-fade-up animate-once;
+.heroContent {
+  @apply flex flex-col lg:flex-row gap-8 max-w-7xl justify-between items-center mx-auto;
 }
 
-.intro {
-  @apply gap-8 animate-delay-300;
+.heroLeft,
+.heroRight {
+  @apply flex;
 }
 
-.actions {
-  @apply animate-delay-700 gap-6;
+.heroLeft {
+  @apply flex-col gap-10 items-center lg:items-start text-center lg:text-left;
+}
+
+.heroRight {
+  @apply order-first lg:order-last;
 }

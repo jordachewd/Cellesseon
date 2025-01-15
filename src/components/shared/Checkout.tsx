@@ -41,7 +41,7 @@ const Checkout = ({
         type="submit"
         disabled={isDisabled}
         variant={btnVariant || "outlined"}
-        sx={{ minWidth: "200px" }}
+        sx={{ minWidth: 220 }}
       >
         {btnName}
       </Button>
