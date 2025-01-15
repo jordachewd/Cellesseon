@@ -10,7 +10,7 @@ dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
 }
 
 .backBtn {
-  @apply !fixed top-4 left-2;
+  @apply !fixed top-4 right-4;
 }
 
 

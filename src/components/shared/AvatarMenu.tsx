@@ -1,5 +1,12 @@
-import { IconButton, Avatar, Menu, MenuItem, Divider } from "@mui/material";
-import { useState } from "react";
+import {
+  IconButton,
+  Avatar,
+  Menu,
+  MenuItem,
+  Divider,
+  Typography,
+} from "@mui/material";
+import { useState, MouseEvent } from "react";
 import { TooltipArrow } from "./TooltipArrow";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import SpinnerGrow from "./SpinnerGrow";
@@ -16,9 +23,9 @@ export default function AvatarMenu() {
   const { user, isLoaded } = useUser();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorElUser);
-  const userName = user?.firstName + " " + user?.lastName;
+  const fullName = user?.firstName + " " + user?.lastName;
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
 
@@ -32,19 +39,21 @@ export default function AvatarMenu() {
 
   return (
     <div className="flex">
-      <TooltipArrow title="My account" placement="left">
+      <TooltipArrow title="My account" placement="bottom">
         <IconButton
           onClick={handleOpenUserMenu}
-          sx={{ p: 0 }}
+          sx={{ p: 0, backgroundColor: "transparent!important" }}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           aria-controls={open ? "my-account" : undefined}
         >
           <Avatar
-            {...stringAvatar(userName)}
-            alt={userName || "User Name"}
+            {...stringAvatar(fullName)}
+            alt={fullName || user?.username || "User"}
             src={user?.imageUrl}
+            className="mr-4"
           />
+          <Typography variant="body2">{user?.username}</Typography>
         </IconButton>
       </TooltipArrow>
 
@@ -53,12 +62,12 @@ export default function AvatarMenu() {
         sx={{ mt: "1rem" }}
         anchorEl={anchorElUser}
         anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
+          vertical: "top",
+          horizontal: "left",
         }}
         transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
+          vertical: "bottom",
+          horizontal: "left",
         }}
         open={Boolean(anchorElUser)}
         onClose={() => setAnchorElUser(null)}

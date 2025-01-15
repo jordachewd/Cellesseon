@@ -4,6 +4,7 @@ import SidebarToggle from "../shared/SidebarToggle";
 import { useChatContext } from "@/context/ChatContext";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
+import AvatarMenu from "../shared/AvatarMenu";
 
 interface ChatSidebarProps {
   loading: boolean;
@@ -51,7 +52,9 @@ export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
         </div>
       </nav>
 
-      <div className={css.bottom}>Sidebar Footer</div>
+      <div className={css.bottom}>
+        <AvatarMenu />
+      </div>
     </aside>
   );
 }

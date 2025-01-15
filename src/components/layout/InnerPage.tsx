@@ -14,8 +14,8 @@ export default function InnerPage({ children }: InnerPageProps) {
   return (
     <div className={css.wrapper}>
       <TooltipArrow
-        placement="right"
-        title="Back to previous page"
+        placement="bottom"
+        title="Go Back"
         className="!transition-all"
       >
         <IconButton

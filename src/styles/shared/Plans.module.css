@@ -31,7 +31,7 @@
   @apply flex flex-col w-full rounded-lg shadow-xl;
   @apply relative overflow-hidden border px-4 lg:px-6 py-10 gap-8;
   border-color: var(--mui-palette-primary-main);
-  background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.3);
+  background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.5);
 }
 
 .planTop {

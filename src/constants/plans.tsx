@@ -1,3 +1,18 @@
+interface Inclusion {
+  label: string;
+  isIncluded: boolean;
+}
+
+export interface Plan {
+  _id: number;
+  name: string;
+  desc: string;
+  icon: string;
+  highlight: boolean;
+  price: number;
+  inclusions: Inclusion[];
+}
+
 export const plans = [
   {
     _id: 0,
@@ -47,7 +62,7 @@ export const plans = [
     desc: "Best for personal projects",
     icon: "bi-stars",
     highlight: true,
-    price: 19,
+    price: 29,
     inclusions: [
       {
         label: "Full AI model",
@@ -89,7 +104,7 @@ export const plans = [
     desc: "Best for businesses",
     icon: "bi-gem",
     highlight: false,
-    price: 49,
+    price: 69,
     inclusions: [
       {
         label: "Multiple AI model selection",

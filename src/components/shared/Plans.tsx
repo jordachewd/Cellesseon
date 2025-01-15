@@ -1,5 +1,5 @@
 "use client";
-import { plans } from "@/constants/plans";
+import { Plan, plans } from "@/constants/plans";
 import { Typography, Switch, Button } from "@mui/material";
 import css from "@/styles/shared/Plans.module.css";
 import Checkout from "./Checkout";
@@ -7,16 +7,20 @@ import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 
 export default function Plans() {
-  const [yearly, setYearly] = useState(false);
+  const [yearly, setYearly] = useState<boolean>(false);
   const { user } = useUser();
-  const save = 0.4; // Save 40% on yearly plans
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const save = 0.4; // Save 35% on yearly plans
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setYearly(event.target.checked);
   };
+
   return (
     <section className={css.section}>
       <div className={css.head}>
-        <Typography variant="h2">Choose a plan</Typography>
+        <Typography variant="h2">
+          {user ? "Upgrade" : "Choose"} your plan
+        </Typography>
         <Typography variant="body1">
           Select the plan that suits your needs!
         </Typography>
@@ -29,12 +33,12 @@ export default function Plans() {
             inputProps={{ "aria-label": "controlled" }}
           />
           <p className={`${yearly && css.switched}`}>Yearly</p>
-          <span className={css.bubble}>Save {save * 100}%+</span>
+          <span className={css.bubble}>Save {save * 100}%</span>
         </div>
       </div>
 
       <div className={css.plans}>
-        {plans.map((plan) => {
+        {plans.map((plan: Plan) => {
           const planFee =
             plan.price === 0
               ? plan.price
