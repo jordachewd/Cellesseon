@@ -9,13 +9,6 @@ export interface UserParams {
 
 export type UserRoles = "lite" | "pro" | "premium" | "admin";
 
-export interface UserRoleColors {
-  basic: "default";
-  medium: "success";
-  premium: "warning";
-  admin: "secondary";
-}
-
 /* Used by local Add User Form */
 export interface CreateClerkUserParams {
   _id?: string;
@@ -48,10 +41,6 @@ export interface UpdateUserParams {
   username?: string;
   email?: string;
   clerkImg?: string | undefined;
-  userImg?: string | undefined;
-  coverImg?: string | undefined;
-  planId?: number;
-  creditBalance?: number;
   role?: UserRoles | UserRoles[];
   bio?: string;
 }
@@ -72,9 +61,5 @@ export interface GetUserParams {
   registerAt: Date | number;
   firstName?: string | undefined;
   lastName?: string | undefined;
-  userImg?: string | undefined;
-  coverImg?: string | undefined;
-  planId?: number;
-  creditBalance?: number;
   bio?: string;
 }

@@ -1,5 +1,5 @@
 .wrapper {
-  @apply flex items-center space-x-1;
+  @apply flex items-center gap-1;
 }
 
 .bubble {

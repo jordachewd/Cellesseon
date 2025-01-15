@@ -3,14 +3,15 @@
 }
 
 .left,
+.center,
 .right {
-  @apply flex items-center;
+  @apply flex items-center gap-6;
 }
 
-.left {
-  @apply space-x-4;
+.center {
+  @apply justify-center mx-auto;
 }
 
 .right {
-  @apply space-x-2 ml-auto;
+  @apply ml-auto;
 }

@@ -4,7 +4,6 @@ import SidebarToggle from "../shared/SidebarToggle";
 import { useChatContext } from "@/context/ChatContext";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
-import ToggleMode from "../shared/ToggleMode";
 
 interface ChatSidebarProps {
   loading: boolean;
@@ -50,12 +49,9 @@ export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
             <span className="ml-3">Task #3</span>
           </Link>
         </div>
-        
       </nav>
 
-      <div className={css.bottom}>
-        <ToggleMode />
-      </div>
+      <div className={css.bottom}>Sidebar Footer</div>
     </aside>
   );
 }

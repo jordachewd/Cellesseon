@@ -63,11 +63,11 @@ export async function POST(req: Request) {
 
     const user = {
       clerkId: id,
-      email: email_addresses[0].email_address,
+      clerkImg: image_url,
       username: username!,
+      email: email_addresses[0].email_address,      
       firstName: first_name ?? "",
-      lastName: last_name ?? "",
-      photo: image_url,
+      lastName: last_name ?? "",     
     };
 
     const newUser = await createUser(user);
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
       firstName: first_name ?? "",
       lastName: last_name ?? "",
       username: username!,
-      photo: image_url,
+      clerkImg: image_url,
     };
 
     const updatedUser = await updateUser(id, user);

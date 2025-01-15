@@ -4,7 +4,7 @@ import {
   AccordionSummary,
   Typography,
 } from "@mui/material";
-import css from "@/styles/sections/Faqs.module.css";
+import css from "@/styles/shared/Faqs.module.css";
 import { faqs } from "@/constants/faqs";
 
 export default function Faqs() {

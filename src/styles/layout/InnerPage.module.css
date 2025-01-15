@@ -1,0 +1,17 @@
+.wrapper {
+  @apply flex flex-1 flex-col w-full relative overflow-y-auto 
+[&::-webkit-scrollbar]:w-[2px] z-10 py-8 md:py-10 gap-10
+[&::-webkit-scrollbar-track]:rounded-full
+[&::-webkit-scrollbar-thumb]:rounded-full
+[&::-webkit-scrollbar-track]:bg-lightBorders-500
+[&::-webkit-scrollbar-thumb]:bg-lightSecondary-800
+dark:[&::-webkit-scrollbar-track]:bg-darkBorders-500
+dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
+}
+
+.backBtn {
+  @apply !fixed top-4 left-2;
+}
+
+
+
