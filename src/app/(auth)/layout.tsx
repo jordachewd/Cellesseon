@@ -1,5 +1,5 @@
 import PageWrapper from "@/components/layout/PageWrapper";
-import css from "./layout.module.css";
+import css from "@/styles/sections/MainPage.module.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,7 +10,9 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <PageWrapper>
-      <section className={css.section}>{children}</section>
+      <div className={css.wrapper}>
+        <div className={`${css.section} `}>{children}</div>
+      </div>
     </PageWrapper>
   );
 }

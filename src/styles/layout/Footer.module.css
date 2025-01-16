@@ -10,5 +10,6 @@
 
 .left,
 .right {
-  @apply flex items-center gap-3 text-xs opacity-60;
+  @apply flex items-center gap-4 text-xs opacity-60;
 }
+ 

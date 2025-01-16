@@ -4,7 +4,7 @@ import { Typography, Switch, Button } from "@mui/material";
 import css from "@/styles/shared/Plans.module.css";
 import Checkout from "./Checkout";
 import { useState } from "react";
-import { useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/clerk-react";
 
 export default function Plans() {
   const [yearly, setYearly] = useState<boolean>(false);

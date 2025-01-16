@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { Button } from "@mui/material";
 import { loadStripe } from "@stripe/stripe-js";
-import { checkoutCredits } from "@/lib/actions/transaction.action";
+import { checkoutPlan } from "@/lib/actions/transaction.action";
 import { CheckoutTransactionParams } from "@/types/TransactionData.d";
 
 const Checkout = ({
@@ -31,8 +31,9 @@ const Checkout = ({
       userId,
     };
 
-    await checkoutCredits(transaction);
+    await checkoutPlan(transaction);
   };
+
 
   return (
     <form action={onCheckout}>

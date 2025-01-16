@@ -2,7 +2,7 @@
 import css from "@/styles/layout/Header.module.css";
 import { useEffect, useState } from "react";
 import { useChatContext } from "@/context/ChatContext";
-import { useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/clerk-react";
 import { Button } from "@mui/material";
 import Logo from "../shared/Logo";
 import ToggleMode from "../shared/ToggleMode";
@@ -27,7 +27,8 @@ export default function Header() {
 
   return (
     <section className={`${css.section} ${scrolled ? css.scrolled : ""}`}>
-      <div className={css.content}>
+
+      <div className={`${css.content} ${!user && "max-w-screen-2xl"}`}>
         {isLoaded ? (
           <>
             <div

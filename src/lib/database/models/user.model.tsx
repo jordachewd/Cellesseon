@@ -3,29 +3,29 @@ import { Schema, model, models, Document } from "mongoose";
 
 export interface IUser extends Document {
   clerkId: string;
-  clerkImg: string;
   username: string;
   email: string;
-  registerAt: Date;
-  role: UserRoles;
   firstName?: string;
   lastName?: string;
-  bio?: string;
+  avatar: string;
+  registerAt: Date;
+  updatedAt?: Date;
+  role: UserRoles;
+  roleUpgradeAt?: Date;
 }
 
 const UserSchema = new Schema<IUser>({
-  clerkImg: { type: String },
   clerkId: {
     type: String,
     required: true,
     unique: true,
   },
-  email: {
+  username: {
     type: String,
     required: true,
     unique: true,
   },
-  username: {
+  email: {
     type: String,
     required: true,
     unique: true,
@@ -36,17 +36,16 @@ const UserSchema = new Schema<IUser>({
   lastName: {
     type: String,
   },
+  avatar: { type: String },
+  registerAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
   role: {
     type: String,
     required: true,
     enum: ["lite", "pro", "premium", "admin"],
     default: "lite",
   },
-  bio: {
-    type: String,
-    default: "",
-  },
-  registerAt: { type: Date, default: Date.now },
+  roleUpgradeAt: { type: Date, default: Date.now },
 });
 
 const User = models?.User || model<IUser>("User", UserSchema);

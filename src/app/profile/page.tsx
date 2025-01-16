@@ -8,7 +8,6 @@ import SpinnerGrow from "@/components/shared/SpinnerGrow";
 export default function ProfilePage() {
   const { user, isLoaded } = useUser();
 
-  console.log(user);
 
   return (
     <InnerPage>

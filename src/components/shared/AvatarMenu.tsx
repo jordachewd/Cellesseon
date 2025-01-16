@@ -72,32 +72,26 @@ export default function AvatarMenu() {
         open={Boolean(anchorElUser)}
         onClose={() => setAnchorElUser(null)}
       >
-        <MenuItem
-          onClick={() => {
-            setAnchorElUser(null);
-          }}
-        >
-          <Link href="/profile">
+        <Link href="/profile">
+          <MenuItem>
             <i className="bi bi-person mr-4"></i>
-            Profile
-          </Link>
-        </MenuItem>
+            <span>Profile</span>
+          </MenuItem>
+        </Link>
 
-        <MenuItem
-          onClick={() => {
-            setAnchorElUser(null);
-          }}
-        >
-          <Link href="/plans">
+        <Link href="/plans">
+          <MenuItem>
             <i className="bi bi-graph-up mr-4"></i>
-            Plans
-          </Link>
-        </MenuItem>
+            <span>Plans</span>
+          </MenuItem>
+        </Link>
 
-        <MenuItem onClick={() => setAnchorElUser(null)}>
-          <i className="bi bi-sliders2-vertical mr-4"></i>
-          Settings
-        </MenuItem>
+        <Link href="/settings">
+          <MenuItem>
+            <i className="bi bi-sliders2-vertical mr-4"></i>
+            <span>Settings</span>
+          </MenuItem>
+        </Link>
 
         <Divider />
 
