@@ -6,6 +6,7 @@ import SpinnerGrow from "@/components/shared/SpinnerGrow";
 import { getUserById } from "@/lib/actions/user.actions";
 import getUserName, { stringAvatar } from "@/lib/utils/getUserName";
 import getFormattedDate from "@/lib/utils/getFormattedDate";
+import PlanCard from "@/components/shared/PlanCard";
 
 export default async function ProfilePage() {
   const { userId } = await auth();
@@ -34,13 +35,6 @@ export default async function ProfilePage() {
 
         <div className={css.hero}>
           <div className={css.heroImg}>
-            {/*             <Image
-              src={profile.clerkImg}
-              alt={userName}
-              width={96}
-              height={96}
-              priority
-            /> */}
             <Avatar
               {...stringAvatar(userName)}
               alt={userName}
@@ -61,10 +55,7 @@ export default async function ProfilePage() {
           </div>
 
           <div className={css.heroPlan}>
-            <Typography variant="h5">Current plan</Typography>
-            <Typography variant="body1" sx={{ textTransform: "capitalize" }}>
-              {profile.role}
-            </Typography>
+            <PlanCard />
           </div>
         </div>
       </section>

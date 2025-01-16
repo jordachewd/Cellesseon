@@ -100,7 +100,7 @@ export async function POST(req: Request) {
       firstName: first_name ?? "",
       lastName: last_name ?? "",
       updatedAt: updated_at,
-      clerkImg: image_url || "",
+      clerkImg: image_url,
     };
 
     const updatedUser = await updateUser(id, user);

@@ -1,0 +1,6 @@
+.wrapper {
+    @apply flex flex-col gap-1 w-full rounded-xl p-4 shadow-md;
+    color: var(--mui-palette-tertiary-contrastText);
+    background-color: var(--mui-palette-tertiary-main);
+  }
+  
