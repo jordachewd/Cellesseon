@@ -1,6 +1,5 @@
 import css from "@/styles/layout/Footer.module.css";
 import { useColorScheme } from "@mui/material/styles";
-
 import Image from "next/image";
 
 export default function Footer() {

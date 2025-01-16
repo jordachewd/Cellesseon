@@ -7,8 +7,24 @@
 }
 
 .hero {
-  @apply flex flex-col gap-2 justify-center items-center;
-  @apply rounded-lg shadow-xl border p-6 gap-4;
+  @apply flex gap-2 justify-between items-start;
+  @apply rounded-lg shadow-xl border p-6 gap-12;
   border-color: var(--mui-palette-primary-main);
   background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.5);
+}
+
+.heroImg {
+  @apply flex;
+}
+
+.heroContent {
+  @apply flex flex-1 justify-between items-center gap-2;
+}
+
+.heroContent > div {
+  @apply flex flex-col gap-2;
+}
+
+.heroPlan {
+  @apply flex flex-col gap-2  w-full max-w-[20%];
 }

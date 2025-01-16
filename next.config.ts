@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: "oaidalleapiprodscus.blob.core.windows.net",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "img.clerk.com",
+        pathname: "**",
+      },
     ],
   },
 };
