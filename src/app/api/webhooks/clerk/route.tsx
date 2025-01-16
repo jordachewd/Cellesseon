@@ -52,17 +52,23 @@ export async function POST(req: Request) {
     });
   }
 
-  // Get the ID and type
-  //const { id } = evt.data;
   const eventType = evt.type;
 
   // CREATE USER
   if (eventType === "user.created") {
-    const { id, email_addresses, created_at, first_name, last_name, username } =
-      evt.data;
+    const {
+      id,
+      email_addresses,
+      created_at,
+      first_name,
+      last_name,
+      username,
+      image_url,
+    } = evt.data;
 
     const user: CreateUserParams = {
       clerkId: id,
+      clerkImg: image_url,
       username: username!,
       email: email_addresses[0].email_address,
       firstName: first_name ?? "",

@@ -5,6 +5,7 @@ export type UserRoles = "lite" | "pro" | "premium" | "admin";
 /* Used by Clerk Webhook ("user.created") */
 export interface CreateUserParams {
   clerkId: string;
+  clerkImg: string;
   email: string;
   username: string;
   firstName: string | undefined;

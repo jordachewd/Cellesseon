@@ -1,0 +1,14 @@
+.section {
+  @apply flex flex-col w-full max-w-6xl mx-auto p-4 gap-4;
+}
+
+.head {
+  @apply flex flex-col gap-2 justify-center items-center;
+}
+
+.hero {
+  @apply flex flex-col gap-2 justify-center items-center;
+  @apply rounded-lg shadow-xl border p-6 gap-4;
+  border-color: var(--mui-palette-primary-main);
+  background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.5);
+}
