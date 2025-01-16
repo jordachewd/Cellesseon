@@ -25,8 +25,6 @@ export default async function ProfilePage() {
     username: profile.username,
   });
 
-  console.log(profile);
-
   return (
     <InnerPage>
       <section className={css.section}>

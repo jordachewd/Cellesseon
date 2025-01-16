@@ -84,6 +84,7 @@ export async function POST(req: Request) {
       await client.users.updateUserMetadata(id, {
         publicMetadata: {
           userId: newUser._id,
+          role: newUser.role,
         },
       });
     }
@@ -93,11 +94,13 @@ export async function POST(req: Request) {
 
   // UPDATE USER
   if (eventType === "user.updated") {
-    const { id, updated_at, first_name, last_name } = evt.data;
+    const { id, updated_at, first_name, last_name, image_url } = evt.data;
+
     const user: UpdateUserParams = {
       firstName: first_name ?? "",
       lastName: last_name ?? "",
       updatedAt: updated_at,
+      clerkImg: image_url || "",
     };
 
     const updatedUser = await updateUser(id, user);
