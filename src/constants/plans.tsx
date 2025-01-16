@@ -13,12 +13,19 @@ export interface Plan {
   inclusions: Inclusion[];
 }
 
+export function getPlanIcon(name: string) {
+  const plan = plans.find(
+    (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+  );
+  return plan ? plan.icon : null;
+}
+
 export const plans = [
   {
     _id: 0,
     name: "Lite",
     desc: "Free trial for 3 days",
-    icon: "bi-gift",
+    icon: "bi bi-clock-history",
     highlight: false,
     price: 0,
     inclusions: [
@@ -60,7 +67,7 @@ export const plans = [
     _id: 1,
     name: "Pro",
     desc: "Best for personal projects",
-    icon: "bi-stars",
+    icon: "bi bi-stars",
     highlight: true,
     price: 29,
     inclusions: [
@@ -102,7 +109,7 @@ export const plans = [
     _id: 2,
     name: "Premium",
     desc: "Best for businesses",
-    icon: "bi-gem",
+    icon: "bi bi-gem",
     highlight: false,
     price: 69,
     inclusions: [

@@ -89,11 +89,12 @@ const config: Config = {
           200: "#D9BFF0",
           300: "#C399E8",
           400: "#AC74E0",
-          500: "#6A0DAD", // Deep Plum
+          500: "#6A0DAD", // deep purple shade
           600: "#5F0C9B",
           700: "#540B88",
           800: "#490A76",
           900: "#3F0963",
+          1000: "#1C032B",
         },
 
         darkSecondary: {
@@ -118,6 +119,7 @@ const config: Config = {
           700: "#BC8B63",
           800: "#A67D57",
           900: "#906E4A",
+          1000: "#60492E",
         },
 
         darkBackground: {
@@ -197,6 +199,7 @@ const config: Config = {
 
       fontSize: {
         xxs: "0.625rem",
+        "2xs": "0.5rem",
       },
     },
   },

@@ -52,8 +52,9 @@ export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
           </Link>
         </div>
       </nav>
-
-      <PlanCard />
+      <div className={css.plancard}>
+        <PlanCard />
+      </div>
 
       <div className={css.bottom}>
         <AvatarMenu />

@@ -55,7 +55,7 @@ export default function Plans() {
 
               <div className={css.planTop}>
                 <i
-                  className={`bi ${plan.icon} mb-2 ${
+                  className={`${plan.icon} mb-2 ${
                     plan.highlight
                       ? "md:-mt-5 text-6xl md:text-7xl"
                       : "text-5xl"

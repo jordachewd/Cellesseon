@@ -127,19 +127,25 @@ export const muiComponents: ThemeOptions = {
     MuiChip: {
       styleOverrides: {
         root: {
+          height: "auto",
           borderRadius: "0.5rem",
           color: "var(--mui-palette-tertiary-dark)",
           borderColor: "var(--mui-palette-tertiary-dark)",
+          transition: "all 0.35s ease-in-out",
         },
 
         icon: {
-          paddingLeft: "0.5rem",
+          paddingLeft: "0.4rem",
+          paddingRight: "0.4rem",
           color: "var(--mui-palette-tertiary-dark)",
+          transition: "all 0.35s ease-in-out",
         },
 
         label: {
-          padding: "1rem",
           fontSize: "0.875rem",
+          display: "block",
+          whiteSpace: "normal",
+          padding: "0.5rem",
         },
 
         clickable: {

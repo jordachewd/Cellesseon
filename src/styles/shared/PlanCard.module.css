@@ -1,6 +1,29 @@
 .wrapper {
-    @apply flex flex-col gap-1 w-full rounded-xl p-4 shadow-md;
-    color: var(--mui-palette-tertiary-contrastText);
-    background-color: var(--mui-palette-tertiary-main);
-  }
-  
+  @apply flex flex-col gap-1 w-full rounded-lg p-4 shadow-md;
+  @apply overflow-hidden relative items-center;
+  color: var(--mui-palette-tertiary-contrastText);
+  background-color: var(--mui-palette-tertiary-main);
+}
+
+.background {
+  @apply flex items-center justify-center absolute z-0 opacity-50;
+  @apply rounded-lg w-full h-[150%] -top-1/2 right-1/3 -rotate-45;
+  background-color: var(--mui-palette-tertiary-dark);
+}
+
+.content {
+  @apply w-full flex flex-col gap-3 z-10 text-center;
+}
+
+.badge {
+  @apply absolute top-0.5 right-0.5 z-10 text-2xs font-medium;
+  @apply px-1 py-1 rounded-md uppercase leading-none;
+  @apply bg-lightAccent-900 text-lightAccent-300;
+  @apply dark:bg-darkAccent-1000 dark:text-darkAccent-400;
+}
+
+.details {
+  @apply flex w-full items-center justify-center;
+  @apply text-xs  pt-2.5 border-t border-dotted;
+  border-color: var(--mui-palette-tertiary-contrastText);
+}
