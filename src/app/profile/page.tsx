@@ -1,12 +1,12 @@
-import { auth } from "@clerk/nextjs/server";
 import css from "@/styles/shared/Profile.module.css";
 import InnerPage from "@/components/layout/InnerPage";
-import { Avatar, Typography } from "@mui/material";
 import SpinnerGrow from "@/components/shared/SpinnerGrow";
-import { getUserById } from "@/lib/actions/user.actions";
 import getUserName, { stringAvatar } from "@/lib/utils/getUserName";
-import getFormattedDate from "@/lib/utils/getFormattedDate";
+import getFormattedDate, { addDaysToDate } from "@/lib/utils/getFormattedDate";
 import PlanCard from "@/components/shared/PlanCard";
+import { auth } from "@clerk/nextjs/server";
+import { Avatar, Typography } from "@mui/material";
+import { getUserById } from "@/lib/actions/user.actions";
 
 export default async function ProfilePage() {
   const { userId } = await auth();
@@ -34,24 +34,31 @@ export default async function ProfilePage() {
         </div>
 
         <div className={css.hero}>
+
           <div className={css.heroImg}>
             <Avatar
               {...stringAvatar(userName)}
               alt={userName}
               src={profile.clerkImg}
-              sx={{ width: 96, height: 96 }}
+              sx={{ width: 80, height: 80 }}
             />
-          </div>
-
-          <div className={css.heroContent}>
-            <div className={css.heroContentLeft}>
+            <div className={css.heroImgContent}>
               <Typography variant="h4">{userName}</Typography>
               <Typography variant="body1">{profile.email}</Typography>
             </div>
-            <div className={css.heroContentRight}>
-              <span>Member since: {getFormattedDate(profile.registerAt)}</span>
-              <span>Last update: {getFormattedDate(profile.updatedAt)}</span>
-            </div>
+          </div>
+
+          <div className={css.heroContent}>
+            <span>
+              <b>Member since: </b> {getFormattedDate(profile.registerAt)}
+            </span>
+            <span>
+              <b>Last update: </b> {getFormattedDate(profile.updatedAt)}
+            </span>
+            <span>
+              <b>Plan expires on: </b>
+              {getFormattedDate(addDaysToDate(profile.roleUpgradeAt, 3))}
+            </span>
           </div>
 
           <div className={css.heroPlan}>

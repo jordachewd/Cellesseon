@@ -148,13 +148,13 @@ const base: ThemeOptions = {
     },
 
     body1: {
-      fontSize: "1.25rem",
+      fontSize: "1.125rem",
       fontFamily: albertsans.style.fontFamily,
       color: "var(--mui-palette-text-primary)",
     },
 
     body2: {
-      fontSize: ".85rem",
+      fontSize: "1rem",
       fontFamily: albertsans.style.fontFamily,
       color: "var(--mui-palette-text-primary)",
     },
