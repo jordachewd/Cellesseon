@@ -18,7 +18,16 @@ export function getPlanIcon(name: string) {
   const plan = plans.find(
     (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
   );
+
   return plan ? plan.icon : null;
+}
+
+export function getExpiresOn(name: string) {
+  const plan = plans.find(
+    (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+  );
+
+  return plan ? plan.expiresOn : null;
 }
 
 export const plans = [

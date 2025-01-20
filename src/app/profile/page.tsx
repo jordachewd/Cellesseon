@@ -28,6 +28,8 @@ export default async function ProfilePage() {
     username: profile.username,
   });
 
+  console.log(profile);
+
   return (
     <InnerPage>
       <section className={css.section}>
@@ -61,7 +63,7 @@ export default async function ProfilePage() {
             <span>
               <b>Plan expires on: </b> <br />
               {getExpirationDate({
-                plan: profile.plan,
+                plan: profile.role.toLowerCase(),
                 startDate: profile.roleUpgradeAt,
               })}
             </span>

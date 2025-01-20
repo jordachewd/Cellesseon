@@ -1,3 +1,4 @@
+import { getExpiresOn } from "@/constants/plans";
 import { UserRoles } from "@/types/UserData.d";
 
 interface DateOptions {
@@ -53,20 +54,12 @@ interface ExpirationDateProps {
 
 export function getExpirationDate({ plan, startDate }: ExpirationDateProps) {
   const fromDate = new Date(startDate);
-  let expirationDate: Date = new Date();
+  const expiresOn = getExpiresOn(plan.toLocaleLowerCase());
 
-  switch (plan) {
-    case "lite":
-      expirationDate = addTimeToDate(fromDate, { days: 3 });
-      break;
-    case "pro":
-      expirationDate = addTimeToDate(fromDate, { months: 1 });
-      break;
-    case "premium":
-      expirationDate = addTimeToDate(fromDate, { years: 1 });
-      break;
-    case "admin":
-      return "No expiration date";
+  if (!expiresOn) {
+    throw new Error("ExpiresOn value is null [getExpirationDate]");
   }
+  const expirationDate = addTimeToDate(fromDate, expiresOn);
+
   return getFormattedDate(expirationDate);
 }
