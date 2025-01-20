@@ -10,6 +10,7 @@ export interface Plan {
   icon: string;
   highlight: boolean;
   price: number;
+  expiresOn: { days?: number; months?: number; years?: number };
   inclusions: Inclusion[];
 }
 
@@ -28,6 +29,7 @@ export const plans = [
     icon: "bi bi-clock-history",
     highlight: false,
     price: 0,
+    expiresOn: { days: 3 },
     inclusions: [
       {
         label: "Full AI model",
@@ -70,6 +72,7 @@ export const plans = [
     icon: "bi bi-stars",
     highlight: true,
     price: 29,
+    expiresOn: { months: 1 },
     inclusions: [
       {
         label: "Full AI model",
@@ -112,6 +115,7 @@ export const plans = [
     icon: "bi bi-gem",
     highlight: false,
     price: 69,
+    expiresOn: { years: 1 },
     inclusions: [
       {
         label: "Multiple AI model selection",

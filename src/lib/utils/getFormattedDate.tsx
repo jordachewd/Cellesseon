@@ -1,5 +1,7 @@
+import { UserRoles } from "@/types/UserData.d";
+
 interface DateOptions {
-  weekday: "long";
+  weekday: "short";
   year: "numeric";
   month: "short";
   day: "numeric";
@@ -10,7 +12,7 @@ interface DateOptions {
 export default function getFormattedDate(date: string | number | Date): string {
   const parsedDate = new Date(date);
   const options: DateOptions = {
-    weekday: "long",
+    weekday: "short",
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -20,13 +22,51 @@ export default function getFormattedDate(date: string | number | Date): string {
   return parsedDate.toLocaleDateString("en-US", options);
 }
 
-export function addDaysToDate(
-  dateString: string | number | Date,
-  daysToAdd: number
-) {
-  const date = new Date(dateString);
+interface TimeToAdd {
+  days?: number;
+  months?: number;
+  years?: number;
+}
 
-  date.setDate(date.getDate() + Number(daysToAdd));
+export function addTimeToDate(date: Date, timeToAdd: TimeToAdd): Date {
+  const newDate = new Date(date);
 
-  return date.toISOString();
+  if (timeToAdd.days) {
+    newDate.setDate(newDate.getDate() + timeToAdd.days);
+  }
+
+  if (timeToAdd.months) {
+    newDate.setMonth(newDate.getMonth() + timeToAdd.months);
+  }
+
+  if (timeToAdd.years) {
+    newDate.setFullYear(newDate.getFullYear() + timeToAdd.years);
+  }
+
+  return newDate;
+}
+
+interface ExpirationDateProps {
+  plan: UserRoles;
+  startDate: string | number | Date;
+}
+
+export function getExpirationDate({ plan, startDate }: ExpirationDateProps) {
+  const fromDate = new Date(startDate);
+  let expirationDate: Date = new Date();
+
+  switch (plan) {
+    case "lite":
+      expirationDate = addTimeToDate(fromDate, { days: 3 });
+      break;
+    case "pro":
+      expirationDate = addTimeToDate(fromDate, { months: 1 });
+      break;
+    case "premium":
+      expirationDate = addTimeToDate(fromDate, { years: 1 });
+      break;
+    case "admin":
+      return "No expiration date";
+  }
+  return getFormattedDate(expirationDate);
 }

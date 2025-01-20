@@ -2,7 +2,9 @@ import css from "@/styles/shared/Profile.module.css";
 import InnerPage from "@/components/layout/InnerPage";
 import SpinnerGrow from "@/components/shared/SpinnerGrow";
 import getUserName, { stringAvatar } from "@/lib/utils/getUserName";
-import getFormattedDate, { addDaysToDate } from "@/lib/utils/getFormattedDate";
+import getFormattedDate, {
+  getExpirationDate,
+} from "@/lib/utils/getFormattedDate";
 import PlanCard from "@/components/shared/PlanCard";
 import { auth } from "@clerk/nextjs/server";
 import { Avatar, Typography } from "@mui/material";
@@ -34,7 +36,6 @@ export default async function ProfilePage() {
         </div>
 
         <div className={css.hero}>
-
           <div className={css.heroImg}>
             <Avatar
               {...stringAvatar(userName)}
@@ -50,14 +51,19 @@ export default async function ProfilePage() {
 
           <div className={css.heroContent}>
             <span>
-              <b>Member since: </b> {getFormattedDate(profile.registerAt)}
+              <b>Member since: </b> <br />
+              {getFormattedDate(profile.registerAt)}
             </span>
             <span>
-              <b>Last update: </b> {getFormattedDate(profile.updatedAt)}
+              <b>Last update: </b> <br /> {getFormattedDate(profile.updatedAt)}
             </span>
+
             <span>
-              <b>Plan expires on: </b>
-              {getFormattedDate(addDaysToDate(profile.roleUpgradeAt, 3))}
+              <b>Plan expires on: </b> <br />
+              {getExpirationDate({
+                plan: profile.plan,
+                startDate: profile.roleUpgradeAt,
+              })}
             </span>
           </div>
 

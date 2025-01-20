@@ -9,10 +9,11 @@ export interface IUser extends Document {
   firstName?: string;
   lastName?: string;
   avatar: string;
+  role: UserRoles;
   registerAt: Date;
   updatedAt?: Date;
-  role: UserRoles;
   roleUpgradeAt?: Date;
+ // roleExpiresAt?: Date;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -38,16 +39,17 @@ const UserSchema = new Schema<IUser>({
   lastName: {
     type: String,
   },
-  avatar: { type: String },
-  registerAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
   role: {
     type: String,
     required: true,
     enum: ["lite", "pro", "premium", "admin"],
     default: "lite",
   },
+  avatar: { type: String },
+  registerAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
   roleUpgradeAt: { type: Date, default: Date.now },
+  // roleExpiresAt: { type: Date, default: Date.now },
 });
 
 const User = models?.User || model<IUser>("User", UserSchema);
