@@ -57,6 +57,12 @@ const UserSchema = new Schema<IUser>({
       enum: ["Lite", "Pro", "Premium"],
       default: "Lite",
     },
+    billing: {
+      type: String,
+      required: true,
+      enum: ["Monthly", "Yearly"],
+      default: "Monthly",
+    },
     upgradeAt: { type: Date, required: true, default: Date.now },
     expiresOn: { type: Date, required: true, default: getExpiresOn("Lite") },
   },

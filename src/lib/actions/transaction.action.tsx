@@ -1,7 +1,6 @@
 "use server";
 import Stripe from "stripe";
 import { redirect } from "next/navigation";
-//import { updatePlan } from "./user.actions";
 import { handleError } from "../utils/handleError";
 import { connectToDatabase } from "../database/mongoose";
 import Transaction from "../database/models/transaction.model";
@@ -27,6 +26,7 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
 
   const {
     id: planId,
+    billing: planBilling,
     name: planName,
     price: planPrice,
   }: CheckoutPlanParams = transaction.plan;
@@ -58,6 +58,7 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
       clerkId,
       name: userName,
       plan: planName,
+      billing: planBilling,
       planId,
     },
     success_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/profile`,
@@ -67,14 +68,11 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   redirect(session.url!);
 }
 
-
 export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();
 
     const newTransaction = await Transaction.create(transaction);
-
-   // await updatePlan(transaction.userId, transaction.plan);
 
     return JSON.parse(JSON.stringify(newTransaction));
   } catch (error) {

@@ -1,5 +1,5 @@
 // ====== USER Data Types
-import { PlanData } from "./PlanData.d";
+import { BillingCycle, PlanData } from "./PlanData.d";
 
 export type UserRoles = "client" | "admin";
 
@@ -22,4 +22,5 @@ export interface UpdateUserParams {
   lastName?: string | undefined;
   updatedAt: Date | number;
   plan?: PlanData;
+  billing?: BillingCycle
 }

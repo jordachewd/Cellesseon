@@ -6,6 +6,7 @@ interface Inclusion {
 }
 
 export type PlanName = "Lite" | "Pro" | "Premium";
+export type BillingCycle = "Monthly" | "Yearly";
 
 export interface Plan {
   id: number;
@@ -21,12 +22,14 @@ export interface Plan {
 export interface PlanData {
   id: string;
   name: PlanName;
+  billing: BillingCycle;
   upgradedAt?: Date;
   expiresOn?: Date;
 }
 
 export interface CheckoutPlanParams {
   id: number;
+  billing: BillingCycle;
   name: PlanName;
   price: number;
 }

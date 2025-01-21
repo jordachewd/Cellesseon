@@ -1,6 +1,6 @@
 // ====== TRANSACTION Data Types
 
-import { CheckoutPlanParams, PlanName } from "./PlanData.d";
+import { BillingCycle, CheckoutPlanParams, PlanName } from "./PlanData.d";
 import { ClerkUserData } from "./TaskData.d";
 
 export interface CreateTransactionParams {
@@ -10,6 +10,7 @@ export interface CreateTransactionParams {
   plan: PlanName;
   userId: string;
   clerkId: string;
+  billing: BillingCycle;
 }
 
 export interface CheckoutTransactionParams {

@@ -82,7 +82,7 @@ export default async function ProfilePage() {
         </div>
         <div className={css.content}>
           {transactions.length > 0 ? (
-            <div className="flex flex-col w-full gap-3 my-4">
+            <div key="unique-key-1" className="flex flex-col w-full gap-3 my-4">
               <div className="flex justify-between gap-3 p-3">
                 <Typography variant="body1" sx={{ width: "220px" }}>
                   <b>Date</b>
@@ -94,9 +94,9 @@ export default async function ProfilePage() {
                   <b>Amount</b>
                 </Typography>
               </div>
-              {transactions.map((transaction) => (
+              {transactions.map((transaction, index) => (
                 <div
-                  key={transaction.id}
+                  key={transaction.id || index}
                   className="flex justify-between gap-3 p-3 border rounded-lg border-white/20"
                 >
                   <Typography variant="body2" sx={{ width: "220px" }}>

@@ -1,4 +1,4 @@
-import { PlanName } from "@/types/PlanData.d";
+import { BillingCycle, PlanName } from "@/types/PlanData.d";
 import { Schema, model, models, ObjectId, Document } from "mongoose";
 
 export interface ITransaction extends Document {
@@ -8,6 +8,7 @@ export interface ITransaction extends Document {
   createdAt: Date;
   amount: number;
   plan: PlanName;
+  billing: BillingCycle;
 }
 
 const TransactionSchema = new Schema<ITransaction>({
@@ -31,7 +32,15 @@ const TransactionSchema = new Schema<ITransaction>({
   },
   plan: {
     type: String,
+    enum: ["Lite", "Pro", "Premium"],
     required: true,
+    default: "Lite",
+  },
+  billing: {
+    type: String,
+    enum: ["Monthly", "Yearly"],
+    required: true,
+    default: "Monthly",
   },
   amount: {
     type: Number,

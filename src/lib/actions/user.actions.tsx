@@ -112,22 +112,3 @@ export async function getAllUsers() {
     handleError(error);
   }
 }
-
-// UPDATE PLAN
-export async function updatePlan(userId: string, plan: string) {
-  try {
-    await connectToDatabase();
-
-    const updatedUser = await User.findOneAndUpdate(
-      { _id: userId },
-      { plan: plan },
-      { new: true }
-    );
-
-    if (!updatedUser) throw new Error("User plan update failed");
-
-    return JSON.parse(JSON.stringify(updatedUser));
-  } catch (error) {
-    handleError(error);
-  }
-}

@@ -1,7 +1,7 @@
 import { getExpiresOn } from "@/constants/plans";
 import { createTransaction } from "@/lib/actions/transaction.action";
 import { updateUser } from "@/lib/actions/user.actions";
-import { PlanName } from "@/types/PlanData.d";
+import { BillingCycle, PlanName } from "@/types/PlanData.d";
 import { CreateTransactionParams } from "@/types/TransactionData.d";
 import { UpdateUserParams } from "@/types/UserData.d";
 import { clerkClient } from "@clerk/nextjs/server";
@@ -34,7 +34,8 @@ export async function POST(request: Request) {
       clerkId: metadata?.clerkId || "",
       createdAt: new Date(),
       amount: amount_total ? amount_total / 100 : 0,
-      plan: (metadata?.plan as PlanName) || "",
+      plan: (metadata?.plan as PlanName) || "Lite",
+      billing: (metadata?.billing || "Monthly") as BillingCycle,
     };
 
     // Create transaction in database
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
         plan: {
           id: metadata?.planId?.toString() || "0",
           name: transaction.plan,
+          billing: transaction.billing,
           upgradedAt: transaction.createdAt,
           expiresOn: getExpiresOn(transaction.plan),
         },
@@ -62,6 +64,7 @@ export async function POST(request: Request) {
             planId: metadata?.planId?.toString() || "0",
             planName: transaction.plan,
             planExpiresOn: getExpiresOn(transaction.plan),
+            billing: transaction.billing,
           },
         });
       } else {

@@ -58,7 +58,9 @@ export default function Plans() {
               ? Math.round(plan.price * 12 * (1 - save))
               : plan.price;
 
-          const disableBtn = plan.name === user?.publicMetadata.planName;
+          const isIncluded = Number(user?.publicMetadata.planId) > plan.id;
+          const disableBtn =
+            plan.name === user?.publicMetadata.planName || isIncluded;
 
           return (
             <div
@@ -141,6 +143,7 @@ export default function Plans() {
                   <Checkout
                     plan={{
                       id: plan.id as number,
+                      billing: yearly ? "Yearly" : "Monthly",
                       name: plan.name as PlanName,
                       price: planFee as number,
                     }}
@@ -153,12 +156,14 @@ export default function Plans() {
                       email: user.emailAddresses[0].emailAddress as string,
                     }}
                     btnName={
-                      plan.price === 0 || disableBtn
-                        ? "Current Plan"
+                      disableBtn
+                        ? isIncluded
+                          ? "Included"
+                          : "Current Plan"
                         : "Upgrade"
                     }
                     btnVariant={plan.highlight ? "contained" : "outlined"}
-                    isDisabled={plan.price === 0 || disableBtn}
+                    isDisabled={disableBtn}
                   />
                 </div>
               )}
