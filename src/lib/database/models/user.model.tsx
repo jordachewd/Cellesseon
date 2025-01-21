@@ -1,3 +1,4 @@
+import { expiresOnLite } from "@/constants/plans";
 import { UserRoles } from "@/types/UserData.d";
 import { Schema, model, models, Document } from "mongoose";
 
@@ -51,7 +52,7 @@ const UserSchema = new Schema<IUser>({
   updatedAt: { type: Date, default: Date.now },
 
   planUpgradeAt: { type: Date, default: Date.now },
-  planExpiresOn: { type: Date, default: Date.now },
+  planExpiresOn: { type: Date, default: expiresOnLite },
 });
 
 const User = models?.User || model<IUser>("User", UserSchema);

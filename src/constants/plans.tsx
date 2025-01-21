@@ -16,7 +16,7 @@ export interface Plan {
 
 const currentDate = new Date();
 
-const expiresOnLite = new Date(currentDate);
+export const expiresOnLite = new Date(currentDate);
 expiresOnLite.setDate(currentDate.getDate() + 3);
 
 const expiresOnPro = new Date(currentDate);
