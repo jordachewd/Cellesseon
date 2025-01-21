@@ -1,11 +1,12 @@
+import { PlanName } from "@/constants/plans";
 import { Schema, model, models, ObjectId, Document } from "mongoose";
 
 export interface ITransaction extends Document {
-  createdAt?: Date;
   stripeId: string;
+  createdAt: Date;
   amount: number;
-  plan?: string;
-  user?: ObjectId | string;
+  plan: PlanName;
+  userId: ObjectId | string;
 }
 
 const TransactionSchema = new Schema({

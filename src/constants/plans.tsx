@@ -18,7 +18,7 @@ export interface Plan {
 
 const currentDate = new Date();
 
-export const expiresOnLite = new Date(currentDate);
+const expiresOnLite = new Date(currentDate);
 expiresOnLite.setDate(currentDate.getDate() + 3);
 
 const expiresOnPro = new Date(currentDate);
@@ -159,18 +159,26 @@ export const plans = [
   },
 ];
 
-export function getPlanIcon(name: string) {
+export function getPlanIcon(name: PlanName) {
   const plan = plans.find(
     (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
   );
 
-  return plan ? plan.icon : null;
+  if (!plan) {
+    throw new Error(`No plan found with the name: ${name}`);
+  }
+
+  return plan.icon;
 }
 
-export function getExpiresOn(name: string) {
+export function getExpiresOn(name: PlanName) {
   const plan = plans.find(
     (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
   );
 
-  return plan ? new Date(plan.expiresOn) : null;
+  if (!plan) {
+    throw new Error(`No plan found with the name: ${name}`);
+  }
+
+  return new Date(plan.expiresOn);
 }

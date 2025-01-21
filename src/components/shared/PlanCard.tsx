@@ -5,11 +5,11 @@ import { getUserById } from "@/lib/actions/user.actions";
 import SpinnerGrow from "./SpinnerGrow";
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
-import { getPlanIcon } from "@/constants/plans";
+import { getPlanIcon, PlanName } from "@/constants/plans";
 
 export default function PlanCard() {
   const { user, isLoaded } = useUser();
-  const [userData, setUserData] = useState<{ role: string } | null>(null);
+  const [userData, setUserData] = useState<{ planName: PlanName } | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +29,8 @@ export default function PlanCard() {
     );
   }
 
+  console.log(userData);
+
   return (
     <div className={css.wrapper}>
       <div className={css.content}>
@@ -44,8 +46,8 @@ export default function PlanCard() {
             gap: "1rem",
           }}
         >
-          <i className={`${getPlanIcon(userData?.role)} text-4xl`}></i>
-          <span>{userData?.role}</span>
+          <i className={`${getPlanIcon(userData?.planName)} text-4xl`}></i>
+          <span>{userData?.planName}</span>
         </Typography>
 
         <div className={css.details}>

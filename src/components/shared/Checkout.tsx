@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { loadStripe } from "@stripe/stripe-js";
 import { checkoutPlan } from "@/lib/actions/transaction.action";
 import { CheckoutTransactionParams } from "@/types/TransactionData.d";
+import { PlanName } from "@/constants/plans";
 
 const Checkout = ({
   plan,
@@ -13,7 +14,7 @@ const Checkout = ({
   isDisabled,
   userId,
 }: {
-  plan: string;
+  plan: PlanName;
   amount: number;
   btnName: string;
   btnVariant?: "text" | "outlined" | "contained";
@@ -33,7 +34,6 @@ const Checkout = ({
 
     await checkoutPlan(transaction);
   };
-
 
   return (
     <form action={onCheckout}>

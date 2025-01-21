@@ -1,6 +1,9 @@
-/* eslint-disable camelcase */
+import { getExpiresOn, PlanName } from "@/constants/plans";
 import { createTransaction } from "@/lib/actions/transaction.action";
+import { updateUser } from "@/lib/actions/user.actions";
 import { CreateTransactionParams } from "@/types/TransactionData.d";
+import { UpdateUserParams } from "@/types/UserData.d";
+import { clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import stripe from "stripe";
 
@@ -23,17 +26,40 @@ export async function POST(request: Request) {
   // CREATE
   if (eventType === "checkout.session.completed") {
     const { id, amount_total, metadata } = event.data.object;
+
     const transaction: CreateTransactionParams = {
       stripeId: id,
-      amount: amount_total ? amount_total / 100 : 0,
-      plan: metadata?.plan || "",
-      userId: metadata?.userId || "",
       createdAt: new Date(),
+      amount: amount_total ? amount_total / 100 : 0,
+      plan: (metadata?.plan as PlanName) || "",
+      userId: metadata?.userId || "",
     };
 
+    const newUserData: UpdateUserParams = {
+      planName: transaction.plan,
+      planUpgradeAt: transaction.createdAt,
+      planExpiresOn: getExpiresOn(transaction.plan),
+      updatedAt: transaction.createdAt,
+    };
+
+    // Create transaction in database
     const newTransaction = await createTransaction(transaction);
 
-    return NextResponse.json({ message: "OK", transaction: newTransaction });
+    // Update user in database
+    const updatedUser = await updateUser(transaction.userId, newUserData);
+
+    // Update Clerk user public metadata
+    if (updatedUser) {
+      const client = await clerkClient();
+      await client.users.updateUserMetadata(transaction.userId, {
+        publicMetadata: {
+          planName: transaction.plan,
+          planExpiresOn: getExpiresOn(transaction.plan),
+        },
+      });
+    }
+
+    return NextResponse.json({ message: "OK", newTransaction, updatedUser });
   }
 
   return new Response("Celeseon | Stripe Webhook Response", { status: 200 });
