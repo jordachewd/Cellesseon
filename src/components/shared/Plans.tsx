@@ -46,6 +46,8 @@ export default function Plans() {
               ? Math.round(plan.price * 12 * (1 - save))
               : plan.price;
 
+          const disableBtn = plan.name === user?.publicMetadata.planName;
+
           return (
             <div
               key={plan._id}
@@ -128,8 +130,12 @@ export default function Plans() {
                     plan={plan.name}
                     amount={planFee}
                     userId={user.id}
-                    isDisabled={plan.price === 0}
-                    btnName={plan.price === 0 ? "Current Plan" : "Upgrade"}
+                    isDisabled={plan.price === 0 || disableBtn}
+                    btnName={
+                      plan.price === 0 || disableBtn
+                        ? "Current Plan"
+                        : "Upgrade"
+                    }
                     btnVariant={plan.highlight ? "contained" : "outlined"}
                   />
                 </div>

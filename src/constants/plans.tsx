@@ -73,7 +73,7 @@ export const plans = [
   },
   {
     _id: 1,
-    name: "Lite" as PlanName,
+    name: "Pro" as PlanName,
     desc: "Best for personal projects",
     icon: "bi bi-stars",
     expiresOn: expiresOnPro,
@@ -116,7 +116,7 @@ export const plans = [
   },
   {
     _id: 2,
-    name: "Lite" as PlanName,
+    name: "Premium" as PlanName,
     desc: "Best for businesses",
     icon: "bi bi-gem",
     highlight: false,
