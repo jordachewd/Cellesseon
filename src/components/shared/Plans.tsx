@@ -6,21 +6,32 @@ import { Typography, Switch, Button } from "@mui/material";
 import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Plan, PlanName } from "@/types/PlanData.d";
+import SpinnerGrow from "./SpinnerGrow";
 
 export default function Plans() {
   const [yearly, setYearly] = useState<boolean>(false);
-  const { user } = useUser();
+  const { user, isSignedIn, isLoaded } = useUser();
   const save = 0.4; // Save 35% on yearly plans
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setYearly(event.target.checked);
   };
 
+  if (!isLoaded) {
+    return (
+      <section className={css.section}>
+        <div className="flex justify-center items-center">
+          <SpinnerGrow size="large" />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className={css.section}>
       <div className={css.head}>
         <Typography variant="h2">
-          {user ? "Upgrade" : "Choose"} your plan
+          {isSignedIn ? "Upgrade" : "Choose"} your plan
         </Typography>
         <Typography variant="body1">
           Select the plan that suits your needs!
@@ -125,7 +136,7 @@ export default function Plans() {
                 ))}
               </div>
 
-              {user && (
+              {isSignedIn && (
                 <div className={css.planActions}>
                   <Checkout
                     plan={{
@@ -155,7 +166,8 @@ export default function Plans() {
           );
         })}
       </div>
-      {!user && (
+
+      {!isSignedIn && (
         <div className={css.planActions}>
           <Button
             size="large"

@@ -10,7 +10,9 @@ import { PlanName } from "@/types/PlanData.d";
 
 export default function PlanCard() {
   const { user, isLoaded } = useUser();
-  const [userData, setUserData] = useState<{ planName: PlanName } | null>(null);
+  const [userData, setUserData] = useState<{ plan: { name: PlanName } } | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,8 +49,8 @@ export default function PlanCard() {
             gap: "1rem",
           }}
         >
-          <i className={`${getPlanIcon(userData?.planName)} text-4xl`}></i>
-          <span>{userData?.planName}</span>
+          <i className={`${getPlanIcon(userData?.plan?.name)} text-4xl`}></i>
+          <span>{userData?.plan?.name}</span>
         </Typography>
 
         <div className={css.details}>
