@@ -60,11 +60,11 @@ export default async function ProfilePage() {
 
             <span>
               <b>Plan expires on: </b> <br />
-              {getFormattedDate(profile.planExpiresOn)}
+              {getFormattedDate(profile.plan.expiresOn)}
             </span>
 
             <span>
-              <PlanCountDown endDate={profile.planExpiresOn} />
+              <PlanCountDown endDate={profile.plan.expiresOn} />
             </span>
           </div>
 

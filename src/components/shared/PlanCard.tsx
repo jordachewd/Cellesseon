@@ -32,8 +32,6 @@ export default function PlanCard() {
     );
   }
 
-  console.log(userData);
-
   return (
     <div className={css.wrapper}>
       <div className={css.content}>

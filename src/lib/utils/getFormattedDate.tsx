@@ -17,6 +17,10 @@ export default function getFormattedDate(date: string | number | Date): string {
     hour: "2-digit",
     minute: "2-digit",
   };
+
+  if (!date) {
+    throw new Error("Date is undefined");
+  }
   return parsedDate.toLocaleDateString("en-US", options);
 }
 
@@ -33,6 +37,14 @@ export function getExpirationCountDown(
   startDate: Date,
   endDate: Date
 ): Partial<TimeDifference> {
+  if (!startDate) {
+    throw new Error("Expiration startDate is undefined");
+  }
+
+  if (!endDate) {
+    throw new Error("Expiration endDate is undefined");
+  }
+
   let delta = Math.abs(endDate.getTime() - startDate.getTime()) / 1000;
 
   const years = Math.floor(delta / (365.25 * 24 * 60 * 60));

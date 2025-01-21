@@ -37,8 +37,6 @@ export default function MainPage() {
         messages: [...chat.slice(1), prompt],
       });
 
-      console.log("response: ", response);
-
       if (response.data.error) {
         setAlert({
           title: response.data.error,
