@@ -32,35 +32,49 @@ export async function POST(request: Request) {
       createdAt: new Date(),
       amount: amount_total ? amount_total / 100 : 0,
       plan: (metadata?.plan as PlanName) || "",
-      userId: metadata?.userId || "",
+      userId: metadata?.userId || "", // Convert userId to ObjectId
     };
 
-    const newUserData: UpdateUserParams = {
-      planName: transaction.plan,
-      planUpgradeAt: transaction.createdAt,
-      planExpiresOn: getExpiresOn(transaction.plan),
-      updatedAt: transaction.createdAt,
-    };
+    console.log("STRIPE: metadata", metadata);
 
     // Create transaction in database
     const newTransaction = await createTransaction(transaction);
 
-    // Update user in database
-    const updatedUser = await updateUser(transaction.userId, newUserData);
+    if (newTransaction) {
+      const newUserData: UpdateUserParams = {
+        planName: transaction.plan,
+        planUpgradeAt: transaction.createdAt,
+        planExpiresOn: getExpiresOn(transaction.plan),
+        updatedAt: transaction.createdAt,
+      };
 
-    // Update Clerk user public metadata
-    if (updatedUser) {
-      const client = await clerkClient();
-      await client.users.updateUserMetadata(transaction.userId, {
-        publicMetadata: {
-          planName: transaction.plan,
-          planExpiresOn: getExpiresOn(transaction.plan),
-        },
+      // Update user in database
+      const updatedUser = await updateUser(transaction.userId, newUserData);
+
+      // Update Clerk user public metadata
+      if (updatedUser) {
+        const client = await clerkClient();
+        await client.users.updateUserMetadata(transaction.userId, {
+          publicMetadata: {
+            planName: transaction.plan,
+            planExpiresOn: getExpiresOn(transaction.plan),
+          },
+        });
+      } else {
+        return NextResponse.json({
+          message: "STRIPE: User database update failed!",
+          updatedUser,
+        });
+      }
+
+      return NextResponse.json({ message: "OK", newTransaction, updatedUser });
+    } else {
+      return NextResponse.json({
+        message: "STRIPE: Transaction failed!",
+        newTransaction,
       });
     }
-
-    return NextResponse.json({ message: "OK", newTransaction, updatedUser });
   }
 
-  return new Response("Celeseon | Stripe Webhook Response", { status: 200 });
+  return new Response("STRIPE: Checkout completed!", { status: 200 });
 }

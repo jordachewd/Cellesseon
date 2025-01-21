@@ -118,15 +118,15 @@ export async function updatePlan(userId: string, plan: string) {
   try {
     await connectToDatabase();
 
-    const updatedUserCredits = await User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { _id: userId },
-      { $inc: { role: plan } },
+      { role: plan },
       { new: true }
     );
 
-    if (!updatedUserCredits) throw new Error("User credits update failed");
+    if (!updatedUser) throw new Error("User plan update failed");
 
-    return JSON.parse(JSON.stringify(updatedUserCredits));
+    return JSON.parse(JSON.stringify(updatedUser));
   } catch (error) {
     handleError(error);
   }

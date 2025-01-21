@@ -129,7 +129,7 @@ export default function Plans() {
                   <Checkout
                     plan={plan.name}
                     amount={planFee}
-                    userId={user.id}
+                    userId={user.publicMetadata.userId as string}
                     isDisabled={plan.price === 0 || disableBtn}
                     btnName={
                       plan.price === 0 || disableBtn

@@ -27,9 +27,11 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
         quantity: 1,
       },
     ],
+    customer_email: "customer.email@test.com",
     metadata: {
       plan: transaction.plan,
       userId: transaction.userId,
+      name: "Customer Name",
     },
     mode: "payment",
     success_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/profile`,
