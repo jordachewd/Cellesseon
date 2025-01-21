@@ -129,14 +129,21 @@ export default function Plans() {
                   <Checkout
                     plan={plan.name}
                     amount={planFee}
-                    userId={user.publicMetadata.userId as string}
-                    isDisabled={plan.price === 0 || disableBtn}
+                    clerkUser={{
+                      userId: user.publicMetadata.userId as string,
+                      clerkId: user.id as string,
+                      username: user.username as string,
+                      firstName: user.firstName as string,
+                      lastName: user.lastName as string,
+                      email: user.emailAddresses[0].emailAddress as string,
+                    }}
                     btnName={
                       plan.price === 0 || disableBtn
                         ? "Current Plan"
                         : "Upgrade"
                     }
                     btnVariant={plan.highlight ? "contained" : "outlined"}
+                    isDisabled={plan.price === 0 || disableBtn}
                   />
                 </div>
               )}

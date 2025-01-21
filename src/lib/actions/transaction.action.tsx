@@ -9,12 +9,31 @@ import {
   CheckoutTransactionParams,
   CreateTransactionParams,
 } from "@/types/TransactionData.d";
+import { ClerkUserData } from "@/types/TaskData.d";
+import getUserName from "../utils/getUserName";
 
 export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const amount = Number(transaction.amount) * 100;
 
+  const {
+    userId,
+    clerkId,
+    username,
+    email,
+    firstName,
+    lastName,
+  }: ClerkUserData = transaction.user;
+
+  const userName = getUserName({
+    first_name: firstName || "",
+    last_name: lastName || "",
+    username: username,
+  });
+
   const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    payment_method_types: ['card'],
     line_items: [
       {
         price_data: {
@@ -27,13 +46,13 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
         quantity: 1,
       },
     ],
-    customer_email: "customer.email@test.com",
+    customer_email: email,
     metadata: {
+      name: userName,
       plan: transaction.plan,
-      userId: transaction.userId,
-      name: "Customer Name",
+      clerkId,
+      userId,
     },
-    mode: "payment",
     success_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/profile`,
     cancel_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/plans`,
   });

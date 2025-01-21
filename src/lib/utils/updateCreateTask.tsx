@@ -43,7 +43,8 @@ export default async function updateCreateTask({
       content: messages,
       usage: usage,
       user: {
-        clerkId: "user.id",
+        clerkId: "clerk.id",
+        userId: "user.id",
         username: "user.username",
         firstName: "user.firstName",
         lastName: "user.lastName",

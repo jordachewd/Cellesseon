@@ -32,10 +32,9 @@ export async function POST(request: Request) {
       createdAt: new Date(),
       amount: amount_total ? amount_total / 100 : 0,
       plan: (metadata?.plan as PlanName) || "",
-      userId: metadata?.userId || "", // Convert userId to ObjectId
+      userId: metadata?.userId || "",
+      clerkId: metadata?.clerkId || "",
     };
-
-    console.log("STRIPE: metadata", metadata);
 
     // Create transaction in database
     const newTransaction = await createTransaction(transaction);
@@ -49,12 +48,12 @@ export async function POST(request: Request) {
       };
 
       // Update user in database
-      const updatedUser = await updateUser(transaction.userId, newUserData);
+      const updatedUser = await updateUser(transaction.clerkId, newUserData);
 
       // Update Clerk user public metadata
       if (updatedUser) {
         const client = await clerkClient();
-        await client.users.updateUserMetadata(transaction.userId, {
+        await client.users.updateUserMetadata(transaction.clerkId, {
           publicMetadata: {
             planName: transaction.plan,
             planExpiresOn: getExpiresOn(transaction.plan),
