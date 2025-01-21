@@ -1,23 +1,33 @@
-import { PlanName } from "@/constants/plans";
+import { PlanName } from "@/types/PlanData.d";
 import { Schema, model, models, ObjectId, Document } from "mongoose";
 
 export interface ITransaction extends Document {
   stripeId: string;
+  userId: ObjectId | string;
+  clerkId: string;
   createdAt: Date;
   amount: number;
   plan: PlanName;
-  userId: ObjectId | string;
 }
 
-const TransactionSchema = new Schema({
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+const TransactionSchema = new Schema<ITransaction>({
   stripeId: {
     type: String,
     required: true,
     unique: true,
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  clerkId: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
   amount: {
     type: Number,
@@ -25,10 +35,7 @@ const TransactionSchema = new Schema({
   },
   plan: {
     type: String,
-  },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+    required: true,
   },
 });
 

@@ -1,10 +1,11 @@
 "use client";
-import { Plan, plans } from "@/constants/plans";
-import { Typography, Switch, Button } from "@mui/material";
 import css from "@/styles/shared/Plans.module.css";
 import Checkout from "./Checkout";
+import { plans } from "@/constants/plans";
+import { Typography, Switch, Button } from "@mui/material";
 import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
+import { Plan, PlanName } from "@/types/PlanData.d";
 
 export default function Plans() {
   const [yearly, setYearly] = useState<boolean>(false);
@@ -50,7 +51,7 @@ export default function Plans() {
 
           return (
             <div
-              key={plan._id}
+              key={plan.id}
               className={`${css.plan} ${plan.highlight && css.highlight}`}
             >
               {plan.highlight && <div className={css.planBadge}>Popular</div>}
@@ -127,8 +128,11 @@ export default function Plans() {
               {user && (
                 <div className={css.planActions}>
                   <Checkout
-                    plan={plan.name}
-                    amount={planFee}
+                    plan={{
+                      id: plan.id as number,
+                      name: plan.name as PlanName,
+                      price: planFee as number,
+                    }}
                     clerkUser={{
                       userId: user.publicMetadata.userId as string,
                       clerkId: user.id as string,

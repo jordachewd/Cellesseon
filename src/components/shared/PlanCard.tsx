@@ -5,7 +5,8 @@ import { getUserById } from "@/lib/actions/user.actions";
 import SpinnerGrow from "./SpinnerGrow";
 import { useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
-import { getPlanIcon, PlanName } from "@/constants/plans";
+import { getPlanIcon } from "@/constants/plans";
+import { PlanName } from "@/types/PlanData.d";
 
 export default function PlanCard() {
   const { user, isLoaded } = useUser();

@@ -11,10 +11,10 @@ import {
 } from "@/types/TransactionData.d";
 import { ClerkUserData } from "@/types/TaskData.d";
 import getUserName from "../utils/getUserName";
+import { CheckoutPlanParams } from "@/types/PlanData.d";
 
 export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-  const amount = Number(transaction.amount) * 100;
 
   const {
     userId,
@@ -25,6 +25,12 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
     lastName,
   }: ClerkUserData = transaction.user;
 
+  const {
+    id: planId,
+    name: planName,
+    price: planPrice,
+  }: CheckoutPlanParams = transaction.plan;
+
   const userName = getUserName({
     first_name: firstName || "",
     last_name: lastName || "",
@@ -33,14 +39,14 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
-    payment_method_types: ['card'],
+    payment_method_types: ["card"],
     line_items: [
       {
         price_data: {
           currency: "usd",
-          unit_amount: amount,
+          unit_amount: Number(planPrice) * 100,
           product_data: {
-            name: transaction.plan,
+            name: planName,
           },
         },
         quantity: 1,
@@ -48,10 +54,11 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
     ],
     customer_email: email,
     metadata: {
-      name: userName,
-      plan: transaction.plan,
-      clerkId,
       userId,
+      clerkId,
+      name: userName,
+      plan: planName,
+      planId,
     },
     success_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/profile`,
     cancel_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/plans`,
@@ -64,10 +71,12 @@ export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();
 
-    const newTransaction = await Transaction.create({
+    /*     const newTransaction = await Transaction.create({
       ...transaction,
       user: transaction.userId,
-    });
+    }); */
+
+    const newTransaction = await Transaction.create(transaction);
 
     await updatePlan(transaction.userId, transaction.plan);
 

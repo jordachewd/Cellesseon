@@ -1,6 +1,5 @@
 // ====== USER Data Types
-
-import { PlanName } from "@/constants/plans";
+import { PlanData } from "./PlanData.d";
 
 export type UserRoles = "client" | "admin";
 
@@ -22,8 +21,5 @@ export interface UpdateUserParams {
   firstName?: string | undefined;
   lastName?: string | undefined;
   updatedAt: Date | number;
-  role?: UserRoles | UserRoles[];
-  planName?: PlanName;
-  planUpgradeAt?: Date | number;
-  planExpiresOn?: Date | number;
+  plan?: PlanData;
 }

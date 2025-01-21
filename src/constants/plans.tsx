@@ -1,20 +1,4 @@
-interface Inclusion {
-  label: string;
-  isIncluded: boolean;
-}
-
-export type PlanName = "Lite" | "Pro" | "Premium";
-
-export interface Plan {
-  _id: number;
-  name: PlanName;
-  desc: string;
-  icon: string;
-  highlight: boolean;
-  price: number;
-  expiresOn: Date;
-  inclusions: Inclusion[];
-}
+import { PlanName } from "@/types/PlanData.d";
 
 const currentDate = new Date();
 
@@ -29,7 +13,7 @@ expiresOnPremium.setFullYear(currentDate.getFullYear() + 1);
 
 export const plans = [
   {
-    _id: 0,
+    id: 0,
     name: "Lite" as PlanName,
     desc: "Free trial for 3 days",
     icon: "bi bi-clock-history",
@@ -72,7 +56,7 @@ export const plans = [
     ],
   },
   {
-    _id: 1,
+    id: 1,
     name: "Pro" as PlanName,
     desc: "Best for personal projects",
     icon: "bi bi-stars",
@@ -115,7 +99,7 @@ export const plans = [
     ],
   },
   {
-    _id: 2,
+    id: 2,
     name: "Premium" as PlanName,
     desc: "Best for businesses",
     icon: "bi bi-gem",

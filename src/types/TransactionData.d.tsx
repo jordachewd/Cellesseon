@@ -1,5 +1,6 @@
-// ====== TRANSACTION PARAMS
-import { PlanName } from "@/constants/plans";
+// ====== TRANSACTION Data Types
+
+import { CheckoutPlanParams, PlanName } from "./PlanData.d";
 import { ClerkUserData } from "./TaskData.d";
 
 export interface CreateTransactionParams {
@@ -12,7 +13,6 @@ export interface CreateTransactionParams {
 }
 
 export interface CheckoutTransactionParams {
-  plan: PlanName;
-  amount: number;
   user: ClerkUserData;
+  plan: CheckoutPlanParams;
 }

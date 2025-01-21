@@ -1,6 +1,7 @@
-import { getExpiresOn, PlanName } from "@/constants/plans";
+import { getExpiresOn } from "@/constants/plans";
 import { createTransaction } from "@/lib/actions/transaction.action";
 import { updateUser } from "@/lib/actions/user.actions";
+import { PlanName } from "@/types/PlanData.d";
 import { CreateTransactionParams } from "@/types/TransactionData.d";
 import { UpdateUserParams } from "@/types/UserData.d";
 import { clerkClient } from "@clerk/nextjs/server";
@@ -29,11 +30,11 @@ export async function POST(request: Request) {
 
     const transaction: CreateTransactionParams = {
       stripeId: id,
+      userId: metadata?.userId || "",
+      clerkId: metadata?.clerkId || "",
       createdAt: new Date(),
       amount: amount_total ? amount_total / 100 : 0,
       plan: (metadata?.plan as PlanName) || "",
-      userId: metadata?.userId || "",
-      clerkId: metadata?.clerkId || "",
     };
 
     // Create transaction in database
@@ -41,10 +42,13 @@ export async function POST(request: Request) {
 
     if (newTransaction) {
       const newUserData: UpdateUserParams = {
-        planName: transaction.plan,
-        planUpgradeAt: transaction.createdAt,
-        planExpiresOn: getExpiresOn(transaction.plan),
-        updatedAt: transaction.createdAt,
+        updatedAt: new Date(),
+        plan: {
+          id: metadata?.planId?.toString() || "0",
+          name: transaction.plan,
+          upgradedAt: transaction.createdAt,
+          expiresOn: getExpiresOn(transaction.plan),
+        },
       };
 
       // Update user in database

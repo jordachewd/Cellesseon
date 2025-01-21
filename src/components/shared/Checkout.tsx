@@ -4,12 +4,11 @@ import { Button } from "@mui/material";
 import { loadStripe } from "@stripe/stripe-js";
 import { checkoutPlan } from "@/lib/actions/transaction.action";
 import { CheckoutTransactionParams } from "@/types/TransactionData.d";
-import { PlanName } from "@/constants/plans";
 import { ClerkUserData } from "@/types/TaskData.d";
+import { CheckoutPlanParams } from "@/types/PlanData.d";
 
 interface CheckoutProps {
-  plan: PlanName;
-  amount: number;
+  plan: CheckoutPlanParams;
   btnName: string;
   btnVariant?: "text" | "outlined" | "contained";
   isDisabled?: boolean;
@@ -18,7 +17,6 @@ interface CheckoutProps {
 
 const Checkout = ({
   plan,
-  amount,
   btnName,
   btnVariant,
   isDisabled,
@@ -32,7 +30,6 @@ const Checkout = ({
     const transaction: CheckoutTransactionParams = {
       user: clerkUser,
       plan,
-      amount,
     };
 
     await checkoutPlan(transaction);
