@@ -2,13 +2,12 @@ import css from "@/styles/shared/Profile.module.css";
 import InnerPage from "@/components/layout/InnerPage";
 import SpinnerGrow from "@/components/shared/SpinnerGrow";
 import getUserName, { stringAvatar } from "@/lib/utils/getUserName";
-import getFormattedDate, {
-  getExpirationDate,
-} from "@/lib/utils/getFormattedDate";
+import getFormattedDate from "@/lib/utils/getFormattedDate";
 import PlanCard from "@/components/shared/PlanCard";
 import { auth } from "@clerk/nextjs/server";
 import { Avatar, Typography } from "@mui/material";
 import { getUserById } from "@/lib/actions/user.actions";
+//import PlanCountDown from "@/components/shared/PlanCountDown";
 
 export default async function ProfilePage() {
   const { userId } = await auth();
@@ -22,13 +21,12 @@ export default async function ProfilePage() {
   }
 
   const profile = await getUserById(userId);
+
   const userName = getUserName({
     first_name: profile.firstName,
     last_name: profile.lastName,
     username: profile.username,
   });
-
-  console.log(profile);
 
   return (
     <InnerPage>
@@ -60,13 +58,15 @@ export default async function ProfilePage() {
               <b>Last update: </b> <br /> {getFormattedDate(profile.updatedAt)}
             </span>
 
-            <span>
+   {/*          <span>
               <b>Plan expires on: </b> <br />
-              {getExpirationDate({
-                plan: profile.role.toLowerCase(),
-                startDate: profile.roleUpgradeAt,
-              })}
+              {getFormattedDate(getExpiresOn)}
             </span>
+
+            <span>
+              <b>getExpirationCountDown: </b> <br />
+              <PlanCountDown endDate={getExpiresOn} />
+            </span> */}
           </div>
 
           <div className={css.heroPlan}>

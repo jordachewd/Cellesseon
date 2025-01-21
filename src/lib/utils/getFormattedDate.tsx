@@ -1,6 +1,3 @@
-import { getExpiresOn } from "@/constants/plans";
-import { UserRoles } from "@/types/UserData.d";
-
 interface DateOptions {
   weekday: "short";
   year: "numeric";
@@ -23,43 +20,45 @@ export default function getFormattedDate(date: string | number | Date): string {
   return parsedDate.toLocaleDateString("en-US", options);
 }
 
-interface TimeToAdd {
-  days?: number;
-  months?: number;
-  years?: number;
+export interface TimeDifference {
+  years: number;
+  months: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
 }
 
-export function addTimeToDate(date: Date, timeToAdd: TimeToAdd): Date {
-  const newDate = new Date(date);
+export function getExpirationCountDown(
+  startDate: Date,
+  endDate: Date
+): Partial<TimeDifference> {
+  let delta = Math.abs(endDate.getTime() - startDate.getTime()) / 1000;
 
-  if (timeToAdd.days) {
-    newDate.setDate(newDate.getDate() + timeToAdd.days);
-  }
+  const years = Math.floor(delta / (365.25 * 24 * 60 * 60));
+  delta -= years * 365.25 * 24 * 60 * 60;
 
-  if (timeToAdd.months) {
-    newDate.setMonth(newDate.getMonth() + timeToAdd.months);
-  }
+  const months = Math.floor(delta / (30.44 * 24 * 60 * 60));
+  delta -= months * 30.44 * 24 * 60 * 60;
 
-  if (timeToAdd.years) {
-    newDate.setFullYear(newDate.getFullYear() + timeToAdd.years);
-  }
+  const days = Math.floor(delta / (24 * 60 * 60));
+  delta -= days * 24 * 60 * 60;
 
-  return newDate;
-}
+  const hours = Math.floor(delta / (60 * 60));
+  delta -= hours * 60 * 60;
 
-interface ExpirationDateProps {
-  plan: UserRoles;
-  startDate: string | number | Date;
-}
+  const minutes = Math.floor(delta / 60);
+  delta -= minutes * 60;
 
-export function getExpirationDate({ plan, startDate }: ExpirationDateProps) {
-  const fromDate = new Date(startDate);
-  const expiresOn = getExpiresOn(plan.toLocaleLowerCase());
+  const seconds = Math.floor(delta);
 
-  if (!expiresOn) {
-    throw new Error("ExpiresOn value is null [getExpirationDate]");
-  }
-  const expirationDate = addTimeToDate(fromDate, expiresOn);
+  const result: Partial<TimeDifference> = {};
+  if (years) result.years = years;
+  if (months) result.months = months;
+  if (days) result.days = days;
+  if (hours) result.hours = hours;
+  if (minutes) result.minutes = minutes;
+  if (seconds) result.seconds = seconds;
 
-  return getFormattedDate(expirationDate);
+  return result;
 }

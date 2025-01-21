@@ -10,25 +10,20 @@ export interface Plan {
   icon: string;
   highlight: boolean;
   price: number;
-  expiresOn: { days?: number; months?: number; years?: number };
+  expiresOn: Date;
   inclusions: Inclusion[];
 }
 
-export function getPlanIcon(name: string) {
-  const plan = plans.find(
-    (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
-  );
+const currentDate = new Date();
 
-  return plan ? plan.icon : null;
-}
+const expiresOnLite = new Date(currentDate);
+expiresOnLite.setDate(currentDate.getDate() + 3);
 
-export function getExpiresOn(name: string) {
-  const plan = plans.find(
-    (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
-  );
+const expiresOnPro = new Date(currentDate);
+expiresOnPro.setMonth(currentDate.getMonth() + 1);
 
-  return plan ? plan.expiresOn : null;
-}
+const expiresOnPremium = new Date(currentDate);
+expiresOnPremium.setFullYear(currentDate.getFullYear() + 1);
 
 export const plans = [
   {
@@ -36,9 +31,10 @@ export const plans = [
     name: "Lite",
     desc: "Free trial for 3 days",
     icon: "bi bi-clock-history",
+    expiresOn: expiresOnLite,
     highlight: false,
     price: 0,
-    expiresOn: { days: 3 },
+
     inclusions: [
       {
         label: "Full AI model",
@@ -79,9 +75,10 @@ export const plans = [
     name: "Pro",
     desc: "Best for personal projects",
     icon: "bi bi-stars",
+    expiresOn: expiresOnPro,
     highlight: true,
     price: 29,
-    expiresOn: { months: 1 },
+
     inclusions: [
       {
         label: "Full AI model",
@@ -123,8 +120,8 @@ export const plans = [
     desc: "Best for businesses",
     icon: "bi bi-gem",
     highlight: false,
+    expiresOn: expiresOnPremium,
     price: 69,
-    expiresOn: { years: 1 },
     inclusions: [
       {
         label: "Multiple AI model selection",
@@ -161,3 +158,19 @@ export const plans = [
     ],
   },
 ];
+
+export function getPlanIcon(name: string) {
+  const plan = plans.find(
+    (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+  );
+
+  return plan ? plan.icon : null;
+}
+
+export function getExpiresOn(name: string) {
+  const plan = plans.find(
+    (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+  );
+
+  return plan ? new Date(plan.expiresOn) : null;
+}

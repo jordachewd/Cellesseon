@@ -12,8 +12,9 @@ export interface IUser extends Document {
   role: UserRoles;
   registerAt: Date;
   updatedAt?: Date;
-  roleUpgradeAt?: Date;
- // roleExpiresAt?: Date;
+
+  planUpgradeAt?: Date;
+  planExpiresOn?: Date;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -48,8 +49,9 @@ const UserSchema = new Schema<IUser>({
   avatar: { type: String },
   registerAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  roleUpgradeAt: { type: Date, default: Date.now },
-  // roleExpiresAt: { type: Date, default: Date.now },
+
+  planUpgradeAt: { type: Date, default: Date.now },
+  planExpiresOn: { type: Date, default: Date.now },
 });
 
 const User = models?.User || model<IUser>("User", UserSchema);

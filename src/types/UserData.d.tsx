@@ -21,5 +21,6 @@ export interface UpdateUserParams {
   lastName?: string | undefined;
   updatedAt: Date | number;
   role?: UserRoles | UserRoles[];
-  roleUpgradeAt?: Date | number;
+  planUpgradeAt?: Date | number;
+  planExpiresOn?: Date | number;
 }
