@@ -3,9 +3,11 @@ interface Inclusion {
   isIncluded: boolean;
 }
 
+export type PlanName = "Lite" | "Pro" | "Premium";
+
 export interface Plan {
   _id: number;
-  name: string;
+  name: PlanName;
   desc: string;
   icon: string;
   highlight: boolean;
@@ -28,13 +30,12 @@ expiresOnPremium.setFullYear(currentDate.getFullYear() + 1);
 export const plans = [
   {
     _id: 0,
-    name: "Lite",
+    name: "Lite" as PlanName,
     desc: "Free trial for 3 days",
     icon: "bi bi-clock-history",
     expiresOn: expiresOnLite,
     highlight: false,
     price: 0,
-
     inclusions: [
       {
         label: "Full AI model",
@@ -72,13 +73,12 @@ export const plans = [
   },
   {
     _id: 1,
-    name: "Pro",
+    name: "Lite" as PlanName,
     desc: "Best for personal projects",
     icon: "bi bi-stars",
     expiresOn: expiresOnPro,
     highlight: true,
     price: 29,
-
     inclusions: [
       {
         label: "Full AI model",
@@ -116,7 +116,7 @@ export const plans = [
   },
   {
     _id: 2,
-    name: "Premium",
+    name: "Lite" as PlanName,
     desc: "Best for businesses",
     icon: "bi bi-gem",
     highlight: false,

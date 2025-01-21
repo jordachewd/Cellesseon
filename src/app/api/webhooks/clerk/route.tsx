@@ -85,6 +85,8 @@ export async function POST(req: Request) {
         publicMetadata: {
           userId: newUser._id,
           role: newUser.role,
+          planName: newUser.planName,
+          planExpiresOn: newUser.planExpiresOn,
         },
       });
     }

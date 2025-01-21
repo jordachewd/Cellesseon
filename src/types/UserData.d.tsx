@@ -1,6 +1,8 @@
 // ====== USER Data Types
 
-export type UserRoles = "lite" | "pro" | "premium" | "admin";
+import { PlanName } from "@/constants/plans";
+
+export type UserRoles = "client" | "admin";
 
 /* Used by Clerk Webhook ("user.created") */
 export interface CreateUserParams {
@@ -10,17 +12,18 @@ export interface CreateUserParams {
   username: string;
   firstName: string | undefined;
   lastName: string | undefined;
-  registerAt?: Date | number;
+  registerAt: Date | number;
 }
 
 /* Used by Clerk Webhook ("user.updated") */
 export interface UpdateUserParams {
-  email?: string; 
+  email?: string;
   clerkImg?: string;
   firstName?: string | undefined;
   lastName?: string | undefined;
   updatedAt: Date | number;
   role?: UserRoles | UserRoles[];
+  planName?: PlanName;
   planUpgradeAt?: Date | number;
   planExpiresOn?: Date | number;
 }

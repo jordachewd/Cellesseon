@@ -1,4 +1,4 @@
-import { expiresOnLite } from "@/constants/plans";
+import { expiresOnLite, PlanName } from "@/constants/plans";
 import { UserRoles } from "@/types/UserData.d";
 import { Schema, model, models, Document } from "mongoose";
 
@@ -14,6 +14,7 @@ export interface IUser extends Document {
   registerAt: Date;
   updatedAt?: Date;
 
+  planName: PlanName;
   planUpgradeAt?: Date;
   planExpiresOn?: Date;
 }
@@ -44,13 +45,19 @@ const UserSchema = new Schema<IUser>({
   role: {
     type: String,
     required: true,
-    enum: ["lite", "pro", "premium", "admin"],
-    default: "lite",
+    enum: ["client", "admin"],
+    default: "client",
   },
   avatar: { type: String },
   registerAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 
+  planName: {
+    type: String,
+    required: true,
+    enum: ["Lite", "Pro", "Premium"],
+    default: "Lite",
+  },
   planUpgradeAt: { type: Date, default: Date.now },
   planExpiresOn: { type: Date, default: expiresOnLite },
 });
