@@ -49,7 +49,6 @@ const UserSchema = new Schema<IUser>({
   avatar: { type: String },
   registerAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-
   plan: {
     id: { type: Number, required: true, default: 0 },
     name: {

@@ -120,7 +120,7 @@ export async function updatePlan(userId: string, plan: string) {
 
     const updatedUser = await User.findOneAndUpdate(
       { _id: userId },
-      { role: plan },
+      { plan: plan },
       { new: true }
     );
 

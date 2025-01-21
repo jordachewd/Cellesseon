@@ -11,15 +11,15 @@ export interface ITransaction extends Document {
 }
 
 const TransactionSchema = new Schema<ITransaction>({
-  stripeId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   userId: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
+  },
+  stripeId: {
+    type: String,
+    required: true,
+    unique: true,
   },
   clerkId: {
     type: String,
@@ -29,12 +29,12 @@ const TransactionSchema = new Schema<ITransaction>({
     type: Date,
     default: Date.now,
   },
-  amount: {
-    type: Number,
-    required: true,
-  },
   plan: {
     type: String,
+    required: true,
+  },
+  amount: {
+    type: Number,
     required: true,
   },
 });

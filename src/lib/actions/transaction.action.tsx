@@ -1,7 +1,7 @@
 "use server";
 import Stripe from "stripe";
 import { redirect } from "next/navigation";
-import { updatePlan } from "./user.actions";
+//import { updatePlan } from "./user.actions";
 import { handleError } from "../utils/handleError";
 import { connectToDatabase } from "../database/mongoose";
 import Transaction from "../database/models/transaction.model";
@@ -67,13 +67,14 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   redirect(session.url!);
 }
 
+
 export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();
 
     const newTransaction = await Transaction.create(transaction);
 
-    await updatePlan(transaction.userId, transaction.plan);
+   // await updatePlan(transaction.userId, transaction.plan);
 
     return JSON.parse(JSON.stringify(newTransaction));
   } catch (error) {
