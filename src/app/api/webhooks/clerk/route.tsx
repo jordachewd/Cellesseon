@@ -6,6 +6,7 @@ import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
 import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
+import { deleteAllTransactions } from "@/lib/actions/transaction.action";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
@@ -85,6 +86,7 @@ export async function POST(req: Request) {
         publicMetadata: {
           userId: newUser._id,
           role: newUser.role,
+          planId: newUser.plan.id,
           planName: newUser.plan.name,
           planExpiresOn: newUser.plan.expiresOn,
         },
@@ -114,7 +116,12 @@ export async function POST(req: Request) {
     const { id } = evt.data;
 
     const deletedUser = await deleteUser(id!);
-    return NextResponse.json({ message: "OK", user: deletedUser });
+    const deletedTransactions = await deleteAllTransactions(id!);
+    return NextResponse.json({
+      message: "OK",
+      deletedUser,
+      deletedTransactions,
+    });
   }
 
   return new Response("Celeseon | Clerk Webhook Response", { status: 200 });

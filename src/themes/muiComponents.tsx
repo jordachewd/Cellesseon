@@ -46,6 +46,10 @@ export const muiComponents: ThemeOptions = {
             boxShadow:
               "0px 1px 4px 0px rgba(var(--mui-palette-secondary-darkChannel) / 0.4)",
           },
+          "&.Mui-disabled": {
+            color: "var(--mui-palette-tertiary-main)",
+            backgroundColor: "var(--mui-palette-tertiary-light)",
+          },
         },
         sizeSmall: {
           fontSize: "1rem",

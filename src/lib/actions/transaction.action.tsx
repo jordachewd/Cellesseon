@@ -71,16 +71,35 @@ export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();
 
-    /*     const newTransaction = await Transaction.create({
-      ...transaction,
-      user: transaction.userId,
-    }); */
-
     const newTransaction = await Transaction.create(transaction);
 
     await updatePlan(transaction.userId, transaction.plan);
 
     return JSON.parse(JSON.stringify(newTransaction));
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+export async function getAllTransactions(userId: string) {
+  try {
+    await connectToDatabase();
+
+    const transactions = await Transaction.find({ clerkId: userId });
+
+    return JSON.parse(JSON.stringify(transactions));
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+export async function deleteAllTransactions(userId: string) {
+  try {
+    await connectToDatabase();
+
+    await Transaction.deleteMany({ clerkId: userId });
+
+    return { message: "All transactions deleted successfully" };
   } catch (error) {
     handleError(error);
   }

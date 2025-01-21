@@ -59,6 +59,7 @@ export async function POST(request: Request) {
         const client = await clerkClient();
         await client.users.updateUserMetadata(transaction.clerkId, {
           publicMetadata: {
+            planId: metadata?.planId?.toString() || "0",
             planName: transaction.plan,
             planExpiresOn: getExpiresOn(transaction.plan),
           },

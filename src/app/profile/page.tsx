@@ -8,6 +8,8 @@ import { auth } from "@clerk/nextjs/server";
 import { Avatar, Typography } from "@mui/material";
 import { getUserById } from "@/lib/actions/user.actions";
 import PlanCountDown from "@/components/shared/PlanCountDown";
+import { getAllTransactions } from "@/lib/actions/transaction.action";
+import { Transaction } from "@/types/TransactionData.d";
 
 export default async function ProfilePage() {
   const { userId } = await auth();
@@ -21,12 +23,13 @@ export default async function ProfilePage() {
   }
 
   const profile = await getUserById(userId);
-
   const userName = getUserName({
     first_name: profile.firstName,
     last_name: profile.lastName,
     username: profile.username,
   });
+
+  const transactions: Transaction[] = await getAllTransactions(userId);
 
   return (
     <InnerPage>
@@ -71,6 +74,44 @@ export default async function ProfilePage() {
           <div className={css.heroPlan}>
             <PlanCard />
           </div>
+        </div>
+      </section>
+      <section className={css.section}>
+        <div className={css.head}>
+          <Typography variant="h3">Billing history</Typography>
+        </div>
+        <div className={css.content}>
+          {transactions.length > 0 ? (
+            <div className="flex flex-col w-full gap-3 my-4">
+              <div className="flex justify-between gap-3 p-3">
+                <Typography variant="body1" sx={{ width: "220px" }}>
+                  <b>Date</b>
+                </Typography>
+                <Typography variant="body1">
+                  <b>Plan</b>
+                </Typography>
+                <Typography variant="body1">
+                  <b>Amount</b>
+                </Typography>
+              </div>
+              {transactions.map((transaction) => (
+                <div
+                  key={transaction.id}
+                  className="flex justify-between gap-3 p-3 border rounded-lg border-white/20"
+                >
+                  <Typography variant="body2" sx={{ width: "220px" }}>
+                    {getFormattedDate(transaction.createdAt)}
+                  </Typography>
+                  <Typography variant="body2">{transaction.plan}</Typography>
+                  <Typography variant="body2">${transaction.amount}</Typography>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <Typography variant="body1">
+              You have no billing history yet.
+            </Typography>
+          )}
         </div>
       </section>
     </InnerPage>
