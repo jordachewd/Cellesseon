@@ -23,7 +23,7 @@ export default function Plans() {
   if (!isLoaded) {
     return (
       <section className={css.section}>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center min-h-[25vh]">
           <SpinnerGrow size="large" />
         </div>
       </section>

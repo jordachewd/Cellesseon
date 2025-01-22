@@ -1,14 +1,12 @@
 .wrapper {
-  @apply flex flex-col flex-1 w-full items-center;
-  @apply gap-10 p-0 m-0 z-10 relative overflow-y-auto;
-
+  @apply flex flex-col flex-1 w-full items-center gap-10 p-0 m-0 z-10 relative overflow-y-auto;
   @apply [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:rounded-full;
   @apply [&::-webkit-scrollbar-track]:bg-lightBorders-500 [&::-webkit-scrollbar-thumb]:bg-lightSecondary-800;
   @apply dark:[&::-webkit-scrollbar-track]:bg-darkBorders-500 dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
 }
 
 .hero {
-  @apply flex w-full justify-between items-center px-8 lg:px-10 lg:pt-[60px];
+  @apply flex w-full justify-between items-center pt-[60px] px-8 lg:px-10;
   @apply bg-white/50 dark:bg-darkPrimary-900/50 shadow-sm;
 }
 
@@ -27,7 +25,7 @@
 }
 
 .heroRight {
-  @apply  relative overflow-hidden self-end;
+  @apply relative overflow-hidden self-end;
 }
 
 .heroShadow {

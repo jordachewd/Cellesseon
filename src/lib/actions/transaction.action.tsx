@@ -84,7 +84,11 @@ export async function getAllTransactions(userId: string) {
   try {
     await connectToDatabase();
 
-    const transactions = await Transaction.find({ clerkId: userId });
+    const transactions = await Transaction.find({ clerkId: userId }, null, {
+      sort: {
+        createdAt: -1, //Sort by Date Added DESC
+      },
+    }).exec();
 
     return JSON.parse(JSON.stringify(transactions));
   } catch (error) {

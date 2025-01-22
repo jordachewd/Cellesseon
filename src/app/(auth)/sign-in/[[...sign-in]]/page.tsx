@@ -1,11 +1,8 @@
-import InnerPage from "@/components/layout/InnerPage";
 import { SignIn } from "@clerk/nextjs";
 export default function SignInPage() {
   return (
-    <InnerPage>
-      <div className="flex mx-auto ">
-        <SignIn />
-      </div>
-    </InnerPage>
+    <div className="h-full min-h-dvh flex items-center justify-center">
+      <SignIn />
+    </div>
   );
 }

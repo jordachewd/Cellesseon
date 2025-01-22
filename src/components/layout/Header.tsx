@@ -5,12 +5,11 @@ import { useChatContext } from "@/context/ChatContext";
 import { useUser } from "@clerk/clerk-react";
 import { Button } from "@mui/material";
 import Logo from "../shared/Logo";
-import ToggleMode from "../shared/ToggleMode";
-import SpinnerGrow from "../shared/SpinnerGrow";
+import ToggleTheme from "../shared/ToggleTheme";
 import SidebarToggle from "../shared/SidebarToggle";
 
 export default function Header() {
-  const { user, isLoaded } = useUser();
+  const { user, isSignedIn } = useUser();
   const { sidebarCtx } = useChatContext();
   const [scrolled, setScrolled] = useState<boolean>(false);
 
@@ -28,38 +27,20 @@ export default function Header() {
   return (
     <section className={`${css.section} ${scrolled && css.scrolled}`}>
       <div className={`${css.content} ${!user && "max-w-screen-2xl"}`}>
-        {isLoaded ? (
-          <>
-            <div
-              className={`${css.left} ${sidebarCtx.isSbOpen && "invisible"}`}
-            >
-              {user ? (
-                <>
-                  <Logo />
-                  <SidebarToggle title="Show Menu" icon="bi-layout-sidebar" />
-                </>
-              ) : (
-                <Logo />
-              )}
-            </div>
-            <div className={css.right}>
-              {user ? (
-                <ToggleMode />
-              ) : (
-                <>
-                  <Button size="small" href="/sign-in">
-                    login
-                  </Button>
-                  <ToggleMode />
-                </>
-              )}
-            </div>
-          </>
-        ) : (
-          <div className={css.center}>
-            <SpinnerGrow />
-          </div>
-        )}
+        <div className={`${css.left} ${sidebarCtx.isSbOpen && "invisible"}`}>
+          <Logo />
+          {isSignedIn && (
+            <SidebarToggle title="Show Menu" icon="bi-layout-sidebar" />
+          )}
+        </div>
+        <div className={css.right}>
+          {!isSignedIn && (
+            <Button size="small" href="/sign-in">
+              login
+            </Button>
+          )}
+          <ToggleTheme />
+        </div>
       </div>
     </section>
   );

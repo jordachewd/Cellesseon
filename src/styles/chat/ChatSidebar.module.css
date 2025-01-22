@@ -1,12 +1,12 @@
 .wrapper {
-  @apply flex flex-col justify-between border-r w-72 lg:w-64 shadow;
+  @apply flex flex-col justify-between border-r w-96 lg:w-64 shadow;
   @apply top-0 bottom-0 left-0 z-10 fixed lg:relative transition-all duration-300;
   @apply bg-lightBackground-200 border-slate-200/50;
   @apply dark:bg-jwdMarine-1000 dark:border-jwdMarine-1000;
 }
 
 .narrow {
-  @apply -ml-72 lg:-ml-64 opacity-0;
+  @apply -ml-96 lg:-ml-64 opacity-0;
 }
 
 .topbar {
