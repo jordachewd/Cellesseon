@@ -23,8 +23,8 @@ export interface PlanData {
   id: string;
   name: PlanName;
   billing: BillingCycle;
-  upgradedAt?: Date;
-  expiresOn?: Date;
+  upgradedAt: Date;
+  expiresOn: Date;
 }
 
 export interface CheckoutPlanParams {

@@ -5,11 +5,12 @@ import { ClerkUserData } from "./TaskData.d";
 
 export interface CreateTransactionParams {
   stripeId: string;
-  createdAt: Date;
-  amount: number;
-  plan: PlanName;
   userId: string;
   clerkId: string;
+  createdAt: Date;
+  expiresOn: Date;
+  amount: number;
+  plan: PlanName;
   billing: BillingCycle;
 }
 

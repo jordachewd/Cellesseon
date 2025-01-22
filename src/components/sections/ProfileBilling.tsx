@@ -24,35 +24,53 @@ export default async function ProfileBilling() {
   return (
     <section className={css.section}>
       <div className={css.head}>
-        <Typography variant="h3">Billing history</Typography>
+        <Typography variant="h3">Billing History</Typography>
       </div>
       <div className={css.content}>
         {transactions.length > 0 ? (
-          <div key="unique-key-1" className="flex flex-col w-full gap-3 my-4">
-            <div className="flex justify-between gap-3 p-3">
-              <Typography variant="body1" sx={{ width: "30%" }}>
-                <b>Date</b>
-              </Typography>
-              <Typography variant="body1">
+          <div key="unique-key-1" className="flex flex-col w-full gap-3 my-6">
+            <div className="flex justify-between items-center gap-3 p-3">
+              <Typography variant="body1" className="flex-1">
                 <b>Plan</b>
               </Typography>
-              <Typography variant="body1">
-                <b>Billing</b>
+              <Typography variant="body1" className="flex-1">
+                <b>Billing / Cycle</b>
+              </Typography>
+              <Typography variant="body1" className="flex-1">
+                <b>Purchased</b>
+              </Typography>
+              <Typography variant="body1" className="flex-1">
+                <b>Expires</b>
               </Typography>
             </div>
             {transactions.map((transaction, index) => (
               <div
                 key={transaction.id || index}
-                className="flex justify-between gap-2 py-2 px-3 border rounded-md border-white/20"
+                className="flex justify-between items-center gap-2 py-2 px-3 border rounded-md border-white/20"
               >
-                <Typography variant="body2" sx={{ width: "30%", fontSize: 14 }}>
+                <Typography variant="body2" className="flex-1">
+                  <b>{transaction.plan}</b>
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: 12 }}
+                  className="flex-1"
+                >
+                  ${transaction.amount} / {transaction.billing}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: 12 }}
+                  className="flex-1"
+                >
                   {getFormattedDate(transaction.createdAt)}
                 </Typography>
-                <Typography variant="body2" sx={{ fontSize: 14 }}>
-                  {transaction.plan}
-                </Typography>
-                <Typography variant="body2" sx={{ fontSize: 14 }}>
-                  ${transaction.amount} / {transaction.billing}
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: 12 }}
+                  className="flex-1"
+                >
+                  -
                 </Typography>
               </div>
             ))}

@@ -35,6 +35,7 @@ const Checkout = ({
     await checkoutPlan(transaction);
   };
 
+  
   return (
     <form action={onCheckout}>
       <Button

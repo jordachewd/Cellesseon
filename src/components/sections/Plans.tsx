@@ -166,6 +166,7 @@ export default function Plans() {
                   </div>
                 ))}
               </div>
+              
 
               {isSignedIn && (
                 <div className={css.planActions}>

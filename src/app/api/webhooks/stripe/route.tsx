@@ -28,14 +28,23 @@ export async function POST(request: Request) {
   if (eventType === "checkout.session.completed") {
     const { id, amount_total, metadata } = event.data.object;
 
+    const theAmount = amount_total ? amount_total / 100 : 0;
+    const theUserId = metadata?.userId || "-";
+    const theClerkId = metadata?.clerkId || "-";
+    const thePlanId = metadata?.planId?.toString() || "0";
+    const thePlanName = (metadata?.plan as PlanName) || "Lite";
+    const theBillingCycle = (metadata?.billing || "Monthly") as BillingCycle;
+    const theExpireDate = getExpiresOn(thePlanName);
+
     const transaction: CreateTransactionParams = {
       stripeId: id,
-      userId: metadata?.userId || "",
-      clerkId: metadata?.clerkId || "",
+      userId: theUserId,
+      clerkId: theClerkId,
       createdAt: new Date(),
-      amount: amount_total ? amount_total / 100 : 0,
-      plan: (metadata?.plan as PlanName) || "Lite",
-      billing: (metadata?.billing || "Monthly") as BillingCycle,
+      expiresOn: theExpireDate,
+      amount: theAmount,
+      plan: thePlanName,
+      billing: theBillingCycle,
     };
 
     // Create transaction in database
@@ -45,26 +54,26 @@ export async function POST(request: Request) {
       const newUserData: UpdateUserParams = {
         updatedAt: new Date(),
         plan: {
-          id: metadata?.planId?.toString() || "0",
-          name: transaction.plan,
-          billing: transaction.billing,
-          upgradedAt: transaction.createdAt,
-          expiresOn: getExpiresOn(transaction.plan as PlanName),
+          id: thePlanId,
+          name: thePlanName,
+          billing: theBillingCycle,
+          upgradedAt: new Date(),
+          expiresOn: theExpireDate,
         },
       };
 
       // Update user in database
-      const updatedUser = await updateUser(transaction.clerkId, newUserData);
+      const updatedUser = await updateUser(theClerkId, newUserData);
 
       // Update Clerk user public metadata
       if (updatedUser) {
         const client = await clerkClient();
-        await client.users.updateUserMetadata(transaction.clerkId, {
+        await client.users.updateUserMetadata(theClerkId, {
           publicMetadata: {
-            planId: metadata?.planId?.toString() || "0",
-            planName: transaction.plan,
-            planExpiresOn: getExpiresOn(transaction.plan as PlanName),
-            billing: transaction.billing,
+            planId: thePlanId,
+            planName: thePlanName,
+            planExpiresOn: theExpireDate,
+            billing: theBillingCycle,
           },
         });
       } else {

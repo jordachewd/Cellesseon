@@ -74,7 +74,7 @@ export async function POST(req: Request) {
       email: email_addresses[0].email_address,
       firstName: first_name ?? "",
       lastName: last_name ?? "",
-      registerAt: created_at,
+      registerAt: new Date(created_at),
     };
 
     const newUser = await createUser(user);
@@ -103,7 +103,7 @@ export async function POST(req: Request) {
     const user: UpdateUserParams = {
       firstName: first_name ?? "",
       lastName: last_name ?? "",
-      updatedAt: updated_at,
+      updatedAt: new Date(updated_at),
       clerkImg: image_url,
     };
 

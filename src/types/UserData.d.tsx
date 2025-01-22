@@ -11,7 +11,7 @@ export interface CreateUserParams {
   username: string;
   firstName: string | undefined;
   lastName: string | undefined;
-  registerAt: Date | number;
+  registerAt: Date;
 }
 
 /* Used by Clerk Webhook ("user.updated") */
@@ -20,10 +20,11 @@ export interface UpdateUserParams {
   clerkImg?: string;
   firstName?: string | undefined;
   lastName?: string | undefined;
-  updatedAt: Date | number;
+  updatedAt: Date;
   plan?: PlanData;
   billing?: BillingCycle
 }
+
 
 export interface UserMetadata {
   billing?: BillingCycle;
