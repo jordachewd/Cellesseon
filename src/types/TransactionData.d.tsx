@@ -23,6 +23,7 @@ export interface Transaction {
   id: string;
   plan: string;
   amount: number;
-  createdAt: string;
+  createdAt: Date;
+  expiresOn: Date;
   billing: BillingCycle;
 }

@@ -6,6 +6,7 @@ export interface ITransaction extends Document {
   userId: ObjectId | string;
   clerkId: string;
   createdAt: Date;
+  expiresOn: Date;
   amount: number;
   plan: PlanName;
   billing: BillingCycle;
@@ -29,6 +30,12 @@ const TransactionSchema = new Schema<ITransaction>({
   createdAt: {
     type: Date,
     default: Date.now,
+    required: true,
+  },
+  expiresOn: {
+    type: Date,
+    default: Date.now,
+    required: true,
   },
   plan: {
     type: String,

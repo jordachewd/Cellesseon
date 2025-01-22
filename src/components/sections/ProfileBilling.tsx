@@ -70,7 +70,7 @@ export default async function ProfileBilling() {
                   sx={{ fontSize: 12 }}
                   className="flex-1"
                 >
-                  -
+                  {getFormattedDate(transaction.expiresOn)}
                 </Typography>
               </div>
             ))}
