@@ -23,4 +23,5 @@ export interface Transaction {
   plan: string;
   amount: number;
   createdAt: string;
+  billing: BillingCycle;
 }

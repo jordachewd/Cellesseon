@@ -1,17 +1,20 @@
 "use client";
-import css from "@/styles/shared/Plans.module.css";
-import Checkout from "./Checkout";
+import css from "@/styles/sections/Plans.module.css";
+import Checkout from "@/components/shared/Checkout";
 import { plans } from "@/constants/plans";
 import { Typography, Switch, Button } from "@mui/material";
 import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Plan, PlanName } from "@/types/PlanData.d";
-import SpinnerGrow from "./SpinnerGrow";
+import { UserMetadata } from "@/types/UserData.d";
+import SpinnerGrow from "@/components/shared/SpinnerGrow";
 
 export default function Plans() {
   const [yearly, setYearly] = useState<boolean>(false);
   const { user, isSignedIn, isLoaded } = useUser();
-  const save = 0.4; // Save 35% on yearly plans
+
+  const save = 0.4; // Save 40% on yearly plans
+  const noOfPLans = plans.length - 1; // Total number of plans
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setYearly(event.target.checked);
@@ -26,6 +29,9 @@ export default function Plans() {
       </section>
     );
   }
+
+  const publicMetadata = user?.publicMetadata as UserMetadata;
+  const { planId, planName, userId, billing } = publicMetadata || {};
 
   return (
     <section className={css.section}>
@@ -58,21 +64,38 @@ export default function Plans() {
               ? Math.round(plan.price * 12 * (1 - save))
               : plan.price;
 
-          const isIncluded = Number(user?.publicMetadata.planId) > plan.id;
-          const disableBtn =
-            plan.name === user?.publicMetadata.planName || isIncluded;
+          const isLite = Number(planId) === 0 || plan.id === 0;
+          const isPlan = plan.name === planName;
+
+          const ownedPlans = Number(planId) > plan.id;
+          const isMonthly = billing === "Monthly" && !yearly;
+
+          const isIncluded = (isPlan || ownedPlans) && (isMonthly || isLite);
+          const isCurrent = isIncluded && !ownedPlans;
+
+          const isPopular = isSignedIn
+            ? !isLite
+              ? plan.id === noOfPLans && !isCurrent
+              : plan.highlight
+            : plan.highlight;
 
           return (
             <div
               key={plan.id}
-              className={`${css.plan} ${plan.highlight && css.highlight}`}
+              className={`${css.plan} ${
+                isCurrent ? css.current : isPopular && css.highlight
+              }`}
             >
-              {plan.highlight && <div className={css.planBadge}>Popular</div>}
+              {(isPopular || isCurrent) && (
+                <div className={css.planBadge}>
+                  {isCurrent ? "Current" : "Popular"}
+                </div>
+              )}
 
               <div className={css.planTop}>
                 <i
                   className={`${plan.icon} mb-2 ${
-                    plan.highlight
+                    isPopular || isCurrent
                       ? "md:-mt-5 text-6xl md:text-7xl"
                       : "text-5xl"
                   }`}
@@ -82,9 +105,12 @@ export default function Plans() {
                   <Typography
                     variant="h4"
                     sx={{
-                      color: plan.highlight
-                        ? "var(--mui-palette-tertiary-contrastText)"
-                        : "var(--mui-palette-text-primary)",
+                      color:
+                        isPopular || isCurrent
+                          ? isCurrent
+                            ? "var(--mui-palette-common-white)"
+                            : "var(--mui-palette-tertiary-contrastText)"
+                          : "var(--mui-palette-text-primary)",
                     }}
                   >
                     {plan.name}
@@ -96,9 +122,12 @@ export default function Plans() {
                       display: "flex",
                       alignItems: "center",
                       lineHeight: "1",
-                      color: plan.highlight
-                        ? "var(--mui-palette-tertiary-contrastText)"
-                        : "var(--mui-palette-text-primary)",
+                      color:
+                        isPopular || isCurrent
+                          ? isCurrent
+                            ? "var(--mui-palette-common-white)"
+                            : "var(--mui-palette-tertiary-contrastText)"
+                          : "var(--mui-palette-text-primary)",
                     }}
                   >
                     <span className="flex">
@@ -148,7 +177,7 @@ export default function Plans() {
                       price: planFee as number,
                     }}
                     clerkUser={{
-                      userId: user.publicMetadata.userId as string,
+                      userId: userId as string,
                       clerkId: user.id as string,
                       username: user.username as string,
                       firstName: user.firstName as string,
@@ -156,14 +185,14 @@ export default function Plans() {
                       email: user.emailAddresses[0].emailAddress as string,
                     }}
                     btnName={
-                      disableBtn
-                        ? isIncluded
+                      isIncluded
+                        ? ownedPlans
                           ? "Included"
                           : "Current Plan"
                         : "Upgrade"
                     }
-                    btnVariant={plan.highlight ? "contained" : "outlined"}
-                    isDisabled={disableBtn}
+                    btnVariant={isPopular ? "contained" : "outlined"}
+                    isDisabled={isIncluded}
                   />
                 </div>
               )}

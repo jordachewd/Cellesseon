@@ -1,9 +1,9 @@
 "use client";
 import css from "@/styles/sections/LandingPage.module.css";
 import { Button, Typography } from "@mui/material";
-import Plans from "../shared/Plans";
+import Plans from "./Plans";
 import Header from "../layout/Header";
-import Faqs from "../shared/Faqs";
+import Faqs from "./Faqs";
 import Image from "next/image";
 import Footer from "../layout/Footer";
 

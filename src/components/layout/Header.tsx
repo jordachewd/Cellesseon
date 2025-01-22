@@ -26,8 +26,7 @@ export default function Header() {
   }, []);
 
   return (
-    <section className={`${css.section} ${scrolled ? css.scrolled : ""}`}>
-
+    <section className={`${css.section} ${scrolled && css.scrolled}`}>
       <div className={`${css.content} ${!user && "max-w-screen-2xl"}`}>
         {isLoaded ? (
           <>

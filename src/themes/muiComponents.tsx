@@ -33,11 +33,15 @@ export const muiComponents: ThemeOptions = {
             borderColor: "var(--mui-palette-tertiary-dark)",
             color: "var(--mui-palette-tertiary-dark)!important",
           },
+          "&.Mui-disabled": {
+            color: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.65)",
+            borderColor: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.65)",
+          },
         },
 
         contained: {
           color: "var(--mui-palette-common-white)",
-          backgroundColor: "var(--mui-palette-secondary-main)",
+          backgroundColor: "var(--mui-palette-secondary-dark)",
           boxShadow:
             "0px 1px 4px 0px rgba(var(--mui-palette-secondary-darkChannel) / 0.3)",
           "&:hover": {

@@ -24,3 +24,12 @@ export interface UpdateUserParams {
   plan?: PlanData;
   billing?: BillingCycle
 }
+
+export interface UserMetadata {
+  billing?: BillingCycle;
+  planExpiresOn?: Date;
+  planId?: string;
+  planName?: string;
+  role?: UserRoles;
+  userId?: string;
+}

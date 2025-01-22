@@ -1,0 +1,11 @@
+.section {
+  @apply flex flex-col w-full max-w-6xl mx-auto p-4 gap-4;
+}
+
+.head {
+  @apply flex flex-col gap-2 justify-center items-center;
+}
+
+.heroContent {
+  @apply flex flex-col justify-between gap-2 w-full lg:max-w-[30%];
+}

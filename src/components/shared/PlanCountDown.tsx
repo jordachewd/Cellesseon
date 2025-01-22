@@ -8,12 +8,13 @@ import { useEffect, useState } from "react";
 interface PlanCountDownProps {
   startDate?: Date;
   endDate: Date;
+  className?: string;
 }
 
-
 export default function PlanCountDown({
-  startDate = new Date(),
   endDate,
+  startDate = new Date(),
+  className: style = "inline-flex items-center bg-black text-white rounded p-1 text-xxs leading-none",
 }: PlanCountDownProps) {
   const [countdown, setCountdown] = useState<string>("");
 
@@ -45,5 +46,5 @@ export default function PlanCountDown({
     return parts.join(" ");
   };
 
-  return <div>PlanCountDown: {countdown}</div>;
+  return <div className={`${style}`}> {countdown}</div>;
 }
