@@ -1,15 +1,32 @@
-import { PlanName } from "@/types/PlanData.d";
+import { BillingCycle, PlanName } from "@/types/PlanData.d";
 
-const currentDate = new Date();
+export function getExpiresOn(plan: PlanName, billing?: BillingCycle): Date {
+  const currentDate = new Date();
+  let expiresOn: Date = new Date();
 
-const expiresOnLite = new Date(currentDate);
-expiresOnLite.setDate(currentDate.getDate() + 3);
+  switch (plan) {
+    case "Lite":
+      expiresOn = new Date(currentDate.setDate(currentDate.getDate() + 3));
+      break;
+    case "Pro":
+    case "Premium":
+      switch (billing) {
+        case "Monthly":
+          expiresOn = new Date(
+            currentDate.setMonth(currentDate.getMonth() + 1)
+          );
+          break;
+        case "Yearly":
+          expiresOn = new Date(
+            currentDate.setFullYear(currentDate.getFullYear() + 1)
+          );
+          break;
+      }
+      break;
+  }
 
-const expiresOnPro = new Date(currentDate);
-expiresOnPro.setMonth(currentDate.getMonth() + 1);
-
-const expiresOnPremium = new Date(currentDate);
-expiresOnPremium.setFullYear(currentDate.getFullYear() + 1);
+  return expiresOn;
+}
 
 export const plans = [
   {
@@ -17,7 +34,6 @@ export const plans = [
     name: "Lite" as PlanName,
     desc: "Free trial for 3 days",
     icon: "bi bi-clock-history",
-    expiresOn: expiresOnLite,
     highlight: false,
     price: 0,
     inclusions: [
@@ -60,7 +76,6 @@ export const plans = [
     name: "Pro" as PlanName,
     desc: "Best for personal projects",
     icon: "bi bi-stars",
-    expiresOn: expiresOnPro,
     highlight: true,
     price: 29,
     inclusions: [
@@ -104,7 +119,6 @@ export const plans = [
     desc: "Best for businesses",
     icon: "bi bi-gem",
     highlight: false,
-    expiresOn: expiresOnPremium,
     price: 69,
     inclusions: [
       {
@@ -153,16 +167,4 @@ export function getPlanIcon(name: PlanName) {
   }
 
   return plan.icon;
-}
-
-export function getExpiresOn(name: PlanName) {
-  const plan = plans.find(
-    (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
-  );
-
-  if (!plan) {
-    throw new Error(`No plan found with the name: ${name}`);
-  }
-
-  return new Date(plan.expiresOn);
 }

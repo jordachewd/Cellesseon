@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     const thePlanId = metadata?.planId?.toString() || "0";
     const thePlanName = (metadata?.plan as PlanName) || "Lite";
     const theBillingCycle = (metadata?.billing || "Monthly") as BillingCycle;
-    const theExpireDate = getExpiresOn(thePlanName);
+    const theExpireDate = getExpiresOn(thePlanName, theBillingCycle);
 
     const transaction: CreateTransactionParams = {
       stripeId: id,

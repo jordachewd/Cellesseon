@@ -14,8 +14,7 @@ export interface Plan {
   desc: string;
   icon: string;
   highlight: boolean;
-  price: number;
-  expiresOn: Date;
+  price: number; 
   inclusions: Inclusion[];
 }
 
