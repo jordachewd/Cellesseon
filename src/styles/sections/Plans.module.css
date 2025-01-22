@@ -24,19 +24,18 @@
 }
 
 .plans {
-  @apply flex flex-col w-full justify-between items-center gap-6 md:gap-4 lg:gap-8 md:flex-row;
+  @apply flex flex-col w-full justify-between gap-6 md:gap-4 lg:gap-8 md:flex-row;
 }
 
 .plan {
   @apply flex flex-col w-full rounded-lg shadow-xl;
-  @apply relative overflow-hidden border px-4 lg:px-6 py-10 gap-8;
-  border-color: var(--mui-palette-primary-main);
+  @apply relative overflow-hidden px-4 lg:px-6 py-10 gap-8;
   background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.5);
 }
 
 .highlight,
 .current {
-  @apply md:py-12 border-none font-medium;
+  @apply font-medium;
 }
 
 .highlight {

@@ -3,7 +3,7 @@ import css from "@/styles/sections/Plans.module.css";
 import Checkout from "@/components/shared/Checkout";
 import { plans } from "@/constants/plans";
 import { Typography, Switch, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Plan, PlanName } from "@/types/PlanData.d";
 import { UserMetadata } from "@/types/UserData.d";
@@ -20,6 +20,14 @@ export default function Plans() {
     setYearly(event.target.checked);
   };
 
+  const publicMetadata = user?.publicMetadata as UserMetadata;
+  const { planId, userId, billing } = publicMetadata || {};
+
+  useEffect(() => {
+    const setBillingBtn = billing === "Yearly" ? true : false;
+    setYearly(setBillingBtn);
+  }, [billing]);
+
   if (!isLoaded) {
     return (
       <section className={css.section}>
@@ -29,9 +37,6 @@ export default function Plans() {
       </section>
     );
   }
-
-  const publicMetadata = user?.publicMetadata as UserMetadata;
-  const { planId, planName, userId, billing } = publicMetadata || {};
 
   return (
     <section className={css.section}>
@@ -65,13 +70,10 @@ export default function Plans() {
               : plan.price;
 
           const isLite = Number(planId) === 0 || plan.id === 0;
-          const isPlan = plan.name === planName;
-
-          const ownedPlans = Number(planId) > plan.id;
-          const isMonthly = billing === "Monthly" && !yearly;
-
-          const isIncluded = (isPlan || ownedPlans) && (isMonthly || isLite);
-          const isCurrent = isIncluded && !ownedPlans;
+          const isBillingCycle = billing === (yearly ? "Yearly" : "Monthly");
+          const isPlan = Number(planId) === plan.id && isBillingCycle;
+          const isIncluded = isLite || isPlan;
+          const isCurrent = isIncluded && isPlan;
 
           const isPopular = isSignedIn
             ? !isLite
@@ -93,13 +95,7 @@ export default function Plans() {
               )}
 
               <div className={css.planTop}>
-                <i
-                  className={`${plan.icon} mb-2 ${
-                    isPopular || isCurrent
-                      ? "md:-mt-5 text-6xl md:text-7xl"
-                      : "text-5xl"
-                  }`}
-                ></i>
+                <i className={`${plan.icon} mb-2 text-5xl`}></i>
 
                 <div className={css.planTitle}>
                   <Typography
@@ -166,7 +162,6 @@ export default function Plans() {
                   </div>
                 ))}
               </div>
-              
 
               {isSignedIn && (
                 <div className={css.planActions}>
@@ -187,10 +182,10 @@ export default function Plans() {
                     }}
                     btnName={
                       isIncluded
-                        ? ownedPlans
-                          ? "Included"
-                          : "Current Plan"
-                        : "Upgrade"
+                        ? isPlan
+                          ? "Current"
+                          : "Included"
+                        : "Subscribe"
                     }
                     btnVariant={isPopular ? "contained" : "outlined"}
                     isDisabled={isIncluded}

@@ -34,8 +34,8 @@ export const muiComponents: ThemeOptions = {
             color: "var(--mui-palette-tertiary-dark)!important",
           },
           "&.Mui-disabled": {
-            color: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.65)",
-            borderColor: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.65)",
+            color: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.5)",
+            borderColor: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.5)",
           },
         },
 
