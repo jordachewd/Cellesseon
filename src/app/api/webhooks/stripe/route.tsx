@@ -49,7 +49,7 @@ export async function POST(request: Request) {
           name: transaction.plan,
           billing: transaction.billing,
           upgradedAt: transaction.createdAt,
-          expiresOn: getExpiresOn(transaction.plan),
+          expiresOn: getExpiresOn(transaction.plan as PlanName),
         },
       };
 
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
           publicMetadata: {
             planId: metadata?.planId?.toString() || "0",
             planName: transaction.plan,
-            planExpiresOn: getExpiresOn(transaction.plan),
+            planExpiresOn: getExpiresOn(transaction.plan as PlanName),
             billing: transaction.billing,
           },
         });
