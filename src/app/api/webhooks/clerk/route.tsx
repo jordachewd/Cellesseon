@@ -89,6 +89,7 @@ export async function POST(req: Request) {
           planId: newUser.plan.id,
           planName: newUser.plan.name,
           planExpiresOn: newUser.plan.expiresOn,
+          amount: 0 as number,
         },
       });
     }
