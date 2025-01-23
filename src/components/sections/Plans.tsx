@@ -15,7 +15,7 @@ export default function Plans() {
   const { user, isSignedIn, isLoaded } = useUser();
 
   const save = 0.4; // Save 40% on yearly plans
- // const noOfPLans = plans.length - 1; // Total number of plans
+  // const noOfPLans = plans.length - 1; // Total number of plans
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setYearly(event.target.checked);
@@ -63,7 +63,11 @@ export default function Plans() {
 
       <div className={css.plans}>
         {plans.map((plan: Plan) => {
-          const planStatus = getPlanStatus({ plan, userMeta: publicMetadata, isYearly: yearly });
+          const planStatus = getPlanStatus({
+            plan,
+            isYearly: yearly,
+            userMeta: publicMetadata,
+          });
           const { isIncluded, isCurrent, isPopular } = planStatus[plan.id];
 
           const planFee =
@@ -75,7 +79,7 @@ export default function Plans() {
 
           console.log("Plan Status: ", planStatus);
 
-        //  const isLite = Number(planId) === 0 || plan.id === 0;
+          //  const isLite = Number(planId) === 0 || plan.id === 0;
           const isBillingCycle = billing === (yearly ? "Yearly" : "Monthly");
           const isPlan = Number(planId) === plan.id && isBillingCycle;
 

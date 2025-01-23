@@ -2,9 +2,9 @@ import { Plan } from "@/types/PlanData.d";
 import { UserMetadata } from "@/types/UserData.d";
 
 interface PlanStatusParams {
-  plan: Plan;
-  userMeta: UserMetadata;
+  plan: Plan;  
   isYearly: boolean;
+  userMeta?: UserMetadata;
 }
 
 interface PlanStatus {
@@ -15,17 +15,18 @@ interface PlanStatus {
 
 export function getPlanStatus({
   plan,
-  userMeta,
   isYearly,
+  userMeta,
 }: PlanStatusParams): PlanStatus[] {
-  const { planId, billing } = userMeta;
+  const { planId, billing } = userMeta || {};
   const billingCycle = billing === (isYearly ? "Yearly" : "Monthly");
 
   let isIncluded = false,
     isCurrent = false,
     isPopular = false;
 
-  const plansStatus: PlanStatus[] = [{ isIncluded, isCurrent, isPopular }];
+  // const plansStatus: PlanStatus[] = [{ isIncluded, isCurrent, isPopular }];
+  const plansStatus: PlanStatus[] = [];
 
   if (plan.id === 0) {
     isCurrent = plan.id === Number(planId) ? true : false;
