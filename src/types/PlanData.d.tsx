@@ -22,6 +22,7 @@ export interface PlanData {
   id: string;
   name: PlanName;
   billing: BillingCycle;
+  amount: number;
   upgradedAt: Date;
   expiresOn: Date;
 }

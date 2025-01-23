@@ -22,9 +22,7 @@ export interface UpdateUserParams {
   lastName?: string | undefined;
   updatedAt: Date;
   plan?: PlanData;
-  billing?: BillingCycle
 }
-
 
 export interface UserMetadata {
   billing?: BillingCycle;

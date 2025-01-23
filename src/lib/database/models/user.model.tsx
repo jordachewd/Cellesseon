@@ -57,6 +57,7 @@ const UserSchema = new Schema<IUser>({
       enum: ["Lite", "Pro", "Premium"],
       default: "Lite",
     },
+    amount: { type: Number, required: true, default: 0 },
     billing: {
       type: String,
       required: true,

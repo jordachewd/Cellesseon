@@ -56,7 +56,7 @@ export async function deleteUser(clerkId: string) {
       throw new Error("User not found");
     }
 
-    // Delete user & AWS folder
+    // Delete user
     const deletedUser = await User.findByIdAndDelete(userToDelete._id);
     revalidatePath("/");
 

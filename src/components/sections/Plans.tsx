@@ -8,13 +8,14 @@ import { useUser } from "@clerk/clerk-react";
 import { Plan, PlanName } from "@/types/PlanData.d";
 import { UserMetadata } from "@/types/UserData.d";
 import SpinnerGrow from "@/components/shared/SpinnerGrow";
+import { getPlanStatus } from "@/lib/utils/getPlanStatus";
 
 export default function Plans() {
   const [yearly, setYearly] = useState<boolean>(false);
   const { user, isSignedIn, isLoaded } = useUser();
 
   const save = 0.4; // Save 40% on yearly plans
-  const noOfPLans = plans.length - 1; // Total number of plans
+ // const noOfPLans = plans.length - 1; // Total number of plans
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setYearly(event.target.checked);
@@ -62,6 +63,9 @@ export default function Plans() {
 
       <div className={css.plans}>
         {plans.map((plan: Plan) => {
+          const planStatus = getPlanStatus({ plan, userMeta: publicMetadata, isYearly: yearly });
+          const { isIncluded, isCurrent, isPopular } = planStatus[plan.id];
+
           const planFee =
             plan.price === 0
               ? plan.price
@@ -69,17 +73,20 @@ export default function Plans() {
               ? Math.round(plan.price * 12 * (1 - save))
               : plan.price;
 
-          const isLite = Number(planId) === 0 || plan.id === 0;
+          console.log("Plan Status: ", planStatus);
+
+        //  const isLite = Number(planId) === 0 || plan.id === 0;
           const isBillingCycle = billing === (yearly ? "Yearly" : "Monthly");
           const isPlan = Number(planId) === plan.id && isBillingCycle;
-          const isIncluded = isLite || isPlan;
+
+          /*           const isIncluded = isLite || isPlan;
           const isCurrent = isIncluded && isPlan;
 
           const isPopular = isSignedIn
             ? !isLite
               ? plan.id === noOfPLans && !isCurrent
               : plan.highlight
-            : plan.highlight;
+            : plan.highlight; */
 
           return (
             <div
@@ -95,7 +102,7 @@ export default function Plans() {
               )}
 
               <div className={css.planTop}>
-                <i className={`${plan.icon} mb-2 text-5xl`}></i>
+                <i className={`${plan.icon} mb-2 text-6xl`}></i>
 
                 <div className={css.planTitle}>
                   <Typography

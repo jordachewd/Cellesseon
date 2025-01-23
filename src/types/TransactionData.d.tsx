@@ -8,10 +8,10 @@ export interface CreateTransactionParams {
   userId: string;
   clerkId: string;
   createdAt: Date;
-  expiresOn: Date;
-  amount: number;
+  expiresOn: Date;  
   plan: PlanName;
   billing: BillingCycle;
+  amount: number;
 }
 
 export interface CheckoutTransactionParams {

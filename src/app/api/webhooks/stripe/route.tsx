@@ -59,6 +59,7 @@ export async function POST(request: Request) {
           billing: theBillingCycle,
           upgradedAt: new Date(),
           expiresOn: theExpireDate,
+          amount: theAmount,
         },
       };
 
@@ -74,6 +75,7 @@ export async function POST(request: Request) {
             planName: thePlanName,
             planExpiresOn: theExpireDate,
             billing: theBillingCycle,
+            amount: theAmount,
           },
         });
       } else {
