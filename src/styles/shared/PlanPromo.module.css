@@ -16,10 +16,18 @@
 }
 
 .badge {
-  @apply absolute top-0.5 right-0.5 z-10 text-2xs font-medium;
-  @apply px-1 py-1 rounded-md uppercase leading-none;
-  @apply bg-lightAccent-900 text-lightAccent-300;
-  @apply dark:bg-darkAccent-1000 dark:text-darkAccent-400;
+  @apply absolute top-0.5 right-0.5 z-10  font-medium;
+  @apply  gap-1 flex items-center;
+}
+
+.badgeLabel {
+  @apply text-xxs font-semibold;
+}
+
+.badgeValue {
+  @apply px-1 py-1 rounded-[5px] uppercase text-2xs;
+  @apply bg-lightAccent-900 text-lightAccent-300 leading-none;
+  @apply dark:bg-darkAccent-1000 dark:text-darkAccent-400 tracking-wider;
 }
 
 .details {

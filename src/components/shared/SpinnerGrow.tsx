@@ -1,8 +1,10 @@
 import css from "@/styles/shared/SpinnerGrow.module.css";
 
+type BubbleSizes = "small" | "medium" | "large";
+
 interface SpinnerGrowProps {
-  styles?: string;
-  size?: "small" | "medium" | "large";
+  className?: string;
+  size?: BubbleSizes;
 }
 
 const bubble1 = {
@@ -24,11 +26,11 @@ const bubble3 = {
 };
 
 export default function SpinnerGrow({
-  styles,
+  className: style = css.wrapper,
   size = "medium",
 }: SpinnerGrowProps) {
   return (
-    <div className={`${css.wrapper} ${styles || ""}`}>
+    <div className={style}>
       <div className={`${css.bubble} ${css.bubble1} ${bubble1[size]}`}></div>
       <div className={`${css.bubble} ${css.bubble2} ${bubble2[size]}`}></div>
       <div className={`${css.bubble} ${css.bubble3} ${bubble3[size]}`}></div>

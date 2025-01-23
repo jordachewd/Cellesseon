@@ -58,13 +58,7 @@ export default async function ProfileHero() {
 
           <div className="flex gap-2 items-center">
             <span className="font-semibold">Plan expires in:</span>
-            <PlanCountDown endDate={profile.plan.expiresOn} />
-          </div>
-
-          <div className="flex flex-col">
-            <span className="text-xs">
-              {getFormattedDate(profile.plan.expiresOn)}
-            </span>
+            <PlanCountDown endDate={profile.plan.expiresOn} wrapped />
           </div>
         </div>
 

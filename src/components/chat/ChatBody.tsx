@@ -59,7 +59,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                         />
                       );
                     } else if (reply.type === "temp") {
-                      return <SpinnerGrow styles="p-1" key={idx} />;
+                      return <SpinnerGrow key={idx} size="small" />;
                     }
                     return null;
                   })

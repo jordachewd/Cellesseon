@@ -1,41 +1,48 @@
 "use client";
-import { Button, Typography } from "@mui/material";
 import css from "@/styles/shared/PlanPromo.module.css";
-import { getUserById } from "@/lib/actions/user.actions";
-import SpinnerGrow from "./SpinnerGrow";
+import { Button, Typography } from "@mui/material";
 import { useUser } from "@clerk/clerk-react";
-import { useEffect, useState } from "react";
 import { getPlanIcon } from "@/constants/plans";
 import { PlanName } from "@/types/PlanData.d";
+import SpinnerGrow from "./SpinnerGrow";
+import { UserMetadata } from "@/types/UserData.d";
+import PlanCountDown from "./PlanCountDown";
 
 export default function PlanPromo() {
   const { user, isLoaded } = useUser();
-  const [userData, setUserData] = useState<{ plan: { name: PlanName } } | null>(
-    null
-  );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (user && isLoaded) {
-        const data = await getUserById(user?.id);
-        setUserData(data);
-      }
-    };
-    fetchData();
-  }, [user, isLoaded]);
-
-  if (!userData) {
+  if (!isLoaded) {
     return (
-      <div className={`${css.wrapper} min-h-40 items-center justify-center`}>
+      <div
+        className={`${css.wrapper} min-h-[162px] items-center justify-center`}
+      >
         <SpinnerGrow />
       </div>
     );
   }
 
+  console.log(user?.publicMetadata);
+  const userMeta = user?.publicMetadata as UserMetadata;
+  const { planId, planName, planExpiresOn } = userMeta || {};
+  const isLitePlan = Number(planId) === 0;
+
   return (
     <div className={css.wrapper}>
       <div className={css.content}>
-        <div className={css.badge}>Your plan</div>
+        <div className={css.badge}>
+          {isLitePlan && <span className={css.badgeLabel}>Expires in:</span>}
+          <span className={`${css.badgeValue} ${isLitePlan && "min-w-[82px]"}`}>
+            {isLitePlan ? (
+              <PlanCountDown
+                endDate={planExpiresOn as Date}
+                className="flex justify-center"
+              />
+            ) : (
+              "Your plan"
+            )}
+          </span>
+        </div>
+
         <Typography
           variant="h5"
           sx={{
@@ -47,8 +54,8 @@ export default function PlanPromo() {
             gap: "1rem",
           }}
         >
-          <i className={`${getPlanIcon(userData?.plan?.name)} text-4xl`}></i>
-          <span>{userData?.plan?.name}</span>
+          <i className={`${getPlanIcon(planName as PlanName)} text-4xl`}></i>
+          <span>{planName}</span>
         </Typography>
 
         <div className={css.details}>
@@ -57,8 +64,8 @@ export default function PlanPromo() {
 
         <Button
           size="small"
-          variant="contained"
           href="/plans"
+          variant="contained"
           className="sizeSmall"
         >
           Upgrade now

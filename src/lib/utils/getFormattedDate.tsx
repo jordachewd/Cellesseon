@@ -1,27 +1,15 @@
-interface DateOptions {
-  weekday: "short";
-  year: "numeric";
-  month: "short";
-  day: "numeric";
-  hour: "2-digit";
-  minute: "2-digit";
-}
-
 export default function getFormattedDate(date: string | number | Date): string {
+  if (!date) {
+    throw new Error("Date is undefined in getFormattedDate()!");
+  }
+
   const parsedDate = new Date(date);
-  const options: DateOptions = {
-    weekday: "short",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    dateStyle: "medium",
+    timeStyle: "short",
   };
 
-  if (!date) {
-    throw new Error("Date is undefined");
-  }
-  return parsedDate.toLocaleDateString("en-US", options);
+  return new Intl.DateTimeFormat("en-GB", dateOptions).format(parsedDate);
 }
 
 export interface TimeDifference {
@@ -65,6 +53,7 @@ export function getExpirationCountDown(
   const seconds = Math.floor(delta);
 
   const result: Partial<TimeDifference> = {};
+
   if (years) result.years = years;
   if (months) result.months = months;
   if (days) result.days = days;

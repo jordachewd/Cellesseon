@@ -20,7 +20,11 @@ export default function ImageHolder({
 
   return (
     <div className={css.wrapper}>
-      {isLoading && <SpinnerGrow styles="p-5" />}
+      {isLoading && (
+        <span className="flex p-4">
+          <SpinnerGrow size="small" />
+        </span>
+      )}
       <Image
         priority
         src={src}
