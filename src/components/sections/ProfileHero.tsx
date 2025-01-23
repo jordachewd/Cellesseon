@@ -1,24 +1,19 @@
+import css from "@/styles/sections/ProfileHero.module.css";
+import PlanCard from "@/components/shared/PlanPromo";
+import PlanCountDown from "@/components/shared/PlanCountDown";
 import getFormattedDate from "@/lib/utils/getFormattedDate";
+import LoadingPage from "@/components/shared/LoadingPage";
+import PageHead from "@/components/layout/PageHead";
 import getUserName, { stringAvatar } from "@/lib/utils/getUserName";
 import { Typography, Avatar } from "@mui/material";
-import css from "@/styles/sections/ProfileHero.module.css";
-import PlanCard from "@/components/shared/PlanCard";
-import PlanCountDown from "@/components/shared/PlanCountDown";
 import { auth } from "@clerk/nextjs/server";
-import SpinnerGrow from "@/components/shared/SpinnerGrow";
 import { getUserById } from "@/lib/actions/user.actions";
 
 export default async function ProfileHero() {
   const { userId } = await auth();
 
   if (!userId) {
-    return (
-      <section className={css.section}>
-        <div className={css.hero}>
-          <SpinnerGrow size="large" />
-        </div>
-      </section>
-    );
+    return <LoadingPage />;
   }
 
   const profile = await getUserById(userId);
@@ -30,9 +25,7 @@ export default async function ProfileHero() {
 
   return (
     <section className={css.section}>
-      <div className={css.head}>
-        <Typography variant="h2">My profile</Typography>
-      </div>
+      <PageHead title="Profile" subtitle="Manage your account settings" />
 
       <div className={css.hero}>
         <div className={css.heroImg}>

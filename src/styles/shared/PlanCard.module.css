@@ -1,29 +1,53 @@
 .wrapper {
-  @apply flex flex-col gap-1 w-full rounded-lg p-4 shadow-md;
-  @apply overflow-hidden relative items-center;
+  @apply flex flex-col w-full rounded-lg shadow-xl;
+  @apply relative overflow-hidden px-4 lg:px-8 py-10 gap-10;
+  background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.5);
+}
+
+.popular,
+.current {
+  @apply font-medium;
+}
+
+.current {
   color: var(--mui-palette-tertiary-contrastText);
   background-color: var(--mui-palette-tertiary-main);
 }
 
-.background {
-  @apply flex items-center justify-center absolute z-0 opacity-50;
-  @apply rounded-lg w-full h-[150%] -top-1/2 right-1/3 -rotate-45;
-  background-color: var(--mui-palette-tertiary-dark);
+.popular {
+  color: var(--mui-palette-secondary-contrastText);
+  background-color: var(--mui-palette-secondary-main);
 }
 
-.content {
-  @apply w-full flex flex-col gap-3 z-10 text-center;
+.head {
+  @apply flex flex-col justify-between items-center;
 }
 
-.badge {
-  @apply absolute top-0.5 right-0.5 z-10 text-2xs font-medium;
-  @apply px-1 py-1 rounded-md uppercase leading-none;
-  @apply bg-lightAccent-900 text-lightAccent-300;
-  @apply dark:bg-darkAccent-1000 dark:text-darkAccent-400;
+.title {
+  @apply flex items-center justify-between w-full;
 }
 
-.details {
-  @apply flex w-full items-center justify-center;
-  @apply text-xs  pt-2.5 border-t border-dotted;
-  border-color: var(--mui-palette-tertiary-contrastText);
+.subtitle {
+  @apply flex items-center justify-between opacity-70 text-xs pl-0.5 w-full;
+}
+
+.planBadge {
+  @apply flex bg-orange-600 text-white leading-none shadow-md uppercase;
+  @apply text-[8px] font-bold absolute top-3.5 -left-8 p-1.5 px-8 -rotate-45 tracking-widest;
+}
+
+.current .planBadge {
+  @apply dark:bg-green-700 bg-blue-600;
+}
+
+.features {
+  @apply flex flex-col gap-2.5 w-full;
+}
+
+.feature {
+  @apply flex items-center gap-4 text-xs;
+}
+
+.actions {
+  @apply flex justify-center items-center;
 }

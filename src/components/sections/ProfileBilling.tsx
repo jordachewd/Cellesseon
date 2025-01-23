@@ -1,8 +1,8 @@
-import getFormattedDate from "@/lib/utils/getFormattedDate";
-import { Typography } from "@mui/material";
 import css from "@/styles/sections/ProfileBilling.module.css";
+import getFormattedDate from "@/lib/utils/getFormattedDate";
+import LoadingPage from "../shared/LoadingPage";
+import { Typography } from "@mui/material";
 import { auth } from "@clerk/nextjs/server";
-import SpinnerGrow from "@/components/shared/SpinnerGrow";
 import { getAllTransactions } from "@/lib/actions/transaction.action";
 import { Transaction } from "@/types/TransactionData.d";
 
@@ -10,13 +10,7 @@ export default async function ProfileBilling() {
   const { userId } = await auth();
 
   if (!userId) {
-    return (
-      <section className={css.section}>
-        <div className="flex justify-center items-center">
-          <SpinnerGrow size="large" />
-        </div>
-      </section>
-    );
+    return <LoadingPage />;
   }
 
   const transactions: Transaction[] = await getAllTransactions(userId);
@@ -76,7 +70,10 @@ export default async function ProfileBilling() {
             ))}
           </div>
         ) : (
-          <Typography variant="body2" className="text-center !mt-6 !font-light !text-xs !text-slate-400">
+          <Typography
+            variant="body2"
+            className="text-center !mt-6 !font-light !text-xs !text-slate-400"
+          >
             You have no billing history yet.
           </Typography>
         )}

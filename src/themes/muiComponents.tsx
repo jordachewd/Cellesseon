@@ -21,6 +21,7 @@ export const muiComponents: ThemeOptions = {
           borderRadius: "0.5rem",
         },
         text: {
+          padding: "5px 15px",
           color: "var(--mui-palette-tertiary-main)",
           "&:hover": {
             color: "var(--mui-palette-tertiary-dark)!important",
@@ -33,10 +34,11 @@ export const muiComponents: ThemeOptions = {
             borderColor: "var(--mui-palette-tertiary-dark)",
             color: "var(--mui-palette-tertiary-dark)!important",
           },
-          "&.Mui-disabled": {
+
+    /*       "&.Mui-disabled": {
             color: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.5)",
             borderColor: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.5)",
-          },
+          }, */
         },
 
         contained: {
@@ -50,10 +52,10 @@ export const muiComponents: ThemeOptions = {
             boxShadow:
               "0px 1px 4px 0px rgba(var(--mui-palette-secondary-darkChannel) / 0.4)",
           },
-          "&.Mui-disabled": {
+/*           "&.Mui-disabled": {
             color: "var(--mui-palette-tertiary-main)",
             backgroundColor: "var(--mui-palette-tertiary-light)",
-          },
+          }, */
         },
         sizeSmall: {
           fontSize: "1rem",

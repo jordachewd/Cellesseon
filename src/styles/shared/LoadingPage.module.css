@@ -1,0 +1,8 @@
+.section,
+.wrapper {
+  @apply flex w-full justify-center items-center;
+}
+
+.wrapper {
+  @apply min-h-[25vh];
+}

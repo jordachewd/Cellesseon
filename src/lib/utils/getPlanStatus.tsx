@@ -8,7 +8,7 @@ interface PlanStatusParams {
   userMeta?: UserMetadata;
 }
 
-interface PlanStatus {
+export interface PlanStatus {
   isIncluded: boolean;
   isCurrent: boolean;
   isPopular: boolean;

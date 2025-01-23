@@ -5,7 +5,7 @@ import { useChatContext } from "@/context/ChatContext";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
 import AvatarMenu from "../shared/AvatarMenu";
-import PlanCard from "../shared/PlanCard";
+import PlanCard from "../shared/PlanPromo";
 
 interface ChatSidebarProps {
   loading: boolean;
