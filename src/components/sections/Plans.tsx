@@ -1,28 +1,26 @@
 "use client";
 import css from "@/styles/sections/Plans.module.css";
 import Checkout from "@/components/shared/Checkout";
+import SpinnerGrow from "@/components/shared/SpinnerGrow";
 import { plans } from "@/constants/plans";
 import { Typography, Switch, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Plan, PlanName } from "@/types/PlanData.d";
 import { UserMetadata } from "@/types/UserData.d";
-import SpinnerGrow from "@/components/shared/SpinnerGrow";
 import { getPlanStatus } from "@/lib/utils/getPlanStatus";
 
 export default function Plans() {
+  const save = 0.4; // Save 40% on yearly plans
   const [yearly, setYearly] = useState<boolean>(false);
   const { user, isSignedIn, isLoaded } = useUser();
-
-  const save = 0.4; // Save 40% on yearly plans
-  // const noOfPLans = plans.length - 1; // Total number of plans
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setYearly(event.target.checked);
   };
 
-  const publicMetadata = user?.publicMetadata as UserMetadata;
-  const { planId, userId, billing } = publicMetadata || {};
+  const userMeta = user?.publicMetadata as UserMetadata;
+  const { userId, billing } = userMeta || {};
 
   useEffect(() => {
     const setBillingBtn = billing === "Yearly" ? true : false;
@@ -63,13 +61,6 @@ export default function Plans() {
 
       <div className={css.plans}>
         {plans.map((plan: Plan) => {
-          const planStatus = getPlanStatus({
-            plan,
-            isYearly: yearly,
-            userMeta: publicMetadata,
-          });
-          const { isIncluded, isCurrent, isPopular } = planStatus[plan.id];
-
           const planFee =
             plan.price === 0
               ? plan.price
@@ -77,20 +68,14 @@ export default function Plans() {
               ? Math.round(plan.price * 12 * (1 - save))
               : plan.price;
 
-          console.log("Plan Status: ", planStatus);
+          const planStatus = getPlanStatus({
+            plan,
+            planFee,
+            yearly,
+            userMeta,
+          });
 
-          //  const isLite = Number(planId) === 0 || plan.id === 0;
-          const isBillingCycle = billing === (yearly ? "Yearly" : "Monthly");
-          const isPlan = Number(planId) === plan.id && isBillingCycle;
-
-          /*           const isIncluded = isLite || isPlan;
-          const isCurrent = isIncluded && isPlan;
-
-          const isPopular = isSignedIn
-            ? !isLite
-              ? plan.id === noOfPLans && !isCurrent
-              : plan.highlight
-            : plan.highlight; */
+          const { isIncluded, isCurrent, isPopular } = planStatus;
 
           return (
             <div
@@ -193,7 +178,7 @@ export default function Plans() {
                     }}
                     btnName={
                       isIncluded
-                        ? isPlan
+                        ? isCurrent
                           ? "Current"
                           : "Included"
                         : "Subscribe"

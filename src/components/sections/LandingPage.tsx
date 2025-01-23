@@ -38,9 +38,8 @@ export default function LandingPage() {
               <Image
                 src="/images/lp-hero-image.png"
                 alt="hero"
-                layout="responsive"
-                width={700}
-                height={475}
+                width={800}
+                height={460}
                 priority
                 className="z-10"
               />

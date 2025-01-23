@@ -31,11 +31,10 @@ export function getExpiresOn(plan: PlanName, billing?: BillingCycle): Date {
 export const plans = [
   {
     id: 0,
+    price: 0,
     name: "Lite" as PlanName,
     desc: "Free trial for 3 days",
     icon: "bi bi-clock-history",
-    highlight: false,
-    price: 0,
     inclusions: [
       {
         label: "Full AI model",
@@ -73,11 +72,10 @@ export const plans = [
   },
   {
     id: 1,
+    price: 29,
     name: "Pro" as PlanName,
     desc: "Best for personal projects",
     icon: "bi bi-stars",
-    highlight: true,
-    price: 29,
     inclusions: [
       {
         label: "Full AI model",
@@ -115,11 +113,10 @@ export const plans = [
   },
   {
     id: 2,
+    price: 69,
     name: "Premium" as PlanName,
     desc: "Best for businesses",
     icon: "bi bi-gem",
-    highlight: false,
-    price: 69,
     inclusions: [
       {
         label: "Multiple AI model selection",

@@ -17,7 +17,7 @@
 
 .heroLeft,
 .heroRight {
-  @apply flex w-full lg:w-1/2;
+  @apply flex w-full lg:w-1/2 relative;
 }
 
 .heroLeft {

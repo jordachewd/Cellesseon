@@ -13,7 +13,6 @@ export interface Plan {
   name: PlanName;
   desc: string;
   icon: string;
-  highlight: boolean;
   price: number; 
   inclusions: Inclusion[];
 }

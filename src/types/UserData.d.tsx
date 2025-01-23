@@ -31,4 +31,5 @@ export interface UserMetadata {
   planName?: string;
   role?: UserRoles;
   userId?: string;
+  amount?: number;
 }

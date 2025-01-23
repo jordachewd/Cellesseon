@@ -76,7 +76,7 @@ export default async function ProfileBilling() {
             ))}
           </div>
         ) : (
-          <Typography variant="body1">
+          <Typography variant="body2" className="text-center !mt-6 !font-light !text-xs !text-slate-400">
             You have no billing history yet.
           </Typography>
         )}
