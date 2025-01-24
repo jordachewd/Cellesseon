@@ -15,7 +15,7 @@ export default function Header() {
 
   useEffect(() => {
     const element = document.querySelector<HTMLElement>(
-      "section#LandingPageWrapper"
+      "section#LandingPageWrapper, div#InnerPageWrapper"
     );
     if (element) {
       element.addEventListener("scroll", () => {

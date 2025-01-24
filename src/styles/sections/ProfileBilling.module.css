@@ -11,13 +11,13 @@
 }
 
 .tableHead {
-  @apply flex justify-between items-center dark:text-slate-300 text-slate-500;
+  @apply flex justify-between items-center dark:text-slate-300 text-slate-600;
   @apply py-1.5 px-3 rounded-md dark:bg-slate-300/10 bg-slate-300/30 mb-3;
   @apply tracking-wider font-medium uppercase text-xs gap-4;
 }
 
 .tableRow {
-  @apply flex justify-between items-center px-3 text-sm text-slate-400 mt-1;
+  @apply flex justify-between items-center px-3 text-sm text-slate-500 mt-1;
   @apply transition-colors duration-200 ease-in-out  rounded-md py-1 gap-4;
   @apply dark:hover:bg-slate-300/5 hover:bg-slate-300/20;
 }

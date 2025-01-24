@@ -27,7 +27,6 @@ export async function POST(request: Request) {
   // CREATE
   if (eventType === "checkout.session.completed") {
     const { id, amount_total, metadata } = event.data.object;
-
     const theAmount = amount_total ? amount_total / 100 : 0;
     const theUserId = metadata?.userId || "-";
     const theClerkId = metadata?.clerkId || "-";
@@ -60,6 +59,7 @@ export async function POST(request: Request) {
           upgradedAt: new Date(),
           expiresOn: theExpireDate,
           amount: theAmount,
+          stripeId: id,
         },
       };
 

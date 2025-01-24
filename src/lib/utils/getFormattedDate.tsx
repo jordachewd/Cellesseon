@@ -63,3 +63,8 @@ export function getExpirationCountDown(
 
   return result;
 }
+
+export function isTimeUp(endDate: Date) {
+  const startDate = new Date();
+  return startDate >= new Date(endDate);
+}

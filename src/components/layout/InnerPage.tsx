@@ -6,5 +6,9 @@ interface InnerPageProps {
 }
 
 export default function InnerPage({ children }: InnerPageProps) {
-  return <div className={css.wrapper}>{children}</div>;
+  return (
+    <div id="InnerPageWrapper" className={css.wrapper}>
+      {children}
+    </div>
+  );
 }

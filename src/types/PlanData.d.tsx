@@ -24,6 +24,7 @@ export interface PlanData {
   amount: number;
   upgradedAt: Date;
   expiresOn: Date;
+  stripeId: string;
 }
 
 export interface CheckoutPlanParams {

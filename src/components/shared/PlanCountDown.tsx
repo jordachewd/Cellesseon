@@ -21,8 +21,16 @@ export default function PlanCountDown({
   wrapped = false,
 }: CountDownProps) {
   const [countdown, setCountdown] = useState<string>("");
+  const [timeUp, setTimeUp] = useState<boolean>(false);
 
   useEffect(() => {
+    const isTimeUp = new Date(startDate) >= new Date(endDate);
+
+    if (isTimeUp) {
+      setTimeUp(true);
+      return;
+    }
+
     const interval = setInterval(() => {
       const countdownValue: TimeDifference = {
         years: 0,
@@ -53,18 +61,28 @@ export default function PlanCountDown({
     return parts.join(" ");
   };
 
-  if (!countdown)
-    return wrapped ? (
-      <div className={`${style} !py-1.5`}>
-        <SpinnerGrow size="small" />
-      </div>
-    ) : (
-      <SpinnerGrow size="small" className="inline-flex items-center gap-0.5" />
-    );
-
   return wrapped ? (
-    <div className={`${style}`}>{countdown}</div>
+    <div className={`${style}`}>
+      {timeUp ? (
+        "Time is up!"
+      ) : countdown ? (
+        countdown
+      ) : (
+        <SpinnerGrow size="small" />
+      )}
+    </div>
   ) : (
-    <>{countdown}</>
+    <>
+      {timeUp ? (
+        "Time is up!"
+      ) : countdown ? (
+        countdown
+      ) : (
+        <SpinnerGrow
+          size="small"
+          className="inline-flex items-center gap-0.5"
+        />
+      )}
+    </>
   );
 }

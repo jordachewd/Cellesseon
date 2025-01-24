@@ -32,4 +32,5 @@ export interface UserMetadata {
   role?: UserRoles;
   userId?: string;
   amount?: number;
+  stripeId?: string;
 }
