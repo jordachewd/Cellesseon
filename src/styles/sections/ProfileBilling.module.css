@@ -19,9 +19,19 @@
 .tableRow {
   @apply flex justify-between items-center px-3 text-sm text-slate-500 mt-1;
   @apply transition-colors duration-200 ease-in-out  rounded-md py-1 gap-4;
-  @apply dark:hover:bg-slate-300/5 hover:bg-slate-300/20;
+  @apply dark:hover:bg-slate-300/5 hover:bg-slate-300/20 dark:text-slate-400;
 }
 
 .tableEmpty {
-  @apply flex justify-center items-center mt-6 font-light text-xs text-slate-500;
+  @apply flex justify-center items-center mt-6 font-light text-xs;
+  @apply dark:text-slate-400 text-slate-500;
+}
+
+.active, .inactive {
+  @apply inline-flex justify-center items-center bg-green-700;
+  @apply text-xxs leading-none p-1 rounded text-white;
+}
+
+.inactive {
+  @apply bg-slate-300 text-slate-400 dark:bg-slate-300/10 dark:text-slate-400;
 }

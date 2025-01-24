@@ -41,24 +41,24 @@ export default function ProfileHero({ userData }: HeroProps) {
         </div>
 
         <div className={css.heroContent}>
-          <div className="flex flex-col">
-            <span className="font-semibold">Member since:</span>
-            <span className="text-xs">
+          <div className="flex gap-2 items-center">
+            <span className="font-semibold leading-none">Member since:</span>
+            <span className="text-xxs leading-none">
               {getFormattedDate(userData.registerAt)}
             </span>
           </div>
 
           {userData.updatedAt && (
-            <div className="flex flex-col">
-              <span className="font-semibold">Last update:</span>
-              <span className="text-xs">
+            <div className="flex gap-2 items-center">
+              <span className="font-semibold leading-none">Last update:</span>
+              <span className="text-xxs leading-none">
                 {getFormattedDate(userData.updatedAt)}
               </span>
             </div>
           )}
 
           <div className="flex gap-2 items-center">
-            <span className="font-semibold">Plan expires in:</span>
+            <span className="font-semibold leading-none">Plan expires in:</span>
             <PlanCountDown endDate={userData.plan.expiresOn} wrapped />
             {/* <PlanCountDown endDate={testTime} wrapped /> */}
           </div>

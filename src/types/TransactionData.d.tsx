@@ -26,4 +26,5 @@ export interface Transaction {
   createdAt: Date;
   expiresOn: Date;
   billing: BillingCycle;
+  stripeId: string;
 }
