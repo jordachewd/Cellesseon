@@ -1,7 +1,7 @@
 import css from "@/styles/sections/ProfileHero.module.css";
 import PlanPromo from "@/components/shared/PlanPromo";
 import PlanCountDown from "@/components/shared/PlanCountDown";
-import getFormattedDate, { isTimeUp } from "@/lib/utils/getFormattedDate";
+import getFormattedDate from "@/lib/utils/getFormattedDate";
 import PageHead from "@/components/layout/PageHead";
 import getUserName, { stringAvatar } from "@/lib/utils/getUserName";
 import { Typography, Avatar } from "@mui/material";
@@ -18,9 +18,9 @@ export default function ProfileHero({ userData }: HeroProps) {
     username: userData.username,
   });
 
-  const testTime = new Date("2025-01-24T06:11:00.332Z");
+  // const testTime = new Date("2025-01-24T06:11:00.332Z");
   // console.log("testTime: ", getFormattedDate(testTime));
-  console.log("isTimeUp: ", isTimeUp(testTime));
+  // console.log("isTimeUp: ", isTimeUp(testTime));
 
   return (
     <section className={css.section}>
@@ -59,8 +59,8 @@ export default function ProfileHero({ userData }: HeroProps) {
 
           <div className="flex gap-2 items-center">
             <span className="font-semibold">Plan expires in:</span>
-            {/*  <PlanCountDown endDate={userData.plan.expiresOn} wrapped /> */}
-            <PlanCountDown endDate={testTime} wrapped />
+            <PlanCountDown endDate={userData.plan.expiresOn} wrapped />
+            {/* <PlanCountDown endDate={testTime} wrapped /> */}
           </div>
         </div>
 

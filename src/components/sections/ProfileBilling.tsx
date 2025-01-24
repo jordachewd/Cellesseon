@@ -47,6 +47,8 @@ export default async function ProfileBilling({ userData }: BillingProps) {
                 <p className="flex-1 text-xxs text-center">
                   {getFormattedDate(txn.expiresOn)}
                 </p>
+                <p className="min-w-14 text-xxs text-center">status</p>
+                <i className="bi bi-file-earmark-arrow-down ml-4 text-base cursor-pointer"></i>
               </div>
             );
           })}
