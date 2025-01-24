@@ -6,7 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { getAllTransactions } from "@/lib/actions/transaction.action";
 import { Transaction } from "@/types/TransactionData.d";
 import { TooltipArrow } from "../shared/TooltipArrow";
-import { generateUniqueString } from "@/lib/utils/generateUniqueString";
+import { generateString } from "@/lib/utils/generateString";
 
 export default async function ProfileBilling() {
   const { userId } = await auth();
@@ -24,7 +24,7 @@ export default async function ProfileBilling() {
       </div>
 
       {transactions.length > 0 ? (
-        <div key={generateUniqueString(24)} className={css.table}>
+        <div key={generateString(24)} className={css.table}>
           <div className={css.tableHead}>
             <p className="flex-1">Plan</p>
             <p className="flex-1 text-center">Amount</p>
@@ -51,9 +51,8 @@ export default async function ProfileBilling() {
                 <p className="flex-1 text-xxs text-center">
                   {getFormattedDate(transaction.expiresOn)}
                 </p>
-                <p className="min-w-14 text-xxs text-center">
-                  status
-                </p>
+                <p className="min-w-14 text-xxs text-center">status</p>
+                
                 <i className="bi bi-file-earmark-arrow-down ml-4 text-base cursor-pointer"></i>
               </div>
             );

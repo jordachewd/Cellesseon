@@ -77,6 +77,7 @@ export async function POST(req: Request) {
       registerAt: new Date(created_at),
     };
 
+
     const newUser = await createUser(user);
 
     // Set public metadata
@@ -90,7 +91,7 @@ export async function POST(req: Request) {
           planName: newUser.plan.name,
           planExpiresOn: newUser.plan.expiresOn,
           amount: 0 as number,
-          stripeId: "" as string,
+          stripeId: "none" as string,
         },
       });
     }

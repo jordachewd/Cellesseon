@@ -1,4 +1,4 @@
-export function generateUniqueString(length?: number) {
+export function generateString(length?: number) {
   let result = "";
   const size = length || 16;
   const chars =
