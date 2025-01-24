@@ -51,7 +51,7 @@ const UserSchema = new Schema<IUser>({
   updatedAt: { type: Date, default: Date.now },
   plan: {
     id: { type: Number, required: true, default: 0 },
-    stripeId: { type: String, required: true, unique: true, default: "---" },
+    stripeId: { type: String, required: true, default: "---" },
     name: {
       type: String,
       required: true,
