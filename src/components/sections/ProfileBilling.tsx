@@ -1,21 +1,17 @@
 import css from "@/styles/sections/ProfileBilling.module.css";
 import getFormattedDate from "@/lib/utils/getFormattedDate";
-import LoadingPage from "../shared/LoadingPage";
 import { Typography } from "@mui/material";
-import { auth } from "@clerk/nextjs/server";
 import { getAllTransactions } from "@/lib/actions/transaction.action";
 import { Transaction } from "@/types/TransactionData.d";
 import { TooltipArrow } from "../shared/TooltipArrow";
-import { generateString } from "@/lib/utils/generateString";
+import { UserData } from "@/types/UserData.d";
 
-export default async function ProfileBilling() {
-  const { userId } = await auth();
+interface BillingProps {
+  userData: UserData;
+}
 
-  if (!userId) {
-    return <LoadingPage />;
-  }
-
-  const transactions: Transaction[] = await getAllTransactions(userId);
+export default async function ProfileBilling({ userData }: BillingProps) {
+  const txns: Transaction[] = await getAllTransactions(userData.clerkId);
 
   return (
     <section className={css.section}>
@@ -23,8 +19,8 @@ export default async function ProfileBilling() {
         <Typography variant="h4">Billing History</Typography>
       </div>
 
-      {transactions.length > 0 ? (
-        <div key={generateString(24)} className={css.table}>
+      {txns.length > 0 ? (
+        <div className={css.table}>
           <div className={css.tableHead}>
             <p className="flex-1">Plan</p>
             <p className="flex-1 text-center">Amount</p>
@@ -36,30 +32,27 @@ export default async function ProfileBilling() {
             </TooltipArrow>
           </div>
 
-          {transactions.map((transaction) => {
-            const payCycle = transaction.billing === "Monthly" ? "Mo" : "Yr";
+          {txns.map((txn) => {
+            const payCycle = txn.billing === "Monthly" ? "Mo" : "Yr";
             return (
-              <div key={transaction.id} className={css.tableRow}>
-                <p className="flex-1 font-medium">{transaction.plan}</p>
+              <div key={txn.id} className={css.tableRow}>
+                <p className="flex-1 font-medium">{txn.plan}</p>
                 <p className="flex-1 font-medium text-center">
-                  ${transaction.amount}
+                  ${txn.amount}
                   <span className="text-xxs font-normal"> / {payCycle}</span>
                 </p>
                 <p className="flex-1 text-xxs text-center">
-                  {getFormattedDate(transaction.createdAt)}
+                  {getFormattedDate(txn.createdAt)}
                 </p>
                 <p className="flex-1 text-xxs text-center">
-                  {getFormattedDate(transaction.expiresOn)}
+                  {getFormattedDate(txn.expiresOn)}
                 </p>
-                <p className="min-w-14 text-xxs text-center">status</p>
-                
-                <i className="bi bi-file-earmark-arrow-down ml-4 text-base cursor-pointer"></i>
               </div>
             );
           })}
         </div>
       ) : (
-        <div className={css.tableEmpty}>You have no billing history yet.</div>
+        <Typography>No transactions found.</Typography>
       )}
     </section>
   );

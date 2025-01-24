@@ -5,17 +5,21 @@ import { Switch, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Plan } from "@/types/PlanData.d";
-import { UserMetadata } from "@/types/UserData.d";
-import LoadingPage from "../shared/LoadingPage";
+import { UserData } from "@/types/UserData.d";
+
 import PageHead from "../layout/PageHead";
 import PlanCard from "@/components/shared/PlanCard";
 
-export default function Plans() {
+interface PlansProps {
+  userData?: UserData;
+}
+
+export default function Plans({ userData }: PlansProps) {
   const save = 0.4; // Save 40% on Yearly plans
   const [yearly, setYearly] = useState<boolean>(false);
-  const { user, isLoaded, isSignedIn } = useUser();
-  const userMeta = user?.publicMetadata as UserMetadata;
-  const { billing } = userMeta || {};
+
+  const { isSignedIn } = useUser();
+  const billing = userData?.plan?.billing;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setYearly(event.target.checked);
@@ -25,10 +29,6 @@ export default function Plans() {
     const setBilling = billing === "Yearly" ? true : false;
     setYearly(setBilling);
   }, [billing]);
-
-  if (!isLoaded) {
-    return <LoadingPage />;
-  }
 
   return (
     <section className={css.section}>
@@ -55,9 +55,7 @@ export default function Plans() {
               key={plan.id}
               plan={plan}
               yearly={yearly}
-              user={user}
-              userMeta={userMeta}
-              showBtn={isSignedIn}
+              userData={userData}
               save={save}
             />
           );

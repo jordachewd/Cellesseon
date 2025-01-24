@@ -1,28 +1,27 @@
 import css from "@/styles/shared/PlanCard.module.css";
-import { getPlanStatus, PlanStatus } from "@/lib/utils/getPlanStatus";
-import Checkout from "@/components/shared/Checkout";
-import { Plan, PlanName } from "@/types/PlanData.d";
+import { getPlanStatus } from "@/lib/utils/getPlanStatus";
+import { Plan, PlanData, PlanStatus } from "@/types/PlanData.d";
 import { Typography } from "@mui/material";
-import { UserResource } from "@clerk/types";
-import { UserMetadata } from "@/types/UserData.d";
+import { UserData } from "@/types/UserData.d";
+import Checkout from "@/components/shared/Checkout";
 
 interface PlanCardProps {
   plan: Plan;
   yearly: boolean;
-  user: UserResource | null;
-  userMeta: UserMetadata;
-  showBtn?: boolean;
+  userData?: UserData;
   save?: number;
 }
 
 export default function PlanCard({
   plan,
   yearly,
-  user,
-  userMeta,
-  showBtn = true,
+  userData,
   save = 0,
 }: PlanCardProps) {
+  const hasUserData = userData && Object.keys(userData).length > 0;
+  
+  const { _id, clerkId, username, firstName, lastName, email } = userData || {};
+
   const planFee =
     plan.price === 0
       ? plan.price
@@ -34,10 +33,11 @@ export default function PlanCard({
     plan,
     planFee,
     yearly,
-    userMeta,
+    userPlan: userData?.plan as PlanData,
   });
 
   const { isCurrent, isPopular } = planStatus as PlanStatus;
+
   return (
     <div
       className={`${css.wrapper} ${
@@ -107,23 +107,23 @@ export default function PlanCard({
         ))}
       </div>
 
-      {showBtn && (
+      {hasUserData && (
         <div className={css.actions}>
           <Checkout
             plan={{
-              id: plan.id as number,
+              id: plan.id,
               billing: yearly ? "Yearly" : "Monthly",
-              name: plan.name as PlanName,
-              price: planFee as number,
+              name: plan.name,
+              price: planFee,
             }}
             planStatus={planStatus}
             clerkUser={{
-              userId: userMeta.userId as string,
-              clerkId: user?.id as string,
-              username: user?.username as string,
-              firstName: user?.firstName as string,
-              lastName: user?.lastName as string,
-              email: user?.emailAddresses[0].emailAddress as string,
+              userId: _id || "",
+              clerkId: clerkId || "",
+              username: username || "",
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
             }}
           />
         </div>

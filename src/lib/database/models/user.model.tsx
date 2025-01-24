@@ -5,16 +5,15 @@ import { Schema, model, models, Document } from "mongoose";
 
 export interface IUser extends Document {
   clerkId: string;
-  clerkImg: string;
   username: string;
   email: string;
-  firstName?: string;
-  lastName?: string;
-  avatar?: string;
   role: UserRoles;
   registerAt: Date;
-  updatedAt?: Date;
   plan: PlanData;
+  firstName?: string;
+  lastName?: string;
+  updatedAt?: Date;
+  userimg?: string;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -23,7 +22,7 @@ const UserSchema = new Schema<IUser>({
     required: true,
     unique: true,
   },
-  clerkImg: { type: String, required: true },
+  userimg: { type: String },
   username: {
     type: String,
     required: true,
@@ -46,12 +45,10 @@ const UserSchema = new Schema<IUser>({
     enum: ["client", "admin"],
     default: "client",
   },
-  avatar: { type: String },
   registerAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   plan: {
     id: { type: Number, required: true, default: 0 },
-    stripeId: { type: String, required: true, default: "---" },
     name: {
       type: String,
       required: true,
@@ -65,8 +62,9 @@ const UserSchema = new Schema<IUser>({
       enum: ["Monthly", "Yearly"],
       default: "Monthly",
     },
-    upgradeAt: { type: Date, required: true, default: Date.now },
+    startedOn: { type: Date, required: true, default: Date.now },
     expiresOn: { type: Date, required: true, default: getExpiresOn("Lite") },
+    stripeId: { type: String },
   },
 });
 

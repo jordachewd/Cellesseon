@@ -69,14 +69,13 @@ export async function POST(req: Request) {
 
     const user: CreateUserParams = {
       clerkId: id,
-      clerkImg: image_url,
+      userimg: image_url,
       username: username!,
       email: email_addresses[0].email_address,
       firstName: first_name ?? "",
       lastName: last_name ?? "",
       registerAt: new Date(created_at),
     };
-
 
     const newUser = await createUser(user);
 
@@ -87,11 +86,7 @@ export async function POST(req: Request) {
         publicMetadata: {
           userId: newUser._id,
           role: newUser.role,
-          planId: newUser.plan.id,
-          planName: newUser.plan.name,
-          planExpiresOn: newUser.plan.expiresOn,
-          amount: 0 as number,
-          stripeId: "none" as string,
+          userimg: newUser.image_url,
         },
       });
     }
@@ -107,7 +102,7 @@ export async function POST(req: Request) {
       firstName: first_name ?? "",
       lastName: last_name ?? "",
       updatedAt: new Date(updated_at),
-      clerkImg: image_url,
+      userimg: image_url,
     };
 
     const updatedUser = await updateUser(id, user);

@@ -1,10 +1,9 @@
 import { getExpiresOn } from "@/constants/plans";
 import { createTransaction } from "@/lib/actions/transaction.action";
 import { updateUser } from "@/lib/actions/user.actions";
-import { BillingCycle, PlanName } from "@/types/PlanData.d";
+import { BillingCycle, PlanData, PlanName } from "@/types/PlanData.d";
 import { CreateTransactionParams } from "@/types/TransactionData.d";
 import { UpdateUserParams } from "@/types/UserData.d";
-import { clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import stripe from "stripe";
 
@@ -56,34 +55,15 @@ export async function POST(request: Request) {
           id: thePlanId,
           name: thePlanName,
           billing: theBillingCycle,
-          upgradedAt: new Date(),
+          startedOn: new Date(),
           expiresOn: theExpireDate,
           amount: theAmount,
           stripeId: id,
-        },
+        } as PlanData,
       };
 
       // Update user in database
       const updatedUser = await updateUser(theClerkId, newUserData);
-
-      // Update Clerk user public metadata
-      if (updatedUser) {
-        const client = await clerkClient();
-        await client.users.updateUserMetadata(theClerkId, {
-          publicMetadata: {
-            planId: thePlanId,
-            planName: thePlanName,
-            planExpiresOn: theExpireDate,
-            billing: theBillingCycle,
-            amount: theAmount,
-          },
-        });
-      } else {
-        return NextResponse.json({
-          message: "STRIPE: User database update failed!",
-          updatedUser,
-        });
-      }
 
       return NextResponse.json({ message: "OK", newTransaction, updatedUser });
     } else {

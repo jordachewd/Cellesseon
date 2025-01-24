@@ -17,6 +17,7 @@ export default function MainPage() {
   const [alert, setAlert] = useState<AlertParams | null>(null);
   const [startMsg, setStartMsg] = useState<string>("");
   const [chat, setChat] = useState<Message[]>([]);
+
   const { isLoaded } = useUser();
 
   const sendMessage = async (prompt: Message) => {

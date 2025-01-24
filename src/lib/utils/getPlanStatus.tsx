@@ -1,30 +1,23 @@
-import { Plan } from "@/types/PlanData.d";
-import { UserMetadata } from "@/types/UserData.d";
+import { Plan, PlanData, PlanStatus } from "@/types/PlanData.d";
 
 interface PlanStatusParams {
   plan: Plan;
   yearly: boolean;
   planFee: number;
-  userMeta?: UserMetadata;
-}
-
-export interface PlanStatus {
-  isIncluded: boolean;
-  isCurrent: boolean;
-  isPopular: boolean;
+  userPlan?: PlanData;
 }
 
 export function getPlanStatus({
   plan,
   yearly,
   planFee,
-  userMeta,
+  userPlan,
 }: PlanStatusParams): PlanStatus {
-  const { planId: userPlanId, billing, amount } = userMeta || {};
   const planId = Number(plan.id);
+  const { id: userPlanId, billing, amount } = userPlan || {};
   const prevPlans = Number(planFee) <= Number(amount);
-  const billingCycle = billing === (yearly ? "Yearly" : "Monthly");
 
+  const billingCycle = billing === (yearly ? "Yearly" : "Monthly");
   const isIncluded = prevPlans && planId <= Number(userPlanId) ? true : false;
 
   let isCurrent = false,

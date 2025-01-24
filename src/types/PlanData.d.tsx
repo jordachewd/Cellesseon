@@ -13,18 +13,24 @@ export interface Plan {
   name: PlanName;
   desc: string;
   icon: string;
-  price: number; 
+  price: number;
   inclusions: Inclusion[];
 }
 
 export interface PlanData {
   id: string;
   name: PlanName;
-  billing: BillingCycle;
   amount: number;
-  upgradedAt: Date;
+  billing: BillingCycle;
   expiresOn: Date;
-  stripeId: string;
+  startedOn: Date;
+  stripeId?: string;
+}
+
+export interface PlanStatus {
+  isIncluded: boolean;
+  isCurrent: boolean;
+  isPopular: boolean;
 }
 
 export interface CheckoutPlanParams {

@@ -1,12 +1,12 @@
 // ====== USER Data Types
-import { BillingCycle, PlanData } from "./PlanData.d";
+import { PlanData } from "./PlanData.d";
 
 export type UserRoles = "client" | "admin";
 
 /* Used by Clerk Webhook ("user.created") */
 export interface CreateUserParams {
   clerkId: string;
-  clerkImg: string;
+  userimg: string;
   email: string;
   username: string;
   firstName: string | undefined;
@@ -17,20 +17,25 @@ export interface CreateUserParams {
 /* Used by Clerk Webhook ("user.updated") */
 export interface UpdateUserParams {
   email?: string;
-  clerkImg?: string;
+  userimg?: string;
   firstName?: string | undefined;
   lastName?: string | undefined;
   updatedAt: Date;
   plan?: PlanData;
 }
 
-export interface UserMetadata {
-  billing?: BillingCycle;
-  planExpiresOn?: Date;
-  planId?: string;
-  planName?: string;
-  role?: UserRoles;
-  userId?: string;
-  amount?: number;
-  stripeId?: string;
+/* When pull user from DataBase */
+export interface UserData {
+  _id: string;
+  clerkId: string;
+  username: string;
+  email: string;
+  role: UserRoles;
+  registerAt: Date;
+  firstName?: string;
+  lastName?: string;
+  updatedAt?: Date;
+  userimg?: string;
+  plan: PlanData;
+  __v: number;
 }

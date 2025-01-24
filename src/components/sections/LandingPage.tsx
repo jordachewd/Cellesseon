@@ -1,4 +1,3 @@
-"use client";
 import css from "@/styles/sections/LandingPage.module.css";
 import { Button, Typography } from "@mui/material";
 import Plans from "./Plans";

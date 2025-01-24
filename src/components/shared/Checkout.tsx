@@ -5,8 +5,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { checkoutPlan } from "@/lib/actions/transaction.action";
 import { CheckoutTransactionParams } from "@/types/TransactionData.d";
 import { ClerkUserData } from "@/types/TaskData.d";
-import { CheckoutPlanParams } from "@/types/PlanData.d";
-import { PlanStatus } from "@/lib/utils/getPlanStatus";
+import { CheckoutPlanParams, PlanStatus } from "@/types/PlanData.d";
 
 interface CheckoutProps {
   plan: CheckoutPlanParams;
@@ -48,7 +47,8 @@ const Checkout = ({
                 color: "var(--mui-palette-common-white)",
                 borderColor: "var(--mui-palette-common-white)",
                 "&:hover": {
-                  color: "rgba(var(--mui-palette-error-contrastTextChannel) / 0.75)!important",
+                  color:
+                    "rgba(var(--mui-palette-error-contrastTextChannel) / 0.75)!important",
                   borderColor:
                     "rgba(var(--mui-palette-error-contrastTextChannel) / 0.75)",
                 },

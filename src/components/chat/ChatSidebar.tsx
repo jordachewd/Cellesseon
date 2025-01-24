@@ -5,7 +5,6 @@ import { useChatContext } from "@/context/ChatContext";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
 import AvatarMenu from "../shared/AvatarMenu";
-import PlanCard from "../shared/PlanPromo";
 
 interface ChatSidebarProps {
   loading: boolean;
@@ -52,9 +51,6 @@ export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
           </Link>
         </div>
       </nav>
-      <div className={css.plancard}>
-        <PlanCard />
-      </div>
 
       <div className={css.bottom}>
         <AvatarMenu />

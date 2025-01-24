@@ -155,6 +155,8 @@ export const plans = [
 ];
 
 export function getPlanIcon(name: PlanName) {
+  if (!name) return;
+
   const plan = plans.find(
     (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
   );

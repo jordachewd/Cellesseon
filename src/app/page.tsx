@@ -17,12 +17,13 @@ export const viewport: Viewport = {
   userScalable: false,
 };
 
-export default function Home() {
+export default async function Home() {
   return (
     <PageWrapper>
       <SignedOut>
         <LandingPage />
       </SignedOut>
+
       <SignedIn>
         <ChatContextProvider>
           <MainPage />

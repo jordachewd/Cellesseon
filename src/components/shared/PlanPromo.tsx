@@ -1,37 +1,24 @@
-"use client";
 import css from "@/styles/shared/PlanPromo.module.css";
 import { Button, Typography } from "@mui/material";
-import { useUser } from "@clerk/clerk-react";
+
 import { getPlanIcon } from "@/constants/plans";
-import { PlanName } from "@/types/PlanData.d";
-import SpinnerGrow from "./SpinnerGrow";
-import { UserMetadata } from "@/types/UserData.d";
+import { PlanData, PlanName } from "@/types/PlanData.d";
+
 import PlanCountDown from "./PlanCountDown";
+
 // import getFormattedDate from "@/lib/utils/getFormattedDate";
 
-export default function PlanPromo() {
-  const { user, isLoaded } = useUser();
+interface PlanPromoProps {
+  userPlan: PlanData;
+}
 
-  if (!isLoaded) {
-    return (
-      <div
-        className={`${css.wrapper} min-h-[158px] items-center justify-center`}
-      >
-        <SpinnerGrow />
-      </div>
-    );
-  }
-
-  const userMeta = user?.publicMetadata as UserMetadata;
-  if (!userMeta) return null;
-  //  console.log("userMeta: ", userMeta, !userMeta ? true : false);
-
-  const { planId, planName, planExpiresOn } = userMeta || {};
-  const isLite = Number(planId) === 0;
-  //  const isPro = Number(planId) === 1;
-  //  const isProFull = isPro && planName === "Pro";
-  const isPremium = Number(planId) === 2;
-  const isPremiumFull = isPremium && planName === "Premium";
+export default function PlanPromo({ userPlan }: PlanPromoProps) {
+  const { id, name, expiresOn, billing } = userPlan;
+  const isLite = Number(id) === 0;
+  //  const isPro = Number(id) === 1;
+  //  const isProFull = isPro && name === "Pro";
+  const isPremium = Number(id) === 2 && billing === "Yearly";
+  const isPremiumFull = isPremium && name === "Premium";
 
   /*   const testTime = new Date("2025-01-24T05:40:00.332Z");
 
@@ -45,7 +32,7 @@ export default function PlanPromo() {
           <span className={`${css.badgeValue} ${isLite && "min-w-[82px]"}`}>
             {isLite ? (
               <PlanCountDown
-                endDate={planExpiresOn as Date}
+                endDate={expiresOn as Date}
                 //  endDate={testTime as Date}
                 className="flex justify-center"
               />
@@ -65,8 +52,8 @@ export default function PlanPromo() {
             gap: "1rem",
           }}
         >
-          <i className={`${getPlanIcon(planName as PlanName)} text-3xl`}></i>
-          <span>{planName}</span>
+          <i className={`${getPlanIcon(name as PlanName)} text-3xl`}></i>
+          <span>{name}</span>
         </Typography>
 
         {!isPremiumFull && (
