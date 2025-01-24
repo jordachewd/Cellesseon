@@ -51,6 +51,7 @@ const UserSchema = new Schema<IUser>({
   updatedAt: { type: Date, default: Date.now },
   plan: {
     id: { type: Number, required: true, default: 0 },
+    stripeId: { type: String, required: true, unique: true, default: "---" },
     name: {
       type: String,
       required: true,
@@ -66,7 +67,6 @@ const UserSchema = new Schema<IUser>({
     },
     upgradeAt: { type: Date, required: true, default: Date.now },
     expiresOn: { type: Date, required: true, default: getExpiresOn("Lite") },
-    stripeId: { type: String, required: true, unique: true },
   },
 });
 
