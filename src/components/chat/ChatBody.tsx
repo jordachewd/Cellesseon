@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import SpinnerGrow from "../shared/SpinnerGrow";
+import LoadingBubbles from "../shared/LoadingBubbles";
 import ImageHolder from "../shared/ImageHolder";
 
 interface ChatBodyProps {
@@ -59,7 +59,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                         />
                       );
                     } else if (reply.type === "temp") {
-                      return <SpinnerGrow key={idx} size="small" />;
+                      return <LoadingBubbles key={idx} size="small" />;
                     }
                     return null;
                   })

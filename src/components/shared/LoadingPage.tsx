@@ -1,5 +1,5 @@
 import css from "@/styles/shared/LoadingPage.module.css";
-import SpinnerGrow from "./SpinnerGrow";
+import LoadingBubbles from "./LoadingBubbles";
 
 interface LoadingPageProps {
   className?: string;
@@ -11,7 +11,7 @@ export default function LoadingPage({
   return (
     <section className={className}>
       <div className={css.wrapper}>
-        <SpinnerGrow size="large" />
+        <LoadingBubbles size="large" />
       </div>
     </section>
   );

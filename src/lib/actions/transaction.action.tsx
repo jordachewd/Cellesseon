@@ -9,8 +9,8 @@ import {
   CreateTransactionParams,
 } from "@/types/TransactionData.d";
 import { ClerkUserData } from "@/types/TaskData.d";
-import getUserName from "../utils/getUserName";
 import { CheckoutPlanParams } from "@/types/PlanData.d";
+import getFullName from "../utils/getFullName";
 
 
 export async function checkoutPlan(transaction: CheckoutTransactionParams) {
@@ -32,11 +32,12 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
     price: planPrice,
   }: CheckoutPlanParams = transaction.plan;
 
-  const userName = getUserName({
-    first_name: firstName || "",
-    last_name: lastName || "",
-    username: username,
+  const fullName = getFullName({
+    firstName: firstName || "",
+    lastName: lastName || "",
+    username: username || "",
   });
+
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -57,7 +58,7 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
     metadata: {
       userId,
       clerkId,
-      name: userName,
+      name: fullName,
       plan: planName,
       billing: planBilling,
       planId,

@@ -3,7 +3,7 @@ import { IntroChips } from "@/constants/introChipsData";
 import { Chip, Typography } from "@mui/material";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
-import SpinnerGrow from "../shared/SpinnerGrow";
+import LoadingBubbles from "../shared/LoadingBubbles";
 
 interface ChatIntroProps {
   sendPrompt: (prompt: string) => void;
@@ -16,7 +16,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
   if (!isLoaded) {
     return (
       <section className={css.section}>
-        <SpinnerGrow size="large" />
+        <LoadingBubbles size="large" />
       </section>
     );
   }

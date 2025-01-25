@@ -1,5 +1,5 @@
 import css from "@/styles/shared/ImageHolder.module.css";
-import SpinnerGrow from "./SpinnerGrow";
+import LoadingBubbles from "./LoadingBubbles";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -22,7 +22,7 @@ export default function ImageHolder({
     <div className={css.wrapper}>
       {isLoading && (
         <span className="flex p-4">
-          <SpinnerGrow size="small" />
+          <LoadingBubbles size="small" />
         </span>
       )}
       <Image

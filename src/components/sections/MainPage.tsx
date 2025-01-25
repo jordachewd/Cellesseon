@@ -74,13 +74,9 @@ export default function MainPage() {
 
   return (
     <div className={css.wrapper}>
-      <ChatSidebar
-        userData={userData}
-        newChat={() => setChat([])}
-        loading={isLoading}
-      />
+      <ChatSidebar userData={userData} />
       <div className={css.section}>
-        <Header />
+        <Header isSignedIn />
         {alert && <AlertMessage message={alert} />}
 
         {chat.length ? (

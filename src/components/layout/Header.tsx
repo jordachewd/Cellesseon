@@ -1,15 +1,17 @@
 "use client";
 import css from "@/styles/layout/Header.module.css";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
-import { useChatContext } from "@/context/ChatContext";
-import { Button } from "@mui/material";
-import Logo from "../shared/Logo";
-import ToggleTheme from "../shared/ToggleTheme";
-import SidebarToggle from "../shared/SidebarToggle";
+import { Button, IconButton } from "@mui/material";
+import { TooltipArrow } from "../shared/TooltipArrow";
+import ToggleTheme from "@/components/shared/ToggleTheme";
+import AvatarMenu from "@/components/shared/AvatarMenu";
+import LogoV2 from "../shared/LogoV2";
 
-export default function Header() {
-  const { sidebarCtx } = useChatContext();
+interface HeaderProps {
+  isSignedIn?: boolean;
+}
+
+export default function Header({ isSignedIn = false }: HeaderProps) {
   const [scrolled, setScrolled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -26,19 +28,35 @@ export default function Header() {
   return (
     <section className={`${css.section} ${scrolled && css.scrolled}`}>
       <div className={css.content}>
-        <div className={`${css.left} ${sidebarCtx.isSbOpen && "invisible"}`}>
-          <Logo />
-          <SignedIn>
-            <SidebarToggle title="Show Menu" icon="bi-layout-sidebar" />
-          </SignedIn>
+        <div className={css.left}>
+          <LogoV2 />
+          {isSignedIn && (
+            <TooltipArrow
+              title="New Task"
+              placement="right"
+              className="!transition-all"
+            >
+              <IconButton
+                size="small"
+                sx={{
+                  padding: "4px 7px",
+                  borderRadius: "8px!important",
+                }}
+              >
+                <i className="bi bi-plus-circle-dotted"></i>
+              </IconButton>
+            </TooltipArrow>
+          )}
         </div>
         <div className={css.right}>
-          <SignedOut>
+          {!isSignedIn && (
             <Button size="small" href="/sign-in">
               login
             </Button>
-          </SignedOut>
+          )}
+
           <ToggleTheme />
+          <AvatarMenu />
         </div>
       </div>
     </section>

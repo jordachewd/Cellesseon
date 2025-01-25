@@ -1,46 +1,29 @@
-import css from "@/styles/chat/ChatSidebar.module.css";
-import Logo from "../shared/Logo";
-import SidebarToggle from "../shared/SidebarToggle";
 import Link from "next/link";
-import AvatarMenu from "../shared/AvatarMenu";
-import { useChatContext } from "@/context/ChatContext";
-import { Button, Typography } from "@mui/material";
+import css from "@/styles/chat/ChatSidebar.module.css";
+import SidebarToggle from "../shared/SidebarToggle";
+import PlanPromo from "@/components/shared/PlanPromo";
+import { Typography } from "@mui/material";
 import { UserData } from "@/types/UserData.d";
-import PlanPromo from "../shared/PlanPromo";
+import Logo from "../shared/Logo";
+ 
+import { useState } from "react";
 
 interface ChatSidebarProps {
   userData: UserData | null;
-  loading: boolean;
-  newChat: () => void;
 }
 
-export default function ChatSidebar({
-  userData,
-  loading,
-  newChat,
-}: ChatSidebarProps) {
-  const { sidebarCtx } = useChatContext();
+export default function ChatSidebar({ userData }: ChatSidebarProps) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
-    <aside className={`${css.wrapper} ${!sidebarCtx.isSbOpen && css.narrow}`}>
+    <aside className={`${css.wrapper} ${!isOpen && css.isOpen}`}>
       <div className={css.topbar}>
-        <Logo />
-        <SidebarToggle icon="bi-arrow-left-short" title="Hide Menu" />
+        <Logo symbol />
+        
       </div>
 
       <nav className={css.navigation}>
-        <Button
-          size="small"
-          variant="outlined"
-          className="!py-2.5"
-          disabled={loading}
-          onClick={() => newChat()}
-        >
-          <i className="bi bi-plus-lg"></i>
-          <span className="ml-3">New Task</span>
-        </Button>
-
-        <div className={css.chats}>
+        <div className={css.history}>
           <Typography variant="body2">History</Typography>
 
           <Link href="/">
@@ -59,15 +42,19 @@ export default function ChatSidebar({
         </div>
       </nav>
 
+      <div className="p-2">
+        <SidebarToggle
+          icon="bi-layout-sidebar"
+          title={`${isOpen ? "Hide menu" : "Show menu"}`}
+          toggleSidebar={() => setIsOpen(!isOpen)}
+        />
+      </div>
+
       {userData && (
-        <div className="px-3 py-4">
+        <div className={css.promo}>
           <PlanPromo userPlan={userData.plan} />
         </div>
       )}
-
-      <div className={css.bottom}>
-        <AvatarMenu />
-      </div>
     </aside>
   );
 }

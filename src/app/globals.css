@@ -42,6 +42,6 @@ h6 {
 }
 
 a {
-  @apply hover:underline transition-all ease-in text-[color:--mui-palette-text-secondary]
+  @apply transition-all ease-in text-[color:--mui-palette-text-secondary]
   hover:text-jwdMarine-500 dark:hover:text-white;
 }

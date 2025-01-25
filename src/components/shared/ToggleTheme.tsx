@@ -9,7 +9,7 @@ export default function ToggleTheme() {
 
   return (
     <ButtonGroup aria-label="theme-toggle">
-      <TooltipArrow title="Light Theme" placement="bottom">
+      <TooltipArrow title="Light" placement="bottom">
         <Button
           size="small"
           onClick={() => setMode("light" as PrefersColorScheme)}
@@ -25,7 +25,7 @@ export default function ToggleTheme() {
           <i className="bi bi-sun text-sm"></i>
         </Button>
       </TooltipArrow>
-      <TooltipArrow title="Dark Theme" placement="bottom">
+      <TooltipArrow title="Dark" placement="bottom">
         <Button
           size="small"
           onClick={() => setMode("dark" as PrefersColorScheme)}

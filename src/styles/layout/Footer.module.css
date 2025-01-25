@@ -5,7 +5,7 @@
 
 .content {
   @apply flex flex-col lg:flex-row justify-between w-full;
-  @apply gap-3 mx-auto max-w-screen-2xl items-center py-6 lg:py-3;
+  @apply gap-3 mx-auto items-center py-6 lg:py-3;
 }
 
 .left,

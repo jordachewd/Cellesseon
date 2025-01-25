@@ -1,8 +1,8 @@
-import css from "@/styles/shared/SpinnerGrow.module.css";
+import css from "@/styles/shared/LoadingBubbles.module.css";
 
 type BubbleSizes = "small" | "medium" | "large";
 
-interface SpinnerGrowProps {
+interface LoadingBubblesProps {
   className?: string;
   size?: BubbleSizes;
 }
@@ -25,10 +25,10 @@ const bubble3 = {
   large: "w-3 h-3",
 };
 
-export default function SpinnerGrow({
+export default function LoadingBubbles({
   className: style = css.wrapper,
   size = "medium",
-}: SpinnerGrowProps) {
+}: LoadingBubblesProps) {
   return (
     <div className={style}>
       <div className={`${css.bubble} ${css.bubble1} ${bubble1[size]}`}></div>

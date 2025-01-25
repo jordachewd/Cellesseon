@@ -5,7 +5,7 @@ import {
   TimeDifference,
   getExpirationCountDown,
 } from "@/lib/utils/getFormattedDate";
-import SpinnerGrow from "@/components/shared/SpinnerGrow";
+import LoadingBubbles from "@/components/shared/LoadingBubbles";
 
 interface CountDownProps {
   endDate: Date;
@@ -68,7 +68,7 @@ export default function PlanCountDown({
       ) : countdown ? (
         countdown
       ) : (
-        <SpinnerGrow size="small" />
+        <LoadingBubbles size="small" />
       )}
     </div>
   ) : (
@@ -78,7 +78,7 @@ export default function PlanCountDown({
       ) : countdown ? (
         countdown
       ) : (
-        <SpinnerGrow
+        <LoadingBubbles
           size="small"
           className="inline-flex items-center gap-0.5"
         />

@@ -1,30 +1,25 @@
 .wrapper {
-  @apply flex flex-col justify-between border-r w-96 lg:w-64 shadow;
-  @apply top-0 bottom-0 left-0 z-10 fixed lg:relative transition-all duration-300;
-  @apply bg-lightBackground-200 border-slate-200/50;
-  @apply dark:bg-jwdMarine-1000 dark:border-jwdMarine-1000;
+  @apply flex flex-col justify-between w-[54px] shadow;
+  @apply z-10 fixed lg:relative transition-all duration-300 top-0 left-0;
+  @apply bg-lightBackground-200 dark:bg-jwdMarine-1000 bottom-0;
 }
 
-.narrow {
-  @apply -ml-96 lg:-ml-64 opacity-0;
+.isOpen {
+  @apply w-96 lg:w-64;
 }
 
 .topbar {
-  @apply flex w-full justify-between items-center p-3;
+  @apply flex w-full items-center p-3 gap-3;
 }
 
 .navigation {
-  @apply flex flex-col px-3 py-6 mb-auto gap-8;
+  @apply flex flex-col px-3 py-6 mb-auto gap-8 lg:hidden;
 }
 
-.chats {
+.history {
   @apply flex flex-col w-full gap-1;
 }
 
-.plancard{
-  @apply flex w-full p-3 py-4;
-}
-
-.bottom {
-  @apply flex items-center p-3 bg-lightPrimary-500 dark:bg-darkPrimary-1000;
+.promo {
+  @apply flex p-3 lg:hidden;
 }

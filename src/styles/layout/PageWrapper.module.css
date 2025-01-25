@@ -6,9 +6,7 @@
 .background {
   @apply absolute flex inset-0 h-full w-full z-[1] bg-[length:16px_16px];
 
- /* @apply bg-lightPrimary-500/90 dark:bg-darkPrimary-900/90; */
-
-  background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.9);
+  background-color: rgb(var(--mui-palette-primary-mainChannel) / 0.5);
 
   @apply bg-[radial-gradient(#4A4A4A10_1px,transparent_1px)] dark:bg-[radial-gradient(#EAEAEA10_1px,transparent_1px)];
   @apply [mask-image:radial-gradient(ellipse_100%_90%_at_50%_0%,_#000000_40%,_transparent_100%)];

@@ -3,24 +3,22 @@ import PlanPromo from "@/components/shared/PlanPromo";
 import PlanCountDown from "@/components/shared/PlanCountDown";
 import getFormattedDate from "@/lib/utils/getFormattedDate";
 import PageHead from "@/components/layout/PageHead";
-import getUserName, { stringAvatar } from "@/lib/utils/getUserName";
 import { Typography, Avatar } from "@mui/material";
 import { UserData } from "@/types/UserData.d";
+import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
 
 interface HeroProps {
   userData: UserData;
 }
 
 export default function ProfileHero({ userData }: HeroProps) {
-  const userName = getUserName({
-    first_name: userData.firstName || "",
-    last_name: userData.lastName || "",
-    username: userData.username,
-  });
+  const { username, firstName, lastName } = userData;
 
-  // const testTime = new Date("2025-01-24T06:11:00.332Z");
-  // console.log("testTime: ", getFormattedDate(testTime));
-  // console.log("isTimeUp: ", isTimeUp(testTime));
+  const fullName = getFullName({
+    firstName: firstName || "",
+    lastName: lastName || "",
+    username: username || "",
+  });
 
   return (
     <section className={css.section}>
@@ -29,13 +27,13 @@ export default function ProfileHero({ userData }: HeroProps) {
       <div className={css.hero}>
         <div className={css.heroImg}>
           <Avatar
-            {...stringAvatar(userName)}
-            alt={userName}
+            alt={fullName}
             src={userData.userimg}
             sx={{ width: 80, height: 80 }}
+            {...getNameLetters(fullName)}
           />
           <div className={css.heroImgContent}>
-            <Typography variant="h4">{userName}</Typography>
+            <Typography variant="h4">{fullName}</Typography>
             <Typography variant="body1">{userData.email}</Typography>
           </div>
         </div>
@@ -60,7 +58,6 @@ export default function ProfileHero({ userData }: HeroProps) {
           <div className="flex gap-2 items-center">
             <span className="font-semibold leading-none">Plan expires in:</span>
             <PlanCountDown endDate={userData.plan.expiresOn} wrapped />
-            {/* <PlanCountDown endDate={testTime} wrapped /> */}
           </div>
         </div>
 

@@ -21,6 +21,7 @@ export const muiComponents: ThemeOptions = {
           borderRadius: "0.5rem",
         },
         text: {
+          lineHeight: 1,
           padding: "5px 15px",
           color: "var(--mui-palette-tertiary-main)",
           "&:hover": {
@@ -34,11 +35,6 @@ export const muiComponents: ThemeOptions = {
             borderColor: "var(--mui-palette-tertiary-dark)",
             color: "var(--mui-palette-tertiary-dark)!important",
           },
-
-    /*       "&.Mui-disabled": {
-            color: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.5)",
-            borderColor: "rgba(var(--mui-palette-tertiary-mainChannel) / 0.5)",
-          }, */
         },
 
         contained: {
@@ -52,10 +48,6 @@ export const muiComponents: ThemeOptions = {
             boxShadow:
               "0px 1px 4px 0px rgba(var(--mui-palette-secondary-darkChannel) / 0.4)",
           },
-/*           "&.Mui-disabled": {
-            color: "var(--mui-palette-tertiary-main)",
-            backgroundColor: "var(--mui-palette-tertiary-light)",
-          }, */
         },
         sizeSmall: {
           fontSize: "1rem",
@@ -107,14 +99,11 @@ export const muiComponents: ThemeOptions = {
     MuiAvatar: {
       styleOverrides: {
         root: {
-          width: 32,
-          height: 32,
-          borderWidth: "2px",
-          borderStyle: "solid",
-          fontSize: "14px",
+          width: 28,
+          height: 28,
+          fontSize: "13px",
           color: "var(--mui-palette-common-white)",
           backgroundColor: "var(--mui-palette-primary-main)",
-          borderColor: "var(--mui-palette-tertiary-main)",
         },
         circular: {
           boxShadow:
@@ -175,6 +164,9 @@ export const muiComponents: ThemeOptions = {
       styleOverrides: {
         paper: {
           borderRadius: "8px",
+          marginTop: "2.5rem",
+          boxShadow:
+            "0px 0px 6px 0px rgba(var(--mui-palette-secondary-darkChannel) / 0.2)",
         },
       },
     },
@@ -185,7 +177,8 @@ export const muiComponents: ThemeOptions = {
           fontSize: ".875rem",
           padding: ".5rem 1.25rem",
           transition: "all 0.35s ease-in-out",
-
+          minWidth: "180px",
+          textDecoration: "none",
           "&:hover": {
             color: "var(--mui-palette-common-white)",
             ...theme.applyStyles("dark", {

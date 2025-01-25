@@ -15,7 +15,7 @@
 .left,
 .center,
 .right {
-  @apply flex items-center gap-6;
+  @apply flex items-center gap-4;
 }
 
 .center {
