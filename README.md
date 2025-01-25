@@ -1,4 +1,4 @@
-# Celeseon
+# Cellesseon
 
 _Smart chat assistant based on OpenAI._
 
