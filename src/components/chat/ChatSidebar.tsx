@@ -1,17 +1,24 @@
 import css from "@/styles/chat/ChatSidebar.module.css";
 import Logo from "../shared/Logo";
 import SidebarToggle from "../shared/SidebarToggle";
-import { useChatContext } from "@/context/ChatContext";
-import { Button, Typography } from "@mui/material";
 import Link from "next/link";
 import AvatarMenu from "../shared/AvatarMenu";
+import { useChatContext } from "@/context/ChatContext";
+import { Button, Typography } from "@mui/material";
+import { UserData } from "@/types/UserData.d";
+import PlanPromo from "../shared/PlanPromo";
 
 interface ChatSidebarProps {
+  userData: UserData | null;
   loading: boolean;
   newChat: () => void;
 }
 
-export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
+export default function ChatSidebar({
+  userData,
+  loading,
+  newChat,
+}: ChatSidebarProps) {
   const { sidebarCtx } = useChatContext();
 
   return (
@@ -51,6 +58,12 @@ export default function ChatSidebar({ loading, newChat }: ChatSidebarProps) {
           </Link>
         </div>
       </nav>
+
+      {userData && (
+        <div className="px-3 py-4">
+          <PlanPromo userPlan={userData.plan} />
+        </div>
+      )}
 
       <div className={css.bottom}>
         <AvatarMenu />

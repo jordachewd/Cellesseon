@@ -1,4 +1,5 @@
 "use client";
+import { useUser } from "@clerk/nextjs";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {
@@ -9,17 +10,29 @@ import {
   useEffect,
 } from "react";
 
-interface SidebarContextType {
+interface ChatProviderProps {
+  children: ReactNode;
+}
+
+interface UserCtx {
+  isSignedIn: boolean;
+}
+
+interface SidebarCtx {
   isSbOpen: boolean;
   toggleSidebar: () => void;
   setSidebarOpen: (isOpen: boolean) => void;
 }
 
 interface ChatContextType {
-  sidebarCtx: SidebarContextType;
+  userCtx: UserCtx;
+  sidebarCtx: SidebarCtx;
 }
 
 const defaultContextValue: ChatContextType = {
+  userCtx: {
+    isSignedIn: false, /* unused!!! */
+  },
   sidebarCtx: {
     isSbOpen: false,
     toggleSidebar: () => {},
@@ -29,22 +42,22 @@ const defaultContextValue: ChatContextType = {
 
 const ChatContext = createContext<ChatContextType>(defaultContextValue);
 
-interface ChatContextProviderProps {
-  children: ReactNode;
-}
-
-export function ChatContextProvider({ children }: ChatContextProviderProps) {
+export function ChatContextProvider({ children }: ChatProviderProps) {
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-  const [isSidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const { isSignedIn } = useUser();
+  const isLgScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    setSidebarOpen(isLargeScreen);
-  }, [isLargeScreen]);
+    setSidebarOpen(isLgScreen);
+  }, [isLgScreen]);
 
   const context: ChatContextType = {
+    userCtx: {
+      isSignedIn: isSignedIn || false,
+    },
     sidebarCtx: {
-      isSbOpen: isSidebarOpen,
+      isSbOpen: sidebarOpen,
       toggleSidebar: () => setSidebarOpen((prev) => !prev),
       setSidebarOpen,
     },

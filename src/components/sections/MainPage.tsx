@@ -1,8 +1,5 @@
 "use client";
 import css from "@/styles/sections/MainPage.module.css";
-import { Message } from "@/types";
-import { useState } from "react";
-import { useUser } from "@clerk/clerk-react";
 import Header from "@/components/layout/Header";
 import ChatIntro from "../chat/ChatIntro";
 import ChatSidebar from "../chat/ChatSidebar";
@@ -10,15 +7,31 @@ import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import AlertMessage, { AlertParams } from "../shared/AlertMessage";
 import getAiCompletition from "@/lib/utils/getAiCompletition";
-import SpinnerGrow from "../shared/SpinnerGrow";
+import { useEffect, useState } from "react";
+import { UserData } from "@/types/UserData.d";
+import { getUserById } from "@/lib/actions/user.actions";
+import { useUser } from "@clerk/nextjs";
+import { Message } from "@/types";
 
 export default function MainPage() {
+  const { user } = useUser();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
   const [startMsg, setStartMsg] = useState<string>("");
   const [chat, setChat] = useState<Message[]>([]);
+  const [userData, setUserData] = useState<UserData | null>(null);
 
-  const { isLoaded } = useUser();
+  const getUserData = async (userId: string) => {
+    if (!userId) return;
+    const userData: UserData = await getUserById(userId);
+    setUserData(userData);
+  };
+
+  useEffect(() => {
+    if (user) {
+      getUserData(user.id);
+    }
+  }, [user]);
 
   const sendMessage = async (prompt: Message) => {
     if (!prompt) return;
@@ -59,17 +72,13 @@ export default function MainPage() {
     setIsLoading(false);
   };
 
-  if (!isLoaded) {
-    return (
-      <div className={`${css.wrapper} justify-center`}>
-        <SpinnerGrow size="large" />
-      </div>
-    );
-  }
-
   return (
     <div className={css.wrapper}>
-      <ChatSidebar newChat={() => setChat([])} loading={isLoading} />
+      <ChatSidebar
+        userData={userData}
+        newChat={() => setChat([])}
+        loading={isLoading}
+      />
       <div className={css.section}>
         <Header />
         {alert && <AlertMessage message={alert} />}

@@ -7,35 +7,30 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import SpinnerGrow from "./SpinnerGrow";
 import { useState, MouseEvent } from "react";
 import { TooltipArrow } from "./TooltipArrow";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import getUserName, { stringAvatar } from "@/lib/utils/getUserName";
 
 export default function AvatarMenu() {
+  const { user } = useUser();
   const { signOut } = useClerk();
-  const { user, isLoaded } = useUser();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorElUser);
+
+  if (!user) return;
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
-
-  if (!isLoaded || !user) {
-    return (
-      <div className="flex">
-        <SpinnerGrow />
-      </div>
-    );
-  }
 
   const userName = getUserName({
     first_name: user?.firstName || "",
     last_name: user?.lastName || "",
     username: user?.username || "",
   });
+
+  const userRole = user?.publicMetadata?.role;
 
   return (
     <div className="flex">
@@ -72,6 +67,15 @@ export default function AvatarMenu() {
         open={Boolean(anchorElUser)}
         onClose={() => setAnchorElUser(null)}
       >
+        {userRole === "admin" && (
+          <Link href="/dashboard">
+            <MenuItem>
+              <i className="bi bi-speedometer2 mr-4"></i>
+              <span>Dashboard</span>
+            </MenuItem>
+          </Link>
+        )}
+
         <Link href="/plans">
           <MenuItem>
             <i className="bi bi-graph-up mr-4"></i>
@@ -83,13 +87,6 @@ export default function AvatarMenu() {
           <MenuItem>
             <i className="bi bi-person mr-4"></i>
             <span>Profile</span>
-          </MenuItem>
-        </Link>
-
-        <Link href="/settings">
-          <MenuItem>
-            <i className="bi bi-sliders2-vertical mr-4"></i>
-            <span>Settings</span>
           </MenuItem>
         </Link>
 
