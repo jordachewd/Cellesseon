@@ -19,7 +19,7 @@ export default function PlansPage() {
             <Faqs />
           </>
         ) : (
-          <div className="flex justify-center items-center h-96">
+          <div className="flex justify-center items-center h-dvh">
             <LoadingBubbles />
           </div>
         )}

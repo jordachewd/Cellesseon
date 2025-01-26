@@ -19,7 +19,7 @@ export default function ProfilePage() {
             <ProfileBilling userData={userData} />
           </>
         ) : (
-          <div className="flex justify-center items-center h-96">
+          <div className="flex justify-center items-center h-dvh">
             <LoadingBubbles />
           </div>
         )}
