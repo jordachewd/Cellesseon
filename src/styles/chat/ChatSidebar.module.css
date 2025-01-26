@@ -13,7 +13,7 @@
 }
 
 .navigation {
-  @apply flex flex-col px-3 py-6 mb-auto gap-8 lg:hidden;
+  @apply flex flex-col px-3 py-6 mb-auto gap-8;
 }
 
 .history {
@@ -21,5 +21,5 @@
 }
 
 .promo {
-  @apply flex p-3 lg:hidden;
+  @apply flex p-3;
 }

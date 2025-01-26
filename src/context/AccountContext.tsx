@@ -28,7 +28,6 @@ export function AccountContextProvider({
   children,
 }: AccountContextProviderProps) {
   const { user } = useUser();
-
   const [userData, setUserData] = useState<UserData | undefined>(undefined);
 
   const getUserData = async (userId: string) => {

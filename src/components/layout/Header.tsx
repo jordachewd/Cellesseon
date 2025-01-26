@@ -29,7 +29,7 @@ export default function Header({ isSignedIn = false }: HeaderProps) {
     <section className={`${css.section} ${scrolled && css.scrolled}`}>
       <div className={css.content}>
         <div className={css.left}>
-          <LogoV2 />
+          {!isSignedIn && <LogoV2 />}
           {isSignedIn && (
             <TooltipArrow
               title="New Task"

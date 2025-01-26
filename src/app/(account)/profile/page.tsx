@@ -11,7 +11,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <Header />
+      <Header isSignedIn />
       <InnerPage>
         {userData ? (
           <>

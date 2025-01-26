@@ -1,7 +1,0 @@
-.wrapper {
-  @apply flex w-full h-dvh m-0 p-0 z-10 transition-all duration-300 relative shadow;
-}
-
-.section {
-  @apply flex flex-col flex-1 h-full relative z-0;
-}

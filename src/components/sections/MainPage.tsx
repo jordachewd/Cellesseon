@@ -1,5 +1,5 @@
 "use client";
-import css from "@/styles/sections/MainPage.module.css";
+import css from "@/styles/layout/PageWrapper.module.css";
 import Header from "@/components/layout/Header";
 import ChatIntro from "../chat/ChatIntro";
 import ChatSidebar from "../chat/ChatSidebar";
@@ -7,31 +7,19 @@ import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import AlertMessage, { AlertParams } from "../shared/AlertMessage";
 import getAiCompletition from "@/lib/utils/getAiCompletition";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { UserData } from "@/types/UserData.d";
-import { getUserById } from "@/lib/actions/user.actions";
-import { useUser } from "@clerk/nextjs";
 import { Message } from "@/types";
 
-export default function MainPage() {
-  const { user } = useUser();
+interface MainPageProps {
+  userData: UserData;
+}
+
+export default function MainPage({ userData }: MainPageProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
   const [startMsg, setStartMsg] = useState<string>("");
   const [chat, setChat] = useState<Message[]>([]);
-  const [userData, setUserData] = useState<UserData | null>(null);
-
-  const getUserData = async (userId: string) => {
-    if (!userId) return;
-    const userData: UserData = await getUserById(userId);
-    setUserData(userData);
-  };
-
-  useEffect(() => {
-    if (user) {
-      getUserData(user.id);
-    }
-  }, [user]);
 
   const sendMessage = async (prompt: Message) => {
     if (!prompt) return;

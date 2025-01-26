@@ -1,32 +1,44 @@
-import type { Metadata, Viewport } from "next";
-import { SignedIn, SignedOut } from "@clerk/nextjs";
-import PageWrapper from "@/components/layout/PageWrapper";
+"use client";
+import { SignedIn, SignedOut, useUser } from "@clerk/nextjs";
+import MainWrapper from "@/components/layout/MainWrapper";
 import LandingPage from "@/components/sections/LandingPage";
 import MainPage from "@/components/sections/MainPage";
+import { getUserById } from "@/lib/actions/user.actions";
+import { UserData } from "@/types/UserData.d";
+import { useState, useEffect } from "react";
+import LoadingBubbles from "@/components/shared/LoadingBubbles";
 
-export const metadata: Metadata = {
-  title: "Cellesseon",
-  description: "Cellesseon Smart Assistent",
-};
+export default function Home() {
+  const { user } = useUser();
+  const [userData, setUserData] = useState<UserData | undefined>(undefined);
 
-export const viewport: Viewport = {
-  width: "device-width",
-  height: "device-height",
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-};
+  const getUserData = async (userId: string) => {
+    if (!userId) return;
+    const userData: UserData = await getUserById(userId);
+    setUserData(userData);
+  };
 
-export default async function Home() {
+  useEffect(() => {
+    if (user) {
+      getUserData(user.id);
+    }
+  }, [user]);
+
   return (
-    <PageWrapper>
+    <MainWrapper>
       <SignedOut>
         <LandingPage />
       </SignedOut>
 
       <SignedIn>
-        <MainPage />
+        {userData ? (
+          <MainPage userData={userData} />
+        ) : (
+          <div className="flex justify-center items-center h-dvh">
+            <LoadingBubbles />
+          </div>
+        )}
       </SignedIn>
-    </PageWrapper>
+    </MainWrapper>
   );
 }

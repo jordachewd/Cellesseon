@@ -5,11 +5,12 @@ import PlanPromo from "@/components/shared/PlanPromo";
 import { Typography } from "@mui/material";
 import { UserData } from "@/types/UserData.d";
 import Logo from "../shared/Logo";
- 
+
 import { useState } from "react";
+import LogoV2 from "../shared/LogoV2";
 
 interface ChatSidebarProps {
-  userData: UserData | null;
+  userData: UserData | undefined;
 }
 
 export default function ChatSidebar({ userData }: ChatSidebarProps) {
@@ -19,7 +20,7 @@ export default function ChatSidebar({ userData }: ChatSidebarProps) {
     <aside className={`${css.wrapper} ${!isOpen && css.isOpen}`}>
       <div className={css.topbar}>
         <Logo symbol />
-        
+        <LogoV2 className={isOpen ? "hidden" : ""} />
       </div>
 
       <nav className={css.navigation}>

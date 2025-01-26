@@ -3,14 +3,6 @@
   @apply pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
 }
 
-.wrapper {
-  @apply flex w-full h-dvh m-0 p-0 z-10 transition-all duration-300 relative shadow;
-}
-
-.section {
-  @apply flex flex-col flex-1 h-full relative z-0;
-}
-
 .background {
   @apply bg-lightPrimary-500/50 dark:bg-darkPrimary-500/50;
   @apply absolute flex inset-0 h-full w-full z-[1] bg-[length:16px_16px];
