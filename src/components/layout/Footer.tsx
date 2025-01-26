@@ -1,6 +1,8 @@
 "use client";
 import css from "@/styles/layout/Footer.module.css";
 import { useColorScheme } from "@mui/material/styles";
+import lightLogo from "../../../public/images/jwd_light.png";
+import darkLogo from "../../..//public/images/jwd_dark.png";
 import Image from "next/image";
 
 export default function Footer() {
@@ -11,14 +13,12 @@ export default function Footer() {
         <div className={css.left}>
           <div className="flex border-r dark:border-white/10 border-black/25 pr-4">
             <Image
-              src={`/images/${
-                mode !== "dark" ? "jwd_dark.png" : "jwd_light.png"
-              }`}
+              src={mode !== "dark" ? darkLogo : lightLogo}
               alt="JWD"
               width={32}
               height={32}
-              priority
               className="z-10"
+              priority
             />
           </div>
 

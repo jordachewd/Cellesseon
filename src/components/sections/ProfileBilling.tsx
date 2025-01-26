@@ -6,14 +6,29 @@ import { Transaction } from "@/types/TransactionData.d";
 import { TooltipArrow } from "../shared/TooltipArrow";
 import { UserData } from "@/types/UserData.d";
 import { generateString } from "@/lib/utils/generateString";
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
 
 interface BillingProps {
   userData: UserData;
 }
 
-export default async function ProfileBilling({ userData }: BillingProps) {
+export default function ProfileBilling({ userData }: BillingProps) {
+  const { user } = useUser();
   const { stripeId } = userData.plan;
-  const txns: Transaction[] = await getAllTransactions(userData.clerkId);
+  const [txns, setTxns] = useState<Transaction[]>([]);
+
+  const getTransactions = async (userId: string) => {
+    if (!userId) return;
+    const txns: Transaction[] = await getAllTransactions(userId);
+    setTxns(txns);
+  };
+
+  useEffect(() => {
+    if (user) {
+      getTransactions(user.id);
+    }
+  }, [user]);
 
   return (
     <section className={css.section}>

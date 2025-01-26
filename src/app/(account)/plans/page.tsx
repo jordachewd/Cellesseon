@@ -1,26 +1,18 @@
+"use client";
 import Faqs from "@/components/sections/Faqs";
 import Plans from "@/components/sections/Plans";
-import InnerPage from "@/components/layout/InnerPage";
 import Header from "@/components/layout/Header";
-import LoadingPage from "@/components/shared/LoadingPage";
-import { UserData } from "@/types/UserData.d";
-import { getUserById } from "@/lib/actions/user.actions";
-import { auth } from "@clerk/nextjs/server";
+import InnerPage from "@/components/layout/InnerPage";
+import { useAccountContext } from "@/context/AccountContext";
 
-export default async function PlansPage() {
-  const { userId } = await auth();
-
-  if (!userId) {
-    return <LoadingPage />;
-  }
-
-  const userData: UserData = await getUserById(userId);
+export default function PlansPage() {
+  const { userData } = useAccountContext();
 
   return (
     <>
       <Header />
       <InnerPage>
-        <Plans userData={userData} />
+        <Plans userData={userData} hasLoader />
         <Faqs />
       </InnerPage>
     </>

@@ -1,4 +1,4 @@
-import css from "@/styles/layout/PageWrapper.module.css";
+import css from "@/styles/layout/PageWrapper.module.css"; 
 import { ReactNode } from "react";
 
 interface PageWrapperProps {

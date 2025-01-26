@@ -6,19 +6,19 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Plan } from "@/types/PlanData.d";
 import { UserData } from "@/types/UserData.d";
-
 import PageHead from "../layout/PageHead";
 import PlanCard from "@/components/shared/PlanCard";
+import LoadingBubbles from "../shared/LoadingBubbles";
 
 interface PlansProps {
   userData?: UserData;
+  hasLoader?: boolean;
 }
 
-export default function Plans({ userData }: PlansProps) {
+export default function Plans({ userData, hasLoader = false }: PlansProps) {
   const save = 0.4; // Save 40% on Yearly plans
-  const [yearly, setYearly] = useState<boolean>(false);
-
   const { isSignedIn } = useUser();
+  const [yearly, setYearly] = useState<boolean>(false);
   const billing = userData?.plan?.billing;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -30,6 +30,16 @@ export default function Plans({ userData }: PlansProps) {
     setYearly(setBilling);
   }, [billing]);
 
+  const cssMonthly = !yearly ? css.switched : "";
+  const cssYearly = yearly ? css.switched : "";
+
+  if (hasLoader && !userData)
+    return (
+      <div className={css.loader}>
+        <LoadingBubbles />
+      </div>
+    );
+
   return (
     <section className={css.section}>
       <PageHead
@@ -37,13 +47,13 @@ export default function Plans({ userData }: PlansProps) {
         subtitle="Select the plan that suits your needs!"
       >
         <div className={css.switch}>
-          <p className={`${!yearly && css.switched}`}>Monthly</p>
+          <p className={cssMonthly}>Monthly</p>
           <Switch
             checked={yearly}
             onChange={handleChange}
             inputProps={{ "aria-label": "controlled" }}
           />
-          <p className={`${yearly && css.switched}`}>Yearly</p>
+          <p className={cssYearly}>Yearly</p>
           <span className={css.bubble}>Save {save * 100}%</span>
         </div>
       </PageHead>
