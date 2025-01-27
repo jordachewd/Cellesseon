@@ -1,7 +1,7 @@
 import Link from "next/link";
 import css from "@/styles/chat/ChatSidebar.module.css";
 import SidebarToggle from "../shared/SidebarToggle";
-import PlanPromo from "@/components/shared/PlanPromo";
+//import PlanPromo from "@/components/shared/PlanPromo";
 import { Typography } from "@mui/material";
 import { UserData } from "@/types/UserData.d";
 import Logo from "../shared/Logo";
