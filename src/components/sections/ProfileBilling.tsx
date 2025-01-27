@@ -1,42 +1,23 @@
 import css from "@/styles/sections/ProfileBilling.module.css";
 import getFormattedDate from "@/lib/utils/getFormattedDate";
 import { Typography } from "@mui/material";
-import { getAllTransactions } from "@/lib/actions/transaction.action";
 import { Transaction } from "@/types/TransactionData.d";
 import { TooltipArrow } from "../shared/TooltipArrow";
-import { UserData } from "@/types/UserData.d";
 import { generateString } from "@/lib/utils/generateString";
-import { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
 
 interface BillingProps {
-  userData: UserData;
+  stripeId: string | undefined;
+  userTxns: Transaction[] | undefined;
 }
 
-export default function ProfileBilling({ userData }: BillingProps) {
-  const { user } = useUser();
-  const { stripeId } = userData.plan;
-  const [txns, setTxns] = useState<Transaction[]>([]);
-
-  const getTransactions = async (userId: string) => {
-    if (!userId) return;
-    const txns: Transaction[] = await getAllTransactions(userId);
-    setTxns(txns);
-  };
-
-  useEffect(() => {
-    if (user) {
-      getTransactions(user.id);
-    }
-  }, [user]);
-
+export default function ProfileBilling({ stripeId, userTxns }: BillingProps) {
   return (
     <section className={css.section}>
       <div className={css.head}>
         <Typography variant="h4">Billing History</Typography>
       </div>
 
-      {txns.length > 0 ? (
+      {userTxns && userTxns.length > 0 ? (
         <div className={css.table}>
           <div className={css.tableHead}>
             <p className="flex-1">Plan</p>
@@ -49,7 +30,7 @@ export default function ProfileBilling({ userData }: BillingProps) {
             </TooltipArrow>
           </div>
 
-          {txns.map((txn) => {
+          {userTxns.map((txn) => {
             const payCycle = txn.billing === "Monthly" ? "Mo" : "Yr";
             const txnStatus = txn.stripeId === stripeId ? "Active" : "Inactive";
             const txnColor =

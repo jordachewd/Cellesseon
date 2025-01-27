@@ -5,6 +5,13 @@ import { connectToDatabase } from "../database/mongoose";
 import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
 import { handleError } from "../utils/handleError";
 
+export interface UserActionsErrors {
+  source: string;
+  message: string;
+  payLoad?: string;
+  status: "Success" | "Error";
+}
+
 // CREATE USER
 export async function createUser(user: CreateUserParams) {
   try {
@@ -12,9 +19,19 @@ export async function createUser(user: CreateUserParams) {
 
     const newUser = await User.create(user);
 
+    if (!newUser) {
+      return JSON.parse(
+        JSON.stringify({
+          message: "User creation failed!",
+          status: "Error",
+          source: "createUser",
+        } as UserActionsErrors)
+      );
+    }
+
     return JSON.parse(JSON.stringify(newUser));
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "createUser" });
   }
 }
 
@@ -29,8 +46,15 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
       upsert: true,
     });
 
-    if (!updatedUser)
-      throw new Error("User update failed. Check: 'user.action'.");
+    if (!updatedUser) {
+      return JSON.parse(
+        JSON.stringify({
+          message: "User update failed!",
+          status: "Error",
+          source: "updateUser",
+        } as UserActionsErrors)
+      );
+    }
 
     return JSON.parse(
       JSON.stringify({
@@ -53,7 +77,13 @@ export async function deleteUser(clerkId: string) {
     const userToDelete = await User.findOne({ clerkId });
 
     if (!userToDelete) {
-      throw new Error("User not found");
+      return JSON.parse(
+        JSON.stringify({
+          message: "User does not exist!",
+          status: "Error",
+          source: "deleteUser",
+        } as UserActionsErrors)
+      );
     }
 
     // Delete user
@@ -62,7 +92,7 @@ export async function deleteUser(clerkId: string) {
 
     return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "deleteUser" });
   }
 }
 
@@ -73,11 +103,20 @@ export async function getUserById(userId: string) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    if (!user) throw new Error("User not found");
+    if (!user) {
+      return JSON.parse(
+        JSON.stringify({
+          message: "User does not exist!",
+          status: "Error",
+          source: "getUserById",
+          payLoad: userId,
+        } as UserActionsErrors)
+      );
+    }
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "getUserById" });
   }
 }
 
@@ -89,12 +128,19 @@ export async function getUserBySlug(slug: string) {
     const user = await User.findOne({ username: slug });
 
     if (!user) {
-      throw new Error("User not found");
+      return JSON.parse(
+        JSON.stringify({
+          message: "User does not exist!",
+          status: "Error",
+          source: "getUserBySlug",
+          payLoad: slug,
+        } as UserActionsErrors)
+      );
     }
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "getUserBySlug" });
   }
 }
 
@@ -105,10 +151,18 @@ export async function getAllUsers() {
 
     const users = await User.find({});
 
-    if (!users || users.length === 0) throw new Error("No users found");
+    if (!users || users.length === 0) {
+      return JSON.parse(
+        JSON.stringify({
+          message: "No users found!",
+          status: "Error",
+          source: "getAllUsers",
+        } as UserActionsErrors)
+      );
+    }
 
     return JSON.parse(JSON.stringify(users));
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "getAllUsers" });
   }
 }

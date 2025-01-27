@@ -78,7 +78,7 @@ export async function createTransaction(transaction: CreateTransactionParams) {
 
     return JSON.parse(JSON.stringify(newTransaction));
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "createTransaction" });
   }
 }
 
@@ -94,7 +94,7 @@ export async function getAllTransactions(userId: string) {
 
     return JSON.parse(JSON.stringify(transactions));
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "getAllTransactions" });
   }
 }
 
@@ -106,6 +106,6 @@ export async function deleteAllTransactions(userId: string) {
 
     return { message: "All transactions deleted successfully" };
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "deleteAllTransactions" });
   }
 }

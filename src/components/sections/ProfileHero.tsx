@@ -12,7 +12,7 @@ interface HeroProps {
 }
 
 export default function ProfileHero({ userData }: HeroProps) {
-  const { username, firstName, lastName } = userData;
+  const { username, firstName, lastName, email, registerAt, updatedAt, plan } = userData;
 
   const fullName = getFullName({
     firstName: firstName || "",
@@ -34,7 +34,7 @@ export default function ProfileHero({ userData }: HeroProps) {
           />
           <div className={css.heroImgContent}>
             <Typography variant="h4">{fullName}</Typography>
-            <Typography variant="body1">{userData.email}</Typography>
+            <Typography variant="body1">{email}</Typography>
           </div>
         </div>
 
@@ -42,7 +42,7 @@ export default function ProfileHero({ userData }: HeroProps) {
           <div className="flex gap-2 items-center">
             <span className="font-semibold leading-none">Member since:</span>
             <span className="text-xxs leading-none">
-              {getFormattedDate(userData.registerAt)}
+              {getFormattedDate(registerAt)}
             </span>
           </div>
 
@@ -50,19 +50,19 @@ export default function ProfileHero({ userData }: HeroProps) {
             <div className="flex gap-2 items-center">
               <span className="font-semibold leading-none">Last update:</span>
               <span className="text-xxs leading-none">
-                {getFormattedDate(userData.updatedAt)}
+                {getFormattedDate(updatedAt as Date)}
               </span>
             </div>
           )}
 
           <div className="flex gap-2 items-center">
             <span className="font-semibold leading-none">Plan expires in:</span>
-            <PlanCountDown endDate={userData.plan.expiresOn} wrapped />
+            <PlanCountDown endDate={plan.expiresOn} wrapped />
           </div>
         </div>
 
         <div className={css.heroPlan}>
-          <PlanPromo userPlan={userData.plan} />
+          <PlanPromo userPlan={plan} />
         </div>
       </div>
     </section>

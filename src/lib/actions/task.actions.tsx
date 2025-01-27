@@ -12,7 +12,7 @@ export async function createTask(task: CreateTaskParams) {
     const newTask = await Tasks.create(task);
     return JSON.parse(JSON.stringify(newTask));
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "connectToDatabase" });
   }
 }
 
@@ -26,7 +26,7 @@ export async function getTaskById(taskId: number) {
 
     return JSON.parse(JSON.stringify(task));
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "getTaskById" });
   }
 }
 
@@ -43,7 +43,7 @@ export async function updateTask(taskId: number, task: UpdateTaskParams) {
 
     return JSON.parse(JSON.stringify(updatedTask));
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "updateTask" });
   }
 }
 
@@ -63,6 +63,6 @@ export async function deleteTask(taskId: number) {
 
     return deletedTask ? JSON.parse(JSON.stringify(deletedTask)) : null;
   } catch (error) {
-    handleError(error);
+    handleError({ error, source: "deleteTask" });
   }
 }
