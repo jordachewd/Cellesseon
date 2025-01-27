@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { Button, IconButton } from "@mui/material";
 import { TooltipArrow } from "../shared/TooltipArrow";
 import ToggleTheme from "@/components/shared/ToggleTheme";
-import AvatarMenu from "@/components/shared/AvatarMenu";
+/* import AvatarMenu from "@/components/shared/AvatarMenu"; */
 import LogoV2 from "../shared/LogoV2";
+import { UserButton } from "@clerk/nextjs";
 
 interface HeaderProps {
   isSignedIn?: boolean;
@@ -56,7 +57,8 @@ export default function Header({ isSignedIn = false }: HeaderProps) {
           )}
 
           <ToggleTheme />
-          <AvatarMenu />
+      {/*     <AvatarMenu /> */}
+          <UserButton signInUrl="/" />
         </div>
       </div>
     </section>

@@ -21,6 +21,8 @@ export default async function ProfilePage() {
 
   const stripeId = userData?.plan.stripeId;
 
+  console.log("ProfilePage userData:", userData);
+
   return (
     <>
       <Header isSignedIn />
