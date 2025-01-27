@@ -16,6 +16,8 @@ interface ChatSidebarProps {
 export default function ChatSidebar({ userData }: ChatSidebarProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  console.log("ChatSidebar userData:", userData);
+
   return (
     <aside className={`${css.wrapper} ${!isOpen && css.isOpen}`}>
       <div className={css.topbar}>
@@ -51,11 +53,11 @@ export default function ChatSidebar({ userData }: ChatSidebarProps) {
         />
       </div>
 
-      {userData && (
+{/*       {userData && (
         <div className={css.promo}>
           <PlanPromo userPlan={userData.plan} />
         </div>
-      )}
+      )} */}
     </aside>
   );
 }
