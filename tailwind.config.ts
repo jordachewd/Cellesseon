@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import tailwindcssAnimated from "tailwindcss-animated";
 
 const config: Config = {
-  darkMode: ["class", '[data-celeseon-theme="dark"]'],
+  darkMode: ["class", '[data-cellesseon-theme="dark"]'],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",

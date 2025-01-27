@@ -3,9 +3,21 @@ import { PrefersColorScheme } from "@/types";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import { TooltipArrow } from "./TooltipArrow";
+import { useEffect } from "react";
 
 export default function ToggleTheme() {
   const { mode, setMode } = useColorScheme();
+
+  useEffect(() => {
+    const defaultMode = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    if (defaultMode) {
+      setMode("dark" as PrefersColorScheme);
+    } else {
+      setMode("light" as PrefersColorScheme);
+    }
+  }, [setMode]);
 
   return (
     <ButtonGroup aria-label="theme-toggle">
