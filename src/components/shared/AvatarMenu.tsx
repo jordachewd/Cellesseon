@@ -30,8 +30,8 @@ export default function AvatarMenu() {
     setAnchorElUser(null);
   };
 
-  const handleSignOut = () => {
-    signOut({ redirectUrl: "/" });
+  const handleSignOut = async () => {
+    await signOut({ redirectUrl: "/" });
   };
 
   return (

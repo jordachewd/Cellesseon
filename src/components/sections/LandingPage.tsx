@@ -5,8 +5,6 @@ import Header from "../layout/Header";
 import Faqs from "./Faqs";
 import Image from "next/image";
 import Footer from "../layout/Footer";
-import LoadingBubbles from "../shared/LoadingBubbles";
-import { Suspense } from "react";
 
 export default function LandingPage() {
   return (
@@ -36,16 +34,14 @@ export default function LandingPage() {
             </div>
 
             <div className={css.heroRight}>
-              <Suspense fallback={<LoadingBubbles />}>
-                <Image
-                  src="/images/lp-hero-image.png"
-                  alt="hero"
-                  width={700}
-                  height={700}
-                  priority
-                  className="z-10"
-                />
-              </Suspense>
+              <Image
+                src="/images/lp-hero-image.png"
+                alt="hero"
+                width={700}
+                height={700}
+                priority
+                className="z-10"
+              />
 
               <div className={css.heroShadow}>&nbsp;</div>
             </div>
