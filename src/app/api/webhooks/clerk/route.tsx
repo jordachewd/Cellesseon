@@ -122,5 +122,5 @@ export async function POST(req: Request) {
     });
   }
 
-  return new Response("Celeseon | Clerk Webhook Response", { status: 200 });
+  return new Response("Cellesseon | Clerk Webhook Response", { status: 200 });
 }

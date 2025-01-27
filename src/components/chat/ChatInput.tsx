@@ -94,7 +94,7 @@ export default function ChatInput({
             value={prompt}
             disabled={loading}
             className="mb-[0.55rem] !pb-0"
-            placeholder="Ask Celeseon..."
+            placeholder="Ask Cellesseon..."
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
@@ -156,7 +156,7 @@ export default function ChatInput({
         </div>
       </div>
       <div className={css.disclaimer}>
-        Celeseon can make mistakes. So double-check it.
+        Cellesseon can make mistakes. So double-check it.
       </div>
     </section>
   );

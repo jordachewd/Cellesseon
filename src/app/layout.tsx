@@ -40,7 +40,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body>
           <AppRouterCacheProvider>
-            <InitColorSchemeScript attribute="data-celeseon-theme" />
+            <InitColorSchemeScript attribute="data-cellesseon-theme" />
             <ThemeProvider theme={muiTheme}>
               <CssBaseline />
               {children}

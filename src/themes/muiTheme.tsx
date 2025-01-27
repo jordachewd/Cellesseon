@@ -6,7 +6,7 @@ import { muiPaletteLight } from "./muiPaletteLight";
 
 const muiTheme = createTheme({
   cssVariables: {
-    colorSchemeSelector: "data-celeseon-theme",
+    colorSchemeSelector: "data-cellesseon-theme",
   },
   colorSchemes: {
     light: muiPaletteLight,

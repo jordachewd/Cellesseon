@@ -1,9 +1,9 @@
 export const faqs = [
   {
     id: 0,
-    question: "How does Celeseon ensure the security of my personal information?",
+    question: "How does Cellesseon ensure the security of my personal information?",
     answer:
-      "Celeseon prioritizes the protection of your personal information. " +
+      "Cellesseon prioritizes the protection of your personal information. " +
       "We implement advanced security protocols to safeguard your data. " +
       "For comprehensive details, please review our Privacy Policy.",
   },
@@ -18,19 +18,19 @@ export const faqs = [
     question: "What is the process to cancel my subscription?",
     answer:
       "You can cancel your subscription anytime through your account settings. " +
-      "For further information, please refer to Celeseon's Refund Policy.",
+      "For further information, please refer to Cellesseon's Refund Policy.",
   },
   {
     id: 3,
-    question: "What subscription plans does Celeseon offer?",
+    question: "What subscription plans does Cellesseon offer?",
     answer:
-      "Celeseon provides various subscription plans to meet your requirements. " +
+      "Cellesseon provides various subscription plans to meet your requirements. " +
       "You can opt for either monthly or yearly plans based on your preference.",
   },
   {
     id: 4,
-    question: "Is it possible to use Celeseon on multiple devices at the same time?",
-    answer: "Yes, Celeseon can be accessed on multiple devices simultaneously.",
+    question: "Is it possible to use Cellesseon on multiple devices at the same time?",
+    answer: "Yes, Cellesseon can be accessed on multiple devices simultaneously.",
   },
   {
     id: 5,
@@ -40,9 +40,9 @@ export const faqs = [
   },
   {
     id: 6,
-    question: "Does Celeseon offer a free trial?",
+    question: "Does Cellesseon offer a free trial?",
     answer:
-      "Yes, Celeseon offers a free trial period for new users. " +
+      "Yes, Cellesseon offers a free trial period for new users. " +
       "You can sign up and explore the features before committing to a subscription plan.",
   },
 ];
