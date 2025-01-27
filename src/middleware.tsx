@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextRequest, NextResponse, NextFetchEvent } from "next/server";
 
 const isPublicRoute = createRouteMatcher([
   "/",
@@ -8,17 +9,32 @@ const isPublicRoute = createRouteMatcher([
   "/api/webhooks/clerk",
 ]);
 
-export default clerkMiddleware(async (auth, request) => {
+/* export default clerkMiddleware(async (auth, request) => {
   if (!isPublicRoute(request)) {
     await auth.protect();
   }
+}); */
 
-  /*   const { userId, redirectToSignIn } = await auth();
+export default async function middleware(request: NextRequest) {
+  console.log("\u001b[1;32m" + request.url + "\u001b[0m");
 
-  if (!userId && !isPublicRoute(request)) {
-    return redirectToSignIn();
-  } */
-});
+  try {
+    const response = await clerkMiddleware(async (auth, request) => {
+      if (!isPublicRoute(request)) {
+        await auth.protect();
+      }
+    })(request, {} as NextFetchEvent);
+
+    if (!response) {
+      throw new TypeError("Expected an instance of Response to be returned");
+    }
+
+    return response;
+  } catch (error) {
+    console.log("\u001b[1;31m" + error + "\u001b[0m");
+    return NextResponse.redirect("/error");
+  }
+}
 
 export const config = {
   matcher: [
