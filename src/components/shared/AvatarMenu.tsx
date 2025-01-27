@@ -1,3 +1,4 @@
+'use client';
 import { IconButton, Avatar, Menu, MenuItem, Divider } from "@mui/material";
 import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
 import { useState, MouseEvent } from "react";
@@ -23,6 +24,14 @@ export default function AvatarMenu() {
 
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleSignOut = () => {
+    signOut({ redirectUrl: "/" });
   };
 
   return (
@@ -56,7 +65,7 @@ export default function AvatarMenu() {
           horizontal: "left",
         }}
         open={Boolean(anchorElUser)}
-        onClose={() => setAnchorElUser(null)}
+        onClose={handleCloseUserMenu}
       >
         {publicMetadata.role === "admin" && (
           <Link href="/dashboard">
@@ -83,7 +92,7 @@ export default function AvatarMenu() {
 
         <Divider />
 
-        <MenuItem onClick={() => signOut({ redirectUrl: "/" })}>
+        <MenuItem onClick={handleSignOut}>
           <i className="bi bi-box-arrow-right mr-4"></i>
           Logout
         </MenuItem>
