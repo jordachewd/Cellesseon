@@ -4,16 +4,14 @@ import { useState, MouseEvent } from "react";
 import { TooltipArrow } from "./TooltipArrow";
 import { useClerk, useUser } from "@clerk/clerk-react";
 import Link from "next/link";
-import LoadingBubbles from "./LoadingBubbles";
 
 export default function AvatarMenu() {
-  const { user, isLoaded } = useUser();
+  const { user } = useUser();
   const { signOut } = useClerk();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorElUser);
 
   if (!user) return null;
-  if (!isLoaded) return <LoadingBubbles size="small" />;
 
   const { username, firstName, lastName, publicMetadata, imageUrl } = user;
   const fullName = getFullName({
@@ -25,8 +23,6 @@ export default function AvatarMenu() {
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
-
-  if (!isLoaded) return <LoadingBubbles size="small" />;
 
   return (
     <div className="flex">

@@ -8,6 +8,7 @@ import { getUserById } from "@/lib/actions/user.actions";
 import { Transaction } from "@/types/TransactionData.d";
 import { UserData } from "@/types/UserData.d";
 import { auth } from "@clerk/nextjs/server";
+import { Suspense } from "react";
 
 export default async function ProfilePage() {
   const { userId } = await auth();
@@ -26,10 +27,10 @@ export default async function ProfilePage() {
       <Header isSignedIn />
       <InnerPage>
         {userData ? (
-          <>
+          <Suspense fallback={<LoadingBubbles />}>
             <ProfileHero userData={userData} />
             <ProfileBilling stripeId={stripeId} userTxns={userTxns} />
-          </>
+          </Suspense>
         ) : (
           <div className="flex justify-center items-center h-dvh">
             <LoadingBubbles />

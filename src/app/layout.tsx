@@ -1,15 +1,12 @@
-"use client";
 import { ClerkProvider } from "@clerk/nextjs";
-// import type { Metadata, Viewport } from "next";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
-import CssBaseline from "@mui/material/CssBaseline";
-import { ThemeProvider } from "@mui/material/styles";
-import muiTheme from "@/themes/muiTheme";
+import CellesseonTheme from "@/components/layout/CellesseonTheme";
+import type { Metadata, Viewport } from "next";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "@/app/globals.css";
 
-/* export const metadata: Metadata = {
+export const metadata: Metadata = {
   title: "Cellesseon",
   description: "Cellesseon Smart Assistent",
 };
@@ -21,7 +18,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-}; */
+};
 
 export default function RootLayout({
   children,
@@ -41,10 +38,7 @@ export default function RootLayout({
         <body>
           <AppRouterCacheProvider>
             <InitColorSchemeScript attribute="data-cellesseon-theme" />
-            <ThemeProvider theme={muiTheme}>
-              <CssBaseline />
-              {children}
-            </ThemeProvider>
+            <CellesseonTheme>{children}</CellesseonTheme>
           </AppRouterCacheProvider>
         </body>
       </html>
