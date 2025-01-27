@@ -6,7 +6,7 @@
 }
 
 .hero {
-  @apply flex w-full justify-between items-center pt-[60px] px-8 lg:px-10;
+  @apply flex w-full justify-between items-center pt-[60px];
   @apply bg-white/50 dark:bg-darkPrimary-900/50 shadow-sm;
 }
 
@@ -21,11 +21,12 @@
 }
 
 .heroLeft {
-  @apply flex-col gap-12 items-center lg:items-start text-center lg:text-left;
+  @apply flex-col gap-12 items-center lg:items-start text-center lg:text-left px-8;
 }
 
 .heroRight {
-  @apply relative overflow-hidden self-end;
+  @apply relative overflow-hidden self-end flex justify-center;
+  @apply sm:min-h-[500px] xl:min-h-[600px] xxl:min-h-[700px];
 }
 
 .heroShadow {

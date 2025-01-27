@@ -184,7 +184,15 @@ const config: Config = {
       },
 
       screens: {
-        "2xl": "1440px",
+        /*    
+        Tailwind default breakpoints
+        sm:	"640px"	,
+        md:	"768px"	,
+        lg:	"1024px",	
+        xl:	"1280px", 
+        */
+        xxl: "1440px",
+        /*     "2xl":	"1536px", // default */
         "3xl": "1600px",
       },
 
