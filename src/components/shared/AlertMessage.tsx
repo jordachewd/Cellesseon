@@ -11,8 +11,8 @@ import {
 import { useEffect, useState } from "react";
 
 export interface AlertParams {
-  title?: string;
-  text: string;
+  title: string;
+  text?: string;
   severity?: "info" | "error" | "success" | "warning";
   variant?: "filled" | "outlined";
 }
@@ -26,7 +26,7 @@ function SlideTransition(props: SlideProps) {
 }
 
 export default function AlertMessage({ message }: AlertMessageProps) {
-  const { title, text, severity = "error", variant = "filled" } = message;
+  const { title, text = "", severity = "error", variant = "filled" } = message;
   const [openAlert, setOpenAlert] = useState(false);
 
   const handleClose = (

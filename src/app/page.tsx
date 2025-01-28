@@ -11,13 +11,20 @@ import ChatWrapper from "@/components/chat/ChatWrapper";
 import AlertMessage from "@/components/shared/AlertMessage";
 
 export default async function Home() {
-  const { userId } = await auth();
-
+  let userId;
   let userData: UserData | undefined = undefined;
+  let error: string | null = null;
 
-  if (userId) {
-    const getUserData = await getUserById(userId);
-    userData = getUserData.user;
+  try {
+    const authResult = await auth();
+    userId = authResult.userId;
+
+    if (userId) {
+      const getUserData = await getUserById(userId);
+      userData = getUserData.user;
+    }
+  } catch (err) {
+    error = String(err);
   }
 
   return (
@@ -29,20 +36,20 @@ export default async function Home() {
       </SignedOut>
 
       <SignedIn>
-        {userId && userData ? (
-          <ChatWrapper userData={userData} />
-        ) : !userData ? (
+        {error ? (
           <>
             <AlertMessage
               message={{
-                title: "Error getting user data!",
-                text: `User does not exist!`,
+                title: error,
+                text: "Please try again later.",
               }}
             />
-            <div className="flex justify-center items-center h-dvh z-10 text-2xl" >
+            <div className="flex justify-center items-center h-dvh z-10 text-2xl">
               <SignOutButton />
             </div>
           </>
+        ) : userId && userData ? (
+          <ChatWrapper userData={userData} />
         ) : (
           <LoadingBubbles wrapped />
         )}
