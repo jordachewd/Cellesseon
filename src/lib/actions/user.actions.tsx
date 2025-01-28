@@ -5,13 +5,6 @@ import { connectToDatabase } from "../database/mongoose";
 import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
 import { handleError } from "../utils/handleError";
 
-export interface UserActionsErrors {
-  source: string;
-  message: string;
-  payLoad?: string;
-  status: "Success" | "Error";
-}
-
 // CREATE USER
 export async function createUser(user: CreateUserParams) {
   try {
@@ -25,7 +18,7 @@ export async function createUser(user: CreateUserParams) {
           message: "User creation failed!",
           status: "Error",
           source: "createUser",
-        } as UserActionsErrors)
+        })
       );
     }
 
@@ -52,7 +45,7 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
           message: "User update failed!",
           status: "Error",
           source: "updateUser",
-        } as UserActionsErrors)
+        })
       );
     }
 
@@ -82,7 +75,7 @@ export async function deleteUser(clerkId: string) {
           message: "User does not exist!",
           status: "Error",
           source: "deleteUser",
-        } as UserActionsErrors)
+        })
       );
     }
 
@@ -103,18 +96,7 @@ export async function getUserById(userId: string) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    if (!user) {
-      return JSON.parse(
-        JSON.stringify({
-          message: "User does not exist!",
-          status: "Error",
-          source: "getUserById",
-          payLoad: userId,
-        } as UserActionsErrors)
-      );
-    }
-
-    return JSON.parse(JSON.stringify(user));
+    return JSON.parse(JSON.stringify({ user }));
   } catch (error) {
     handleError({ error, source: "getUserById" });
   }
@@ -134,7 +116,7 @@ export async function getUserBySlug(slug: string) {
           status: "Error",
           source: "getUserBySlug",
           payLoad: slug,
-        } as UserActionsErrors)
+        })
       );
     }
 
@@ -157,7 +139,7 @@ export async function getAllUsers() {
           message: "No users found!",
           status: "Error",
           source: "getAllUsers",
-        } as UserActionsErrors)
+        })
       );
     }
 

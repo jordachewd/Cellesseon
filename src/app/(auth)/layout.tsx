@@ -7,9 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <PageWrapper className="flex items-center justify-center">
-      {children}
-    </PageWrapper>
-  );
+  return <PageWrapper>{children}</PageWrapper>;
 }

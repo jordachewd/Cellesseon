@@ -1,6 +1,5 @@
 "use client";
-import css from "@/styles/layout/PageWrapper.module.css";
-import Header from "@/components/layout/Header";
+import css from "@/styles/chat/ChatWrapper.module.css";
 import ChatIntro from "../chat/ChatIntro";
 import ChatSidebar from "../chat/ChatSidebar";
 import ChatBody from "@/components/chat/ChatBody";
@@ -10,12 +9,14 @@ import getAiCompletition from "@/lib/utils/getAiCompletition";
 import { useState } from "react";
 import { UserData } from "@/types/UserData.d";
 import { Message } from "@/types";
+import ChatHeader from "./ChatHeader";
+import classNames from "classnames";
 
-interface MainPageProps {
+interface ChatWrapperProps {
   userData: UserData;
 }
 
-export default function MainPage({ userData }: MainPageProps) {
+export default function ChatWrapper({ userData }: ChatWrapperProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
   const [startMsg, setStartMsg] = useState<string>("");
@@ -60,25 +61,33 @@ export default function MainPage({ userData }: MainPageProps) {
     setIsLoading(false);
   };
 
-  return (
-    <div className={css.wrapper}>
-      <ChatSidebar userData={userData} />
-      <div className={css.section}>
-        <Header isSignedIn />
-        {alert && <AlertMessage message={alert} />}
+  const isChatEmpty = chat.length === 0;
+  
 
-        {chat.length ? (
-          <ChatBody messages={chat} />
-        ) : (
-          <ChatIntro sendPrompt={(prompt) => setStartMsg(prompt)} />
-        )}
+  return (
+    <section className={css.wrapper}>
+      <ChatSidebar userData={userData} />
+      <main className={css.main}>
+        {alert && <AlertMessage message={alert} />}
+        <ChatHeader />
+
+        <section
+          id="ChatWrapperContent"
+          className={classNames(css.content, isChatEmpty && css.intro)}
+        >
+          {isChatEmpty ? (
+            <ChatIntro sendPrompt={(prompt) => setStartMsg(prompt)} />
+          ) : (
+            <ChatBody messages={chat} />
+          )}
+        </section>
 
         <ChatInput
           sendMessage={sendMessage}
           loading={isLoading}
           startPrompt={startMsg}
         />
-      </div>
-    </div>
+      </main>
+    </section>
   );
 }

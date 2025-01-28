@@ -41,7 +41,7 @@ export default function Plans({ userData, hasLoader = false }: PlansProps) {
     );
 
   return (
-    <section className={css.section}>
+    <div className={css.section}>
       <PageHead
         title={`${isSignedIn ? "Upgrade" : "Choose"} your plan`}
         subtitle="Select the plan that suits your needs!"
@@ -84,6 +84,6 @@ export default function Plans({ userData, hasLoader = false }: PlansProps) {
           </Button>
         </div>
       )}
-    </section>
+    </div>
   );
 }

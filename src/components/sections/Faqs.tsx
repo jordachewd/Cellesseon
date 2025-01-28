@@ -9,7 +9,7 @@ import { faqs } from "@/constants/faqs";
 
 export default function Faqs() {
   return (
-    <section className={css.section}>
+    <div className={css.section}>
       <div className={css.head}>
         <Typography variant="h4">Frequently Asked Questions</Typography>
         <Typography variant="body2">
@@ -24,7 +24,9 @@ export default function Faqs() {
               aria-controls={`panel${faq.id}-content`}
               id={`panel${faq.id}-header`}
             >
-              <Typography component="span" variant="h6">{faq.question}</Typography>
+              <Typography component="span" variant="h6">
+                {faq.question}
+              </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography variant="body2">{faq.answer}</Typography>
@@ -32,6 +34,6 @@ export default function Faqs() {
           </Accordion>
         ))}
       </div>
-    </section>
+    </div>
   );
 }

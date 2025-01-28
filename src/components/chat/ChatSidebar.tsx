@@ -1,13 +1,13 @@
 import Link from "next/link";
 import css from "@/styles/chat/ChatSidebar.module.css";
 import SidebarToggle from "../shared/SidebarToggle";
-//import PlanPromo from "@/components/shared/PlanPromo";
 import { Typography } from "@mui/material";
 import { UserData } from "@/types/UserData.d";
-import Logo from "../shared/Logo";
-
 import { useState } from "react";
+import PlanPromo from "@/components/shared/PlanPromo";
+import Logo from "../shared/Logo";
 import LogoV2 from "../shared/LogoV2";
+ 
 
 interface ChatSidebarProps {
   userData: UserData | undefined;
@@ -16,8 +16,6 @@ interface ChatSidebarProps {
 export default function ChatSidebar({ userData }: ChatSidebarProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  console.log("ChatSidebar userData:", userData);
-
   return (
     <aside className={`${css.wrapper} ${!isOpen && css.isOpen}`}>
       <div className={css.topbar}>
@@ -25,7 +23,7 @@ export default function ChatSidebar({ userData }: ChatSidebarProps) {
         <LogoV2 className={isOpen ? "hidden" : ""} />
       </div>
 
-      <nav className={css.navigation}>
+      <nav className={`${css.navigation} mt-12`}>
         <div className={css.history}>
           <Typography variant="body2">History</Typography>
 
@@ -53,11 +51,13 @@ export default function ChatSidebar({ userData }: ChatSidebarProps) {
         />
       </div>
 
-{/*       {userData && (
+           {userData && (
         <div className={css.promo}>
           <PlanPromo userPlan={userData.plan} />
         </div>
-      )} */}
+      )} 
+
+    
     </aside>
   );
 }

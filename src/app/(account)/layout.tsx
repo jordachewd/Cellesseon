@@ -1,5 +1,5 @@
-import PageWrapper from "@/components/layout/PageWrapper";
+import InnerPage from "@/components/layout/InnerPage";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <PageWrapper>{children}</PageWrapper>;
+  return <InnerPage>{children}</InnerPage>;
 }

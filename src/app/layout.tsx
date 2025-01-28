@@ -5,6 +5,7 @@ import CellesseonTheme from "@/components/layout/CellesseonTheme";
 import type { Metadata, Viewport } from "next";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "@/app/globals.css";
+import MainWrapper from "@/components/layout/MainWrapper";
 
 export const metadata: Metadata = {
   title: "Cellesseon",
@@ -27,7 +28,6 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider
-    //  afterSignOutUrl="/"
       appearance={{
         variables: {
           colorPrimary: "#6A0DAD",
@@ -39,7 +39,9 @@ export default function RootLayout({
         <body>
           <AppRouterCacheProvider>
             <InitColorSchemeScript attribute="data-cellesseon-theme" />
-            <CellesseonTheme>{children}</CellesseonTheme>
+            <CellesseonTheme>
+              <MainWrapper>{children}</MainWrapper>
+            </CellesseonTheme>
           </AppRouterCacheProvider>
         </body>
       </html>

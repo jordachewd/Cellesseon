@@ -1,17 +1,18 @@
 "use client";
-import css from "@/styles/layout/Footer.module.css";
 import { useColorScheme } from "@mui/material/styles";
+import css from "@/styles/layout/Footer.module.css";
 import lightLogo from "../../../public/images/jwd_light.png";
-import darkLogo from "../../..//public/images/jwd_dark.png";
+import darkLogo from "../../../public/images/jwd_dark.png";
 import Image from "next/image";
 
 export default function Footer() {
   const { mode } = useColorScheme();
+
   return (
     <section className={css.section}>
       <div className={css.content}>
         <div className={css.left}>
-          <div className="flex border-r dark:border-white/10 border-black/25 pr-4">
+          <div className={css.jwdlogo}>
             <Image
               src={mode !== "dark" ? darkLogo : lightLogo}
               alt="JWD"
@@ -22,7 +23,7 @@ export default function Footer() {
             />
           </div>
 
-          <div className="flex flex-col text-xxs leading-3">
+          <div className={css.jwdinfo}>
             <span>© {new Date().getFullYear()} JordacheWD.</span>
             <span>All rights reserved.</span>
           </div>

@@ -13,6 +13,8 @@ interface PlanPromoProps {
 }
 
 export default function PlanPromo({ userPlan }: PlanPromoProps) {
+  if (!userPlan) return null;
+
   const { id, name, expiresOn, billing } = userPlan;
   const isLite = Number(id) === 0;
   //  const isPro = Number(id) === 1;

@@ -1,5 +1,5 @@
 .main {
-  @apply flex flex-col w-full h-dvh relative z-0;
+  @apply flex flex-col w-full relative z-0;
   @apply pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];
 }
 

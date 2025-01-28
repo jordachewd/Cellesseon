@@ -1,64 +1,40 @@
 "use client";
 import css from "@/styles/layout/Header.module.css";
 import { useEffect, useState } from "react";
-import { Button, IconButton } from "@mui/material";
-import { TooltipArrow } from "../shared/TooltipArrow";
+import { Button } from "@mui/material";
 import ToggleTheme from "@/components/shared/ToggleTheme";
-/* import AvatarMenu from "@/components/shared/AvatarMenu"; */
 import LogoV2 from "../shared/LogoV2";
-import { UserButton } from "@clerk/nextjs";
 
-interface HeaderProps {
-  isSignedIn?: boolean;
-}
-
-export default function Header({ isSignedIn = false }: HeaderProps) {
+export default function Header() {
   const [scrolled, setScrolled] = useState<boolean>(false);
 
   useEffect(() => {
-    const element = document.querySelector<HTMLElement>(
-      "section#LandingPageWrapper, div#InnerPageWrapper"
-    );
-    if (element) {
-      element.addEventListener("scroll", () => {
-        setScrolled(element.scrollTop > 10);
-      });
-    }
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
     <section className={`${css.section} ${scrolled && css.scrolled}`}>
       <div className={css.content}>
         <div className={css.left}>
-          {!isSignedIn && <LogoV2 />}
-          {isSignedIn && (
-            <TooltipArrow
-              title="New Task"
-              placement="right"
-              className="!transition-all"
-            >
-              <IconButton
-                size="small"
-                sx={{
-                  padding: "4px 7px",
-                  borderRadius: "8px!important",
-                }}
-              >
-                <i className="bi bi-plus-circle-dotted"></i>
-              </IconButton>
-            </TooltipArrow>
-          )}
+          <LogoV2 />
         </div>
         <div className={css.right}>
-          {!isSignedIn && (
-            <Button size="small" href="/sign-in">
-              login
-            </Button>
-          )}
+          <Button size="small" href="/sign-in">
+            login
+          </Button>
 
           <ToggleTheme />
-      {/*     <AvatarMenu /> */}
-          <UserButton signInUrl="/" />
         </div>
       </div>
     </section>

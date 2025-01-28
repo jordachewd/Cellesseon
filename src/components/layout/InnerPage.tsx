@@ -7,8 +7,8 @@ interface InnerPageProps {
 
 export default function InnerPage({ children }: InnerPageProps) {
   return (
-    <div id="InnerPageWrapper" className={css.wrapper}>
+    <section id="InnerPageWrapper" className={css.wrapper}>
       {children}
-    </div>
+    </section>
   );
 }

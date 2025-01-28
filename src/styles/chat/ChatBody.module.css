@@ -1,16 +1,5 @@
-.section {
-  @apply flex flex-1 flex-col w-full relative overflow-y-auto 
-  [&::-webkit-scrollbar]:w-[2px] z-10
-  [&::-webkit-scrollbar-track]:rounded-full
-  [&::-webkit-scrollbar-thumb]:rounded-full
-  [&::-webkit-scrollbar-track]:bg-lightBorders-500
-  [&::-webkit-scrollbar-thumb]:bg-lightSecondary-800
-  dark:[&::-webkit-scrollbar-track]:bg-darkBorders-500
-  dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
-}
-
 .wrapper {
-  @apply flex flex-col flex-1 space-y-4 w-full max-w-4xl mx-auto p-6 lg:px-0 lg:py-10;
+  @apply flex flex-col flex-1 space-y-4 w-full max-w-screen-lg mx-auto p-6 lg:px-0 lg:pt-20 lg:pb-10;
 }
 
 .article {

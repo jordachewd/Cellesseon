@@ -25,7 +25,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
   }, [parent, messages]);
 
   return (
-    <section className={css.section}>
+    <>
       <div className={css.wrapper} ref={parent}>
         {messages.map((message, i) => {
           const isBot = message.whois !== "user";
@@ -75,6 +75,6 @@ export default function ChatBody({ messages }: ChatBodyProps) {
       </div>
 
       <div className={css.bottomRef} ref={bottomRef}></div>
-    </section>
+    </>
   );
 }

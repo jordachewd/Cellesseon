@@ -1,5 +1,5 @@
 .wrapper {
-  @apply flex items-center gap-1;
+  @apply flex justify-center items-center gap-1 w-full;
 }
 
 .bubble {
@@ -17,4 +17,8 @@
 
 .bubble3 {
   @apply dark:bg-darkPrimary-400/40 bg-lightPrimary-600 animate-delay-200;
+}
+
+.isWrapped {
+  @apply flex justify-center items-center h-dvh;
 }

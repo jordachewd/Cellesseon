@@ -1,5 +1,3 @@
-import Header from "@/components/layout/Header";
-import InnerPage from "@/components/layout/InnerPage";
 import ProfileBilling from "@/components/sections/ProfileBilling";
 import ProfileHero from "@/components/sections/ProfileHero";
 import LoadingBubbles from "@/components/shared/LoadingBubbles";
@@ -21,23 +19,18 @@ export default async function ProfilePage() {
 
   const stripeId = userData?.plan.stripeId;
 
-  console.log("ProfilePage userData:", userData);
-
   return (
     <>
-      <Header isSignedIn />
-      <InnerPage>
-        {userData ? (
-          <>
-            <ProfileHero userData={userData} />
-            <ProfileBilling stripeId={stripeId} userTxns={userTxns} />
-          </>
-        ) : (
-          <div className="flex justify-center items-center h-dvh">
-            <LoadingBubbles />
-          </div>
-        )}
-      </InnerPage>
+      {userData ? (
+        <>
+          <ProfileHero userData={userData} />
+          <ProfileBilling stripeId={stripeId} userTxns={userTxns} />
+        </>
+      ) : (
+        <div className="flex justify-center items-center h-dvh">
+          <LoadingBubbles />
+        </div>
+      )}
     </>
   );
 }

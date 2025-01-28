@@ -10,12 +10,5 @@ export default function PageWrapper({
   children,
   className: styles = "",
 }: PageWrapperProps) {
-  return (
-    <main className={css.main}>
-      <div className={css.wrapper}>
-        <div className={`${css.section} ${styles}`}>{children}</div>
-      </div>
-      <div className={css.background}></div>
-    </main>
-  );
+  return <div className={`${css.section} ${styles}`}>{children}</div>;
 }

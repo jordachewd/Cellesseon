@@ -9,6 +9,7 @@ interface ChatIntroProps {
   sendPrompt: (prompt: string) => void;
 }
 
+
 export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
   const { user, isLoaded } = useUser();
   const [chipSet, setChipSet] = useState<number>(-1);
@@ -22,7 +23,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
   }
 
   return (
-    <section className={css.section}>
+    <>
       {chipSet < 0 ? (
         <>
           <Typography variant="h5" className={css.title}>
@@ -71,6 +72,6 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
           </div>
         </>
       )}
-    </section>
+    </>
   );
 }

@@ -9,15 +9,18 @@ export default function ToggleTheme() {
   const { mode, setMode } = useColorScheme();
 
   useEffect(() => {
-    const defaultMode = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    if (defaultMode) {
-      setMode("dark" as PrefersColorScheme);
-    } else {
-      setMode("light" as PrefersColorScheme);
+    if (mode === "system") {
+      const defaultMode = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+
+      if (defaultMode) {
+        setMode("dark" as PrefersColorScheme);
+      } else {
+        setMode("light" as PrefersColorScheme);
+      }
     }
-  }, [setMode]);
+  }, [mode, setMode]);
 
   return (
     <ButtonGroup aria-label="theme-toggle">

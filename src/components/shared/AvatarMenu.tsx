@@ -1,4 +1,3 @@
-'use client';
 import { IconButton, Avatar, Menu, MenuItem, Divider } from "@mui/material";
 import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
 import { useState, MouseEvent } from "react";
@@ -76,12 +75,10 @@ export default function AvatarMenu() {
           </Link>
         )}
 
-        <Link href="/plans">
-          <MenuItem>
-            <i className="bi bi-graph-up mr-4"></i>
-            <span>Plans</span>
-          </MenuItem>
-        </Link>
+        <MenuItem>
+          <i className="bi bi-graph-up mr-4"></i>
+          <span>Plans</span>
+        </MenuItem>
 
         <Link href="/profile">
           <MenuItem>
