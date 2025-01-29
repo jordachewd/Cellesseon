@@ -3,7 +3,7 @@ export {};
 declare global {
   interface CustomJwtSessionClaims {
     metadata: {
-      role: string;
+      role: "admin" | "client";
       onboardingComplete?: boolean;
     };
   }
