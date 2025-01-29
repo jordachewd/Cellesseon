@@ -79,14 +79,15 @@ export async function POST(req: Request) {
 
     const newUser = await createUser(user);
 
-    // Set public metadata
+    // Set publicMetadata for Clerk user
     if (newUser) {
       const client = await clerkClient();
       await client.users.updateUserMetadata(id, {
         publicMetadata: {
           userId: newUser._id,
           role: newUser.role,
-          userimg: newUser.image_url,
+          userimg: image_url,
+          onboardingComplete: true,
         },
       });
     }
