@@ -23,7 +23,7 @@ export default function ChatHeader() {
     <section className={`${css.section} ${scrolled && css.scrolled}`}>
       <div className={css.content}>
         <div className={css.left}>
-          <LogoV2 />
+          <LogoV2 href="/workspace" />
 
           <TooltipArrow
             title="New Task"
