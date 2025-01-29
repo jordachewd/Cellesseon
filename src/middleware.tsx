@@ -23,8 +23,9 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
 
   // Redirect to sign-in if the route is private and the user is not logged in
   if (!userId && !isPublicRoute(req)) {
-    const signInUrl = new URL("/sign-in", req.url);
-    return NextResponse.redirect(signInUrl);
+    await auth.protect();
+    /*     const signInUrl = new URL("/sign-in", req.url);
+    return NextResponse.redirect(signInUrl); */
   }
 
   // If the user is logged in but hasn't completed onboarding, revoke the session
@@ -32,20 +33,19 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
     const sessionId = sessionClaims?.sid;
 
     const client = await clerkClient();
-    const response = await client.sessions.revokeSession(sessionId);
+    await client.sessions.revokeSession(sessionId);
 
+    /*    const response = await client.sessions.revokeSession(sessionId);
     if (response.status === "200") {
       const signInUrl = new URL("/sign-in", req.url);
       return NextResponse.redirect(signInUrl);
     }
 
-    return NextResponse.next();
+    return NextResponse.next(); */
   }
 
   // Allow access to private routes if the user is signedin and is an admin
   if (userId && !isAdmin && isPrivateRoute(req)) {
-    console.log("isPrivateRoute", isPrivateRoute(req));
-
     const signInUrl = new URL("/401", req.url);
     return NextResponse.redirect(signInUrl);
   }
