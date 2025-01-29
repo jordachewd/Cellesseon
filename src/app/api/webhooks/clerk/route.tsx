@@ -86,7 +86,7 @@ export async function POST(req: Request) {
         publicMetadata: {
           userId: newUser._id,
           role: newUser.role,
-          userimg: image_url,
+          userImg: image_url,
           onboardingComplete: true,
         },
       });
