@@ -2,7 +2,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const isOnboardingRoute = createRouteMatcher(["/sign-in(.*)", "/sign-up(.*)"]);
+const isOnboardingRoute = createRouteMatcher(["/(account)(.*)"]);
 const isPublicRoute = createRouteMatcher([
   "/",
   "/api/webhooks/stripe",
@@ -24,7 +24,7 @@ export default clerkMiddleware(async (auth, req) => {
   // Catch users who do not have `onboardingComplete: true` in their publicMetadata
   // Redirect them to the /home route to try again
   if (userId && !sessionClaims?.metadata?.onboardingComplete) {
-    const onboardingUrl = new URL("/", req.url);
+    const onboardingUrl = new URL("/profile", req.url);
     return NextResponse.redirect(onboardingUrl);
   }
 
