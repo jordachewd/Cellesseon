@@ -24,14 +24,12 @@ export default clerkMiddleware(async (auth, req) => {
   // Catch users who do not have `onboardingComplete: true` in their publicMetadata
   // Redirect them to the /home route to try again
   if (userId && !sessionClaims?.metadata?.onboardingComplete) {
-    const onboardingUrl = new URL("/profile", req.url);
+    const onboardingUrl = new URL("/", req.url);
     return NextResponse.redirect(onboardingUrl);
   }
 
   // If the user is logged in and the route is protected, let them view.
   if (userId && !isPublicRoute(req)) return NextResponse.next();
-
-  // if (!isPublicRoute(req)) await auth.protect();
 });
 
 export const config = {
