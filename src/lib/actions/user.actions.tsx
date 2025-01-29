@@ -98,7 +98,7 @@ export async function getUserById(userId: string) {
 
     if (!user) throw new Error("User does not exist!");
 
-    return JSON.parse(JSON.stringify({ user }));
+    return JSON.parse(JSON.stringify(user));
   } catch (error) {
     handleError({ error, source: "getUserById" });
   }

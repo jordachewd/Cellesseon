@@ -14,10 +14,11 @@ export default async function ProfilePage() {
 
   if (userId) {
     userData = await getUserById(userId);
-    userTxns = await getAllTransactions(userId);
+    userTxns =
+      (userData?.plan && (await getAllTransactions(userId))) || undefined;
   }
 
-  const stripeId = userData?.plan.stripeId;
+  const stripeId = userData?.plan?.stripeId || undefined;
 
   return (
     <>

@@ -37,6 +37,7 @@ export default function ProfileBilling({ stripeId, userTxns }: BillingProps) {
               txn.stripeId === stripeId ? css.active : css.inactive;
             return (
               <div key={txn.id + generateString(32)} className={css.tableRow}>
+                ProfileBilling
                 <p className="flex-1 font-medium">{txn.plan}</p>
                 <p className="flex-1 font-medium text-center">
                   ${txn.amount}
@@ -57,7 +58,12 @@ export default function ProfileBilling({ stripeId, userTxns }: BillingProps) {
           })}
         </div>
       ) : (
-        <Typography>No transactions found.</Typography>
+        <Typography
+          variant="body2"
+          className="text-center !mt-10 !text-slate-600"
+        >
+          No transactions yet.
+        </Typography>
       )}
     </section>
   );

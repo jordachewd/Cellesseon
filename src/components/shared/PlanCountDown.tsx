@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import css from "@/styles/shared/PlanCountDown.module.css";
+import LoadingBubbles from "@/components/shared/LoadingBubbles";
 import {
   TimeDifference,
   getExpirationCountDown,
 } from "@/lib/utils/getFormattedDate";
-import LoadingBubbles from "@/components/shared/LoadingBubbles";
 
 interface CountDownProps {
   endDate: Date;
@@ -21,11 +21,13 @@ export default function PlanCountDown({
   wrapped = false,
 }: CountDownProps) {
   const [countdown, setCountdown] = useState<string>("");
-  const [timeUp, setTimeUp] = useState<boolean>(false);
+  const [timeUp, setTimeUp] = useState<boolean>(false);  
+
+  const parsedStartDate = useMemo(() => new Date(startDate), [startDate]);
+  const parsedEndDate = useMemo(() => new Date(endDate), [endDate]);
+  const isTimeUp = parsedStartDate >= parsedEndDate;
 
   useEffect(() => {
-    const isTimeUp = new Date(startDate) >= new Date(endDate);
-
     if (isTimeUp) {
       setTimeUp(true);
       return;
@@ -39,13 +41,13 @@ export default function PlanCountDown({
         hours: 0,
         minutes: 0,
         seconds: 0,
-        ...getExpirationCountDown(new Date(startDate), new Date(endDate)),
+        ...getExpirationCountDown(parsedStartDate, parsedEndDate),
       };
       setCountdown(formatCountdown(countdownValue));
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [startDate, endDate]);
+  }, [isTimeUp, parsedStartDate, parsedEndDate]);
 
   const formatCountdown = (time: TimeDifference) => {
     const parts = [];

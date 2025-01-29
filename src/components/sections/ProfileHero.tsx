@@ -1,18 +1,19 @@
 import css from "@/styles/sections/ProfileHero.module.css";
 import PlanPromo from "@/components/shared/PlanPromo";
-import PlanCountDown from "@/components/shared/PlanCountDown";
 import getFormattedDate from "@/lib/utils/getFormattedDate";
 import PageHead from "@/components/layout/PageHead";
 import { Typography, Avatar } from "@mui/material";
 import { UserData } from "@/types/UserData.d";
 import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
+import PlanCountDown from "../shared/PlanCountDown";
 
 interface HeroProps {
   userData: UserData;
 }
 
 export default function ProfileHero({ userData }: HeroProps) {
-  const { username, firstName, lastName, email, registerAt, updatedAt, plan } = userData;
+  const { username, firstName, lastName, email, registerAt, updatedAt, plan } =
+    userData;
 
   const fullName = getFullName({
     firstName: firstName || "",
@@ -42,7 +43,7 @@ export default function ProfileHero({ userData }: HeroProps) {
           <div className="flex gap-2 items-center">
             <span className="font-semibold leading-none">Member since:</span>
             <span className="text-xxs leading-none">
-              {getFormattedDate(registerAt)}
+              {getFormattedDate(registerAt as Date)}
             </span>
           </div>
 
@@ -57,7 +58,7 @@ export default function ProfileHero({ userData }: HeroProps) {
 
           <div className="flex gap-2 items-center">
             <span className="font-semibold leading-none">Plan expires in:</span>
-            <PlanCountDown endDate={plan.expiresOn} wrapped />
+            <PlanCountDown endDate={plan.expiresOn as Date} wrapped />
           </div>
         </div>
 

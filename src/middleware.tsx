@@ -11,6 +11,9 @@ const isPublicRoute = createRouteMatcher([
 
 export default clerkMiddleware(async (auth, req) => {
   const { userId, sessionClaims, redirectToSignIn } = await auth();
+  const isBoardingComplete = sessionClaims?.metadata?.onboardingComplete;
+
+  console.log("sessionClaims", sessionClaims?.metadata);
 
   // For users visiting /onboarding, don't try to redirect
   if (userId && isOnboardingRoute(req)) {
@@ -23,7 +26,7 @@ export default clerkMiddleware(async (auth, req) => {
 
   // Catch users who do not have `onboardingComplete: true` in their publicMetadata
   // Redirect them to the /home route to try again
-  if (userId && !sessionClaims?.metadata?.onboardingComplete) {
+  if (userId && !isBoardingComplete) {
     const onboardingUrl = new URL("/", req.url);
     return NextResponse.redirect(onboardingUrl);
   }

@@ -13,24 +13,24 @@ export default function getFormattedDate(date: string | number | Date): string {
 }
 
 export interface TimeDifference {
-  years: number;
-  months: number;
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
+  years?: number | undefined;
+  months?: number | undefined;
+  days?: number | undefined;
+  hours?: number | undefined;
+  minutes?: number | undefined;
+  seconds?: number | undefined;
 }
 
 export function getExpirationCountDown(
   startDate: Date,
   endDate: Date
 ): Partial<TimeDifference> {
-  if (!startDate) {
-    throw new Error("Expiration startDate is undefined");
+  if (!(startDate instanceof Date) || isNaN(startDate.getTime())) {
+    throw new Error("Expiration startDate is not a valid Date object");
   }
 
-  if (!endDate) {
-    throw new Error("Expiration endDate is undefined");
+  if (!(endDate instanceof Date) || isNaN(endDate.getTime())) {
+    throw new Error("Expiration endDate is not a valid Date object");
   }
 
   let delta = Math.abs(endDate.getTime() - startDate.getTime()) / 1000;
