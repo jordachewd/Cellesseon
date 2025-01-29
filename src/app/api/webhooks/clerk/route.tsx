@@ -87,7 +87,6 @@ export async function POST(req: Request) {
           userId: newUser._id,
           role: newUser.role,
           userImg: image_url,
-          onboardingComplete: true,
         },
       });
     }

@@ -12,9 +12,13 @@ export default async function Home() {
   const { userId } = await auth();
   let userData: UserData | undefined = undefined;
 
+//  console.log("await auth() : ", await auth());
+
   if (userId) {
     userData = await getUserById(userId);
   }
+
+ // console.log("Home userId, userData: ", { userId, userData });
 
   return (
     <>

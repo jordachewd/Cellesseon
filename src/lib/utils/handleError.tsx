@@ -1,24 +1,16 @@
 // ERROR HANDLER
 
- interface HdlErrorProps {
+interface HdlErrorProps {
   error: Error | unknown;
   source?: string | undefined;
 }
 
 export const handleError = ({ error, source }: HdlErrorProps) => {
-  if (source) {
-    console.error(
-      `%cError at ${source}:`,
-      "color:yellow;background:red;padding:1px 2px",
-      error
-    );
-  }
-
   if (error instanceof Error) {
-    throw new Error(error.message);
+    throw new Error(error.message + " | " + source);
   } else if (typeof error === "string") {
-    throw new Error(error);
+    throw new Error(error + " | " + source);
   } else {
-    throw new Error(JSON.stringify(error));
+    throw new Error(JSON.stringify(error + " | " + source));
   }
 };

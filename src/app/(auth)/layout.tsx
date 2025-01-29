@@ -1,5 +1,3 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
 import PageWrapper from "@/components/layout/PageWrapper";
 import type { Metadata } from "next";
 
@@ -13,8 +11,5 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  if ((await auth()).sessionClaims?.metadata.onboardingComplete === true) {
-    redirect("/");
-  }
   return <PageWrapper>{children}</PageWrapper>;
 }

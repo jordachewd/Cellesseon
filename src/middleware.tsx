@@ -1,12 +1,7 @@
-/** Resource: https://clerk.com/docs/references/nextjs/add-onboarding-flow */
-"use server";
-import {
- // clerkClient,
-  clerkMiddleware,
-  createRouteMatcher,
-} from "@clerk/nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
+const isPrivateRoute = createRouteMatcher(["/dashboard/:path*"]);
 const isPublicRoute = createRouteMatcher([
   "/",
   "/sign-in(.*)",
@@ -15,36 +10,28 @@ const isPublicRoute = createRouteMatcher([
   "/api/webhooks/clerk",
 ]);
 
-//const isPrivateRoute = createRouteMatcher(["/dashboard/:path*"]);
-
 export default clerkMiddleware(async (auth, req: NextRequest) => {
- // const { userId, sessionClaims, sessionId } = await auth();
- // const isAdmin = sessionClaims?.metadata?.role === "admin";
- // const isBoardingComplete = sessionClaims?.metadata?.onboardingComplete;
+  try {
+    const { userId, sessionClaims, redirectToSignIn } = await auth();
+    const isAdmin = sessionClaims?.metadata?.role === "admin";
 
-  // console.log("auth(): ", await auth());
+    // Redirect to sign-in if the route is private and the user is not logged in
+    if (!userId && !isPublicRoute(req)) {
+      return redirectToSignIn({ returnBackUrl: "/" });
+    }
 
-  // Redirect to sign-in if the route is private and the user is not logged in
-  if (!isPublicRoute(req)) {
-    await auth.protect({
-      unauthorizedUrl: new URL("/401", req.url).toString(),
-      unauthenticatedUrl: new URL("/sign-in", req.url).toString(),
-    });
+    // Allow access to private routes if the user is signed in and is an admin
+    if (userId && !isAdmin && isPrivateRoute(req)) {
+      const unAuthUrl = new URL("/401", req.url);
+      return NextResponse.redirect(unAuthUrl);
+    }
+  } catch (error) {
+    console.error("Error in middleware:", error);
+    if (error instanceof Error && "digest" in error) {
+      console.error("Error digest:", error.digest);
+    }
+    return NextResponse.redirect(new URL("/500", req.url));
   }
-
-  // If the user is logged in but hasn't completed onboarding, revoke the session
-/*   if (userId && !isBoardingComplete) {
-    const client = await clerkClient();
-    await client.sessions.revokeSession(sessionId);
-  } */
-
-  // Allow access to private routes if the user is signedin and is an admin
-/*   if (userId && !isAdmin && isPrivateRoute(req)) {
-    const signInUrl = new URL("/401", req.url);
-    return NextResponse.redirect(signInUrl);
-  } */
-
-  return NextResponse.next();
 });
 
 export const config = {
@@ -55,3 +42,5 @@ export const config = {
     "/(api|trpc)(.*)",
   ],
 };
+
+/** Resources: https://clerk.com/docs/references/nextjs/add-onboarding-flow */
