@@ -1,7 +1,7 @@
 /** Resource: https://clerk.com/docs/references/nextjs/add-onboarding-flow */
 "use server";
 import {
-  clerkClient,
+ // clerkClient,
   clerkMiddleware,
   createRouteMatcher,
 } from "@clerk/nextjs/server";
@@ -15,12 +15,12 @@ const isPublicRoute = createRouteMatcher([
   "/api/webhooks/clerk",
 ]);
 
-const isPrivateRoute = createRouteMatcher(["/dashboard/:path*"]);
+//const isPrivateRoute = createRouteMatcher(["/dashboard/:path*"]);
 
 export default clerkMiddleware(async (auth, req: NextRequest) => {
-  const { userId, sessionClaims, sessionId } = await auth();
-  const isAdmin = sessionClaims?.metadata?.role === "admin";
-  const isBoardingComplete = sessionClaims?.metadata?.onboardingComplete;
+ // const { userId, sessionClaims, sessionId } = await auth();
+ // const isAdmin = sessionClaims?.metadata?.role === "admin";
+ // const isBoardingComplete = sessionClaims?.metadata?.onboardingComplete;
 
   // console.log("auth(): ", await auth());
 
@@ -33,16 +33,16 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
   }
 
   // If the user is logged in but hasn't completed onboarding, revoke the session
-  if (userId && !isBoardingComplete) {
+/*   if (userId && !isBoardingComplete) {
     const client = await clerkClient();
     await client.sessions.revokeSession(sessionId);
-  }
+  } */
 
   // Allow access to private routes if the user is signedin and is an admin
-  if (userId && !isAdmin && isPrivateRoute(req)) {
+/*   if (userId && !isAdmin && isPrivateRoute(req)) {
     const signInUrl = new URL("/401", req.url);
     return NextResponse.redirect(signInUrl);
-  }
+  } */
 
   return NextResponse.next();
 });
