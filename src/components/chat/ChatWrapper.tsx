@@ -1,22 +1,16 @@
 "use client";
 import css from "@/styles/chat/ChatWrapper.module.css";
 import ChatIntro from "../chat/ChatIntro";
-import ChatSidebar from "../chat/ChatSidebar";
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import AlertMessage, { AlertParams } from "../shared/AlertMessage";
 import getAiCompletition from "@/lib/utils/getAiCompletition";
 import { useState } from "react";
-import { UserData } from "@/types/UserData.d";
 import { Message } from "@/types";
 import ChatHeader from "./ChatHeader";
 import classNames from "classnames";
 
-interface ChatWrapperProps {
-  userData: UserData;
-}
-
-export default function ChatWrapper({ userData }: ChatWrapperProps) {
+export default function ChatWrapper() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
   const [startMsg, setStartMsg] = useState<string>("");
@@ -62,32 +56,29 @@ export default function ChatWrapper({ userData }: ChatWrapperProps) {
   };
 
   const isChatEmpty = chat.length === 0;
+
   
-
   return (
-    <section className={css.wrapper}>
-      <ChatSidebar userData={userData} />
-      <main className={css.main}>
-        {alert && <AlertMessage message={alert} />}
-        <ChatHeader />
+    <main className={css.main}>
+      {alert && <AlertMessage message={alert} />}
+      <ChatHeader />
 
-        <section
-          id="ChatWrapperContent"
-          className={classNames(css.content, isChatEmpty && css.intro)}
-        >
-          {isChatEmpty ? (
-            <ChatIntro sendPrompt={(prompt) => setStartMsg(prompt)} />
-          ) : (
-            <ChatBody messages={chat} />
-          )}
-        </section>
+      <section
+        id="ChatWrapperContent"
+        className={classNames(css.content, isChatEmpty && css.intro)}
+      >
+        {isChatEmpty ? (
+          <ChatIntro sendPrompt={(prompt) => setStartMsg(prompt)} />
+        ) : (
+          <ChatBody messages={chat} />
+        )}
+      </section>
 
-        <ChatInput
-          sendMessage={sendMessage}
-          loading={isLoading}
-          startPrompt={startMsg}
-        />
-      </main>
-    </section>
+      <ChatInput
+        sendMessage={sendMessage}
+        loading={isLoading}
+        startPrompt={startMsg}
+      />
+    </main>
   );
 }

@@ -11,5 +11,9 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  return <PageWrapper>{children}</PageWrapper>;
+  return (
+    <PageWrapper className="justify-center items-center">
+      {children}
+    </PageWrapper>
+  );
 }

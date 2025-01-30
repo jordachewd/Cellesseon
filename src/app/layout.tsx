@@ -37,7 +37,6 @@ export default function RootLayout({
     >
       <html lang="en" suppressHydrationWarning>
         <body>
-          <p className="bg-red-600 text-yellow-400">main layout</p>
           <AppRouterCacheProvider>
             <InitColorSchemeScript attribute="data-cellesseon-theme" />
             <CellesseonTheme>

@@ -1,3 +1,14 @@
-.section {
-  @apply flex items-center justify-center z-10 h-dvh;
+.wrapper {
+  @apply flex flex-col w-full h-dvh m-0 p-0 z-10  relative;
+}
+
+.content {
+  @apply flex flex-1 flex-col w-full relative h-full overflow-y-auto
+    [&::-webkit-scrollbar]:w-[2px] z-10 mt-14 pb-10 gap-10 
+    [&::-webkit-scrollbar-track]:rounded-full
+    [&::-webkit-scrollbar-thumb]:rounded-full
+    [&::-webkit-scrollbar-track]:bg-lightBorders-500
+    [&::-webkit-scrollbar-thumb]:bg-lightSecondary-800
+    dark:[&::-webkit-scrollbar-track]:bg-darkBorders-500
+    dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
 }

@@ -17,7 +17,7 @@ export default function ChatInput({
   loading,
   startPrompt,
 }: ChatInputProps) {
-  const [prompt, setPrompt] = useState(startPrompt || "");
+  const [prompt, setPrompt] = useState<string>(startPrompt || "");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
 

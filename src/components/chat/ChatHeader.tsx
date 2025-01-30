@@ -1,17 +1,27 @@
 "use client";
 import css from "@/styles/chat/ChatHeader.module.css";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { IconButton } from "@mui/material";
 import { TooltipArrow } from "../shared/TooltipArrow";
 import ToggleTheme from "@/components/shared/ToggleTheme";
 import AvatarMenu from "@/components/shared/AvatarMenu";
 import LogoV2 from "../shared/LogoV2";
 
-export default function ChatHeader() {
+interface ChatHeaderProps {
+  className?: string;
+}
+
+export default function ChatHeader({ className: style = "" }: ChatHeaderProps) {
   const [scrolled, setScrolled] = useState<boolean>(false);
+  const isScrolled = scrolled ? css.scrolled : "";
+  const customCss = style ? style : "";
+  const currentPath = usePathname();
 
   useEffect(() => {
-    const element = document.querySelector<HTMLElement>("section#ChatWrapperContent");
+    const element = document.querySelector<HTMLElement>(
+      "#ChatWrapperContent, #PageWrapperContent > div"
+    );
     if (element) {
       element.addEventListener("scroll", () => {
         setScrolled(element.scrollTop > 10);
@@ -20,27 +30,28 @@ export default function ChatHeader() {
   }, []);
 
   return (
-    <section className={`${css.section} ${scrolled && css.scrolled}`}>
+    <section className={`${css.section} ${isScrolled} ${customCss}`}>
       <div className={css.content}>
         <div className={css.left}>
-          <LogoV2 href="/workspace" />
-
-          <TooltipArrow
-            title="New Task"
-            placement="right"
-            className="!transition-all"
-          >
-            <IconButton
-              size="small"
-              sx={{
-                padding: "4px 7px",
-                borderRadius: "8px!important",
-                lineHeight: 1,
-              }}
+          {currentPath !== "/" && <LogoV2 />}
+          {currentPath === "/" && (
+            <TooltipArrow
+              title="New Task"
+              placement="right"
+              className="!transition-all"
             >
-              <i className="bi bi-plus-circle-dotted"></i>
-            </IconButton>
-          </TooltipArrow>
+              <IconButton
+                size="small"
+                sx={{
+                  padding: "4px 7px",
+                  borderRadius: "8px!important",
+                  lineHeight: 1,
+                }}
+              >
+                <i className="bi bi-plus-circle-dotted"></i>
+              </IconButton>
+            </TooltipArrow>
+          )}
         </div>
         <div className={css.right}>
           <ToggleTheme />

@@ -2,13 +2,21 @@ import css from "@/styles/layout/PageWrapper.module.css";
 import { ReactNode } from "react";
 
 interface PageWrapperProps {
-  children: ReactNode;
+  id?: string;
+  scrollable?: boolean;
   className?: string;
+  children: ReactNode;
 }
 
 export default function PageWrapper({
   children,
-  className: styles = "",
+  scrollable = false,
+  className: customCss = "",
+  id: pageId = "PageWrapper",
 }: PageWrapperProps) {
-  return <div className={`${css.section} ${styles}`}>{children}</div>;
+  return (
+    <div className={`${css.wrapper} ${customCss}`} id={pageId}>
+      {scrollable ? <div className={css.content}>{children}</div> : children}
+    </div>
+  );
 }

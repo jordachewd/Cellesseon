@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import css from "@/styles/chat/ChatSidebar.module.css";
 import SidebarToggle from "../shared/SidebarToggle";
@@ -7,7 +8,6 @@ import { useState } from "react";
 import PlanPromo from "@/components/shared/PlanPromo";
 import Logo from "../shared/Logo";
 import LogoV2 from "../shared/LogoV2";
- 
 
 interface ChatSidebarProps {
   userData: UserData | undefined;
@@ -22,7 +22,6 @@ export default function ChatSidebar({ userData }: ChatSidebarProps) {
         <Logo symbol />
         <LogoV2 className={isOpen ? "hidden" : ""} />
       </div>
-
       <nav className={`${css.navigation} mt-12`}>
         <div className={css.history}>
           <Typography variant="body2">History</Typography>
@@ -42,7 +41,6 @@ export default function ChatSidebar({ userData }: ChatSidebarProps) {
           </Link>
         </div>
       </nav>
-
       <div className="p-2">
         <SidebarToggle
           icon="bi-layout-sidebar"
@@ -50,14 +48,11 @@ export default function ChatSidebar({ userData }: ChatSidebarProps) {
           toggleSidebar={() => setIsOpen(!isOpen)}
         />
       </div>
-
-           {userData && (
+      {userData && (
         <div className={css.promo}>
           <PlanPromo userPlan={userData.plan} />
         </div>
-      )} 
-
-    
+      )}
     </aside>
   );
 }

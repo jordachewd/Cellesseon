@@ -17,7 +17,7 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
 
     // Redirect to sign-in if the route is private and the user is not logged in
     if (!userId && !isPublicRoute(req)) {
-      return redirectToSignIn({ returnBackUrl: "/workspace" });
+      return redirectToSignIn({ returnBackUrl: "/" });
     }
 
     // Allow access to private routes if the user is signed in and is an admin
@@ -25,13 +25,11 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
       const unAuthUrl = new URL("/401", req.url);
       return NextResponse.redirect(unAuthUrl);
     }
-    
   } catch (error) {
     console.error("Error in middleware:", error);
     if (error instanceof Error && "digest" in error) {
       console.error("Error digest:", error.digest);
     }
-    return NextResponse.redirect(new URL("/500", req.url));
   }
 });
 

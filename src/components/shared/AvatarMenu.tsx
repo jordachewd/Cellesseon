@@ -3,12 +3,12 @@ import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
 import { useState, MouseEvent } from "react";
 import { TooltipArrow } from "./TooltipArrow";
 import { useUser } from "@clerk/clerk-react";
-import { useClerk } from "@clerk/nextjs";
+
 import Link from "next/link";
+import LoggoutBtn from "./LoggoutBtn";
 
 export default function AvatarMenu() {
   const { user } = useUser();
-  const { signOut } = useClerk();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorElUser);
 
@@ -27,10 +27,6 @@ export default function AvatarMenu() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-
-  const handleSignOut = async () => {
-    await signOut({ redirectUrl: "/" });
   };
 
   return (
@@ -74,11 +70,12 @@ export default function AvatarMenu() {
             </MenuItem>
           </Link>
         )}
-
-        <MenuItem>
-          <i className="bi bi-graph-up mr-4"></i>
-          <span>Plans</span>
-        </MenuItem>
+        <Link href="/plans">
+          <MenuItem>
+            <i className="bi bi-graph-up mr-4"></i>
+            <span>Plans</span>
+          </MenuItem>
+        </Link>
 
         <Link href="/profile">
           <MenuItem>
@@ -89,9 +86,8 @@ export default function AvatarMenu() {
 
         <Divider />
 
-        <MenuItem onClick={handleSignOut}>
-          <i className="bi bi-box-arrow-right mr-4"></i>
-          Logout
+        <MenuItem>
+          <LoggoutBtn />
         </MenuItem>
       </Menu>
     </div>
