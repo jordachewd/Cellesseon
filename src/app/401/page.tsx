@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 const UnauthorizedPage = () => {
   const router = useRouter();
   return (
-    <PageWrapper className="justify-center items-center">
+    <PageWrapper className="justify-center items-center gap-10">
       <Typography variant="h1">Unauthorized</Typography>
-      <div className="flex flex-col items-center gap-1">
-        <Typography variant="body1">
+      <div className="flex flex-col items-center gap-2 bg-red-800 p-8 rounded-xl shadow-lg">
+        <Typography variant="h6">
           You do not have the necessary permissions to access this page.
         </Typography>
 

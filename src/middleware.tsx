@@ -12,12 +12,12 @@ const isPublicRoute = createRouteMatcher([
 
 export default clerkMiddleware(async (auth, req: NextRequest) => {
   try {
-    const { userId, sessionClaims, redirectToSignIn } = await auth();
+    const { userId, sessionClaims } = await auth();
     const isAdmin = sessionClaims?.metadata?.role === "admin";
 
-    // Redirect to sign-in if the route is private and the user is not logged in
+    // Redirect to sign-in if the route is not public and the user is not logged in
     if (!userId && !isPublicRoute(req)) {
-      return redirectToSignIn({ returnBackUrl: "/" });
+      return NextResponse.redirect(new URL("/sign-in", req.url));
     }
 
     // Allow access to private routes if the user is signed in and is an admin
