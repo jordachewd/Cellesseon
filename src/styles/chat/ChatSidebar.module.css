@@ -1,19 +1,28 @@
 .wrapper {
-  @apply flex flex-col justify-between w-[54px] shadow;
+  @apply flex flex-col justify-between shadow w-96 -ml-96 lg:w-64 lg:-ml-64;
   @apply z-10 fixed lg:relative transition-all duration-300 top-0 left-0;
   @apply bg-lightBackground-200 dark:bg-jwdMarine-1000 bottom-0;
 }
 
-.isOpen {
-  @apply w-96 lg:w-64;
+.toggle {
+  @apply flex absolute top-2.5;
+  @apply transition-all duration-300 rounded-md p-1 -right-12;
+}
+
+.show {
+  @apply ml-0;
+}
+
+.show .toggle {
+  @apply right-2 lg:-right-12;
 }
 
 .topbar {
-  @apply flex w-full items-center p-3 gap-3;
+  @apply flex w-full items-center p-4 gap-3;
 }
 
 .navigation {
-  @apply flex flex-col px-3 py-6 mb-auto gap-8;
+  @apply flex flex-col px-4 py-6 mb-auto gap-8;
 }
 
 .history {
@@ -21,5 +30,5 @@
 }
 
 .promo {
-  @apply flex p-3;
+  @apply flex p-4;
 }

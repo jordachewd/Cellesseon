@@ -26,6 +26,7 @@ export default function SidebarToggle({
         sx={{
           padding: "4px 7px",
           borderRadius: "8px!important",
+          lineHeight: 1,
         }}
       >
         <i className={`bi ${icon}`}></i>

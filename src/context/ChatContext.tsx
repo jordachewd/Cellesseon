@@ -1,5 +1,5 @@
 /* UNUSED */
-
+"use client";
 import { createContext, useContext, ReactNode } from "react";
 import { UserData } from "@/types/UserData.d";
 import { getUserById } from "@/lib/actions/user.actions";

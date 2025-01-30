@@ -4,25 +4,49 @@ import css from "@/styles/chat/ChatSidebar.module.css";
 import SidebarToggle from "../shared/SidebarToggle";
 import { Typography } from "@mui/material";
 import { UserData } from "@/types/UserData.d";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PlanPromo from "@/components/shared/PlanPromo";
 import Logo from "../shared/Logo";
-import LogoV2 from "../shared/LogoV2";
+// import LogoV2 from "../shared/LogoV2";
+import { useUser } from "@clerk/nextjs";
+import { getUserById } from "@/lib/actions/user.actions";
+// import useScreenSize from "@/lib/hooks/useScreenSize";
 
-interface ChatSidebarProps {
-  userData: UserData | null;
-}
-
-export default function ChatSidebar({ userData }: ChatSidebarProps) {
+export default function ChatSidebar() {
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  // const { screenSize } = useScreenSize();
+  const { user } = useUser();
+
+  //console.log(screenSize.width);
+
+  useEffect(() => {
+    if (user?.id) {
+      const getUserData = async (userId: string) => {
+        const response = await getUserById(userId);
+        if (response) {
+          setUserData(response);
+        }
+      };
+      getUserData(user.id);
+    }
+  }, [user?.id]);
 
   return (
-    <aside className={`${css.wrapper} ${!isOpen && css.isOpen}`}>
+    <aside className={`${css.wrapper} ${isOpen ? css.show : ""}`}>
+      <div className={css.toggle}>
+        <SidebarToggle
+          icon="bi-layout-sidebar"
+          title={`${isOpen ? "Hide menu" : "Show menu"}`}
+          toggleSidebar={() => setIsOpen(!isOpen)}
+        />
+      </div>
+
       <div className={css.topbar}>
         <Logo symbol />
-        <LogoV2 className={isOpen ? "hidden" : ""} />
+        {/*     <LogoV2 className={isOpen ? "hidden" : ""} /> */}
       </div>
-      <nav className={`${css.navigation} mt-12`}>
+      <nav className={`${css.navigation}`}>
         <div className={css.history}>
           <Typography variant="body2">History</Typography>
 
@@ -41,13 +65,7 @@ export default function ChatSidebar({ userData }: ChatSidebarProps) {
           </Link>
         </div>
       </nav>
-      <div className="p-2">
-        <SidebarToggle
-          icon="bi-layout-sidebar"
-          title={`${isOpen ? "Hide menu" : "Show menu"}`}
-          toggleSidebar={() => setIsOpen(!isOpen)}
-        />
-      </div>
+
       {userData && (
         <div className={css.promo}>
           <PlanPromo userPlan={userData.plan} />
