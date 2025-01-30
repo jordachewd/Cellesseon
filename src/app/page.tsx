@@ -16,7 +16,7 @@ export default async function Home() {
     userData = await getUserById(userId);
   }
 
-  return userId && userData ? (
+  return userId ? (
     <PageWrapper id="ChatPageWrapper" className="!flex-row">
       <ChatSidebar userData={userData} />
       <ChatWrapper />
