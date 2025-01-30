@@ -6,11 +6,11 @@ import { getUserById } from "@/lib/actions/user.actions";
 import { auth } from "@clerk/nextjs/server";
 
 interface ChatContextTypes {
-  userData: UserData | undefined;
+  userData: UserData | null;
 }
 
 const defaultValues: ChatContextTypes = {
-  userData: undefined,
+  userData: null,
 };
 
 const ChatContext = createContext<ChatContextTypes>(defaultValues);
@@ -30,7 +30,7 @@ export async function ChatContextProvider({
   }
 
   const context: ChatContextTypes = {
-    userData: userId && userData ? userData : undefined,
+    userData: userId && userData ? userData : null,
   };
 
   return (

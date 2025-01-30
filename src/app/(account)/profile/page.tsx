@@ -9,16 +9,16 @@ import { auth } from "@clerk/nextjs/server";
 
 export default async function ProfilePage() {
   const { userId } = await auth();
-  let userData: UserData | undefined = undefined;
-  let userTxns: Transaction[] | undefined = undefined;
+  let userData: UserData | null = null;
+  let userTxns: Transaction[] | null = null;
 
   if (userId) {
     userData = await getUserById(userId);
     userTxns =
-      (userData?.plan && (await getAllTransactions(userId))) || undefined;
+      (userData?.plan && (await getAllTransactions(userId))) || null;
   }
 
-  const stripeId = userData?.plan?.stripeId || undefined;
+  const stripeId = userData?.plan?.stripeId || null;
 
   return (
     <>

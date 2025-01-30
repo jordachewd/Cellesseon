@@ -7,7 +7,7 @@ import { auth } from "@clerk/nextjs/server";
 
 export default async function PlansPage() {
   const { userId } = await auth();
-  let userData: UserData | undefined = undefined;
+  let userData: UserData | null = null;
 
   if (userId) {
     userData = await getUserById(userId);

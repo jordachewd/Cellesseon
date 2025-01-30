@@ -10,7 +10,7 @@ import Logo from "../shared/Logo";
 import LogoV2 from "../shared/LogoV2";
 
 interface ChatSidebarProps {
-  userData: UserData | undefined;
+  userData: UserData | null;
 }
 
 export default function ChatSidebar({ userData }: ChatSidebarProps) {

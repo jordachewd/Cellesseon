@@ -11,7 +11,7 @@ import PlanCard from "@/components/shared/PlanCard";
 import LoadingBubbles from "../shared/LoadingBubbles";
 
 interface PlansProps {
-  userData?: UserData;
+  userData?: UserData | null;
   hasLoader?: boolean;
 }
 

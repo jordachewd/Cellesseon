@@ -6,8 +6,8 @@ import { TooltipArrow } from "../shared/TooltipArrow";
 import { generateString } from "@/lib/utils/generateString";
 
 interface BillingProps {
-  stripeId: string | undefined;
-  userTxns: Transaction[] | undefined;
+  stripeId: string | null;
+  userTxns: Transaction[] | null;
 }
 
 export default function ProfileBilling({ stripeId, userTxns }: BillingProps) {

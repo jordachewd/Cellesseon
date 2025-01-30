@@ -8,7 +8,7 @@ import PlanCountDown from "./PlanCountDown";
 // import getFormattedDate from "@/lib/utils/getFormattedDate";
 
 interface PlanPromoProps {
-  userPlan: PlanData;
+  userPlan: PlanData | null;
 }
 
 export default function PlanPromo({ userPlan }: PlanPromoProps) {

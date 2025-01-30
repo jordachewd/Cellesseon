@@ -10,7 +10,7 @@ import PageWrapper from "@/components/layout/PageWrapper";
 
 export default async function Home() {
   const { userId } = await auth();
-  let userData: UserData | undefined = undefined;
+  let userData: UserData | null = null;
 
   if (userId) {
     userData = await getUserById(userId);

@@ -8,7 +8,7 @@ import Checkout from "@/components/shared/Checkout";
 interface PlanCardProps {
   plan: Plan;
   yearly: boolean;
-  userData?: UserData;
+  userData?: UserData | null;
   save?: number;
 }
 
