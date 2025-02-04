@@ -19,6 +19,7 @@
 
 .topbar {
   @apply flex w-full items-center p-4 gap-3;
+  @apply bg-lightPrimary-100 dark:bg-darkPrimary-1000;
 }
 
 .navigation {
@@ -32,3 +33,4 @@
 .promo {
   @apply flex p-4;
 }
+

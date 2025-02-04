@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from 'react';
 
 export type ScreenSize = {
   width: number;
@@ -12,31 +12,25 @@ export type Breakpoints = {
   xl: number;
 };
 
-export default function useScreenSize() {
-  const [screenSize, setScreenSize] = useState<ScreenSize>({
-    width: 0,
-    height: 0,
-  });
+const breakpoints: Breakpoints = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+};
 
-  const breakpoints: Breakpoints = {
-    sm: 640,
-    md: 768,
-    lg: 1024,
-    xl: 1280,
-  };
+const useScreenSize = () => {
+  const [screenSize, setScreenSize] = useState<ScreenSize>({ width: 0, height: 0 });
+  const [currentBreakpoint, setCurrentBreakpoint] = useState<string | null>(null);
 
-  const getBreakpointName = (width: number): string | null => {
+  const getBreakpointName = useCallback((width: number): string | null => {
     if (width <= breakpoints.sm) return "sm";
     if (breakpoints.sm < width && width <= breakpoints.md) return "md";
     if (breakpoints.md < width && width <= breakpoints.lg) return "lg";
     if (breakpoints.lg < width && width <= breakpoints.xl) return "xl";
     if (width > breakpoints.xl) return "xxl";
     return null;
-  };
-
-  const [currentBreakpoint, setCurrentBreakpoint] = useState<string | null>(
-    null
-  );
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -56,7 +50,9 @@ export default function useScreenSize() {
         window.removeEventListener("resize", updateScreenSize);
       };
     }
-  }, []);
+  }, [getBreakpointName]);
 
   return { screenSize, currentBreakpoint };
-}
+};
+
+export default useScreenSize;

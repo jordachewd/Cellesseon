@@ -4,7 +4,7 @@ import ChatIntro from "../chat/ChatIntro";
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import AlertMessage, { AlertParams } from "../shared/AlertMessage";
-import getAiCompletition from "@/lib/utils/getAiCompletition";
+import getAiCompletition from "@/lib/openai/getAiCompletition";
 import { useState } from "react";
 import { Message } from "@/types";
 import ChatHeader from "./ChatHeader";
@@ -34,6 +34,8 @@ export default function ChatWrapper() {
         messages: [...chat.slice(1), prompt],
       });
 
+      console.log(response);
+
       if (response.data.error) {
         setAlert({
           title: response.data.error,
@@ -55,13 +57,16 @@ export default function ChatWrapper() {
     setIsLoading(false);
   };
 
+  const handleNewTask = () => {
+    setChat([]);
+  };
+
   const isChatEmpty = chat.length === 0;
 
-  
   return (
     <main className={css.main}>
       {alert && <AlertMessage message={alert} />}
-      <ChatHeader />
+      <ChatHeader setNewTask={handleNewTask} isInUse={isChatEmpty} />
 
       <section
         id="ChatWrapperContent"
@@ -75,9 +80,9 @@ export default function ChatWrapper() {
       </section>
 
       <ChatInput
-        sendMessage={sendMessage}
         loading={isLoading}
         startPrompt={startMsg}
+        sendMessage={sendMessage}
       />
     </main>
   );

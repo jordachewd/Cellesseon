@@ -9,7 +9,7 @@
 }
 
 .content {
-  @apply flex justify-between items-center w-full pl-8 py-3 gap-4 mx-auto;
+  @apply flex justify-between items-center w-full py-3 gap-4 mx-auto;
 }
 
 .left,

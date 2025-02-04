@@ -1,6 +1,6 @@
 import { Message } from "@/types";
 import { CreateTaskParams, TokenUsage } from "@/types/TaskData.d";
-import getOpenAiApi from "./getOpenAiApi";
+import getOpenAiApi from "@/lib/openai/getOpenAiApi";
 
 interface StoreChatParams {
   messages: Message[];
@@ -11,6 +11,7 @@ export default async function updateCreateTask({
   messages,
   usage,
 }: StoreChatParams) {
+  
   const getTitle: Message = {
     whois: "user",
     role: "user",

@@ -9,10 +9,23 @@ interface ChatIntroProps {
   sendPrompt: (prompt: string) => void;
 }
 
-
 export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
   const { user, isLoaded } = useUser();
   const [chipSet, setChipSet] = useState<number>(-1);
+
+  const handleChooseChip = (id: number) => {
+    setChipSet(id);
+  };
+
+  const handleSendPrompt = (prompt: string) => {
+    sendPrompt(prompt);
+   // setChipSet(-1);
+  };
+
+  const closeIntro = () => {
+    setChipSet(-1);
+    sendPrompt("");
+  };
 
   if (!isLoaded) {
     return (
@@ -39,7 +52,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
                 key={chip.id}
                 variant="outlined"
                 label={chip.label}
-                onClick={() => setChipSet(chip.id)}
+                onClick={() => handleChooseChip(chip.id)}
                 className={`${css.chip} ${css[`chip_${chip.id}`]}`}
                 icon={<i className={chip.icon}></i>}
               />
@@ -57,17 +70,14 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
                 key={opt.id}
                 variant="outlined"
                 label={opt.label}
-                onClick={() => sendPrompt(opt.label)}
+                onClick={() => handleSendPrompt(opt.label)}
                 className={`${css.chip} ${css[`chip_${opt.id}`]}`}
               />
             ))}
 
             <i
               className={`bi bi-x-circle ${css.chip} ${css.chip_x}`}
-              onClick={() => {
-                setChipSet(-1);
-                sendPrompt("");
-              }}
+              onClick={closeIntro}
             ></i>
           </div>
         </>

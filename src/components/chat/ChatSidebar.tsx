@@ -6,19 +6,25 @@ import { Typography } from "@mui/material";
 import { UserData } from "@/types/UserData.d";
 import { useEffect, useState } from "react";
 import PlanPromo from "@/components/shared/PlanPromo";
-import Logo from "../shared/Logo";
-// import LogoV2 from "../shared/LogoV2";
+import LogoV2 from "../shared/LogoV2";
 import { useUser } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.actions";
-// import useScreenSize from "@/lib/hooks/useScreenSize";
+import useScreenSize from "@/lib/hooks/useScreenSize";
 
 export default function ChatSidebar() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  // const { screenSize } = useScreenSize();
+  const { screenSize } = useScreenSize();
+  const screenWidth = screenSize.width;
   const { user } = useUser();
 
-  //console.log(screenSize.width);
+  useEffect(() => {
+    if (screenWidth <= 1024) {
+      setIsOpen(false);
+    } else {
+      setIsOpen(true);
+    }
+  }, [screenWidth]);
 
   useEffect(() => {
     if (user?.id) {
@@ -43,8 +49,7 @@ export default function ChatSidebar() {
       </div>
 
       <div className={css.topbar}>
-        <Logo symbol />
-        {/*     <LogoV2 className={isOpen ? "hidden" : ""} /> */}
+        <LogoV2 />
       </div>
       <nav className={`${css.navigation}`}>
         <div className={css.history}>
