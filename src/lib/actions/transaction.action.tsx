@@ -12,9 +12,9 @@ import { ClerkUserData } from "@/types/TaskData.d";
 import { CheckoutPlanParams } from "@/types/PlanData.d";
 import getFullName from "../utils/getFullName";
 
-
 export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  const BASEURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const {
     userId,
@@ -37,7 +37,6 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
     lastName: lastName || "",
     username: username || "",
   });
-
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
@@ -63,8 +62,8 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
       billing: planBilling,
       planId,
     },
-    success_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/profile`,
-    cancel_url: `${process.env.NEXT_PUBLIC_API_BASE_URL}/plans`,
+    success_url: `${BASEURL}/profile`,
+    cancel_url: `${BASEURL}/plans`,
   });
 
   redirect(session.url!);

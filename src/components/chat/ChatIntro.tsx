@@ -19,7 +19,6 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
 
   const handleSendPrompt = (prompt: string) => {
     sendPrompt(prompt);
-   // setChipSet(-1);
   };
 
   const closeIntro = () => {

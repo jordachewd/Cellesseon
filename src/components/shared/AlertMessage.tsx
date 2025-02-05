@@ -51,7 +51,7 @@ export default function AlertMessage({ message }: AlertMessageProps) {
     <Snackbar
       open={openAlert}
       onClose={handleClose}
-      autoHideDuration={7000}
+      autoHideDuration={10000}
       TransitionComponent={SlideTransition}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
       sx={{ zIndex: "100" }}

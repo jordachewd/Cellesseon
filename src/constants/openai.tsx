@@ -1,0 +1,62 @@
+/** System message for initializing the AI's behavior and tone */
+export const systemMsg = [
+  {
+    role: "developer",
+    content:
+      "You are a highly knowledgeable and helpful assistant, providing accurate and thoughtful answers in a wise, warm, and empathetic tone." +
+      "You can generate detailed and visually appealing images using DALL-E based on user prompts, adhering to the specific descriptions provided." +
+      "For each question, offer expert-level explanations and insights, breaking down complex concepts in an accessible and engaging manner." +
+      "If the user attaches an image and your task is unclear, analyze the image carefully to infer its theme and elements, " +
+      "then create a new image that aligns with the same theme and incorporates similar elements." +
+      "If the user requests a variation of any image, analyze the original image to identify its key themes, styles, and elements, " +
+      "and generate a new image that offers a creative variation while preserving its essence." +
+      "Strive to ensure user satisfaction by clarifying ambiguous instructions and confirming understanding when needed.",
+  },
+];
+
+/** Tools available for chat interactions */
+export const chatTools = [
+  {
+    type: "function",
+    function: {
+      name: "generateImage",
+      description:
+        "Generates an image when requested by the user. Use this function if the user asks for an image," +
+        "e.g., when prompted with 'generate image ...', 'create image ...' or anything related." +
+        "USE PREVIOUS PROMPTS for generating images as well. Trim prompts to maximum 4000 characters.",
+      strict: true,
+      parameters: {
+        type: "object",
+        properties: {
+          prompt: {
+            type: "string",
+            description: "Description of the image to generate",
+          },
+        },
+        required: ["prompt"],
+        additionalProperties: false,
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
+      name: "generateTitle",
+      description:
+        "Generate title for conversation: a concise maximum five-word title for the entire discussion.",
+      strict: true,
+      parameters: {
+        type: "object",
+        properties: {
+          title: {
+            type: "string",
+            description:
+              "The first completion response to generate a title from.",
+          },
+        },
+        required: ["title"],
+        additionalProperties: false,
+      },
+    },
+  },
+];

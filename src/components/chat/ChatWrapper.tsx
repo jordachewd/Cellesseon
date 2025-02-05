@@ -1,14 +1,13 @@
 "use client";
-import css from "@/styles/chat/ChatWrapper.module.css";
-import ChatIntro from "../chat/ChatIntro";
-import ChatBody from "@/components/chat/ChatBody";
-import ChatInput from "@/components/chat/ChatInput";
-import AlertMessage, { AlertParams } from "../shared/AlertMessage";
-import getAiCompletition from "@/lib/openai/getAiCompletition";
+import classNames from "classnames";
 import { useState } from "react";
 import { Message } from "@/types";
-import ChatHeader from "./ChatHeader";
-import classNames from "classnames";
+import css from "@/styles/chat/ChatWrapper.module.css";
+import ChatHeader from "@/components/chat/ChatHeader";
+import ChatIntro from "@/components/chat/ChatIntro";
+import ChatBody from "@/components/chat/ChatBody";
+import ChatInput from "@/components/chat/ChatInput";
+import AlertMessage, { AlertParams } from "@/components/shared/AlertMessage";
 
 export default function ChatWrapper() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -30,24 +29,27 @@ export default function ChatWrapper() {
     setChat((prev) => [...prev, prompt, tempChat]);
 
     try {
-      const response = await getAiCompletition({
-        messages: [...chat.slice(1), prompt],
+      const taskMessages = [...chat.slice(1), prompt] as Message[];
+      const response = await fetch("/api/openai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: taskMessages }),
       });
 
-      console.log(response);
-
-      if (response.data.error) {
-        setAlert({
-          title: response.data.error,
-          text: `Error status: ${response.data.status}`,
-        });
-        setIsLoading(false);
-        setChat((prev) => prev.slice(0, -1));
+      if (response.status !== 200) {
+        handleError(response.statusText, `Error status: ${response.status}`);
         return;
       }
 
-      if (response.openai) {
-        setChat((prev) => [...prev.slice(0, -1), response.openai]);
+      const responseData = await response.json();
+      console.log("ChatWrapper responseData: ", responseData);
+
+      if (responseData.taskError) {
+        const { title, error } = responseData.taskError;
+        handleError(title, error);
+        return;
+      } else if (responseData.taskData) {
+        setChat((prev) => [...prev.slice(0, -1), responseData.taskData]);
       }
     } catch (error) {
       console.error(error);
@@ -57,8 +59,10 @@ export default function ChatWrapper() {
     setIsLoading(false);
   };
 
-  const handleNewTask = () => {
-    setChat([]);
+  const handleError = (title: string, text: string) => {
+    setAlert({ title, text });
+    setIsLoading(false);
+    setChat((prev) => prev.slice(0, -1));
   };
 
   const isChatEmpty = chat.length === 0;
@@ -66,7 +70,7 @@ export default function ChatWrapper() {
   return (
     <main className={css.main}>
       {alert && <AlertMessage message={alert} />}
-      <ChatHeader setNewTask={handleNewTask} isInUse={isChatEmpty} />
+      <ChatHeader />
 
       <section
         id="ChatWrapperContent"
@@ -80,9 +84,9 @@ export default function ChatWrapper() {
       </section>
 
       <ChatInput
+        sendMessage={sendMessage}
         loading={isLoading}
         startPrompt={startMsg}
-        sendMessage={sendMessage}
       />
     </main>
   );

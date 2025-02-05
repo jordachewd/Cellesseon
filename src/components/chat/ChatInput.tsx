@@ -7,15 +7,15 @@ import { UploadFileInput } from "../shared/UploadFileInput";
 import { TooltipArrow } from "../shared/TooltipArrow";
 
 interface ChatInputProps {
-  sendMessage: (message: Message) => void;
   loading: boolean;
   startPrompt?: string;
+  sendMessage: (message: Message) => void;
 }
 
 export default function ChatInput({
-  sendMessage,
   loading,
   startPrompt,
+  sendMessage,
 }: ChatInputProps) {
   const [prompt, setPrompt] = useState<string>(startPrompt || "");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -40,7 +40,7 @@ export default function ChatInput({
     setSelectedFile(file);
   };
 
-  const convertToBase64 = (file: File): Promise<string> => {
+  const convertToBase64 = async (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -72,12 +72,13 @@ export default function ChatInput({
       });
     }
 
-    sendMessage({
+    const message: Message = {
       whois: "user",
       role: "user",
       content,
-    });
+    };
 
+    sendMessage(message);
     setPrompt("");
     setSelectedFile(null);
   };

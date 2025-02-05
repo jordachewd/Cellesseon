@@ -1,9 +1,10 @@
 import { useColorScheme } from "@mui/material/styles";
-import { PrefersColorScheme } from "@/types";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Button from "@mui/material/Button";
 import { TooltipArrow } from "./TooltipArrow";
 import { useEffect } from "react";
+
+type ColorSchemes = "system" | "light" | "dark";
 
 export default function ToggleTheme() {
   const { mode, setMode } = useColorScheme();
@@ -15,9 +16,9 @@ export default function ToggleTheme() {
       ).matches;
 
       if (defaultMode) {
-        setMode("dark" as PrefersColorScheme);
+        setMode("dark" as ColorSchemes);
       } else {
-        setMode("light" as PrefersColorScheme);
+        setMode("light" as ColorSchemes);
       }
     }
   }, [mode, setMode]);
@@ -27,7 +28,7 @@ export default function ToggleTheme() {
       <TooltipArrow title="Light" placement="bottom">
         <Button
           size="small"
-          onClick={() => setMode("light" as PrefersColorScheme)}
+          onClick={() => setMode("light" as ColorSchemes)}
           variant={mode === "light" ? "contained" : "outlined"}
           sx={{
             border: "none",
@@ -43,7 +44,7 @@ export default function ToggleTheme() {
       <TooltipArrow title="Dark" placement="bottom">
         <Button
           size="small"
-          onClick={() => setMode("dark" as PrefersColorScheme)}
+          onClick={() => setMode("dark" as ColorSchemes)}
           variant={mode === "dark" ? "contained" : "outlined"}
           sx={{
             border: "none",

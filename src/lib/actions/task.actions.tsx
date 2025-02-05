@@ -1,9 +1,9 @@
 "use server";
 import Tasks from "../database/models/tasks.model";
 import { CreateTaskParams, UpdateTaskParams } from "@/types/TaskData.d";
-import { connectToDatabase } from "../database/mongoose";
+import { connectToDatabase } from "@/lib/database/mongoose";
 import { revalidatePath } from "next/cache";
-import { handleError } from "../utils/handleError";
+import { handleError } from "@/lib/utils/handleError";
 
 // CREATE TASK
 export async function createTask(task: CreateTaskParams) {

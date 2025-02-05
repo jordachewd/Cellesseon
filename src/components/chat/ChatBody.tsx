@@ -53,9 +53,9 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                       return (
                         <ImageHolder
                           key={idx}
-                          src={reply.image_url.url}
-                          width={isBot ? 320 : 60}
-                          height={isBot ? 320 : 60}
+                          src={reply.image_url.url || ""}
+                          width={isBot ? 320 : 128}
+                          height={isBot ? 320 : 128}
                         />
                       );
                     } else if (reply.type === "temp") {

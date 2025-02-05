@@ -1,29 +1,28 @@
-import { Uploadable } from "openai/uploads.mjs";
-
 interface TextContent {
   type: "text" | "temp";
-  text: string;
+  text: string | null | undefined;
 }
 
 interface ImageContent {
   type: "image_url";
   image_url: {
-    url: string;
+    url: string | undefined;
   };
 }
 
-export type PrefersColorScheme = "system" | "light" | "dark";
-export type MessageRole = "user" | "assistant" | "system";
+export type MessageRole = "user" | "assistant" | "system" | "developer";
+
 export type ContentType = TextContent | ImageContent;
 
 export interface Message {
-  whois: string;
+  whois?: MessageRole;
   role: MessageRole;
   content: string | ContentType[];
 }
 
 export interface Messages {
   taskId?: string;
+  taskTitle?: string;
   messages: Message[];
 }
 
@@ -31,11 +30,7 @@ export interface GenerateImage {
   prompt: string;
 }
 
-export interface VariateImage {
-  image: Uploadable;
-}
-
-export type Option = {
+type ChipOptions = {
   id: number;
   label: string;
 };
@@ -44,5 +39,5 @@ export type Chip = {
   id: number;
   label: string;
   icon: string;
-  options: Option[];
+  options: ChipOptions[];
 };
