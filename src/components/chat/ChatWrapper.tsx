@@ -70,7 +70,7 @@ export default function ChatWrapper() {
   return (
     <main className={css.main}>
       {alert && <AlertMessage message={alert} />}
-      <ChatHeader />
+      <ChatHeader setNewTask={() => setChat([])} />
 
       <section
         id="ChatWrapperContent"
