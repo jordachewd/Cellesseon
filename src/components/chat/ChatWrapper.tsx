@@ -13,23 +13,25 @@ export default function ChatWrapper() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
   const [startMsg, setStartMsg] = useState<string>("");
-  const [chat, setChat] = useState<Message[]>([]);
+  const [task, setTask] = useState<Message[]>([]);
+  const isNewTask = task.length === 0;
 
   const sendMessage = async (prompt: Message) => {
     if (!prompt) return;
     setIsLoading(true);
     setStartMsg("");
 
-    const tempChat: Message = {
+    const tempPrompt: Message = {
       whois: "assistant",
       role: "user",
       content: [{ type: "temp", text: "Thinking ..." }],
     };
 
-    setChat((prev) => [...prev, prompt, tempChat]);
+    setTask((prev) => [...prev, prompt, tempPrompt]);
 
     try {
-      const taskMessages = [...chat.slice(1), prompt] as Message[];
+      const taskMessages = [...task, prompt] as Message[];
+
       const response = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -37,49 +39,49 @@ export default function ChatWrapper() {
       });
 
       if (response.status !== 200) {
-        handleError(response.statusText, `Error status: ${response.status}`);
+        showAlert(response.statusText, `Error status: ${response.status}`);
         return;
       }
 
       const responseData = await response.json();
-      console.log("ChatWrapper responseData: ", responseData);
+      const { taskData, taskError } = responseData;
 
-      if (responseData.taskError) {
-        const { title, error } = responseData.taskError;
-        handleError(title, error);
+      if (taskData) {
+        setTask((prev) => [...prev.slice(0, -1), taskData]);
+      }
+
+      if (taskError) {
+        const { title, error } = taskError;
+        showAlert(title, error);
         return;
-      } else if (responseData.taskData) {
-        setChat((prev) => [...prev.slice(0, -1), responseData.taskData]);
       }
     } catch (error) {
       console.error(error);
-      setChat((prev) => prev.slice(0, -1));
+      setTask((prev) => prev.slice(0, -1));
     }
 
     setIsLoading(false);
   };
 
-  const handleError = (title: string, text: string) => {
+  const showAlert = (title: string, text: string) => {
     setAlert({ title, text });
     setIsLoading(false);
-    setChat((prev) => prev.slice(0, -1));
+    setTask((prev) => prev.slice(0, -1));
   };
-
-  const isChatEmpty = chat.length === 0;
 
   return (
     <main className={css.main}>
       {alert && <AlertMessage message={alert} />}
-      <ChatHeader setNewTask={() => setChat([])} />
+      <ChatHeader setNewTask={() => setTask([])} />
 
       <section
         id="ChatWrapperContent"
-        className={classNames(css.content, isChatEmpty && css.intro)}
+        className={classNames(css.content, isNewTask && css.intro)}
       >
-        {isChatEmpty ? (
+        {isNewTask ? (
           <ChatIntro sendPrompt={(prompt) => setStartMsg(prompt)} />
         ) : (
-          <ChatBody messages={chat} />
+          <ChatBody messages={task} />
         )}
       </section>
 

@@ -1,5 +1,6 @@
 "use server";
 import OpenAI from "openai";
+import manageOpenAiError from "@/lib/utils/openai/manageOpenAiError";
 import { ContentType, Message, MessageRole } from "@/types";
 import { systemMsg, chatTools } from "@/constants/openai";
 import {
@@ -28,7 +29,6 @@ export async function getChatCompletion(messages: Message[]) {
 
     const { message, finish_reason } = chatData.choices[0];
     const toolCalls = message.tool_calls;
-
     const taskContent: ContentType[] = [
       { type: "text", text: message.content },
     ];
@@ -52,7 +52,10 @@ export async function getChatCompletion(messages: Message[]) {
 
     return { taskData };
   } catch (error) {
-    return handleOpenAiError("Chat Completion API Error", error);
+    return manageOpenAiError({
+      title: "'getChatCompletion' error",
+      error,
+    });
   }
 }
 
@@ -76,7 +79,7 @@ async function handleImageGeneration(prompt: string, role: MessageRole) {
       taskData: { whois: role, role, content: imgTaskContent },
     };
   } catch (error) {
-    return handleOpenAiError("Image Generation Error", error);
+    return manageOpenAiError({ title: "'handleImageGeneration' error", error });
   }
 }
 
@@ -95,17 +98,6 @@ export async function getImageGeneration(prompt: string) {
 
     return imageData.data[0];
   } catch (error) {
-    return handleOpenAiError("Image Generation API Error", error);
+    return manageOpenAiError({ title: "'getImageGeneration' error", error });
   }
-}
-
-function handleOpenAiError(title: string, error: Error | unknown) {
-  return {
-    taskError: {
-      title,
-      error:
-        error instanceof Error ? error.message : "Unexpected error occurred.",
-      status: 500,
-    },
-  };
 }

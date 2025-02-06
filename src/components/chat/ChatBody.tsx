@@ -1,6 +1,6 @@
 import css from "@/styles/chat/ChatBody.module.css";
 import { Message } from "@/types";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -22,58 +22,62 @@ export default function ChatBody({ messages }: ChatBodyProps) {
       }
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [parent, messages]);
+  }, [parent.current, messages]);
+
+  // Memoize messages rendering
+  const listMessages = useMemo(() => {
+    return messages.map((message, i) => {
+      const { whois, content } = message;
+      const isBot = whois !== "user";
+
+      return (
+        <article
+          key={i}
+          className={`${css.article} ${isBot ? css.botArticle : ""}`}
+        >
+          <i
+            className={`bi bi-${isBot ? "robot" : "person"} ${css.avatar}`}
+          ></i>
+
+          <div className={css.content}>
+            {Array.isArray(content) ? (
+              content.map((reply, idx) => {
+                if (reply.type === "text") {
+                  return (
+                    <ReactMarkdown key={idx} remarkPlugins={[remarkGfm]}>
+                      {reply.text}
+                    </ReactMarkdown>
+                  );
+                } else if (reply.type === "image_url") {
+                  return (
+                    <ImageHolder
+                      key={idx}
+                      src={reply.image_url.url || ""}
+                      width={isBot ? 320 : 128}
+                      height={isBot ? 320 : 128}
+                    />
+                  );
+                } else if (reply.type === "temp") {
+                  return <LoadingBubbles key={idx} size="small" />;
+                }
+                return null;
+              })
+            ) : (
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {content}
+              </ReactMarkdown>
+            )}
+          </div>
+        </article>
+      );
+    });
+  }, [messages]);
 
   return (
     <>
       <div className={css.wrapper} ref={parent}>
-        {messages.map((message, i) => {
-          const isBot = message.whois !== "user";
-          return (
-            <article
-              key={i}
-              className={`${css.article} ${isBot ? css.botArticle : ""}`}
-            >
-              {isBot ? (
-                <i className={`bi bi-robot ${css.avatar}`}></i>
-              ) : (
-                <i className={`bi bi-person ${css.avatar}`}></i>
-              )}
-
-              <div className={css.content}>
-                {Array.isArray(message.content) ? (
-                  message.content.map((reply, idx) => {
-                    if (reply.type === "text") {
-                      return (
-                        <ReactMarkdown key={idx} remarkPlugins={[remarkGfm]}>
-                          {reply.text}
-                        </ReactMarkdown>
-                      );
-                    } else if (reply.type === "image_url") {
-                      return (
-                        <ImageHolder
-                          key={idx}
-                          src={reply.image_url.url || ""}
-                          width={isBot ? 320 : 128}
-                          height={isBot ? 320 : 128}
-                        />
-                      );
-                    } else if (reply.type === "temp") {
-                      return <LoadingBubbles key={idx} size="small" />;
-                    }
-                    return null;
-                  })
-                ) : (
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {message.content}
-                  </ReactMarkdown>
-                )}
-              </div>
-            </article>
-          );
-        })}
+        {listMessages}
       </div>
-
       <div className={css.bottomRef} ref={bottomRef}></div>
     </>
   );
