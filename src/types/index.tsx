@@ -12,9 +12,7 @@ interface ImageContent {
 
 interface AudioContent {
   type: "audio_url";
-  audio_url: {
-    url: string | undefined | null;
-  };
+  audio_url: string | undefined | null;
 }
 
 export type MessageRole = "user" | "assistant" | "system" | "developer";

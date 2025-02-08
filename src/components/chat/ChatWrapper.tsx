@@ -102,7 +102,9 @@ function filterAssistantMsg(messages: Message[]) {
       return {
         ...message,
         content: Array.isArray(message.content)
-          ? message.content.filter((item) => item.type !== "image_url")
+          ? message.content.filter(
+              (item) => item.type !== "image_url" && item.type !== "audio_url"
+            )
           : message.content,
       };
     }

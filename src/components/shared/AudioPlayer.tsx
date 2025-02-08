@@ -1,21 +1,74 @@
-"use client";
-
 import { useState, useEffect } from "react";
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardContent,
+  Typography,
+  LinearProgress,
+} from "@mui/material";
 
 interface AudioPlayerProps {
   audioSrc: string | null;
 }
+
 export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState("0:00");
+  const [duration, setDuration] = useState("0:00");
 
   useEffect(() => {
     if (audioSrc) {
-      const audioElement = new Audio(audioSrc);
-      setAudio(audioElement);
+      try {
+        const byteCharacters = atob(audioSrc);
+        const byteNumbers = new Uint8Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const blob = new Blob([byteNumbers], { type: "audio/wav" });
+        const url = URL.createObjectURL(blob);
+        setBlobUrl(url);
+        const audioElement = new Audio(url);
+        setAudio(audioElement);
+
+        audioElement.onloadedmetadata = () => {
+          setDuration(formatTime(audioElement.duration));
+        };
+      } catch (error) {
+        console.error("Error processing audio:", error);
+      }
     }
-  }, [audioSrc]);
+    return () => {
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+      }
+    };
+  }, [audioSrc, blobUrl]);
+
+  useEffect(() => {
+    if (audio) {
+      const updateProgress = () => {
+        setProgress((audio.currentTime / audio.duration) * 100);
+        setCurrentTime(formatTime(audio.currentTime));
+      };
+
+      const handleEnded = () => {
+        setIsPlaying(false);
+        setProgress(0);
+        setCurrentTime("0:00");
+      };
+
+      audio.addEventListener("timeupdate", updateProgress);
+      audio.addEventListener("ended", handleEnded);
+
+      return () => {
+        audio.removeEventListener("timeupdate", updateProgress);
+        audio.removeEventListener("ended", handleEnded);
+      };
+    }
+  }, [audio]);
 
   const togglePlay = () => {
     if (audio) {
@@ -30,10 +83,21 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
     }
   };
 
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+  };
+
   return (
-    <Card sx={{ display: "flex", textAlign: "center", margin: "auto" }}>
+    <Card
+      sx={{
+        display: "flex",
+        width: "100%",
+        margin: "0.75rem auto 0",
+      }}
+    >
       <CardContent>
-        <Typography variant="h5">Audio Response</Typography>
         <Button
           size="small"
           onClick={togglePlay}
@@ -41,10 +105,16 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
             <i className={`bi bi-${isPlaying ? "pause" : "play"}`}></i>
           }
           sx={{ mt: 2 }}
-          disabled={!audioSrc}
+          disabled={!blobUrl}
         >
           {isPlaying ? "Pause" : "Play"}
         </Button>
+
+        <LinearProgress variant="determinate" value={progress} sx={{ mt: 2 }} />
+
+        <Typography variant="body2" sx={{ mt: 1 }}>
+          {currentTime} / {duration}
+        </Typography>
       </CardContent>
     </Card>
   );

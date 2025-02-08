@@ -43,7 +43,7 @@ export async function getChatCompletion(messages: Message[]) {
       const { name: fnName, arguments: args } = toolCalls[0].function;
       const fnArgs = JSON.parse(args);
 
-      console.log("fnName: ", fnName);
+      // console.log("fnName: ", fnName);
 
       if (fnName === "generateImage") {
         return await getImageGenerator(
@@ -53,6 +53,8 @@ export async function getChatCompletion(messages: Message[]) {
       }
 
       if (fnName === "generateAudio") {
+        //  console.log("fnArgs: ", fnArgs);
+
         return await getAudioGenerator(
           Array.isArray(fnArgs) ? fnArgs : ([fnArgs] as Message[]),
           message.role as MessageRole
@@ -61,7 +63,6 @@ export async function getChatCompletion(messages: Message[]) {
 
       if (fnName === "generateTitle") {
         console.log("generateTitle fnArgs: ", fnArgs);
-        // return { ...chatData, taskTitle: fnArgs.title };
       }
     }
 
@@ -116,26 +117,23 @@ async function getAudioGenerator(messages: Message[], role: MessageRole) {
       messages: [...messages] as ChatCompletionMessageParam[],
     });
 
-    const respData = response.choices[0]?.message?.audio?.data;
+    const respData = response.choices[0]?.message?.audio;
 
     if (!respData) {
       throw new Error("No audio data returned from Audio API.");
     }
-
-   // console.log("AUDIO respData: ", typeof respData);
-
-    const audioBlob = new Blob([Buffer.from(respData, "base64")], {
-      type: "audio/wav",
-    });
-    const audioUrl = URL.createObjectURL(audioBlob);
 
     const taskData: Message = {
       whois: role,
       role,
       content: [
         {
+          type: "text",
+          text: "transcript" in respData ? respData.transcript : "",
+        },
+        {
           type: "audio_url",
-          audio_url: { url: audioUrl },
+          audio_url: respData.data,
         },
       ],
     };

@@ -8,7 +8,6 @@ import LoadingBubbles from "../shared/LoadingBubbles";
 import ImageHolder from "@/components/shared/ImageHolder";
 import AudioPlayer from "@/components/shared/AudioPlayer";
 
-
 interface ChatBodyProps {
   messages: Message[];
 }
@@ -24,7 +23,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
       }
       bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [parent.current, messages]);
+  }, [messages]);
 
   // Memoize messages rendering
   const listMessages = useMemo(() => {
@@ -66,10 +65,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
 
                 if (reply.type === "audio_url") {
                   return (
-                    <AudioPlayer
-                      key={idx}
-                      audioSrc={reply.audio_url.url || ""}
-                    />
+                    <AudioPlayer key={idx} audioSrc={reply.audio_url || null} />
                   );
                 }
 

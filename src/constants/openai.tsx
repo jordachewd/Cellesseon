@@ -44,7 +44,7 @@ export const chatTools = [
       name: "generateAudio",
       description:
         "Generates an audio file when requested by the user. Use this function if the user asks for an audio file," +
-        "e.g., when prompted with 'generate audio ...', 'create audio ...' or anything related." +
+        "e.g., when prompted with 'generate audio ...', 'create audio ...' or anything related. MAX 1 minute long." +
         "USE PREVIOUS PROMPTS for generating audio files as well. Trim prompts to maximum 4000 characters.",
       strict: true,
       parameters: {
