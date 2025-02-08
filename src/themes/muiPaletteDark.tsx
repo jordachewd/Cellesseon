@@ -17,8 +17,8 @@ export const muiPaletteDark: ThemeOptions = {
     action: {
       active: "#E8A87C", // Rose Gold
       hover: "#C17B5B", // Slightly darker shade
-      disabled: "#6A0DAD", // Deep Plum
-      disabledBackground: "#6A0DAD", // Deep Plum
+      // disabled: "#6A0DAD", // Deep Plum
+      // disabledBackground: "#6A0DAD", // Deep Plum
     },
     background: {
       default: "#020519", // Marine Dark Blue

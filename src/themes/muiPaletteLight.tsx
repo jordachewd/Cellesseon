@@ -17,8 +17,8 @@ export const muiPaletteLight: ThemeOptions = {
     action: {
       active: "#50C878", // Emerald Green
       hover: "#3E995F", // Slightly darker shade
-      disabled: "#f0c9cd", // Blush Pink
-      disabledBackground: "#f0c9cd", // Blush Pink
+      disabled: "#999", // Blush Pink
+      //disabledBackground: "#f0c9cd", // Blush Pink
     },
     background: {
       default: "#F9F5F1", // Soft Beige

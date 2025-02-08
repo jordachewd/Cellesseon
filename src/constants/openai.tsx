@@ -41,6 +41,32 @@ export const chatTools = [
   {
     type: "function",
     function: {
+      name: "generateAudio",
+      description:
+        "Generates an audio file when requested by the user. Use this function if the user asks for an audio file," +
+        "e.g., when prompted with 'generate audio ...', 'create audio ...' or anything related." +
+        "USE PREVIOUS PROMPTS for generating audio files as well. Trim prompts to maximum 4000 characters.",
+      strict: true,
+      parameters: {
+        type: "object",
+        properties: {
+          role: {
+            type: "string",
+            description: "The role of the user requesting the audio file",
+          },
+          content: {
+            type: "string",
+            description: "Description of the audio file to generate",
+          },
+        },
+        required: ["role", "content"],
+        additionalProperties: false,
+      },
+    },
+  },
+  {
+    type: "function",
+    function: {
       name: "generateTitle",
       description:
         "Generate title for conversation: a concise maximum five-word title for the entire discussion.",

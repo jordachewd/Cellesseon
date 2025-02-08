@@ -10,6 +10,13 @@ interface ImageContent {
   };
 }
 
+interface AudioContent {
+  id: string;
+  expires_at: Date | number;
+  data: string;
+  transcript: string;
+}
+
 export type MessageRole = "user" | "assistant" | "system" | "developer";
 
 export type ContentType = TextContent | ImageContent;
@@ -17,7 +24,8 @@ export type ContentType = TextContent | ImageContent;
 export interface Message {
   whois?: MessageRole;
   role: MessageRole;
-  content: string | ContentType[];
+  content: ContentType[] | string | null;
+  audio?: AudioContent | string | null;
 }
 
 export interface Messages {

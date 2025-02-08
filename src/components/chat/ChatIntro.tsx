@@ -69,7 +69,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
                 key={opt.id}
                 variant="outlined"
                 label={opt.label}
-                onClick={() => handleSendPrompt(opt.label)}
+                onClick={() => handleSendPrompt(`${IntroChips[chipSet].label}: ${opt.label}`)}
                 className={`${css.chip} ${css[`chip_${opt.id}`]}`}
               />
             ))}

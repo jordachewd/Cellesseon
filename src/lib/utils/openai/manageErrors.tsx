@@ -3,7 +3,7 @@ interface OpenAiError {
   error: Error | unknown;
 }
 
-export default function manageOpenAiError({ title, error }: OpenAiError) {
+export default function manageErrors({ title, error }: OpenAiError) {
   return {
     taskError: {
       title,

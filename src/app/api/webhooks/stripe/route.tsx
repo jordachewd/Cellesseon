@@ -1,13 +1,26 @@
+/**
+ * This file contains the route handler for Stripe webhooks.
+ * It listens for POST requests from Stripe and processes events such as "checkout.session.completed".
+ *
+ * Params:
+ * - request: The incoming HTTP request object containing the Stripe event payload and headers.
+ *
+ * Returns:
+ * - A JSON response indicating the result of the webhook processing.
+ * - In case of a successful "checkout.session.completed" event, it returns the created transaction and updated user data.
+ * - In case of an error, it returns a JSON response with an error message.
+ */
+
 import { getExpiresOn } from "@/constants/plans";
 import { createTransaction } from "@/lib/actions/transaction.action";
 import { updateUser } from "@/lib/actions/user.actions";
 import { BillingCycle, PlanData, PlanName } from "@/types/PlanData.d";
 import { CreateTransactionParams } from "@/types/TransactionData.d";
 import { UpdateUserParams } from "@/types/UserData.d";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import stripe from "stripe";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   const body = await request.text();
   const sig = request.headers.get("stripe-signature") as string;
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
@@ -74,5 +87,5 @@ export async function POST(request: Request) {
     }
   }
 
-  return new Response("STRIPE: Checkout completed!", { status: 200 });
+  return NextResponse.json({ message: "STRIPE: Checkout completed!" }, { status: 200 });
 }

@@ -52,6 +52,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                   return (
                     <ImageHolder
                       key={idx}
+                      hasTools={isBot}
                       src={reply.image_url.url || ""}
                       width={isBot ? 320 : 128}
                       height={isBot ? 320 : 128}

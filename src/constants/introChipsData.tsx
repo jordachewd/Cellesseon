@@ -66,7 +66,7 @@ export const IntroChips: Chip[] = [
       },
       {
         id: 1,
-        label: "Detect emotions in a group photo.",
+        label: "What's in this image? Describe it.",
       },
       {
         id: 2,

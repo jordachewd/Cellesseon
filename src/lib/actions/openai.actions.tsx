@@ -1,6 +1,6 @@
 "use server";
 import OpenAI from "openai";
-import manageOpenAiError from "@/lib/utils/openai/manageOpenAiError";
+import manageErrors from "@/lib/utils/openai/manageErrors";
 import { ContentType, Message, MessageRole } from "@/types";
 import { systemMsg, chatTools } from "@/constants/openai";
 import {
@@ -18,7 +18,7 @@ export async function getChatCompletion(messages: Message[]) {
   try {
     const chatData = await openAiClient.chat.completions.create({
       model: "gpt-4o",
-      temperature: 0.3,
+      temperature: 0.1,
       messages: [...systemMsg, ...messages] as ChatCompletionMessageParam[],
       tools: chatTools as ChatCompletionTool[],
     });
@@ -40,64 +40,111 @@ export async function getChatCompletion(messages: Message[]) {
     };
 
     if (finish_reason === "tool_calls" && toolCalls) {
-      const { name, arguments: args } = toolCalls[0].function;
+      const { name: fnName, arguments: args } = toolCalls[0].function;
       const fnArgs = JSON.parse(args);
 
-      if (name === "generateImage") {
-        return await handleImageGeneration(fnArgs.prompt, message.role);
-      } else if (name === "generateTitle") {
+      console.log("fnName: ", fnName);
+
+      if (fnName === "generateImage") {
+        return await getImageGenerator(
+          fnArgs.prompt as string,
+          message.role as MessageRole
+        );
+      }
+
+      if (fnName === "generateAudio") {
+        const audioData = await getAudioGenerator(
+          Array.isArray(fnArgs) ? fnArgs : [fnArgs] as Message[],
+          message.role as MessageRole
+        );
+
+        console.log("fnArgs: ", fnArgs);
+
+        console.log("RETURNED audioData: ", audioData);
+        // return { ...chatData, taskData: { ...taskData, content: audioData } };
+      }
+
+      if (fnName === "generateTitle") {
         return { ...chatData, taskTitle: fnArgs.title };
       }
     }
 
     return { taskData };
   } catch (error) {
-    return manageOpenAiError({
+    return manageErrors({
       title: "'getChatCompletion' error",
       error,
     });
   }
 }
 
-async function handleImageGeneration(prompt: string, role: MessageRole) {
+async function getImageGenerator(prompt: string, role: MessageRole) {
   try {
-    const imageResponse = await getImageGeneration(prompt);
+    const response = await openAiClient.images.generate({
+      model: "dall-e-3",
+      size: "1024x1024",
+      prompt,
+      n: 1,
+    });
 
-    const imgTaskContent: ContentType[] = [
+    if (!response.data?.length) {
+      throw new Error("No images returned from Image API.");
+    }
+
+    const respData = response.data[0];
+    const respContent: ContentType[] = [
       {
         type: "text",
-        text:
-          "revised_prompt" in imageResponse ? imageResponse.revised_prompt : "",
+        text: "revised_prompt" in respData ? respData.revised_prompt : "",
       },
       {
         type: "image_url",
-        image_url: { url: "url" in imageResponse ? imageResponse.url : "" },
+        image_url: { url: "url" in respData ? respData.url : "" },
       },
     ];
 
     return {
-      taskData: { whois: role, role, content: imgTaskContent },
+      taskData: { whois: role, role, content: respContent },
     };
   } catch (error) {
-    return manageOpenAiError({ title: "'handleImageGeneration' error", error });
+    return manageErrors({ title: "'getImageGenerator' error", error });
   }
 }
 
-export async function getImageGeneration(prompt: string) {
+async function getAudioGenerator(messages: Message[], role: MessageRole) {
   try {
-    const imageData = await openAiClient.images.generate({
-      model: "dall-e-3",
-      prompt,
-      size: "1024x1024",
-      n: 1,
+    console.log("AudioGenerator messages: ", messages);
+    console.log("ChatCompletionMessageParam: ", [
+      ...messages,
+    ] as ChatCompletionMessageParam[]);
+
+    const response = await openAiClient.chat.completions.create({
+      model: "gpt-4o-audio-preview",
+      modalities: ["text", "audio"],
+      audio: { voice: "alloy", format: "wav" },
+      messages: [...messages] as ChatCompletionMessageParam[],
     });
 
-    if (!imageData.data?.length) {
-      throw new Error("No images returned from Image API.");
+    const respData = response.choices[0]?.message?.audio?.data;
+
+    console.log("respData: ", respData);
+
+    if (!respData) {
+      throw new Error("No audio data returned from Audio API.");
     }
 
-    return imageData.data[0];
+    const audioBlob = new Blob([respData], { type: "audio/wav" });
+    const audioUrl = URL.createObjectURL(audioBlob);
+
+    const taskData: Message = {
+      whois: role,
+      role,
+      content: null,
+      audio: audioUrl,
+    };
+
+    return { taskData };
   } catch (error) {
-    return manageOpenAiError({ title: "'getImageGeneration' error", error });
+    return manageErrors({ title: "'getAudioGenerator' error", error });
   }
 }

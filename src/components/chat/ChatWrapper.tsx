@@ -30,7 +30,7 @@ export default function ChatWrapper() {
     setTask((prev) => [...prev, prompt, tempPrompt]);
 
     try {
-      const taskMessages = [...task, prompt] as Message[];
+      const taskMessages = filterAssistantMsg([...task, prompt] as Message[]);
 
       const response = await fetch("/api/openai", {
         method: "POST",
@@ -69,6 +69,8 @@ export default function ChatWrapper() {
     setTask((prev) => prev.slice(0, -1));
   };
 
+  console.log("tasks", task);
+
   return (
     <main className={css.main}>
       {alert && <AlertMessage message={alert} />}
@@ -92,4 +94,18 @@ export default function ChatWrapper() {
       />
     </main>
   );
+}
+
+function filterAssistantMsg(messages: Message[]) {
+  return messages.map((message) => {
+    if (message.whois === "assistant") {
+      return {
+        ...message,
+        content: Array.isArray(message.content)
+          ? message.content.filter((item) => item.type !== "image_url")
+          : message.content,
+      };
+    }
+    return message;
+  });
 }
