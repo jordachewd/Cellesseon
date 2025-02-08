@@ -5,7 +5,9 @@ import autoAnimate from "@formkit/auto-animate";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import LoadingBubbles from "../shared/LoadingBubbles";
-import ImageHolder from "../shared/ImageHolder";
+import ImageHolder from "@/components/shared/ImageHolder";
+import AudioPlayer from "@/components/shared/AudioPlayer";
+
 
 interface ChatBodyProps {
   messages: Message[];
@@ -48,7 +50,9 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                       {reply.text}
                     </ReactMarkdown>
                   );
-                } else if (reply.type === "image_url") {
+                }
+
+                if (reply.type === "image_url") {
                   return (
                     <ImageHolder
                       key={idx}
@@ -58,9 +62,21 @@ export default function ChatBody({ messages }: ChatBodyProps) {
                       height={isBot ? 320 : 128}
                     />
                   );
-                } else if (reply.type === "temp") {
+                }
+
+                if (reply.type === "audio_url") {
+                  return (
+                    <AudioPlayer
+                      key={idx}
+                      audioSrc={reply.audio_url.url || ""}
+                    />
+                  );
+                }
+
+                if (reply.type === "temp") {
                   return <LoadingBubbles key={idx} size="small" />;
                 }
+
                 return null;
               })
             ) : (

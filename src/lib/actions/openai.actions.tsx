@@ -53,19 +53,15 @@ export async function getChatCompletion(messages: Message[]) {
       }
 
       if (fnName === "generateAudio") {
-        const audioData = await getAudioGenerator(
-          Array.isArray(fnArgs) ? fnArgs : [fnArgs] as Message[],
+        return await getAudioGenerator(
+          Array.isArray(fnArgs) ? fnArgs : ([fnArgs] as Message[]),
           message.role as MessageRole
         );
-
-        console.log("fnArgs: ", fnArgs);
-
-        console.log("RETURNED audioData: ", audioData);
-        // return { ...chatData, taskData: { ...taskData, content: audioData } };
       }
 
       if (fnName === "generateTitle") {
-        return { ...chatData, taskTitle: fnArgs.title };
+        console.log("generateTitle fnArgs: ", fnArgs);
+        // return { ...chatData, taskTitle: fnArgs.title };
       }
     }
 
@@ -113,11 +109,6 @@ async function getImageGenerator(prompt: string, role: MessageRole) {
 
 async function getAudioGenerator(messages: Message[], role: MessageRole) {
   try {
-    console.log("AudioGenerator messages: ", messages);
-    console.log("ChatCompletionMessageParam: ", [
-      ...messages,
-    ] as ChatCompletionMessageParam[]);
-
     const response = await openAiClient.chat.completions.create({
       model: "gpt-4o-audio-preview",
       modalities: ["text", "audio"],
@@ -127,20 +118,26 @@ async function getAudioGenerator(messages: Message[], role: MessageRole) {
 
     const respData = response.choices[0]?.message?.audio?.data;
 
-    console.log("respData: ", respData);
-
     if (!respData) {
       throw new Error("No audio data returned from Audio API.");
     }
 
-    const audioBlob = new Blob([respData], { type: "audio/wav" });
+   // console.log("AUDIO respData: ", typeof respData);
+
+    const audioBlob = new Blob([Buffer.from(respData, "base64")], {
+      type: "audio/wav",
+    });
     const audioUrl = URL.createObjectURL(audioBlob);
 
     const taskData: Message = {
       whois: role,
       role,
-      content: null,
-      audio: audioUrl,
+      content: [
+        {
+          type: "audio_url",
+          audio_url: { url: audioUrl },
+        },
+      ],
     };
 
     return { taskData };

@@ -11,21 +11,19 @@ interface ImageContent {
 }
 
 interface AudioContent {
-  id: string;
-  expires_at: Date | number;
-  data: string;
-  transcript: string;
+  type: "audio_url";
+  audio_url: {
+    url: string | undefined | null;
+  };
 }
 
 export type MessageRole = "user" | "assistant" | "system" | "developer";
-
-export type ContentType = TextContent | ImageContent;
+export type ContentType = TextContent | ImageContent | AudioContent;
 
 export interface Message {
   whois?: MessageRole;
   role: MessageRole;
   content: ContentType[] | string | null;
-  audio?: AudioContent | string | null;
 }
 
 export interface Messages {

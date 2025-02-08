@@ -46,6 +46,8 @@ export default function ChatWrapper() {
       const responseData = await response.json();
       const { taskData, taskError } = responseData;
 
+      console.log("taskData", taskData);
+
       if (taskData) {
         setTask((prev) => [...prev.slice(0, -1), taskData]);
       }
@@ -68,8 +70,6 @@ export default function ChatWrapper() {
     setIsLoading(false);
     setTask((prev) => prev.slice(0, -1));
   };
-
-  console.log("tasks", task);
 
   return (
     <main className={css.main}>
