@@ -9,14 +9,21 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        source: "/(.*)",
-        headers: [
-          {
-            key: "Content-Security-Policy",
-            value:
-              "default-src 'self' blob:; script-src 'self' 'unsafe-inline' blob:;",
-          },
-        ],
+      source: "/api/:path*",
+      headers: [
+        {
+        key: "Access-Control-Allow-Origin",
+        value: "https://cellesseon.vercel.app", // Change this to your specific domain if necessary
+        },
+        {
+        key: "Access-Control-Allow-Methods",
+        value: "GET, POST, OPTIONS",
+        },
+        {
+        key: "Access-Control-Allow-Headers",
+        value: "Content-Type, Authorization",
+        },
+      ],
       },
     ];
   },
