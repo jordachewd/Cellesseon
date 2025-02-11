@@ -1,60 +1,44 @@
-import { ContentType, Message } from "@/types";
-import { ClerkUserData, TokenUsage } from "@/types/TaskData.d";
-import { model, models, Schema, Document } from "mongoose";
+import { ContentItem, Message } from "@/types";
+import { Schema, model, models, Document } from "mongoose";
 
+// Define the Task document interface
 export interface ITask extends Document {
-  user: ClerkUserData;
+  userId: string;
+  usage: number;
   title: string;
-  content?: Message[];
-  usage?: TokenUsage[];
-  createdAt?: Date;
-  updatedAt?: Date;
+  messages: Message[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const MessageContentSchema = new Schema<ContentType>({
-  type: { type: String, enum: ["text", "temp", "image_url"], required: true },
-  text: {
-    type: String,
-    required: function () {
-      return this.type === "text" || this.type === "temp";
-    },
-  },
-  image_url: {
-    url: {
-      type: String,
-      required: function () {
-        return this.type === "image_url";
-      },
-    },
-  },
+const ContentItemSchema = new Schema<ContentItem>({
+  type: { type: String, required: true },
+  text: { type: String },
+  image_url: { type: String },
+  audio_url: { type: String },
 });
 
 const MessageSchema = new Schema<Message>({
-  whois: { type: String, required: true },
-  role: { type: String, enum: ["user", "assistant", "system"], required: true },
-  content: { type: [MessageContentSchema], required: true },
-});
-
-const UsageSchema = new Schema<TokenUsage>({
-  completion_tokens: { type: Number },
-  prompt_tokens: { type: Number },
-  total_tokens: { type: Number },
-});
-
-const TaksSchema = new Schema<ITask>({
-  user: {
-    clerkId: { type: String, ref: "User", required: true },
-    username: { type: String, ref: "User", required: true },
-    firstName: { type: String },
-    lastName: { type: String },
+  whois: {
+    type: String,
+    enum: ["user", "assistant", "system", "developer"],
   },
+  role: {
+    type: String,
+    enum: ["user", "assistant", "system", "developer"],
+    required: true,
+  },
+  content: { type: [ContentItemSchema], required: true },
+});
+
+const TaskSchema = new Schema<ITask>({
+  userId: { type: String, required: true },
+  usage: { type: Number, required: true, default: 0 },
   title: { type: String, required: true },
-  content: { type: [MessageSchema] },
-  usage: { type: [UsageSchema] },
+  messages: { type: [MessageSchema], required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });
 
-const Tasks = models?.Tasks || model<ITask>("Tasks", TaksSchema);
-
-export default Tasks;
+const Task = models?.Task || model<ITask>("Task", TaskSchema);
+export default Task;

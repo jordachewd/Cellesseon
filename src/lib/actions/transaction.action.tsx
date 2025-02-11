@@ -1,16 +1,16 @@
 "use server";
 import Stripe from "stripe";
 import { redirect } from "next/navigation";
-import { handleError } from "../utils/handleError";
-import { connectToDatabase } from "../database/mongoose";
-import Transaction from "../database/models/transaction.model";
+import { handleError } from "@/lib/utils/handleError";
+import { connectToDatabase } from "@/lib/database/mongoose";
+import Transaction from "@/lib/database/models/transaction.model";
 import {
   CheckoutTransactionParams,
   CreateTransactionParams,
 } from "@/types/TransactionData.d";
-import { ClerkUserData } from "@/types/TaskData.d";
 import { CheckoutPlanParams } from "@/types/PlanData.d";
-import getFullName from "../utils/getFullName";
+import { ClerkUserData } from "@/types/UserData.d";
+import getFullName from "@/lib/utils/getFullName";
 
 export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);

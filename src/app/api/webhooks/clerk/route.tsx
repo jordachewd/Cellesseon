@@ -17,6 +17,7 @@ export async function POST(req: Request) {
     );
   }
 
+
   // Get the headers
   const headerPayload = await headers();
   const svix_id = headerPayload.get("svix-id");
@@ -78,6 +79,8 @@ export async function POST(req: Request) {
     };
 
     const newUser = await createUser(user);
+
+    console.log("\x1b[34m%s\x1b[0m", "createUser: ", newUser);
 
     // Set publicMetadata for Clerk user
     if (newUser) {

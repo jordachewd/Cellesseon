@@ -1,7 +1,7 @@
 "use server";
 import OpenAI from "openai";
 import manageErrors from "@/lib/utils/openai/manageErrors";
-import { ContentType, Message, MessageRole } from "@/types";
+import { ContentItem, Message, MessageRole } from "@/types";
 import { systemMsg, chatTools } from "@/constants/openai";
 import {
   ChatCompletionMessageParam,
@@ -27,9 +27,11 @@ export async function getChatCompletion(messages: Message[]) {
       throw new Error("No choices returned from Chat Completion API.");
     }
 
+    // console.log("\x1b[36m%s\x1b[0m", "chatData: ", chatData);
+
     const { message, finish_reason } = chatData.choices[0];
     const toolCalls = message.tool_calls;
-    const taskContent: ContentType[] = [
+    const taskContent: ContentItem[] = [
       { type: "text", text: message.content },
     ];
 
@@ -43,7 +45,13 @@ export async function getChatCompletion(messages: Message[]) {
       const { name: fnName, arguments: args } = toolCalls[0].function;
       const fnArgs = JSON.parse(args);
 
-      // console.log("fnName: ", fnName);
+      if (fnName === "generateTitle") {
+        console.log("generateTitle fnArgs: ", fnArgs);
+      }
+
+      if (fnName === "generateResponse") {
+        console.log("generateResponse fnArgs: ", fnArgs);
+      }
 
       if (fnName === "generateImage") {
         return await getImageGenerator(
@@ -53,23 +61,19 @@ export async function getChatCompletion(messages: Message[]) {
       }
 
       if (fnName === "generateAudio") {
-        //  console.log("fnArgs: ", fnArgs);
-
         return await getAudioGenerator(
           Array.isArray(fnArgs) ? fnArgs : ([fnArgs] as Message[]),
           message.role as MessageRole
         );
       }
-
-      if (fnName === "generateTitle") {
-        console.log("generateTitle fnArgs: ", fnArgs);
-      }
     }
 
-    return { taskData };
+    const taskUsage = chatData.usage?.total_tokens;
+
+    return { taskData, taskUsage };
   } catch (error) {
     return manageErrors({
-      title: "'getChatCompletion' error",
+      title: "AI chat completion error!",
       error,
     });
   }
@@ -88,23 +92,29 @@ async function getImageGenerator(prompt: string, role: MessageRole) {
       throw new Error("No images returned from Image API.");
     }
 
+    //   console.log("\x1b[36m%s\x1b[0m", "getImageGenerator data: ", response);
+
     const respData = response.data[0];
-    const respContent: ContentType[] = [
+    const content: ContentItem[] = [
       {
         type: "text",
         text: "revised_prompt" in respData ? respData.revised_prompt : "",
       },
       {
         type: "image_url",
-        image_url: { url: "url" in respData ? respData.url : "" },
+        image_url: "url" in respData ? respData.url : "",
       },
     ];
 
-    return {
-      taskData: { whois: role, role, content: respContent },
+    const taskData: Message = {
+      whois: role,
+      role,
+      content,
     };
+
+    return { taskData };
   } catch (error) {
-    return manageErrors({ title: "'getImageGenerator' error", error });
+    return manageErrors({ title: "AI image generator error!", error });
   }
 }
 
@@ -138,8 +148,37 @@ async function getAudioGenerator(messages: Message[], role: MessageRole) {
       ],
     };
 
-    return { taskData };
+    const taskUsage = response.usage?.total_tokens;
+
+    return { taskData, taskUsage };
   } catch (error) {
-    return manageErrors({ title: "'getAudioGenerator' error", error });
+    return manageErrors({ title: "AI audio generator error!", error });
+  }
+}
+
+export async function generateTaskTitle(messages: Message[]) {
+  const systemMsg = [
+    {
+      role: "system",
+      content:
+        "Generate a concise, maximum of five words engaging title that captures the essence of the conversation and piques interest.",
+    },
+  ];
+
+  try {
+    const response = await openAiClient.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [...systemMsg, ...messages] as ChatCompletionMessageParam[],
+    });
+
+    const title = response.choices[0]?.message.content as string;
+
+    if (!title) {
+      throw new Error("No data returned from Title Generator API.");
+    }
+
+    return { title, usage: response.usage?.total_tokens };
+  } catch (error) {
+    return manageErrors({ title: "AI title generator error!", error });
   }
 }

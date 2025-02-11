@@ -66,9 +66,7 @@ export default function ChatInput({
       const base64Image = await convertToBase64(selectedFile);
       content.push({
         type: "image_url",
-        image_url: {
-          url: `data:image/jpeg;base64,${base64Image}`,
-        },
+        image_url: `data:image/jpeg;base64,${base64Image}`,
       });
     }
 

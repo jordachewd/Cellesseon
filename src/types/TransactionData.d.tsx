@@ -1,14 +1,14 @@
 // ====== TRANSACTION Data Types
 
 import { BillingCycle, CheckoutPlanParams, PlanName } from "./PlanData.d";
-import { ClerkUserData } from "./TaskData.d";
+import { ClerkUserData } from "./UserData.d";
 
 export interface CreateTransactionParams {
   stripeId: string;
   userId: string;
   clerkId: string;
   createdAt: Date;
-  expiresOn: Date;  
+  expiresOn: Date;
   plan: PlanName;
   billing: BillingCycle;
   amount: number;

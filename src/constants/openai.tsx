@@ -10,7 +10,8 @@ export const systemMsg = [
       "then create a new image that aligns with the same theme and incorporates similar elements." +
       "If the user requests a variation of any image, analyze the original image to identify its key themes, styles, and elements, " +
       "and generate a new image that offers a creative variation while preserving its essence." +
-      "Strive to ensure user satisfaction by clarifying ambiguous instructions and confirming understanding when needed.",
+      "Strive to ensure user satisfaction by clarifying ambiguous instructions and confirming understanding when needed." +
+      "If the user asks for an audio file, generate a one-minute audio file based on the provided description, ensuring that the content is engaging and relevant.",
   },
 ];
 
@@ -60,27 +61,6 @@ export const chatTools = [
           },
         },
         required: ["role", "content"],
-        additionalProperties: false,
-      },
-    },
-  },
-  {
-    type: "function",
-    function: {
-      name: "generateTitle",
-      description:
-        "Generate title for conversation: a concise maximum five-word title for the entire discussion.",
-      strict: true,
-      parameters: {
-        type: "object",
-        properties: {
-          title: {
-            type: "string",
-            description:
-              "The first completion response to generate a title from.",
-          },
-        },
-        required: ["title"],
         additionalProperties: false,
       },
     },

@@ -4,8 +4,8 @@ import { Button } from "@mui/material";
 import { loadStripe } from "@stripe/stripe-js";
 import { checkoutPlan } from "@/lib/actions/transaction.action";
 import { CheckoutTransactionParams } from "@/types/TransactionData.d";
-import { ClerkUserData } from "@/types/TaskData.d";
 import { CheckoutPlanParams, PlanStatus } from "@/types/PlanData.d";
+import { ClerkUserData } from "@/types/UserData.d";
 
 interface CheckoutProps {
   plan: CheckoutPlanParams;

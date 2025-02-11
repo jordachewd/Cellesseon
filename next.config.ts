@@ -6,28 +6,6 @@ const nextConfig: NextConfig = {
   // Disable source maps in production to avoid 404 errors
   productionBrowserSourceMaps: false,
 
-  async headers() {
-    return [
-      {
-      source: "/api/:path*",
-      headers: [
-        {
-        key: "Access-Control-Allow-Origin",
-        value: "https://cellesseon.vercel.app", // Change this to your specific domain if necessary
-        },
-        {
-        key: "Access-Control-Allow-Methods",
-        value: "GET, POST, OPTIONS",
-        },
-        {
-        key: "Access-Control-Allow-Headers",
-        value: "Content-Type, Authorization",
-        },
-      ],
-      },
-    ];
-  },
-
   images: {
     remotePatterns: [
       {

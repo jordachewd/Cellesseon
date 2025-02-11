@@ -22,7 +22,6 @@ const UserSchema = new Schema<IUser>({
     required: true,
     unique: true,
   },
-  userimg: { type: String },
   username: {
     type: String,
     required: true,
@@ -32,20 +31,13 @@ const UserSchema = new Schema<IUser>({
     type: String,
     required: true,
   },
-  firstName: {
-    type: String,
-  },
-  lastName: {
-    type: String,
-  },
   role: {
     type: String,
     required: true,
     enum: ["client", "admin"],
     default: "client",
   },
-  registerAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
+  registerAt: { type: Date, default: Date.now, required: true },
   plan: {
     id: { type: Number, required: true, default: 0 },
     name: {
@@ -65,6 +57,14 @@ const UserSchema = new Schema<IUser>({
     expiresOn: { type: Date, required: true, default: getExpiresOn("Lite") },
     stripeId: { type: String },
   },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  updatedAt: { type: Date, default: Date.now },
+  userimg: { type: String },
 });
 
 const User = models?.User || model<IUser>("User", UserSchema);
