@@ -3,6 +3,7 @@ import { PlanData } from "@/types/PlanData.d";
 import { UserRoles } from "@/types/UserData.d";
 import { Schema, model, models, Document } from "mongoose";
 
+
 export interface IUser extends Document {
   clerkId: string;
   username: string;

@@ -5,7 +5,6 @@ import {
 import { NextResponse } from "next/server";
 import { Message, Messages } from "@/types";
 import { auth } from "@clerk/nextjs/server";
-
 import { CreateTaskParams } from "@/types/TaskData.d";
 import { createTask } from "@/lib/actions/task.actions";
 
@@ -27,7 +26,7 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     const chatResp = await getChatCompletion(messages as Message[]);
 
-   // console.log("\x1b[33m%s\x1b[0m", "chatResp: ", chatResp);
+    // console.log("\x1b[33m%s\x1b[0m", "chatResp: ", chatResp);
     console.log("\x1b[33m%s\x1b[0m", "=======================================");
 
     if ("taskData" in chatResp) {
