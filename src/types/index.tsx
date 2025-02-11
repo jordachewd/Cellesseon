@@ -14,6 +14,7 @@ export interface Message {
 }
 
 export interface Messages {
+  taskId: string | null;
   messages: Message[];
 }
 

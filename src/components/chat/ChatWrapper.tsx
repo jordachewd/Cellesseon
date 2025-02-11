@@ -13,6 +13,7 @@ export default function ChatWrapper() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<AlertParams | null>(null);
   const [startMsg, setStartMsg] = useState<string>("");
+  const [dbTaskId, setDbTaskId] = useState<string | null>(null);
   const [task, setTask] = useState<Message[]>([]);
   const isNewTask = task.length === 0;
 
@@ -35,7 +36,7 @@ export default function ChatWrapper() {
       const response = await fetch("/api/openai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: taskMessages }),
+        body: JSON.stringify({ messages: taskMessages, taskId: dbTaskId }),
       });
 
       if (response.status !== 200) {
@@ -44,12 +45,18 @@ export default function ChatWrapper() {
       }
 
       const responseData = await response.json();
-      const { taskData, taskError } = responseData;
+      const { taskData, taskId, taskError } = responseData;
 
-      console.log("taskData", taskData);
+      console.log("responseData: ", responseData);
+      console.log("taskId: ", taskId);
+      console.log("taskData: ", taskData);
 
       if (taskData) {
         setTask((prev) => [...prev.slice(0, -1), taskData]);
+      }
+
+      if (taskId) {
+        setDbTaskId(taskId);
       }
 
       if (taskError) {

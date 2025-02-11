@@ -1,6 +1,5 @@
 // ====== Task Data Types
 import { Message } from "@/types";
-import { ClerkUserData } from "./UserData.d";
 
 export interface CreateTaskParams {
   userId: string;
@@ -12,8 +11,6 @@ export interface CreateTaskParams {
 }
 
 export interface UpdateTaskParams {
-  user: ClerkUserData;
-  title: string;
   messages?: Message[];
   usage?: number;
   updatedAt?: Date;

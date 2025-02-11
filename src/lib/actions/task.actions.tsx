@@ -5,8 +5,6 @@ import { revalidatePath } from "next/cache";
 import { handleError } from "@/lib/utils/handleError";
 import Task from "../database/models/tasks.model";
 
-
-
 // CREATE TASK
 export async function createTask(task: CreateTaskParams) {
   try {
@@ -32,14 +30,12 @@ export async function getTaskById(userId: string) {
 }
 
 // UPDATE TASK
-export async function updateTask(taskId: number, task: UpdateTaskParams) {
+export async function updateTask(taskId: string, task: UpdateTaskParams) {
   try {
     await connectToDatabase();
-    const updatedTask = await Task.findOneAndUpdate({ taskId }, task, {
+    const updatedTask = await Task.findOneAndUpdate({ _id: taskId }, task, {
       new: true,
     });
-
-    //if (!updatedTask) throw new Error("Task update failed");
 
     return JSON.parse(JSON.stringify(updatedTask));
   } catch (error) {
@@ -53,11 +49,6 @@ export async function deleteTask(taskId: number) {
     await connectToDatabase();
 
     const taskToDelete = await Task.findOne({ taskId });
-
-    /*     if (!taskToDelete) {
-      throw new Error("Task not found. / deleteTask()");
-    } */
-
     const deletedTask = await Task.findByIdAndDelete(taskToDelete._id);
     revalidatePath("/");
 

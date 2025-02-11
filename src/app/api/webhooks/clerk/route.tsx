@@ -6,8 +6,6 @@ import { Webhook } from "svix";
 import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
 import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
 import { deleteAllTransactions } from "@/lib/actions/transaction.action";
-import { CreateTaskParams } from "@/types/TaskData.d";
-import { createTask } from "@/lib/actions/task.actions";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
@@ -79,39 +77,6 @@ export async function POST(req: Request) {
     };
 
     const newUser = await createUser(user);
-
-    const newTaskContent: CreateTaskParams = {
-      userId: id,
-      usage: 492,
-      title: '"Rise of the Majestic Phoenix"',
-      messages: [
-        {
-          whois: "user",
-          role: "user",
-          content: [
-            {
-              type: "text",
-              text: "Ask anything: What's your dream mythical creature and why?",
-            },
-          ],
-        },
-        {
-          whois: "assistant",
-          role: "assistant",
-          content: [
-            {
-              type: "text",
-              text: "The phoenix is a symbol of renewal, transformation, and resilience, as it is known for its ability to rise from its own ashes.",
-            },
-          ],
-        },
-      ],
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
-    const newTask = await createTask(newTaskContent);
-    console.log("CLERK createTask: ", newTask);
 
     // Set publicMetadata for Clerk user
     if (newUser) {

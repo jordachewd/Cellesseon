@@ -1,3 +1,11 @@
+import OpenAI from "openai";
+
+export const openAiClient = new OpenAI({
+  organization: process.env.OPENAI_ORG!,
+  project: process.env.OPENAI_PRJ!,
+  apiKey: process.env.OPENAI_KEY!,
+});
+
 /** System message for initializing the AI's behavior and tone */
 export const systemMsg = [
   {
