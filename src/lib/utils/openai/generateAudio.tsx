@@ -1,9 +1,18 @@
 import { openAiClient } from "@/constants/openai";
 import { Message, MessageRole } from "@/types";
-import manageErrors from "./manageErrors";
 import { ChatCompletionMessageParam } from "openai/resources/chat/completions.mjs";
 
-export async function generateAudio(messages: Message[], role: MessageRole) {
+interface GenerateAudioParams {
+  messages: Message[];
+  role: MessageRole;
+  taskId?: string | null;
+}
+
+export async function generateAudio({
+  messages,
+  role,
+  taskId,
+}: GenerateAudioParams) {
   try {
     const response = await openAiClient.chat.completions.create({
       model: "gpt-4o-audio-preview",
@@ -15,8 +24,10 @@ export async function generateAudio(messages: Message[], role: MessageRole) {
     const respData = response.choices[0]?.message?.audio;
 
     if (!respData) {
-      throw new Error("No audio data returned from Audio API.");
+      throw new Error("No audio data returned from Audio Generator API.");
     }
+
+    console.log("\x1b[36m%s\x1b[0m", "generateAudio taskId: ", taskId);
 
     const taskData: Message = {
       whois: role,
@@ -24,7 +35,7 @@ export async function generateAudio(messages: Message[], role: MessageRole) {
       content: [
         {
           type: "text",
-          text: "transcript" in respData ? respData.transcript : "",
+          text: "transcript" in respData ? respData.transcript : null,
         },
         {
           type: "audio_url",
@@ -35,8 +46,15 @@ export async function generateAudio(messages: Message[], role: MessageRole) {
 
     const taskUsage = response.usage?.total_tokens;
 
-    return { taskData, taskUsage };
+    return JSON.stringify({ taskData, taskUsage });
   } catch (error) {
-    return manageErrors({ title: "AI audio generator error!", error });
+    const errMsg = error instanceof Error && error.message;
+    const aiError = {
+      title: "AI Audio Generator error!",
+      error: errMsg || "Unexpected error occurred.",
+      status: 500,
+    };
+
+    return JSON.stringify({ aiError });
   }
 }

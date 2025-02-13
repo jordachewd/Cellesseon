@@ -45,11 +45,7 @@ export default function ChatWrapper() {
       }
 
       const responseData = await response.json();
-      const { taskData, taskId, taskError } = responseData;
-
-      console.log("responseData: ", responseData);
-      console.log("taskId: ", taskId);
-      console.log("taskData: ", taskData);
+      const { taskData, taskId, aiError } = responseData;
 
       if (taskData) {
         setTask((prev) => [...prev.slice(0, -1), taskData]);
@@ -59,8 +55,8 @@ export default function ChatWrapper() {
         setDbTaskId(taskId);
       }
 
-      if (taskError) {
-        const { title, error } = taskError;
+      if (aiError) {
+        const { title, error } = aiError;
         showAlert(title, error);
         return;
       }

@@ -3,15 +3,14 @@ import { Message } from "@/types";
 
 export interface CreateTaskParams {
   userId: string;
-  usage: number;
+  usage?: number;
   title: string;
   messages: Message[];
   createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface UpdateTaskParams {
-  messages?: Message[];
+  messages: Message[];
+  updatedAt: Date;
   usage?: number;
-  updatedAt?: Date;
 }

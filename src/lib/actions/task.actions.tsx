@@ -9,23 +9,16 @@ import Task from "../database/models/tasks.model";
 export async function createTask(task: CreateTaskParams) {
   try {
     await connectToDatabase();
+
     const newTask = await Task.create(task);
+
+    if (!newTask) {
+      throw new Error("Task creation failed!");
+    }
 
     return JSON.parse(JSON.stringify(newTask));
   } catch (error) {
     handleError({ error, source: "createTask" });
-  }
-}
-
-// READ TASK by ID
-export async function getTaskById(userId: string) {
-  try {
-    await connectToDatabase();
-    const task = await Task.findOne({ clerkId: userId });
-
-    return JSON.parse(JSON.stringify(task));
-  } catch (error) {
-    handleError({ error, source: "getTaskById" });
   }
 }
 
@@ -37,9 +30,29 @@ export async function updateTask(taskId: string, task: UpdateTaskParams) {
       new: true,
     });
 
+    if (!updatedTask) {
+      throw new Error("Task update failed!");
+    }
+
     return JSON.parse(JSON.stringify(updatedTask));
   } catch (error) {
     handleError({ error, source: "updateTask" });
+  }
+}
+
+// READ TASK by ID
+export async function getTaskById(userId: string) {
+  try {
+    await connectToDatabase();
+    const task = await Task.findOne({ clerkId: userId });
+
+    if (!task) {
+      throw new Error("Task not found!");
+    }
+
+    return JSON.parse(JSON.stringify(task));
+  } catch (error) {
+    handleError({ error, source: "getTaskById" });
   }
 }
 
@@ -49,10 +62,20 @@ export async function deleteTask(taskId: number) {
     await connectToDatabase();
 
     const taskToDelete = await Task.findOne({ taskId });
+
+    if (!taskToDelete) {
+      throw new Error("Task not found!");
+    }
+
     const deletedTask = await Task.findByIdAndDelete(taskToDelete._id);
+
+    if (!deletedTask) {
+      throw new Error("Task deletion failed!");
+    }
+
     revalidatePath("/");
 
-    return deletedTask ? JSON.parse(JSON.stringify(deletedTask)) : null;
+    return JSON.parse(JSON.stringify(deletedTask));
   } catch (error) {
     handleError({ error, source: "deleteTask" });
   }

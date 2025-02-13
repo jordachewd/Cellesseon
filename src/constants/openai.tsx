@@ -7,7 +7,7 @@ export const openAiClient = new OpenAI({
 });
 
 /** System message for initializing the AI's behavior and tone */
-export const systemMsg = [
+export const chatSystemMsg = [
   {
     role: "developer",
     content:
@@ -28,7 +28,7 @@ export const chatTools = [
   {
     type: "function",
     function: {
-      name: "generateImage",
+      name: "getGeneratedImage",
       description:
         "Generates an image when requested by the user. Use this function if the user asks for an image," +
         "e.g., when prompted with 'generate image ...', 'create image ...' or anything related." +
@@ -50,7 +50,7 @@ export const chatTools = [
   {
     type: "function",
     function: {
-      name: "generateAudio",
+      name: "getGeneratedAudio",
       description:
         "Generates an audio file when requested by the user. Use this function if the user asks for an audio file," +
         "e.g., when prompted with 'generate audio ...', 'create audio ...' or anything related. MAX 1 minute long." +
@@ -72,5 +72,13 @@ export const chatTools = [
         additionalProperties: false,
       },
     },
+  },
+];
+
+export const titleSystemMsg = [
+  {
+    role: "system",
+    content:
+      "Generate a concise, maximum of five words engaging title that captures the essence of the conversation and piques interest.",
   },
 ];
