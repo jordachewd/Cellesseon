@@ -3,6 +3,9 @@ import { ContentItem, Message, MessageRole } from "@/types";
 import { handleError } from "../handleError";
 // import sharp from "sharp";
 
+/* This route should run on the Edge Runtime.*/
+export const runtime = "edge";
+
 interface GenerateImageParams {
   prompt: string;
   role: MessageRole;
