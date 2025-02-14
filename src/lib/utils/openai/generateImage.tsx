@@ -1,16 +1,33 @@
 import { openAiClient } from "@/constants/openai";
 import { ContentItem, Message, MessageRole } from "@/types";
+import { handleError } from "../handleError";
+// import sharp from "sharp";
 
 interface GenerateImageParams {
   prompt: string;
   role: MessageRole;
   taskId?: string | null;
+  userId: string;
 }
+
+/* async function convertToPng(imageUrl: string): Promise<Buffer | undefined> {
+  try {
+    const response = await fetch(imageUrl);
+    if (!response.ok) throw new Error("Failed to fetch image");
+
+    const arrayBuffer = await response.arrayBuffer();
+    const imageBuffer = Buffer.from(arrayBuffer);
+    return sharp(imageBuffer).png().toBuffer();
+  } catch (error) {
+    handleError({ error, source: "convertToPng" });
+  }
+} */
 
 export async function generateImage({
   prompt,
   role,
-  taskId,
+  //taskId,
+  //userId,
 }: GenerateImageParams) {
   try {
     const response = await openAiClient.images.generate({
@@ -20,24 +37,47 @@ export async function generateImage({
       n: 1,
     });
 
-    console.log("\x1b[36m%s\x1b[0m", "generateImage response: ", response);
-
-    if (!response.data?.length) {
-      throw new Error("No images returned from Image Generator API.");
+    if (!response || !response.data?.length) {
+      throw new Error("The Image Generator API did not return any images.");
     }
 
-    console.log("\x1b[36m%s\x1b[0m", "generateImage taskId: ", taskId);
+    console.log("\x1b[33m%s\x1b[0m", "generateImage response: ", response);
 
     const respData = response.data[0];
-    // const imageUrl = respData.url;
+    const imageUrl = respData.url;
 
-    //  console.log("\x1b[36m%s\x1b[0m", "generateImage: ", respData);
+    // Convert image to PNG
+    if (!imageUrl) {
+      throw new Error("Image URL is undefined");
+    }
 
-    /*     const awsResp = await fetch("/api/aws", {
+   // console.log("\x1b[33m%s\x1b[0m", "generateImage imageUrl: ", imageUrl);
+
+  /*   const pngImageBuffer = await convertToPng(imageUrl);
+
+    if (!pngImageBuffer) {
+      throw new Error("Failed to convert image to PNG");
+    }
+
+    const awsResp = await fetch("/api/aws", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId, taskId, imageUrl }),
-    }); */
+      body: JSON.stringify({
+        userId,
+        taskId,
+        pngImageBuffer: pngImageBuffer.toString("base64"),
+      }),
+    });
+
+    if (!awsResp.ok) {
+      throw new Error("Failed to upload image to AWS");
+    }
+
+    console.log(
+      "\x1b[33m%s\x1b[0m",
+      "generateImage awsResp: ",
+      JSON.parse(JSON.stringify(awsResp))
+    ); */
 
     const taskData: Message = {
       whois: role,
@@ -49,20 +89,13 @@ export async function generateImage({
         },
         {
           type: "image_url",
-          image_url: "url" in respData ? respData.url : null,
+          image_url: { url: "url" in respData ? respData.url : null },
         },
       ] as ContentItem[],
     };
 
     return JSON.stringify({ taskData });
   } catch (error) {
-    const errMsg = error instanceof Error && error.message;
-    const aiError = {
-      title: "AI Image Generator error!",
-      error: errMsg || "Unexpected error occurred.",
-      status: 500,
-    };
-
-    return JSON.stringify({ aiError });
+    handleError({ error, source: "generateImage" });
   }
 }

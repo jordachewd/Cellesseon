@@ -1,6 +1,7 @@
 import { openAiClient } from "@/constants/openai";
 import { Message, MessageRole } from "@/types";
 import { ChatCompletionMessageParam } from "openai/resources/chat/completions.mjs";
+import { handleError } from "../handleError";
 
 interface GenerateAudioParams {
   messages: Message[];
@@ -21,14 +22,19 @@ export async function generateAudio({
       messages: [...messages] as ChatCompletionMessageParam[],
     });
 
+    if (!response || !response.choices?.length) {
+      throw new Error("No response or empty choices from Audio Generator API.");
+    }
+
     const respData = response.choices[0]?.message?.audio;
 
     if (!respData) {
-      throw new Error("No audio data returned from Audio Generator API.");
+      throw new Error("Audio Generator API returned no audio data.");
     }
 
     console.log("\x1b[36m%s\x1b[0m", "generateAudio taskId: ", taskId);
-
+    
+    const taskUsage = response.usage?.total_tokens;
     const taskData: Message = {
       whois: role,
       role,
@@ -44,17 +50,8 @@ export async function generateAudio({
       ],
     };
 
-    const taskUsage = response.usage?.total_tokens;
-
     return JSON.stringify({ taskData, taskUsage });
   } catch (error) {
-    const errMsg = error instanceof Error && error.message;
-    const aiError = {
-      title: "AI Audio Generator error!",
-      error: errMsg || "Unexpected error occurred.",
-      status: 500,
-    };
-
-    return JSON.stringify({ aiError });
+    handleError({ error, source: "generateAudio" });
   }
 }

@@ -8,6 +8,7 @@ import ChatIntro from "@/components/chat/ChatIntro";
 import ChatBody from "@/components/chat/ChatBody";
 import ChatInput from "@/components/chat/ChatInput";
 import AlertMessage, { AlertParams } from "@/components/shared/AlertMessage";
+import { filterAssistantMsg } from "@/lib/utils/openai/filterAssistantMsg";
 
 export default function ChatWrapper() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -97,20 +98,4 @@ export default function ChatWrapper() {
       />
     </main>
   );
-}
-
-function filterAssistantMsg(messages: Message[]) {
-  return messages.map((message) => {
-    if (message.whois === "assistant") {
-      return {
-        ...message,
-        content: Array.isArray(message.content)
-          ? message.content.filter(
-              (item) => item.type !== "image_url" && item.type !== "audio_url"
-            )
-          : message.content,
-      };
-    }
-    return message;
-  });
 }

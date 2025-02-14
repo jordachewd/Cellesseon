@@ -6,11 +6,10 @@ export interface CreateTaskParams {
   usage?: number;
   title: string;
   messages: Message[];
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 export interface UpdateTaskParams {
   messages: Message[];
-  updatedAt: Date;
   usage?: number;
 }

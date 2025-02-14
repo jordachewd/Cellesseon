@@ -26,9 +26,18 @@ export async function createTask(task: CreateTaskParams) {
 export async function updateTask(taskId: string, task: UpdateTaskParams) {
   try {
     await connectToDatabase();
-    const updatedTask = await Task.findOneAndUpdate({ _id: taskId }, task, {
-      new: true,
-    });
+
+    const updateFields = { ...task, updatedAt: new Date() };
+    delete updateFields.usage;
+
+    const updatedTask = await Task.findOneAndUpdate(
+      { _id: taskId },
+      {
+        $inc: { usage: task.usage },
+        $set: updateFields,
+      },
+      { new: true }
+    );
 
     if (!updatedTask) {
       throw new Error("Task update failed!");

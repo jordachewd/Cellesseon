@@ -1,7 +1,7 @@
 export interface ContentItem {
   type: "text" | "temp" | "image_url" | "audio_url";
   text?: string | null | undefined;
-  image_url?: string | null;
+  image_url?: { url: string | null };
   audio_url?: string | null;
 }
 

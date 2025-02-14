@@ -2,7 +2,6 @@ import { chatTools, openAiClient, chatSystemMsg } from "@/constants/openai";
 import { ContentItem, Message, MessageRole } from "@/types";
 import { generateImage } from "./generateImage";
 import { generateAudio } from "./generateAudio";
-
 import {
   ChatCompletionMessageParam,
   ChatCompletionTool,
@@ -10,66 +9,64 @@ import {
 import { handleError } from "../handleError";
 
 /* This route should run on the Edge Runtime.*/
-//export const runtime = "edge";
+export const runtime = "edge";
 
 interface GenerateResponseParams {
   messages: Message[];
-  taskId: string | null;
+  taskId?: string;
+  userId: string;
 }
+
 export async function generateResponse({
   messages,
   taskId,
+  userId,
 }: GenerateResponseParams) {
   try {
     const chatData = await openAiClient.chat.completions.create({
       model: "gpt-4o",
-      temperature: 0.1,
+      temperature: 0.2,
       messages: [...chatSystemMsg, ...messages] as ChatCompletionMessageParam[],
       tools: chatTools as ChatCompletionTool[],
     });
 
-    console.log("\x1b[33m%s\x1b[0m", "chatData: ", chatData);
-    console.log("\x1b[33m%s\x1b[0m", "chatSystemMsg: ", chatSystemMsg);
-    console.log("\x1b[33m%s\x1b[0m", "messages: ", messages);
-
-    if (!chatData.choices?.length) {
-      throw new Error("No choices returned from Chat Completion API.");
+    if (!chatData?.choices?.length) {
+      throw new Error("No valid response from Chat Completion API.");
     }
 
-    const { message, finish_reason } = chatData.choices[0];
-    const toolCalls = message.tool_calls;
+    const { message } = chatData.choices[0];
+    const toolCall = message.tool_calls?.[0]?.function;
 
-    if (finish_reason === "tool_calls" && toolCalls) {
-      const { name: fnName, arguments: args } = toolCalls[0].function;
-      const fnArgs = JSON.parse(args);
+    if (toolCall) {
+      const { name: functionName, arguments: args } = toolCall;
+      const parsedArgs = JSON.parse(args);
 
-      console.log("\x1b[32m%s\x1b[0m", "fnName: ", fnName);
-
-      if (fnName === "getGeneratedImage") {
+      if (functionName === "getGeneratedImage") {
         return await generateImage({
-          prompt: fnArgs.prompt as string,
+          prompt: parsedArgs.prompt,
           role: message.role as MessageRole,
-          taskId: taskId as string | null,
+          taskId,
+          userId,
         });
       }
 
-      if (fnName === "getGeneratedAudio") {
+      if (functionName === "getGeneratedAudio") {
         return await generateAudio({
-          messages: Array.isArray(fnArgs) ? fnArgs : ([fnArgs] as Message[]),
+          messages: Array.isArray(parsedArgs) ? parsedArgs : [parsedArgs],
           role: message.role as MessageRole,
-          taskId: taskId as string | null,
+          taskId,
         });
       }
     }
 
-    const taskUsage = chatData.usage?.total_tokens ?? 0;
-    const taskData: Message = {
-      whois: message.role,
-      role: message.role,
-      content: [{ type: "text", text: message.content }] as ContentItem[],
-    };
-
-    return JSON.stringify({ taskData, taskUsage });
+    return JSON.stringify({
+      taskData: {
+        whois: message.role,
+        role: message.role,
+        content: [{ type: "text", text: message.content }] as ContentItem[],
+      },
+      taskUsage: chatData.usage?.total_tokens ?? 0,
+    });
   } catch (error) {
     handleError({ error, source: "generateResponse" });
   }

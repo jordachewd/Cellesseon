@@ -30,44 +30,48 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
         const blob = new Blob([byteNumbers], { type: "audio/wav" });
         const url = URL.createObjectURL(blob);
         setBlobUrl(url);
+
         const audioElement = new Audio(url);
         setAudio(audioElement);
 
         audioElement.onloadedmetadata = () => {
           setDuration(formatTime(audioElement.duration));
         };
+
+        return () => {
+          URL.revokeObjectURL(url);
+          audioElement.pause();
+          setAudio(null);
+        };
       } catch (error) {
         console.error("Error processing audio:", error);
       }
     }
-    return () => {
-      if (blobUrl) {
-        URL.revokeObjectURL(blobUrl);
-      }
-    };
-  }, [audioSrc, blobUrl]);
+  }, [audioSrc]);
 
   useEffect(() => {
-    if (audio) {
-      const updateProgress = () => {
+    if (!audio) return;
+
+    const updateProgress = () => {
+      if (audio.duration) {
         setProgress((audio.currentTime / audio.duration) * 100);
         setCurrentTime(formatTime(audio.currentTime));
-      };
+      }
+    };
 
-      const handleEnded = () => {
-        setIsPlaying(false);
-        setProgress(0);
-        setCurrentTime("0:00");
-      };
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setProgress(0);
+      setCurrentTime("0:00");
+    };
 
-      audio.addEventListener("timeupdate", updateProgress);
-      audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("ended", handleEnded);
 
-      return () => {
-        audio.removeEventListener("timeupdate", updateProgress);
-        audio.removeEventListener("ended", handleEnded);
-      };
-    }
+    return () => {
+      audio.removeEventListener("timeupdate", updateProgress);
+      audio.removeEventListener("ended", handleEnded);
+    };
   }, [audio]);
 
   const togglePlay = () => {
@@ -97,22 +101,25 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
         margin: "0.75rem auto 0",
       }}
     >
-      <CardContent>
+      <CardContent className="flex flex-1 items-center justify-between gap-4 !p-4">
         <Button
           size="small"
           onClick={togglePlay}
           startIcon={
             <i className={`bi bi-${isPlaying ? "pause" : "play"}`}></i>
           }
-          sx={{ mt: 2 }}
           disabled={!blobUrl}
         >
           {isPlaying ? "Pause" : "Play"}
         </Button>
 
-        <LinearProgress variant="determinate" value={progress} sx={{ mt: 2 }} />
+        <LinearProgress
+          variant="determinate"
+          value={progress}
+          className="flex-1"
+        />
 
-        <Typography variant="body2" sx={{ mt: 1 }}>
+        <Typography variant="body2" className="!text-sm">
           {currentTime} / {duration}
         </Typography>
       </CardContent>
