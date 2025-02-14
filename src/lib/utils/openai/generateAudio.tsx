@@ -4,7 +4,7 @@ import { ChatCompletionMessageParam } from "openai/resources/chat/completions.mj
 import { handleError } from "../handleError";
 
 /* This route should run on the Edge Runtime.*/
-export const runtime = "edge";
+// export const runtime = "edge";
 
 interface GenerateAudioParams {
   messages: Message[];

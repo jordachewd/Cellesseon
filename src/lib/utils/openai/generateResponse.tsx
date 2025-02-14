@@ -9,7 +9,7 @@ import {
 import { handleError } from "../handleError";
 
 /* This route should run on the Edge Runtime.*/
-export const runtime = "edge";
+// export const runtime = "edge";
 
 interface GenerateResponseParams {
   messages: Message[];
