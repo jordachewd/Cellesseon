@@ -7,34 +7,35 @@ import { NextResponse } from "next/server";
 
 // UPLOAD IMAGES TO AWS
 export async function POST(req: Request) {
-  try {
-    const { userId, taskId, pngImageBuffer } = await req.json();
+  console.log("\x1b[34m%s\x1b[0m", "AWS API Called ");
 
-    if (!userId || !taskId || !pngImageBuffer) {
-      return NextResponse.json({
-        message: "UserId, TaskId, and Image Buffer are required.",
-        status: 400,
-      });
+  try {
+    const user = await currentUser();
+    const { taskId, imgBuffer } = await req.json();
+
+    if (!user?.id || !taskId || !imgBuffer) {
+      throw new Error("UserId, TaskId, and Image Buffer are required.");
     }
 
-    const buffer = Buffer.from(pngImageBuffer, "base64");
-
+    const buffer = Buffer.from(imgBuffer, "base64");
     const fileName = `${taskId}_image_${generateString()}.png`;
     const mimeType = "image/png";
-    const folder = `${userId}/${taskId}`;
+    const folder = `${user?.id}/${taskId}`;
 
     const fileUrl = await uploadFileToAWS(buffer, fileName, mimeType, folder);
 
-    if (fileUrl) {
-      return NextResponse.json({
-        fileUrl,
-      });
+    if (!fileUrl) {
+      throw new Error("uploadFileToAWS returned undefined");
     }
+
+    return NextResponse.json({ fileUrl });
   } catch (error: unknown) {
+    console.error("AWS API Error:", error);
+
     return NextResponse.json({
       status: 500,
       message: "File upload failed",
-      error: error || "Unknown error",
+      error: (error as Error).message || "Unknown error",
     });
   }
 }

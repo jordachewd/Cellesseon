@@ -3,9 +3,6 @@ import { Message, MessageRole } from "@/types";
 import { ChatCompletionMessageParam } from "openai/resources/chat/completions.mjs";
 import { handleError } from "../handleError";
 
-/* This route should run on the Edge Runtime.*/
-// export const runtime = "edge";
-
 interface GenerateAudioParams {
   messages: Message[];
   role: MessageRole;
@@ -36,7 +33,7 @@ export async function generateAudio({
     }
 
     console.log("\x1b[36m%s\x1b[0m", "generateAudio taskId: ", taskId);
-    
+
     const taskUsage = response.usage?.total_tokens;
     const taskData: Message = {
       whois: role,

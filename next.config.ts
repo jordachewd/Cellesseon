@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
 
   // Disable source maps in production to avoid 404 errors
   productionBrowserSourceMaps: false,
-
+  devIndicators: false,
   images: {
     remotePatterns: [
       {

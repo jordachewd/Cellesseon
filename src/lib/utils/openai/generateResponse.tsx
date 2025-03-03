@@ -8,24 +8,19 @@ import {
 } from "openai/resources/chat/completions.mjs";
 import { handleError } from "../handleError";
 
-/* This route should run on the Edge Runtime.*/
-// export const runtime = "edge";
-
 interface GenerateResponseParams {
   messages: Message[];
-  taskId?: string;
-  userId: string;
+  taskId: string;
 }
 
 export async function generateResponse({
   messages,
   taskId,
-  userId,
 }: GenerateResponseParams) {
   try {
     const chatData = await openAiClient.chat.completions.create({
       model: "gpt-4o",
-      temperature: 0.2,
+      temperature: 0.5,
       messages: [...chatSystemMsg, ...messages] as ChatCompletionMessageParam[],
       tools: chatTools as ChatCompletionTool[],
     });
@@ -46,7 +41,6 @@ export async function generateResponse({
           prompt: parsedArgs.prompt,
           role: message.role as MessageRole,
           taskId,
-          userId,
         });
       }
 

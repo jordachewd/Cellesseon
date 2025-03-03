@@ -39,7 +39,7 @@ export async function POST(req: Request): Promise<NextResponse> {
       throw new Error("Task ID is undefined.");
     }
 
-    const aiResponse = await generateResponse({ messages, taskId, userId });
+    const aiResponse = await generateResponse({ messages, taskId });
     const { taskData, taskUsage } = JSON.parse(aiResponse as string);
 
     console.log("Generated Task Data:", taskData.content);

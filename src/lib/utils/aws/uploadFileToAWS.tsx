@@ -8,20 +8,39 @@ export default async function uploadFileToAWS(
   contentType: string,
   folder: string
 ): Promise<string> {
-  const bucketName = process.env.AWS_S3_BUCKET as string;
-  const filePath = `${folder}/${fileName}`;
+  try {
+    const bucketName = process.env.AWS_S3_BUCKET;
+    const region = process.env.AWS_S3_REGION;
 
-  const params = {
-    Bucket: bucketName,
-    Key: filePath,
-    Body: file,
-    ContentType: contentType,
-  };
+    if (!bucketName) {
+      throw new Error("AWS_S3_BUCKET environment variable is not defined");
+    }
 
-  const putObjectToAWS = new PutObjectCommand(params);
+    if (!region) {
+      throw new Error("AWS_S3_REGION environment variable is not defined");
+    }
 
-  await awsS3Client.send(putObjectToAWS);
+    const filePath = `${folder}/${fileName}`;
 
-  const fileUrl = `https://${bucketName}.s3.${process.env.AWS_S3_REGION}.amazonaws.com/${filePath}`;
-  return fileUrl;
+    const params = {
+      Bucket: bucketName,
+      Key: filePath,
+      Body: file,
+      ContentType: contentType,
+    };
+
+    const putObjectToAWS = new PutObjectCommand(params);
+
+    console.log("Uploading file to AWS S3:", filePath);
+
+    await awsS3Client.send(putObjectToAWS);
+
+    const fileUrl = `https://${bucketName}.s3.${region}.amazonaws.com/${filePath}`;
+
+    console.log("File successfully uploaded:", fileUrl);
+    return fileUrl;
+  } catch (error) {
+    console.error("AWS S3 Upload Error:", error);
+    throw new Error(`File upload failed: ${(error as Error).message}`);
+  }
 }

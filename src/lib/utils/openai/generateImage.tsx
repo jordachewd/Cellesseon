@@ -1,19 +1,17 @@
 import { openAiClient } from "@/constants/openai";
 import { ContentItem, Message, MessageRole } from "@/types";
 import { handleError } from "../handleError";
-// import sharp from "sharp";
+// import axios, { AxiosError } from "axios";
 
-/* This route should run on the Edge Runtime.*/
-// export const runtime = "edge";
+import sharp from "sharp";
 
 interface GenerateImageParams {
   prompt: string;
   role: MessageRole;
-  taskId?: string | null;
-  userId: string;
+  taskId: string;
 }
 
-/* async function convertToPng(imageUrl: string): Promise<Buffer | undefined> {
+async function convertToPng(imageUrl: string): Promise<Buffer | undefined> {
   try {
     const response = await fetch(imageUrl);
     if (!response.ok) throw new Error("Failed to fetch image");
@@ -24,27 +22,22 @@ interface GenerateImageParams {
   } catch (error) {
     handleError({ error, source: "convertToPng" });
   }
-} */
+}
 
 export async function generateImage({
   prompt,
   role,
-  //taskId,
-  //userId,
+  taskId,
 }: GenerateImageParams) {
   try {
     const response = await openAiClient.images.generate({
       model: "dall-e-3",
-      size: "1024x1024",
       prompt,
-      n: 1,
     });
 
     if (!response || !response.data?.length) {
       throw new Error("The Image Generator API did not return any images.");
     }
-
-    console.log("\x1b[33m%s\x1b[0m", "generateImage response: ", response);
 
     const respData = response.data[0];
     const imageUrl = respData.url;
@@ -54,33 +47,54 @@ export async function generateImage({
       throw new Error("Image URL is undefined");
     }
 
-   // console.log("\x1b[33m%s\x1b[0m", "generateImage imageUrl: ", imageUrl);
+    console.log("\x1b[33m%s\x1b[0m", "generateImage imageUrl: ", imageUrl);
 
-  /*   const pngImageBuffer = await convertToPng(imageUrl);
+    const imgBuffer = await convertToPng(imageUrl);
 
-    if (!pngImageBuffer) {
+    if (!imgBuffer) {
       throw new Error("Failed to convert image to PNG");
     }
 
-    const awsResp = await fetch("/api/aws", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId,
-        taskId,
-        pngImageBuffer: pngImageBuffer.toString("base64"),
-      }),
-    });
-
-    if (!awsResp.ok) {
-      throw new Error("Failed to upload image to AWS");
+    console.log("taskID: ", taskId);
+    /*  
+    try {
+      const awsResp = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/aws`,
+        {
+          taskId,
+          imgBuffer: imgBuffer.toString("base64"),
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    
+      console.log("\x1b[33m%s\x1b[0m", "generateImage awsData: ", awsResp.data);
+    
+      if (!awsResp.status || awsResp.status !== 200) {
+        throw new Error("Failed to upload image to AWS");
+      }
+    
+      const awsData = awsResp.data;
+    } catch (error: unknown) { 
+      console.error("Axios Error:", error);
+    
+      if (error instanceof AxiosError) { 
+        const axiosError = error as AxiosError;
+        console.error(
+          "Axios Error Response:",
+          axiosError.response ? JSON.stringify(axiosError.response.data, null, 2) : "No response data"
+        );
+        console.error("Axios Request Error:", axiosError.request ? "Request failed" : "No request issue");
+      } else {
+        console.error("Unexpected Error:", (error as Error).message);
+      }
+    
+      throw new Error("AWS request failed");
     }
 
-    console.log(
-      "\x1b[33m%s\x1b[0m",
-      "generateImage awsResp: ",
-      JSON.parse(JSON.stringify(awsResp))
-    ); */
+
+ */
 
     const taskData: Message = {
       whois: role,

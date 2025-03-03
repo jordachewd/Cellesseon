@@ -13,12 +13,11 @@ _Smart assistant based on OpenAI._
 Software as a service (SaaS)
 
 ### Technologies
-
-- [OpenAI](https://openai.com/)
-- [Stripe](https://stripe.com)
-- [Clerk](https://clerk.com/)
-- [Vercel](https://vercel.com/)
 - [NextJS](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Material UI](https://mui.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [OpenAI](https://openai.com/)
+- [Stripe](https://stripe.com)
+- [Clerk](https://clerk.com/)
+- [Vercel](https://vercel.com/)
