@@ -12,7 +12,7 @@ _Smart assistant based on OpenAI._
 
 Software as a service (SaaS)
 
-### Technologies
+### Tech Stack
 - [NextJS](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Material UI](https://mui.com/)
