@@ -3,7 +3,7 @@ import css from "@/styles/layout/Header.module.css";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import ToggleTheme from "@/components/shared/ToggleTheme";
-import LogoV2 from "../shared/LogoV2";
+import LogoV2 from "../shared/Logo";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState<boolean>(false);

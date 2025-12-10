@@ -6,7 +6,7 @@ import { IconButton } from "@mui/material";
 import { TooltipArrow } from "../shared/TooltipArrow";
 import ToggleTheme from "@/components/shared/ToggleTheme";
 import AvatarMenu from "@/components/shared/AvatarMenu";
-import LogoV2 from "../shared/LogoV2";
+import LogoV2 from "../shared/Logo";
 
 interface ChatHeaderProps {
   className?: string;

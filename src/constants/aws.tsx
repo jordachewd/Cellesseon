@@ -7,10 +7,3 @@ export const awsS3Client = new S3Client({
     secretAccessKey: process.env.AWS_S3_SECRET_KEY as string,
   },
 });
-
-export const ALLOWED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/gif",
-  "image/webp",
-];

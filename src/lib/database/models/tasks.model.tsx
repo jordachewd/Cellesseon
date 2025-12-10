@@ -1,8 +1,7 @@
 import { ContentItem, Message } from "@/types";
 import { Schema, model, models, Document } from "mongoose";
 
-// Define the Task document interface
-export interface ITask extends Document {
+interface ITask extends Document {
   userId: string;
   title: string;
   messages: Message[];
