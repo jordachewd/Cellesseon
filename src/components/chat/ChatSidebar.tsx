@@ -6,7 +6,7 @@ import { Typography } from "@mui/material";
 import { UserData } from "@/types/UserData.d";
 import { useEffect, useState } from "react";
 import PlanPromo from "@/components/shared/PlanPromo";
-import LogoV2 from "../shared/LogoV2";
+import LogoV2 from "../shared/Logo";
 import { useUser } from "@clerk/nextjs";
 import { getUserById } from "@/lib/actions/user.actions";
 import useScreenSize from "@/lib/hooks/useScreenSize";

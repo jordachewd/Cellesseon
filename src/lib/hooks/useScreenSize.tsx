@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from "react";
 
-export type ScreenSize = {
+type ScreenSize = {
   width: number;
   height: number;
 };
 
-export type Breakpoints = {
+type Breakpoints = {
   sm: number;
   md: number;
   lg: number;
@@ -20,8 +20,13 @@ const breakpoints: Breakpoints = {
 };
 
 const useScreenSize = () => {
-  const [screenSize, setScreenSize] = useState<ScreenSize>({ width: 0, height: 0 });
-  const [currentBreakpoint, setCurrentBreakpoint] = useState<string | null>(null);
+  const [screenSize, setScreenSize] = useState<ScreenSize>({
+    width: 0,
+    height: 0,
+  });
+  const [currentBreakpoint, setCurrentBreakpoint] = useState<string | null>(
+    null
+  );
 
   const getBreakpointName = useCallback((width: number): string | null => {
     if (width <= breakpoints.sm) return "sm";

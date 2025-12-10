@@ -1,7 +1,7 @@
 import { BillingCycle, PlanName } from "@/types/PlanData.d";
 import { Schema, model, models, ObjectId, Document } from "mongoose";
 
-export interface ITransaction extends Document {
+interface ITransaction extends Document {
   stripeId: string;
   userId: ObjectId | string;
   clerkId: string;

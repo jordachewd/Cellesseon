@@ -9,7 +9,7 @@ export const dosis = Dosis({
   display: "swap",
 });
 
-export const albertsans = Albert_Sans({
+const albertsans = Albert_Sans({
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
