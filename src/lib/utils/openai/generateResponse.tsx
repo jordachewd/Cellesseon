@@ -30,11 +30,18 @@ export async function generateResponse({
     }
 
     const { message } = chatData.choices[0];
-    const toolCall = message.tool_calls?.[0]?.function;
+    const toolCall = message.tool_calls?.[0];
 
-    if (toolCall) {
-      const { name: functionName, arguments: args } = toolCall;
-      const parsedArgs = JSON.parse(args);
+    if (toolCall && toolCall.type === "function" && toolCall.function) {
+      const functionName = toolCall.function.name;
+      const argsStr = toolCall.function.arguments ?? "{}";
+      const parsedArgs = (() => {
+        try {
+          return JSON.parse(argsStr);
+        } catch {
+          return {};
+        }
+      })();
 
       if (functionName === "getGeneratedImage") {
         return await generateImage({
