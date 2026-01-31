@@ -15,11 +15,11 @@ _Smart AI Assistant powered by OpenAI_
 
 ---
 
-## 📖 Description
+## Description
 
 **Cellesseon** is a modern, full-featured AI-powered virtual assistant built as a Software as a Service (SaaS) platform. It delivers insightful, concise answers in a warm yet professional tone, with responses carefully formatted for optimal readability and comprehension.
 
-### ✨ Key Features
+### Key Features
 
 - **AI Chat Interface** — Interactive conversational AI powered by OpenAI
 - **Image Generation** — Create images using AI capabilities
@@ -30,7 +30,7 @@ _Smart AI Assistant powered by OpenAI_
 - **Dark/Light Mode** — Customizable theme support
 - **Responsive Design** — Optimized for all device sizes
 
-### 🎯 Subscription Tiers
+### Subscription Tiers
 
 | Plan | Description |
 |------|-------------|
@@ -42,7 +42,7 @@ _Smart AI Assistant powered by OpenAI_
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 | Technology | Purpose |
@@ -76,7 +76,7 @@ _Smart AI Assistant powered by OpenAI_
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 cellesseon/
@@ -218,7 +218,7 @@ cellesseon/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -254,7 +254,7 @@ cellesseon/
 
 ---
 
-## � Environment Variables
+## Environment Variables
 
 Create a `.env.local` file in the root directory with the following variables:
 
@@ -293,13 +293,13 @@ AWS_S3_BUCKET_NAME=cellesseon-bucket
 
 ---
 
-## �📄 License
+## License
 
 This project is private and proprietary.
 
 ---
 
-## 👤 Author
+## Author
 
 Made with ❤️ by [JordacheWD](https://jordachewd.com/)
 
