@@ -21,14 +21,14 @@ _Smart AI Assistant powered by OpenAI_
 
 ### ✨ Key Features
 
-- 🤖 **AI Chat Interface** — Interactive conversational AI powered by OpenAI
-- 🖼️ **Image Generation** — Create images using AI capabilities
-- 🔊 **Audio Generation** — Text-to-speech and voice input support
-- 📁 **File Uploads** — Upload and analyze documents via AWS S3
-- 🔐 **Authentication** — Secure user authentication with Clerk
-- 💳 **Subscription Plans** — Tiered pricing with Stripe integration
-- 🌓 **Dark/Light Mode** — Customizable theme support
-- 📱 **Responsive Design** — Optimized for all device sizes
+- **AI Chat Interface** — Interactive conversational AI powered by OpenAI
+- **Image Generation** — Create images using AI capabilities
+- **Audio Generation** — Text-to-speech and voice input support
+- **File Uploads** — Upload and analyze documents via AWS S3
+- **Authentication** — Secure user authentication with Clerk
+- **Subscription Plans** — Tiered pricing with Stripe integration
+- **Dark/Light Mode** — Customizable theme support
+- **Responsive Design** — Optimized for all device sizes
 
 ### 🎯 Subscription Tiers
 
