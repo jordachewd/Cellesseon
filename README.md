@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Cellesseon](public/images/lp-hero-image-small.png)
+![Cellesseon](public/images/lp-hero-image-480x480.png)
 
 _Smart AI Assistant powered by OpenAI_
 
