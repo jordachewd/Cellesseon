@@ -262,12 +262,6 @@ This project is private and proprietary.
 
 ## 👤 Author
 
-**JordacheWD**
+Made with ❤️ by [JordacheWD](https://jordachewd.com/)
 
----
-
-<div align="center">
-
-Made with ❤️ using Next.js and OpenAI
-
-</div>
+ 
