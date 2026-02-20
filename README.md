@@ -149,6 +149,7 @@ cellesseon/
 │   │       ├── PlanCard.tsx         # Plan display card
 │   │       ├── PlanCountDown.tsx    # Trial countdown
 │   │       ├── PlanPromo.tsx        # Promotional banner
+│   │       ├── LoggoutBtn.tsx       # Logout button
 │   │       ├── SidebarToggle.tsx    # Sidebar toggle
 │   │       ├── ToggleTheme.tsx      # Theme switcher
 │   │       ├── TooltipArrow.tsx     # Tooltip component
@@ -179,7 +180,14 @@ cellesseon/
 │   │   │
 │   │   └── utils/                   # Utility functions
 │   │       ├── aws/                 # AWS utilities
+│   │       │   ├── deleteFileFromAWS.tsx  # S3 file deletion
+│   │       │   └── uploadFileToAWS.tsx    # S3 file upload
 │   │       ├── openai/              # OpenAI utilities
+│   │       │   ├── filterAssistantMsg.tsx # Filter assistant messages
+│   │       │   ├── generateAudio.tsx      # Audio generation
+│   │       │   ├── generateImage.tsx      # Image generation
+│   │       │   ├── generateResponse.tsx   # Chat response generation
+│   │       │   └── generateTitle.tsx      # Title generation
 │   │       ├── generateString.tsx   # String generation
 │   │       ├── getFormattedDate.tsx # Date formatting
 │   │       ├── getFullName.tsx      # Name formatting
@@ -188,9 +196,32 @@ cellesseon/
 │   │
 │   ├── styles/                      # CSS Modules
 │   │   ├── chat/                    # Chat component styles
+│   │   │   ├── ChatBody.module.css
+│   │   │   ├── ChatHeader.module.css
+│   │   │   ├── ChatInput.module.css
+│   │   │   ├── ChatIntro.module.css
+│   │   │   ├── ChatSidebar.module.css
+│   │   │   └── ChatWrapper.module.css
 │   │   ├── layout/                  # Layout styles
+│   │   │   ├── Footer.module.css
+│   │   │   ├── Header.module.css
+│   │   │   ├── MainWrapper.module.css
+│   │   │   ├── PageHead.module.css
+│   │   │   └── PageWrapper.module.css
 │   │   ├── sections/                # Section styles
+│   │   │   ├── Faqs.module.css
+│   │   │   ├── LandingPage.module.css
+│   │   │   ├── Plans.module.css
+│   │   │   ├── ProfileBilling.module.css
+│   │   │   └── ProfileHero.module.css
 │   │   └── shared/                  # Shared component styles
+│   │       ├── ImageHolder.module.css
+│   │       ├── LoadingBubbles.module.css
+│   │       ├── LoadingPage.module.css
+│   │       ├── LoadingSpinner.module.css
+│   │       ├── PlanCard.module.css
+│   │       ├── PlanCountDown.module.css
+│   │       └── PlanPromo.module.css
 │   │
 │   ├── themes/                      # MUI Theme configuration
 │   │   ├── muiBase.tsx              # Base theme settings
@@ -209,6 +240,7 @@ cellesseon/
 │   │
 │   └── proxy.tsx                    # Proxy configuration
 │
+├── .eslintrc.json                   # ESLint configuration
 ├── next.config.ts                   # Next.js configuration
 ├── tailwind.config.ts               # Tailwind CSS configuration
 ├── tsconfig.json                    # TypeScript configuration
