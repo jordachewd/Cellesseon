@@ -6,7 +6,7 @@
 
 _Smart AI Assistant powered by OpenAI_
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://cellesseon.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://cellesseon.jwd-apps.com)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
 [![MUI](https://img.shields.io/badge/MUI-7-007FFF)](https://mui.com/)
@@ -38,7 +38,7 @@ _Smart AI Assistant powered by OpenAI_
 | **Pro** | Best for personal projects with expanded limits |
 | **Premium** | Unlimited access with priority support |
 
-:point_right: **[See it in action](https://cellesseon.vercel.app/)**
+:point_right: **[See it in action](https://cellesseon.jwd-apps.com)**
 
 ---
 
