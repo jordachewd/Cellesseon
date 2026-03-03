@@ -42,3 +42,16 @@ next-env.d.ts
 
 # misc
 ToDo.txt
+
+# AI Data & Agents instructions must stay local
+.agents/
+.codex/
+
+AGENTS.md
+AGENTS.MD
+
+SPEC.md
+SPEC.MD
+
+CLAUDE.md
+CLAUDE.MD
