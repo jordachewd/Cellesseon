@@ -36,7 +36,10 @@ test("toggles dark mode and persists it after reload", async ({ page }) => {
 test("redirects unauthenticated users from private routes to sign-in", async ({
   page,
 }) => {
-  await page.goto("/profile");
+  const privateRoutes = ["/profile", "/plans", "/dashboard"];
 
-  await expect(page).toHaveURL(/\/sign-in/);
+  for (const route of privateRoutes) {
+    await page.goto(route);
+    await expect(page).toHaveURL(/\/sign-in/);
+  }
 });

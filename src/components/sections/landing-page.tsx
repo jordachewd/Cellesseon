@@ -1,5 +1,5 @@
-import Plans from "./Plans";
-import Faqs from "./Faqs";
+import Plans from "./plans-section";
+import Faqs from "./faqs-section";
 import Image from "next/image";
 import Link from "next/link";
 

@@ -1,4 +1,4 @@
-import { TooltipArrow } from "./TooltipArrow";
+import { TooltipArrow } from "./tooltip-arrow";
 
 interface SidebarToggleProps {
   title?: string | null;

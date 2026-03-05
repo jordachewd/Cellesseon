@@ -1,11 +1,11 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import CellesseonTheme from "@/components/layout/CellesseonTheme";
+import CellesseonTheme from "@/components/layout/cellesseon-theme";
 import type { Metadata, Viewport } from "next";
 import { Albert_Sans, Dosis } from "next/font/google";
 import Script from "next/script";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "@/app/globals.css";
-import MainWrapper from "@/components/layout/MainWrapper";
+import MainWrapper from "@/components/layout/main-wrapper";
 
 export const metadata: Metadata = {
   title: "Cellesseon",

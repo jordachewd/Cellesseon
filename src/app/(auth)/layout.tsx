@@ -1,4 +1,4 @@
-import PageWrapper from "@/components/layout/PageWrapper";
+import PageWrapper from "@/components/layout/page-wrapper";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

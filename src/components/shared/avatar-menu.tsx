@@ -5,10 +5,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { TooltipArrow } from "./TooltipArrow";
+import { TooltipArrow } from "./tooltip-arrow";
 import { useUser } from "@clerk/clerk-react";
 import Link from "next/link";
-import LogoutBtn from "./LogoutBtn";
+import LogoutBtn from "./logout-btn";
 
 export default function AvatarMenu() {
   const { user } = useUser();

@@ -27,6 +27,7 @@ async function signIn(page: Page) {
   await passwordInput.press("Enter");
 
   await page.waitForURL(/\/($|\?)/, { timeout: 45_000 });
+  await page.waitForLoadState("networkidle");
 }
 
 test.describe("authenticated user flows", () => {

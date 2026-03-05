@@ -1,5 +1,5 @@
 "use client";
-import PageWrapper from "@/components/layout/PageWrapper";
+import PageWrapper from "@/components/layout/page-wrapper";
 import { useRouter } from "next/navigation";
 
 const UnauthorizedPage = () => {

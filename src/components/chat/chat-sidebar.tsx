@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
-import SidebarToggle from "../shared/SidebarToggle";
+import SidebarToggle from "../shared/sidebar-toggle";
 import { useState } from "react";
-import PlanPromo from "@/components/shared/PlanPromo";
-import LogoV2 from "../shared/Logo";
+import PlanPromo from "@/components/shared/plan-promo";
+import LogoV2 from "../shared/app-logo";
 import useScreenSize from "@/lib/hooks/useScreenSize";
 import { PlanData } from "@/types/PlanData.d";
 

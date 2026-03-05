@@ -1,7 +1,7 @@
 import { getPlanStatus } from "@/lib/utils/getPlanStatus";
 import { Plan, PlanData, PlanStatus } from "@/types/PlanData.d";
 import { UserData } from "@/types/UserData.d";
-import Checkout from "@/components/shared/Checkout";
+import Checkout from "@/components/shared/checkout-form";
 
 interface PlanCardProps {
   plan: Plan;

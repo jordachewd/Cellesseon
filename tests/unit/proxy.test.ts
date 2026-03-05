@@ -69,6 +69,21 @@ describe("proxy route protection", () => {
     expect(response).toBeUndefined();
   });
 
+  it("allows unauthenticated webhook requests for Stripe and Clerk", async () => {
+    const stripeWebhookRequest = new NextRequest(
+      "http://localhost:3000/api/webhooks/stripe",
+    );
+    const clerkWebhookRequest = new NextRequest(
+      "http://localhost:3000/api/webhooks/clerk",
+    );
+
+    const stripeResponse = await proxy(stripeWebhookRequest, {} as never);
+    const clerkResponse = await proxy(clerkWebhookRequest, {} as never);
+
+    expect(stripeResponse).toBeUndefined();
+    expect(clerkResponse).toBeUndefined();
+  });
+
   it("redirects unauthenticated users from protected routes to /sign-in", async () => {
     const request = new NextRequest("http://localhost:3000/profile");
     const response = await proxy(request, {} as never);

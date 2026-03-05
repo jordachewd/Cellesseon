@@ -1,4 +1,4 @@
-import LoadingBubbles from "./LoadingBubbles";
+import LoadingBubbles from "./loading-bubbles";
 import { useState } from "react";
 import Image from "next/image";
 

@@ -1,11 +1,11 @@
 "use client";
 import { useRef, useState } from "react";
 import { Message } from "@/types";
-import ChatHeader from "@/components/chat/ChatHeader";
-import ChatIntro from "@/components/chat/ChatIntro";
-import ChatBody from "@/components/chat/ChatBody";
-import ChatInput from "@/components/chat/ChatInput";
-import AlertMessage, { AlertParams } from "@/components/shared/AlertMessage";
+import ChatHeader from "@/components/chat/chat-header";
+import ChatIntro from "@/components/chat/chat-intro";
+import ChatBody from "@/components/chat/chat-body";
+import ChatInput from "@/components/chat/chat-input";
+import AlertMessage, { AlertParams } from "@/components/shared/alert-message";
 import { filterAssistantMsg } from "@/lib/utils/openai/filterAssistantMsg";
 
 export default function ChatWrapper() {

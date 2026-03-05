@@ -1,5 +1,5 @@
-import ChatHeader from "@/components/chat/ChatHeader";
-import PageWrapper from "@/components/layout/PageWrapper";
+import ChatHeader from "@/components/chat/chat-header";
+import PageWrapper from "@/components/layout/page-wrapper";
 
 interface RouteGroupLayoutProps {
   children: React.ReactNode;

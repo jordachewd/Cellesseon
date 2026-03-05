@@ -3,9 +3,9 @@ import { useEffect, useMemo, useRef } from "react";
 import autoAnimate from "@formkit/auto-animate";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import LoadingBubbles from "../shared/LoadingBubbles";
-import ImageHolder from "@/components/shared/ImageHolder";
-import AudioPlayer from "@/components/shared/AudioPlayer";
+import LoadingBubbles from "../shared/loading-bubbles";
+import ImageHolder from "@/components/shared/image-holder";
+import AudioPlayer from "@/components/shared/audio-player";
 
 interface ChatBodyProps {
   messages: Message[];

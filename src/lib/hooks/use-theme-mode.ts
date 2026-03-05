@@ -3,7 +3,7 @@
 import {
   CellesseonThemeContext,
   ThemeMode,
-} from "@/components/layout/CellesseonTheme";
+} from "@/components/layout/cellesseon-theme";
 import { useContext } from "react";
 
 export type ThemeModeState = ThemeMode | undefined;

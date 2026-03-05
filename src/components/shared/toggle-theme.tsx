@@ -1,4 +1,4 @@
-import { TooltipArrow } from "./TooltipArrow";
+import { TooltipArrow } from "./tooltip-arrow";
 import useThemeMode from "@/lib/hooks/use-theme-mode";
 
 export default function ToggleTheme() {

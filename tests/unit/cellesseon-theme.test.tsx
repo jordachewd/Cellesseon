@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import CellesseonTheme from "@/components/layout/CellesseonTheme";
+import CellesseonTheme from "@/components/layout/cellesseon-theme";
 import useThemeMode from "@/lib/hooks/use-theme-mode";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 

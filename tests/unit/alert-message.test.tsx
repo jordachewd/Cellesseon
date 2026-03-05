@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import AlertMessage, { AlertParams } from "@/components/shared/AlertMessage";
+import AlertMessage, { AlertParams } from "@/components/shared/alert-message";
 import { describe, expect, it } from "vitest";
 
 describe("AlertMessage", () => {

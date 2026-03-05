@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Plan } from "@/types/PlanData.d";
 import { UserData } from "@/types/UserData.d";
-import PageHead from "../layout/PageHead";
-import PlanCard from "@/components/shared/PlanCard";
-import LoadingBubbles from "../shared/LoadingBubbles";
+import PageHead from "../layout/page-head";
+import PlanCard from "@/components/shared/plan-card";
+import LoadingBubbles from "../shared/loading-bubbles";
 import Link from "next/link";
 
 interface PlansProps {

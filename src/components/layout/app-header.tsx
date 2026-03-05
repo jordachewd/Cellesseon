@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import ToggleTheme from "@/components/shared/ToggleTheme";
-import LogoV2 from "../shared/Logo";
+import ToggleTheme from "@/components/shared/toggle-theme";
+import LogoV2 from "../shared/app-logo";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState<boolean>(false);

@@ -1,7 +1,7 @@
 import { IntroChips } from "@/constants/introChipsData";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
-import LoadingBubbles from "../shared/LoadingBubbles";
+import LoadingBubbles from "../shared/loading-bubbles";
 
 interface ChatIntroProps {
   sendPrompt: (prompt: string) => void;

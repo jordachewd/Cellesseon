@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { TooltipArrow } from "../shared/TooltipArrow";
-import ToggleTheme from "@/components/shared/ToggleTheme";
-import AvatarMenu from "@/components/shared/AvatarMenu";
-import LogoV2 from "../shared/Logo";
+import { TooltipArrow } from "../shared/tooltip-arrow";
+import ToggleTheme from "@/components/shared/toggle-theme";
+import AvatarMenu from "@/components/shared/avatar-menu";
+import LogoV2 from "../shared/app-logo";
 
 interface ChatHeaderProps {
   className?: string;

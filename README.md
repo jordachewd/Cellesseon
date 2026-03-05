@@ -4,14 +4,14 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 
 ## Recent Updates (March 2026)
 
-- Expanded behavior-first test coverage for core features and failure paths:
-  - Unit: `proxy` access control, `/api/aws` upload/delete success + error handling, Stripe webhook verification and checkout handling, malformed `/api/openai` payload handling, and shared serialization behavior.
-  - E2E: unauthenticated redirect to sign-in for private routes, plus existing landing/theme/authenticated regression flows.
-- Fixed technical debt items from `SPEC.md`:
-  - Replaced duplicated `(account)`/`(admin)` layout markup with shared `src/components/layout/route-group-layout.tsx`.
-  - Replaced repeated `JSON.parse(JSON.stringify(...))` server action serialization with `src/lib/utils/serialize-for-client.ts`.
-- Standardized Playwright artifacts under `tests/e2e/test-results`.
-- Authenticated E2E specs use `E2E_TEST_*` credentials from `.env.local` via `tests/e2e/utils/e2e-test-user.ts`.
+- Normalized legacy component filenames to kebab-case across `src/components/**` and updated all imports/references.
+- Fixed Tailwind canonical class warnings that were causing editor `suggestCanonicalClasses` noise (for example `z-[1]` -> `z-1` and cleaned arbitrary radial-gradient value formatting).
+- Expanded behavior-first tests for critical success and failure paths:
+  - Unit: added `/api/webhooks/clerk` webhook coverage (missing headers, invalid signature, create/update/delete flows, unhandled events), plus webhook route-public access assertions in `proxy` tests.
+  - E2E: strengthened unauthenticated route protection checks across `/profile`, `/plans`, and `/dashboard`, alongside existing landing/theme/authenticated flows.
+- Re-hardened Playwright config:
+  - Enforced `tests/e2e/test-results` output directory for artifacts.
+  - Added failure-focused screenshot/video retention to improve debugging signal.
 
 ## Tech Stack
 
@@ -62,5 +62,3 @@ npm run test
 npm run test:e2e
 npm run build
 ```
-
-Playwright authenticated tests read credentials from `.env.local` automatically.

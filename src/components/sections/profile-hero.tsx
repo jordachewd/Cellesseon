@@ -1,9 +1,9 @@
-import PlanPromo from "@/components/shared/PlanPromo";
+import PlanPromo from "@/components/shared/plan-promo";
 import getFormattedDate from "@/lib/utils/getFormattedDate";
-import PageHead from "@/components/layout/PageHead";
+import PageHead from "@/components/layout/page-head";
 import { UserData } from "@/types/UserData.d";
 import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
-import PlanCountDown from "../shared/PlanCountDown";
+import PlanCountDown from "../shared/plan-count-down";
 
 interface HeroProps {
   userData: UserData;

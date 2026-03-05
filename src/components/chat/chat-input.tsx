@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useState, ChangeEvent, useEffect, useRef } from "react";
 import { Message } from "@/types";
-import { UploadFileInput } from "../shared/UploadFileInput";
-import { TooltipArrow } from "../shared/TooltipArrow";
+import { UploadFileInput } from "../shared/upload-file-input";
+import { TooltipArrow } from "../shared/tooltip-arrow";
 
 interface ChatInputProps {
   loading: boolean;

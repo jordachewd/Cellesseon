@@ -1,6 +1,6 @@
 import { getPlanIcon } from "@/constants/plans";
 import { PlanData, PlanName } from "@/types/PlanData.d";
-import PlanCountDown from "./PlanCountDown";
+import PlanCountDown from "./plan-count-down";
 import Link from "next/link";
 
 interface PlanPromoProps {

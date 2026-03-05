@@ -1,4 +1,4 @@
-import PageHead from "@/components/layout/PageHead";
+import PageHead from "@/components/layout/page-head";
 
 export default async function AdminDashboard() {
   return (

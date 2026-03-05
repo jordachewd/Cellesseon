@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import LoadingBubbles from "@/components/shared/LoadingBubbles";
+import LoadingBubbles from "@/components/shared/loading-bubbles";
 import {
   TimeDifference,
   getExpirationCountDown,

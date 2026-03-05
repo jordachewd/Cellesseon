@@ -3,7 +3,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ImgHTMLAttributes } from "react";
 import { describe, expect, it, vi } from "vitest";
-import ChatInput from "@/components/chat/ChatInput";
+import ChatInput from "@/components/chat/chat-input";
 
 vi.mock("next/image", () => ({
   default: (props: ImgHTMLAttributes<HTMLImageElement>) => (
