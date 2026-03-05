@@ -4,6 +4,12 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 
 ## Recent Updates (March 2026)
 
+- Strengthened test setup after dependency upgrades:
+  - Playwright authenticated specs now read `E2E_TEST_*` values directly from `.env.local` (with environment-variable fallback).
+  - Authenticated e2e specs now use `E2E_TEST_USERNAME` (fallback `E2E_TEST_EMAIL`) + `E2E_TEST_PASSWORD`.
+  - Removed Playwright's default external `playwright.dev` sample test and kept e2e coverage app-focused.
+- Added new unit coverage for `getFullName` / `getNameLetters`.
+- Stabilized `POST /api/openai` unit tests by resetting mock call state between test cases.
 - Removed all MUI/Emotion/styled-components dependencies and legacy theme files.
 - Migrated all component styling from CSS Modules to Tailwind v4.2 utilities and shared `@layer` styles in `src/app/globals.css`.
 - Replaced MUI theme runtime with an internal `CellesseonTheme` provider using `data-cellesseon-theme` + local persistence.
@@ -69,6 +75,8 @@ npm run test:e2e
 npm run build
 ```
 
+Playwright authenticated tests read credentials from `.env.local` automatically.
+
 ## Environment Variables
 
 Create `.env.local`:
@@ -101,9 +109,9 @@ AWS_S3_SECRET_KEY=...
 
 DOWNLOAD_URL_ALLOWLIST=assets.example.com,cdn.example.com
 
-E2E_TEST_USERNAME=codex-jwd
-E2E_TEST_EMAIL=codex-jwd@jwd.com
-E2E_TEST_PASSWORD=q$cuo2WR*%k$n5@oakCJPSZC
+E2E_TEST_USERNAME=test-e2e-username
+E2E_TEST_EMAIL=test-e2e-email@example.com
+E2E_TEST_PASSWORD=test-e2e-password
 ```
 
 Never commit `.env.local`.

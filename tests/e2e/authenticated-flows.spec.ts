@@ -1,28 +1,22 @@
 import { expect, Page, test } from "@playwright/test";
+import {
+  getE2ETestUser,
+  missingCredentialsError,
+  requireE2ETestUser,
+} from "./utils/e2e-test-user";
 
-function getAuthCredentials() {
-  const email = process.env.E2E_TEST_EMAIL;
-  const password = process.env.E2E_TEST_PASSWORD;
-
-  if (!email || !password) {
-    throw new Error(
-      "Set E2E_TEST_EMAIL and E2E_TEST_PASSWORD to run authenticated flows.",
-    );
-  }
-
-  return { email, password };
-}
+const e2eTestUser = getE2ETestUser();
 
 async function signIn(page: Page) {
-  const { email, password } = getAuthCredentials();
+  const { identifier, password } = requireE2ETestUser();
 
   await page.goto("/sign-in");
 
-  const emailInput = page
+  const identifierInput = page
     .locator('input[name="identifier"], input[type="email"]')
     .first();
-  await emailInput.fill(email);
-  await emailInput.press("Enter");
+  await identifierInput.fill(identifier);
+  await identifierInput.press("Enter");
 
   const passwordInput = page
     .locator('input[name="password"], input[type="password"]')
@@ -36,10 +30,7 @@ async function signIn(page: Page) {
 }
 
 test.describe("authenticated user flows", () => {
-  test.skip(
-    !process.env.E2E_TEST_EMAIL || !process.env.E2E_TEST_PASSWORD,
-    "Set E2E_TEST_EMAIL and E2E_TEST_PASSWORD to run authenticated flows.",
-  );
+  test.skip(!e2eTestUser, missingCredentialsError);
 
   test.beforeEach(async ({ page }) => {
     await signIn(page);

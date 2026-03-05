@@ -5,6 +5,11 @@ const config = [
   ...nextCoreWebVitals,
   ...nextTypescript,
   {
+    settings: {
+      react: {
+        version: "19.0",
+      },
+    },
     rules: {
       "react-hooks/set-state-in-effect": "off",
     },

@@ -32,6 +32,7 @@ function buildRequest(payload: unknown): Request {
 
 describe("POST /api/openai", () => {
   beforeEach(() => {
+    vi.clearAllMocks();
     vi.mocked(auth).mockResolvedValue({ userId: "user_123" } as never);
     vi.mocked(generateTitle).mockResolvedValue(
       JSON.stringify({ title: "Generated title", usage: 7 }),
