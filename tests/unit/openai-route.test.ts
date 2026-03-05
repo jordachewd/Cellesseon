@@ -128,6 +128,35 @@ describe("POST /api/openai", () => {
     expect(payload.aiError.error).toContain("Task creation failed.");
   });
 
+  it("returns aiError when title generation returns malformed JSON", async () => {
+    vi.mocked(generateTitle).mockResolvedValue("not-json" as never);
+    const req = buildRequest({
+      messages: [{ role: "user", whois: "user", content: "new chat" }],
+    });
+
+    const response = await POST(req);
+    const payload = await response.json();
+
+    expect(payload.aiError.title).toBe("AI API endpoint error!");
+    expect(payload.aiError.error).toBeTypeOf("string");
+    expect(createTask).not.toHaveBeenCalled();
+  });
+
+  it("returns aiError when response payload is malformed JSON", async () => {
+    vi.mocked(generateResponse).mockResolvedValue("not-json" as never);
+    const req = buildRequest({
+      taskId: "existing-task",
+      messages: [{ role: "user", whois: "user", content: "continue" }],
+    });
+
+    const response = await POST(req);
+    const payload = await response.json();
+
+    expect(payload.aiError.title).toBe("AI API endpoint error!");
+    expect(payload.aiError.error).toBeTypeOf("string");
+    expect(updateTask).not.toHaveBeenCalled();
+  });
+
   it("returns aiError when response generation throws", async () => {
     vi.mocked(generateResponse).mockRejectedValue(
       new Error("OpenAI unavailable"),

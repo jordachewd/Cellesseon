@@ -1,26 +1,33 @@
-// import { ALLOWED_IMAGE_TYPES } from "@/constants/aws";
 import deleteFileFromAWS from "@/lib/utils/aws/deleteFileFromAWS";
 import uploadFileToAWS from "@/lib/utils/aws/uploadFileToAWS";
 import { generateString } from "@/lib/utils/generateString";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-// UPLOAD IMAGES TO AWS
-export async function POST(req: Request) {
-  console.log("\x1b[34m%s\x1b[0m", "AWS API Called ");
-
+export async function POST(req: Request): Promise<NextResponse> {
   try {
     const user = await currentUser();
+
+    if (!user?.id) {
+      return NextResponse.json(
+        { message: "User not authenticated." },
+        { status: 401 },
+      );
+    }
+
     const { taskId, imgBuffer } = await req.json();
 
-    if (!user?.id || !taskId || !imgBuffer) {
-      throw new Error("UserId, TaskId, and Image Buffer are required.");
+    if (!taskId || !imgBuffer) {
+      return NextResponse.json(
+        { message: "TaskId and image buffer are required." },
+        { status: 400 },
+      );
     }
 
     const buffer = Buffer.from(imgBuffer, "base64");
     const fileName = `${taskId}_image_${generateString()}.png`;
     const mimeType = "image/png";
-    const folder = `${user?.id}/${taskId}`;
+    const folder = `${user.id}/${taskId}`;
 
     const fileUrl = await uploadFileToAWS(buffer, fileName, mimeType, folder);
 
@@ -28,92 +35,50 @@ export async function POST(req: Request) {
       throw new Error("uploadFileToAWS returned undefined");
     }
 
-    return NextResponse.json({ fileUrl });
+    return NextResponse.json({ fileUrl }, { status: 200 });
   } catch (error: unknown) {
     console.error("AWS API Error:", error);
 
-    return NextResponse.json({
-      status: 500,
-      message: "File upload failed",
-      error: (error as Error).message || "Unknown error",
-    });
+    return NextResponse.json(
+      {
+        message: "File upload failed",
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 },
+    );
   }
 }
 
-// UPLOAD IMAGES TO AWS
-/* export async function POST(req: Request) {
+export async function DELETE(req: Request): Promise<NextResponse> {
   try {
     const user = await currentUser();
-    const username = user?.username;
 
-    const formData = await req.formData();
-    const file = formData.get("file") as File | null;
-    const folder = formData.get("folder") as string | null;
-
-    if (!username || !file || !folder) {
-      return NextResponse.json({
-        message: "Username, File and Folder are required.",
-        status: 400,
-      });
+    if (!user?.id) {
+      return NextResponse.json(
+        { message: "User not authenticated." },
+        { status: 401 },
+      );
     }
 
-    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
-      return NextResponse.json({
-        message:
-          "Invalid file type. Allowed types are jpg, jpeg, png, gif, webp",
-        status: 400,
-      });
-    }
-
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const fileUrl = await uploadFileToAWS(
-      buffer,
-      file.name,
-      file.type,
-      username,
-      folder
-    );
-
-    if (fileUrl) {
-      return NextResponse.json({
-        fileUrl,
-      });
-    }
-  } catch (error: unknown) {
-    return NextResponse.json({
-      status: 500,
-      message: "File upload failed",
-      error: error || "Unknown error",
-    });
-  }
-} */
-
-// DELETE IMAGES FROM AWS
-export async function DELETE(req: Request) {
-  try {
-    const user = await currentUser();
-    const username = user?.username;
     const { folder, fileName } = await req.json();
 
-    if (!username || !folder || !fileName) {
-      return NextResponse.json({
-        message:
-          "Folder, username, clerkId and fileName are required for deletion.",
-        status: 400,
-      });
+    if (!folder || !fileName) {
+      return NextResponse.json(
+        { message: "Folder and fileName are required for deletion." },
+        { status: 400 },
+      );
     }
 
-    await deleteFileFromAWS(username, fileName, folder);
+    await deleteFileFromAWS(user.id, fileName, folder);
 
-    return NextResponse.json({
-      message: "Image deleted successfully",
-      status: 200,
-    });
+    return NextResponse.json({ message: "Image deleted successfully" });
   } catch (error) {
-    return NextResponse.json({
-      status: 500,
-      message: "Error deleting the image",
-      error: error || "Unknown error",
-    });
+    return NextResponse.json(
+      {
+        message: "Error deleting the image",
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
+      { status: 500 },
+    );
   }
 }

@@ -3,6 +3,7 @@ import { CreateTaskParams, UpdateTaskParams } from "@/types/TaskData.d";
 import { connectToDatabase } from "../database/mongoose";
 import { revalidatePath } from "next/cache";
 import { handleError } from "@/lib/utils/handleError";
+import serializeForClient from "@/lib/utils/serialize-for-client";
 import Task from "../database/models/tasks.model";
 
 // CREATE TASK
@@ -16,7 +17,7 @@ export async function createTask(task: CreateTaskParams) {
       throw new Error("Task creation failed!");
     }
 
-    return JSON.parse(JSON.stringify(newTask));
+    return serializeForClient(newTask);
   } catch (error) {
     handleError({ error, source: "createTask" });
   }
@@ -43,7 +44,7 @@ export async function updateTask(taskId: string, task: UpdateTaskParams) {
       throw new Error("Task update failed!");
     }
 
-    return JSON.parse(JSON.stringify(updatedTask));
+    return serializeForClient(updatedTask);
   } catch (error) {
     handleError({ error, source: "updateTask" });
   }
@@ -59,7 +60,7 @@ export async function getTaskById(userId: string) {
       throw new Error("Task not found!");
     }
 
-    return JSON.parse(JSON.stringify(task));
+    return serializeForClient(task);
   } catch (error) {
     handleError({ error, source: "getTaskById" });
   }
@@ -84,7 +85,7 @@ export async function deleteTask(taskId: number) {
 
     revalidatePath("/");
 
-    return JSON.parse(JSON.stringify(deletedTask));
+    return serializeForClient(deletedTask);
   } catch (error) {
     handleError({ error, source: "deleteTask" });
   }

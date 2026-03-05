@@ -22,15 +22,32 @@ import stripe from "stripe";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body = await request.text();
-  const sig = request.headers.get("stripe-signature") as string;
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+  const sig = request.headers.get("stripe-signature");
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!sig) {
+    return NextResponse.json(
+      { message: "Webhook error", error: "Missing stripe-signature header" },
+      { status: 400 },
+    );
+  }
+
+  if (!endpointSecret) {
+    return NextResponse.json(
+      { message: "Webhook error", error: "Missing STRIPE_WEBHOOK_SECRET" },
+      { status: 500 },
+    );
+  }
 
   let event;
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
   } catch (err) {
-    return NextResponse.json({ message: "Webhook error", error: err });
+    return NextResponse.json(
+      { message: "Webhook error", error: err },
+      { status: 400 },
+    );
   }
 
   // Get the ID and type
@@ -80,15 +97,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
       return NextResponse.json({ message: "OK", newTransaction, updatedUser });
     } else {
-      return NextResponse.json({
-        message: "STRIPE: Transaction failed!",
-        newTransaction,
-      });
+      return NextResponse.json(
+        {
+          message: "STRIPE: Transaction failed!",
+          newTransaction,
+        },
+        { status: 500 },
+      );
     }
   }
 
   return NextResponse.json(
-    { message: "STRIPE: Checkout completed!" },
+    { message: `STRIPE: Unhandled event type: ${eventType}` },
     { status: 200 },
   );
 }

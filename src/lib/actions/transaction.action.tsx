@@ -11,6 +11,7 @@ import {
 import { CheckoutPlanParams } from "@/types/PlanData.d";
 import { ClerkUserData } from "@/types/UserData.d";
 import getFullName from "@/lib/utils/getFullName";
+import serializeForClient from "@/lib/utils/serialize-for-client";
 
 export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -75,7 +76,7 @@ export async function createTransaction(transaction: CreateTransactionParams) {
 
     const newTransaction = await Transaction.create(transaction);
 
-    return JSON.parse(JSON.stringify(newTransaction));
+    return serializeForClient(newTransaction);
   } catch (error) {
     handleError({ error, source: "createTransaction" });
   }
@@ -91,7 +92,7 @@ export async function getAllTransactions(userId: string) {
       },
     }).exec();
 
-    return JSON.parse(JSON.stringify(transactions));
+    return serializeForClient(transactions);
   } catch (error) {
     handleError({ error, source: "getAllTransactions" });
   }

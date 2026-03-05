@@ -1,13 +1,5 @@
-import ChatHeader from "@/components/chat/ChatHeader";
-import PageWrapper from "@/components/layout/PageWrapper";
+import RouteGroupLayout from "@/components/layout/route-group-layout";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <ChatHeader />
-      <PageWrapper id="PageWrapperContent" scrollable>
-        {children}
-      </PageWrapper>
-    </>
-  );
+  return <RouteGroupLayout>{children}</RouteGroupLayout>;
 }

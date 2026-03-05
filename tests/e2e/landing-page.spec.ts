@@ -32,3 +32,11 @@ test("toggles dark mode and persists it after reload", async ({ page }) => {
     "dark",
   );
 });
+
+test("redirects unauthenticated users from private routes to sign-in", async ({
+  page,
+}) => {
+  await page.goto("/profile");
+
+  await expect(page).toHaveURL(/\/sign-in/);
+});

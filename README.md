@@ -4,27 +4,14 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 
 ## Recent Updates (March 2026)
 
-- Moved Playwright `test-results` output under `tests/e2e/test-results` and refreshed `SPEC.md` §10 technical debt entries.
-- Strengthened test setup after dependency upgrades:
-  - Playwright authenticated specs now read `E2E_TEST_*` values directly from `.env.local` (with environment-variable fallback).
-  - Authenticated e2e specs now use `E2E_TEST_USERNAME` (fallback `E2E_TEST_EMAIL`) + `E2E_TEST_PASSWORD`.
-  - Removed Playwright's default external `playwright.dev` sample test and kept e2e coverage app-focused.
-- Added new unit coverage for `getFullName` / `getNameLetters`.
-- Stabilized `POST /api/openai` unit tests by resetting mock call state between test cases.
-- Removed all MUI/Emotion/styled-components dependencies and legacy theme files.
-- Migrated all component styling from CSS Modules to Tailwind v4.2 utilities and shared `@layer` styles in `src/app/globals.css`.
-- Replaced MUI theme runtime with an internal `CellesseonTheme` provider using `data-cellesseon-theme` + local persistence.
-- Added regression coverage for theme behavior:
-  - Unit: `tests/unit/cellesseon-theme.test.tsx`
-  - E2E: dark-mode toggle persistence in `tests/e2e/landing-page.spec.ts`
-- Fixed shared component naming typo by renaming `LoggoutBtn` to `LogoutBtn` and updating account menu imports.
-- Restored repeated alert visibility for identical messages by adding a per-alert identifier in `AlertMessage`.
-- Hardened runtime theme persistence against blocked Web Storage (`SecurityError`) with safe read/write fallbacks.
-- Improved chat upload accessibility by replacing label-based upload trigger with a keyboard-accessible button.
-- Removed incorrect ARIA menu semantics from the custom account dropdown to align behavior with announced roles.
-- Unified upload MIME validation and extension lookup in `upload-file-validation`, with defensive guard in `/api/upload`.
-- Updated authenticated E2E flow credential handling to avoid unsafe non-null assertions.
-- Migrated Vitest config to ESM (`vitest.config.mts`) to align with Vite Node API direction.
+- Expanded behavior-first test coverage for core features and failure paths:
+  - Unit: `proxy` access control, `/api/aws` upload/delete success + error handling, Stripe webhook verification and checkout handling, malformed `/api/openai` payload handling, and shared serialization behavior.
+  - E2E: unauthenticated redirect to sign-in for private routes, plus existing landing/theme/authenticated regression flows.
+- Fixed technical debt items from `SPEC.md`:
+  - Replaced duplicated `(account)`/`(admin)` layout markup with shared `src/components/layout/route-group-layout.tsx`.
+  - Replaced repeated `JSON.parse(JSON.stringify(...))` server action serialization with `src/lib/utils/serialize-for-client.ts`.
+- Standardized Playwright artifacts under `tests/e2e/test-results`.
+- Authenticated E2E specs use `E2E_TEST_*` credentials from `.env.local` via `tests/e2e/utils/e2e-test-user.ts`.
 
 ## Tech Stack
 
@@ -77,42 +64,3 @@ npm run build
 ```
 
 Playwright authenticated tests read credentials from `.env.local` automatically.
-
-## Environment Variables
-
-Create `.env.local`:
-
-```env
-NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
-
-MONGODB_URL=...
-
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
-CLERK_SECRET_KEY=...
-CLERK_WEBHOOK_SECRET=...
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
-
-OPENAI_KEY=...
-OPENAI_ORG=...
-OPENAI_PRJ=...
-
-STRIPE_PUBLISHABLE_KEY=...
-STRIPE_SECRET_KEY=...
-STRIPE_WEBHOOK_SECRET=...
-
-AWS_S3_REGION=...
-AWS_S3_BUCKET=...
-AWS_S3_ACCESS_ID=...
-AWS_S3_SECRET_KEY=...
-
-DOWNLOAD_URL_ALLOWLIST=assets.example.com,cdn.example.com
-
-E2E_TEST_USERNAME=test-e2e-username
-E2E_TEST_EMAIL=test-e2e-email@example.com
-E2E_TEST_PASSWORD=test-e2e-password
-```
-
-Never commit `.env.local`.

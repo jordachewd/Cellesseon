@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { connectToDatabase } from "../database/mongoose";
 import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
 import { handleError } from "../utils/handleError";
+import serializeForClient from "../utils/serialize-for-client";
 
 // CREATE USER
 export async function createUser(user: CreateUserParams) {
@@ -13,16 +14,14 @@ export async function createUser(user: CreateUserParams) {
     const newUser = await User.create(user);
 
     if (!newUser) {
-      return JSON.parse(
-        JSON.stringify({
-          message: "User creation failed!",
-          status: "Error",
-          source: "createUser",
-        }),
-      );
+      return serializeForClient({
+        message: "User creation failed!",
+        status: "Error",
+        source: "createUser",
+      });
     }
 
-    return JSON.parse(JSON.stringify(newUser));
+    return serializeForClient(newUser);
   } catch (error) {
     handleError({ error, source: "createUser" });
   }
@@ -40,24 +39,20 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
     });
 
     if (!updatedUser) {
-      return JSON.parse(
-        JSON.stringify({
-          message: "User update failed!",
-          status: "Error",
-          source: "updateUser",
-        }),
-      );
+      return serializeForClient({
+        message: "User update failed!",
+        status: "Error",
+        source: "updateUser",
+      });
     }
 
-    return JSON.parse(
-      JSON.stringify({
-        mongoResponse: updatedUser,
-        message: "User updated successfully (user.actions.tsx)",
-        status: 200,
-      }),
-    );
+    return serializeForClient({
+      mongoResponse: updatedUser,
+      message: "User updated successfully (user.actions.tsx)",
+      status: 200,
+    });
   } catch (error) {
-    return JSON.parse(JSON.stringify(error));
+    return serializeForClient(error);
   }
 }
 
@@ -70,20 +65,18 @@ export async function deleteUser(clerkId: string) {
     const userToDelete = await User.findOne({ clerkId });
 
     if (!userToDelete) {
-      return JSON.parse(
-        JSON.stringify({
-          message: "User does not exist!",
-          status: "Error",
-          source: "deleteUser",
-        }),
-      );
+      return serializeForClient({
+        message: "User does not exist!",
+        status: "Error",
+        source: "deleteUser",
+      });
     }
 
     // Delete user
     const deletedUser = await User.findByIdAndDelete(userToDelete._id);
     revalidatePath("/");
 
-    return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
+    return deletedUser ? serializeForClient(deletedUser) : null;
   } catch (error) {
     handleError({ error, source: "deleteUser" });
   }
@@ -96,7 +89,7 @@ export async function getUserById(userId: string) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    return JSON.parse(JSON.stringify(user));
+    return serializeForClient(user);
   } catch (error) {
     handleError({ error, source: "getUserById" });
   }
@@ -110,17 +103,15 @@ export async function getUserBySlug(slug: string) {
     const user = await User.findOne({ username: slug });
 
     if (!user) {
-      return JSON.parse(
-        JSON.stringify({
-          message: "User does not exist!",
-          status: "Error",
-          source: "getUserBySlug",
-          payLoad: slug,
-        }),
-      );
+      return serializeForClient({
+        message: "User does not exist!",
+        status: "Error",
+        source: "getUserBySlug",
+        payLoad: slug,
+      });
     }
 
-    return JSON.parse(JSON.stringify(user));
+    return serializeForClient(user);
   } catch (error) {
     handleError({ error, source: "getUserBySlug" });
   }
@@ -134,16 +125,14 @@ export async function getAllUsers() {
     const users = await User.find({});
 
     if (!users || users.length === 0) {
-      return JSON.parse(
-        JSON.stringify({
-          message: "No users found!",
-          status: "Error",
-          source: "getAllUsers",
-        }),
-      );
+      return serializeForClient({
+        message: "No users found!",
+        status: "Error",
+        source: "getAllUsers",
+      });
     }
 
-    return JSON.parse(JSON.stringify(users));
+    return serializeForClient(users);
   } catch (error) {
     handleError({ error, source: "getAllUsers" });
   }
