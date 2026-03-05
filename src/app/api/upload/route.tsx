@@ -14,6 +14,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { validateUploadFile } from "@/lib/utils/upload-file-validation";
+
+const MIME_TYPE_TO_EXTENSION: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "image/gif": "gif",
+};
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -21,28 +29,33 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const file = formData.get("file") as File | null;
 
-    if (!file) {
-      return NextResponse.json({ error: "No file uploaded.", status: 400 });
+    const validation = validateUploadFile(file);
+    if (!validation.isValid) {
+      return NextResponse.json(
+        { error: validation.message },
+        { status: validation.status || 400 },
+      );
     }
 
+    const safeFile = file as File;
     const uploadsDir = path.join(process.cwd(), "public", "uploads");
 
     if (!fs.existsSync(uploadsDir)) {
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    const fileName = `uploaded_file_${Date.now()}.png`;
+    const fileExtension = MIME_TYPE_TO_EXTENSION[safeFile.type];
+    const fileName = `uploaded_file_${Date.now()}.${fileExtension}`;
     const filePath = path.join(uploadsDir, fileName);
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const buffer = Buffer.from(await safeFile.arrayBuffer());
     fs.writeFileSync(filePath, buffer);
 
     return NextResponse.json({ fileName });
-  } catch (error) {
+  } catch {
     return NextResponse.json({
       message: "Failed to upload file.",
       status: 500,
-      error,
     });
   }
 }

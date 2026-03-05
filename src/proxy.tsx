@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isPrivateRoute = createRouteMatcher(["/dashboard/:path*"]);
@@ -10,7 +10,7 @@ const isPublicRoute = createRouteMatcher([
   "/api/webhooks/clerk",
 ]);
 
-export default clerkMiddleware(async (auth, req: NextRequest) => {
+const clerkProxy = clerkMiddleware(async (auth, req: NextRequest) => {
   try {
     const { userId, sessionClaims } = await auth();
     const isAdmin = sessionClaims?.metadata?.role === "admin";
@@ -26,12 +26,16 @@ export default clerkMiddleware(async (auth, req: NextRequest) => {
       return NextResponse.redirect(unAuthUrl);
     }
   } catch (error) {
-    console.error("Error in middleware:", error);
+    console.error("Error in proxy:", error);
     if (error instanceof Error && "digest" in error) {
       console.error("Error digest:", error.digest);
     }
   }
 });
+
+export function proxy(request: NextRequest, event: NextFetchEvent) {
+  return clerkProxy(request, event);
+}
 
 export const config = {
   matcher: [

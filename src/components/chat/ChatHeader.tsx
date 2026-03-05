@@ -27,12 +27,19 @@ export default function ChatHeader({
 
   useEffect(() => {
     const element = document.querySelector<HTMLElement>(
-      "#ChatWrapperContent, #PageWrapperContent > div"
+      "#ChatWrapperContent, #PageWrapperContent > div",
     );
+
     if (element) {
-      element.addEventListener("scroll", () => {
+      const onScroll = () => {
         setScrolled(element.scrollTop > 10);
-      });
+      };
+
+      element.addEventListener("scroll", onScroll);
+
+      return () => {
+        element.removeEventListener("scroll", onScroll);
+      };
     }
   }, []);
 

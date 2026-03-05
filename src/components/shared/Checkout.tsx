@@ -1,7 +1,5 @@
 "use client";
-import { useEffect } from "react";
 import { Button } from "@mui/material";
-import { loadStripe } from "@stripe/stripe-js";
 import { checkoutPlan } from "@/lib/actions/transaction.action";
 import { CheckoutTransactionParams } from "@/types/TransactionData.d";
 import { CheckoutPlanParams, PlanStatus } from "@/types/PlanData.d";
@@ -13,16 +11,7 @@ interface CheckoutProps {
   planStatus: PlanStatus;
 }
 
-const Checkout = ({
-  plan,
-
-  planStatus,
-  clerkUser,
-}: CheckoutProps) => {
-  useEffect(() => {
-    loadStripe(`${process.env.STRIPE_PUBLISHABLE_KEY!}`);
-  }, []);
-
+const Checkout = ({ plan, planStatus, clerkUser }: CheckoutProps) => {
   const { isIncluded, isCurrent, isPopular } = planStatus as PlanStatus;
 
   const onCheckout = async () => {

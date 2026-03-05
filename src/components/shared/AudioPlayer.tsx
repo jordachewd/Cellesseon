@@ -19,6 +19,12 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
   const [currentTime, setCurrentTime] = useState("0:00");
   const [duration, setDuration] = useState("0:00");
 
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+  };
+
   useEffect(() => {
     if (audioSrc) {
       try {
@@ -85,12 +91,6 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
       }
       setIsPlaying(!isPlaying);
     }
-  };
-
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
   return (

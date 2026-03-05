@@ -9,7 +9,7 @@ _Smart AI Assistant powered by OpenAI_
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://cellesseon.jwd-apps.com)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
-[![MUI](https://img.shields.io/badge/MUI-7-007FFF)](https://mui.com/)
+[![MUI-Legacy](https://img.shields.io/badge/MUI-legacy-007FFF)](https://mui.com/)
 
 </div>
 
@@ -18,6 +18,14 @@ _Smart AI Assistant powered by OpenAI_
 ## Description
 
 **Cellesseon** is a modern, full-featured AI-powered virtual assistant built as a Software as a Service (SaaS) platform. It delivers insightful, concise answers in a warm yet professional tone, with responses carefully formatted for optimal readability and comprehension.
+
+### Recent Updates (March 2026)
+
+- Added upload and download security guards (URL allowlist, file type/size validation)
+- Migrated route protection to Next.js 16 proxy export convention
+- Moved chat sidebar user data load to server-side rendering flow
+- Added test infrastructure: Vitest (`tests/unit`) and Playwright (`tests/e2e`)
+- Updated dependency baseline (`classnames`, `knip` in `devDependencies`)
 
 ### Key Features
 
@@ -32,11 +40,11 @@ _Smart AI Assistant powered by OpenAI_
 
 ### Subscription Tiers
 
-| Plan | Description |
-|------|-------------|
-| **Lite** | Free 3-day trial with limited features |
-| **Pro** | Best for personal projects with expanded limits |
-| **Premium** | Unlimited access with priority support |
+| Plan        | Description                                     |
+| ----------- | ----------------------------------------------- |
+| **Lite**    | Free 3-day trial with limited features          |
+| **Pro**     | Best for personal projects with expanded limits |
+| **Premium** | Unlimited access with priority support          |
 
 :point_right: **[See it in action](https://cellesseon.jwd-apps.com)**
 
@@ -45,33 +53,43 @@ _Smart AI Assistant powered by OpenAI_
 ## Tech Stack
 
 ### Frontend
-| Technology | Purpose |
-|------------|---------|
-| [Next.js 16](https://nextjs.org/) | React framework with App Router |
-| [React 19](https://react.dev/) | UI library |
-| [TypeScript 5.7](https://www.typescriptlang.org/) | Type-safe development |
-| [Material UI 7](https://mui.com/) | Component library |
-| [Tailwind CSS 3](https://tailwindcss.com/) | Utility-first CSS |
-| [Emotion](https://emotion.sh/) | CSS-in-JS styling |
+
+| Technology                                        | Purpose                               |
+| ------------------------------------------------- | ------------------------------------- |
+| [Next.js 16](https://nextjs.org/)                 | React framework with App Router       |
+| [React 19](https://react.dev/)                    | UI library                            |
+| [TypeScript 5.7](https://www.typescriptlang.org/) | Type-safe development                 |
+| [Tailwind CSS 3](https://tailwindcss.com/)        | Utility-first CSS                     |
+| [Material UI 7](https://mui.com/)                 | Legacy UI layer scheduled for removal |
+
+### Testing & QA
+
+| Technology                            | Purpose                     |
+| ------------------------------------- | --------------------------- |
+| [Vitest](https://vitest.dev/)         | Unit testing (`tests/unit`) |
+| [Playwright](https://playwright.dev/) | E2E testing (`tests/e2e`)   |
 
 ### Backend & Services
-| Technology | Purpose |
-|------------|---------|
-| [OpenAI API](https://openai.com/) | AI/ML capabilities |
-| [MongoDB](https://www.mongodb.com/) | Database |
-| [Mongoose](https://mongoosejs.com/) | ODM for MongoDB |
-| [AWS S3](https://aws.amazon.com/s3/) | File storage |
+
+| Technology                           | Purpose            |
+| ------------------------------------ | ------------------ |
+| [OpenAI API](https://openai.com/)    | AI/ML capabilities |
+| [MongoDB](https://www.mongodb.com/)  | Database           |
+| [Mongoose](https://mongoosejs.com/)  | ODM for MongoDB    |
+| [AWS S3](https://aws.amazon.com/s3/) | File storage       |
 
 ### Authentication & Payments
-| Technology | Purpose |
-|------------|---------|
-| [Clerk](https://clerk.com/) | Authentication & user management |
-| [Stripe](https://stripe.com/) | Payment processing |
-| [Svix](https://www.svix.com/) | Webhook handling |
+
+| Technology                    | Purpose                          |
+| ----------------------------- | -------------------------------- |
+| [Clerk](https://clerk.com/)   | Authentication & user management |
+| [Stripe](https://stripe.com/) | Payment processing               |
+| [Svix](https://www.svix.com/) | Webhook handling                 |
 
 ### Deployment
-| Technology | Purpose |
-|------------|---------|
+
+| Technology                    | Purpose              |
+| ----------------------------- | -------------------- |
 | [Vercel](https://vercel.com/) | Hosting & deployment |
 
 ---
@@ -223,7 +241,7 @@ cellesseon/
 │   │       ├── PlanCountDown.module.css
 │   │       └── PlanPromo.module.css
 │   │
-│   ├── themes/                      # MUI Theme configuration
+│   ├── themes/                      # MUI theme (legacy, scheduled for removal)
 │   │   ├── muiBase.tsx              # Base theme settings
 │   │   ├── muiComponents.tsx        # Component overrides
 │   │   ├── muiPaletteDark.tsx       # Dark theme palette
@@ -277,12 +295,14 @@ cellesseon/
 
 ### Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
+| Command            | Description              |
+| ------------------ | ------------------------ |
+| `npm run dev`      | Start development server |
+| `npm run build`    | Build for production     |
+| `npm run start`    | Start production server  |
+| `npm run lint`     | Run ESLint               |
+| `npm run test`     | Run Vitest unit tests    |
+| `npm run test:e2e` | Run Playwright E2E tests |
 
 ---
 
@@ -292,10 +312,10 @@ Create a `.env.local` file in the root directory with the following variables:
 
 ```env
 # App
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
 
 # MongoDB
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/cellesseon
+MONGODB_URL=mongodb+srv://username:password@cluster.mongodb.net/cellesseon
 
 # Clerk Authentication
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -307,18 +327,23 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
 
 # OpenAI
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_ORG=org_xxxxxxxxxxxxxxxxx
+OPENAI_PRJ=proj_xxxxxxxxxxxxxxxxx
 
 # Stripe
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+STRIPE_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # AWS S3
-AWS_ACCESS_KEY_ID=AKIAXXXXXXXXXXXXXXXX
-AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-AWS_REGION=us-east-1
-AWS_S3_BUCKET_NAME=cellesseon-bucket
+AWS_S3_REGION=us-east-1
+AWS_S3_BUCKET=cellesseon-bucket
+AWS_S3_ACCESS_ID=AKIAXXXXXXXXXXXXXXXX
+AWS_S3_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Optional: extra download hosts
+DOWNLOAD_URL_ALLOWLIST=assets.example.com,cdn.example.com
 ```
 
 > ⚠️ **Note:** Never commit your `.env.local` file to version control. Make sure it's listed in your `.gitignore`.
@@ -334,5 +359,3 @@ This project is private and proprietary.
 ## Author
 
 Made with ❤️ by [JordacheWD](https://jordachewd.com/)
-
- 

@@ -8,7 +8,7 @@ import {
   SnackbarCloseReason,
 } from "@mui/material";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 
 export interface AlertParams {
   title: string;
@@ -27,25 +27,24 @@ function SlideTransition(props: SlideProps) {
 
 export default function AlertMessage({ message }: AlertMessageProps) {
   const { title, text = "", severity = "error", variant = "filled" } = message;
-  const [openAlert, setOpenAlert] = useState(false);
+  const [dismissedAlert, setDismissedAlert] = useState<string | null>(null);
+  const currentAlertKey = useMemo(
+    () => `${title}:${text}:${severity}:${variant}`,
+    [severity, text, title, variant],
+  );
+  const openAlert = text !== "" && dismissedAlert !== currentAlertKey;
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
-    reason?: SnackbarCloseReason
+    reason?: SnackbarCloseReason,
   ) => {
     event?.preventDefault();
     if (reason === "clickaway") {
       return;
     }
 
-    setOpenAlert(false);
+    setDismissedAlert(currentAlertKey);
   };
-
-  useEffect(() => {
-    if (text !== "") {
-      setOpenAlert(true);
-    }
-  }, [message, text]);
 
   return (
     <Snackbar

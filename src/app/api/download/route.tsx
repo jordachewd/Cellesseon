@@ -10,12 +10,19 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { isAllowedDownloadUrl } from "@/lib/utils/download-url-allowlist";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
     const imageUrl = req.nextUrl.searchParams.get("url");
     if (!imageUrl) {
       return new NextResponse("Image URL is required", { status: 400 });
+    }
+
+    if (!isAllowedDownloadUrl(imageUrl)) {
+      return new NextResponse("This URL is not allowed for download", {
+        status: 400,
+      });
     }
 
     const response = await fetch(imageUrl);

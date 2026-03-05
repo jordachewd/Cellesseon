@@ -2,7 +2,7 @@
 import css from "@/styles/sections/Plans.module.css";
 import { plans } from "@/constants/plans";
 import { Switch, Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Plan } from "@/types/PlanData.d";
 import { UserData } from "@/types/UserData.d";
@@ -18,17 +18,12 @@ interface PlansProps {
 export default function Plans({ userData, hasLoader = false }: PlansProps) {
   const save = 0.4; // Save 40% on Yearly plans
   const { isSignedIn } = useUser();
-  const [yearly, setYearly] = useState<boolean>(false);
   const billing = userData?.plan?.billing;
+  const [yearly, setYearly] = useState<boolean>(billing === "Yearly");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setYearly(event.target.checked);
   };
-
-  useEffect(() => {
-    const setBilling = billing === "Yearly" ? true : false;
-    setYearly(setBilling);
-  }, [billing]);
 
   const cssMonthly = !yearly ? css.switched : "";
   const cssYearly = yearly ? css.switched : "";
