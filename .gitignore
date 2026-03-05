@@ -65,3 +65,6 @@ node_modules/
 /tests/**/test-results/
 /tests/**/playwright-report/
 /tests/**/blob-report/
+
+# Playwright
+/test-results/
