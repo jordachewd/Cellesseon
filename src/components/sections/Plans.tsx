@@ -1,7 +1,7 @@
 "use client";
 import css from "@/styles/sections/Plans.module.css";
 import { plans } from "@/constants/plans";
-import { Switch, Button } from "@mui/material";
+import { Switch, Button } from "@/components/shared/mui";
 import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { Plan } from "@/types/PlanData.d";

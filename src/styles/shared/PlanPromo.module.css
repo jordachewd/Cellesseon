@@ -1,3 +1,5 @@
+@reference "../tailwind-reference.css";
+
 .wrapper {
   @apply flex flex-col gap-1 w-full rounded-lg p-4 shadow-md;
   @apply overflow-hidden relative items-center;
@@ -17,7 +19,7 @@
 
 .badge {
   @apply absolute top-0.5 right-0.5 z-10  font-medium;
-  @apply  gap-1 flex items-center;
+  @apply gap-1 flex items-center;
 }
 
 .badgeLabel {

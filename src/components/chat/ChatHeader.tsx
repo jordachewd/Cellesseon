@@ -2,7 +2,7 @@
 import css from "@/styles/chat/ChatHeader.module.css";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { IconButton } from "@mui/material";
+import { IconButton } from "@/components/shared/mui";
 import { TooltipArrow } from "../shared/TooltipArrow";
 import ToggleTheme from "@/components/shared/ToggleTheme";
 import AvatarMenu from "@/components/shared/AvatarMenu";
@@ -52,7 +52,7 @@ export default function ChatHeader({
             <TooltipArrow
               title="New Task"
               placement="right"
-              className="!transition-all"
+              className="transition-all!"
             >
               <span>
                 <IconButton

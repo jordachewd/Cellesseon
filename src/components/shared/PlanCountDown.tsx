@@ -21,7 +21,7 @@ export default function PlanCountDown({
   wrapped = false,
 }: CountDownProps) {
   const [countdown, setCountdown] = useState<string>("");
-  const [timeUp, setTimeUp] = useState<boolean>(false);  
+  const [timeUp, setTimeUp] = useState<boolean>(false);
 
   const parsedStartDate = useMemo(() => new Date(startDate), [startDate]);
   const parsedEndDate = useMemo(() => new Date(endDate), [endDate]);

@@ -1,7 +1,7 @@
 "use client";
 import css from "@/styles/layout/Header.module.css";
 import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Button } from "@/components/shared/mui";
 import ToggleTheme from "@/components/shared/ToggleTheme";
 import LogoV2 from "../shared/Logo";
 

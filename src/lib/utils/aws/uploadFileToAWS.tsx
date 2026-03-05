@@ -6,7 +6,7 @@ export default async function uploadFileToAWS(
   file: Buffer,
   fileName: string,
   contentType: string,
-  folder: string
+  folder: string,
 ): Promise<string> {
   try {
     const bucketName = process.env.AWS_S3_BUCKET;

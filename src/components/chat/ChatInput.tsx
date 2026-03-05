@@ -2,7 +2,7 @@ import css from "@/styles/chat/ChatInput.module.css";
 import Image from "next/image";
 import { useState, ChangeEvent, useEffect } from "react";
 import { Message } from "@/types";
-import { IconButton, Input, Zoom } from "@mui/material";
+import { IconButton, Input, Zoom } from "@/components/shared/mui";
 import { UploadFileInput } from "../shared/UploadFileInput";
 import { TooltipArrow } from "../shared/TooltipArrow";
 
@@ -92,7 +92,7 @@ export default function ChatInput({
             name="chatInput"
             value={prompt}
             disabled={loading}
-            className="mb-[0.55rem] !pb-0"
+            className="mb-[0.55rem] pb-0!"
             placeholder="Ask Cellesseon..."
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={(e) => {
@@ -146,7 +146,7 @@ export default function ChatInput({
                 priority
                 width={40}
                 height={40}
-                className="rounded max-w-[40px] max-h-[40px]"
+                className="rounded-sm max-w-[40px] max-h-[40px]"
                 alt="Selected image"
                 src={`data:image/jpeg;base64,${fileUrl}`}
               />

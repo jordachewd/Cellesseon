@@ -1,12 +1,12 @@
 "use client";
-import { useColorScheme } from "@mui/material/styles";
 import css from "@/styles/layout/Footer.module.css";
 import lightLogo from "../../../public/images/jwd_light.png";
 import darkLogo from "../../../public/images/jwd_dark.png";
 import Image from "next/image";
+import useThemeMode from "@/lib/hooks/use-theme-mode";
 
 export default function Footer() {
-  const { mode } = useColorScheme();
+  const { mode } = useThemeMode();
 
   return (
     <section className={css.section}>

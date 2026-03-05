@@ -1,6 +1,6 @@
 import css from "@/styles/sections/ProfileBilling.module.css";
 import getFormattedDate from "@/lib/utils/getFormattedDate";
-import { Typography } from "@mui/material";
+import { Typography } from "@/components/shared/mui";
 import { Transaction } from "@/types/TransactionData.d";
 import { TooltipArrow } from "../shared/TooltipArrow";
 
@@ -58,7 +58,7 @@ export default function ProfileBilling({ stripeId, userTxns }: BillingProps) {
       ) : (
         <Typography
           variant="body2"
-          className="text-center !mt-10 !text-slate-600"
+          className="text-center mt-10! text-slate-600!"
         >
           No transactions yet.
         </Typography>

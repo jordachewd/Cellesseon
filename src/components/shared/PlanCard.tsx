@@ -1,7 +1,7 @@
 import css from "@/styles/shared/PlanCard.module.css";
 import { getPlanStatus } from "@/lib/utils/getPlanStatus";
 import { Plan, PlanData, PlanStatus } from "@/types/PlanData.d";
-import { Typography } from "@mui/material";
+import { Typography } from "@/components/shared/mui";
 import { UserData } from "@/types/UserData.d";
 import Checkout from "@/components/shared/Checkout";
 
@@ -19,15 +19,15 @@ export default function PlanCard({
   save = 0,
 }: PlanCardProps) {
   const hasUserData = userData && Object.keys(userData).length > 0;
-  
+
   const { _id, clerkId, username, firstName, lastName, email } = userData || {};
 
   const planFee =
     plan.price === 0
       ? plan.price
       : yearly
-      ? Math.round(plan.price * 12 * (1 - save))
-      : plan.price;
+        ? Math.round(plan.price * 12 * (1 - save))
+        : plan.price;
 
   const planStatus = getPlanStatus({
     plan,

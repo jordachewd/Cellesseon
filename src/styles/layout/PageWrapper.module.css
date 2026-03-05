@@ -1,3 +1,5 @@
+@reference "../tailwind-reference.css";
+
 .wrapper {
   @apply flex flex-col w-full h-dvh m-0 p-0 z-10  relative;
 }

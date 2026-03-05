@@ -41,11 +41,15 @@
     "stripe": "^17.5.0",
     "styled-components": "^6.1.14",
     "svix": "^1.45.1",
-    "tailwindcss-animated": "^1.1.2"
+    "tailwindcss-animated": "^2.0.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.51.1",
     "@clerk/nextjs": "^6.10.3",
+    "@playwright/test": "^1.51.1",
+    "@tailwindcss/postcss": "^4.2.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/axios": "^0.9.36",
     "@types/classnames": "^2.3.0",
     "@types/node": "^24.10.2",
@@ -62,7 +66,7 @@
     "prettier": "^3.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.7.3",
     "vitest": "^2.1.8"
   }

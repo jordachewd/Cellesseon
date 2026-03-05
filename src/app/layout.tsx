@@ -1,6 +1,8 @@
 import { ClerkProvider } from "@clerk/nextjs";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
+import {
+  AppRouterCacheProvider,
+  InitColorSchemeScript,
+} from "@/components/shared/mui-theme";
 import CellesseonTheme from "@/components/layout/CellesseonTheme";
 import type { Metadata, Viewport } from "next";
 import "bootstrap-icons/font/bootstrap-icons.css";

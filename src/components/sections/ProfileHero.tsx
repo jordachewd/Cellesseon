@@ -2,7 +2,7 @@ import css from "@/styles/sections/ProfileHero.module.css";
 import PlanPromo from "@/components/shared/PlanPromo";
 import getFormattedDate from "@/lib/utils/getFormattedDate";
 import PageHead from "@/components/layout/PageHead";
-import { Typography, Avatar } from "@mui/material";
+import { Typography, Avatar } from "@/components/shared/mui";
 import { UserData } from "@/types/UserData.d";
 import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
 import PlanCountDown from "../shared/PlanCountDown";

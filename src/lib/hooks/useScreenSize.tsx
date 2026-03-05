@@ -25,7 +25,7 @@ const useScreenSize = () => {
     height: 0,
   });
   const [currentBreakpoint, setCurrentBreakpoint] = useState<string | null>(
-    null
+    null,
   );
 
   const getBreakpointName = useCallback((width: number): string | null => {

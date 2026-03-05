@@ -14,8 +14,7 @@ export default async function ProfilePage() {
 
   if (userId) {
     userData = await getUserById(userId);
-    userTxns =
-      (userData?.plan && (await getAllTransactions(userId))) || null;
+    userTxns = (userData?.plan && (await getAllTransactions(userId))) || null;
   }
 
   const stripeId = userData?.plan?.stripeId || null;

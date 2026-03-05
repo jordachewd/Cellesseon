@@ -1,5 +1,5 @@
 import css from "@/styles/sections/LandingPage.module.css";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography } from "@/components/shared/mui";
 import Plans from "./Plans";
 import Faqs from "./Faqs";
 import Image from "next/image";

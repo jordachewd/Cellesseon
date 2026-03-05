@@ -1,5 +1,5 @@
 import css from "@/styles/layout/PageHead.module.css";
-import { Typography } from "@mui/material";
+import { Typography } from "@/components/shared/mui";
 
 interface PageHeadProps {
   title: string;

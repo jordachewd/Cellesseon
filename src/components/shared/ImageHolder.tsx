@@ -2,7 +2,7 @@ import css from "@/styles/shared/ImageHolder.module.css";
 import LoadingBubbles from "./LoadingBubbles";
 import { useState } from "react";
 import Image from "next/image";
-import { IconButton } from "@mui/material";
+import { IconButton } from "@/components/shared/mui";
 
 interface ImageHolderProps {
   src: string;
@@ -26,7 +26,7 @@ export default function ImageHolder({
     setIsDownloading(true);
     try {
       const response = await fetch(
-        `/api/download?url=${encodeURIComponent(imageUrl)}`
+        `/api/download?url=${encodeURIComponent(imageUrl)}`,
       );
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);

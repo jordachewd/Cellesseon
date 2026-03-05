@@ -1,4 +1,10 @@
-import { IconButton, Avatar, Menu, MenuItem, Divider } from "@mui/material";
+import {
+  IconButton,
+  Avatar,
+  Menu,
+  MenuItem,
+  Divider,
+} from "@/components/shared/mui";
 import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
 import { useState, MouseEvent } from "react";
 import { TooltipArrow } from "./TooltipArrow";

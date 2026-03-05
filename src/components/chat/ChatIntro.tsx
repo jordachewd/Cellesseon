@@ -1,6 +1,6 @@
 import css from "@/styles/chat/ChatIntro.module.css";
 import { IntroChips } from "@/constants/introChipsData";
-import { Chip, Typography } from "@mui/material";
+import { Chip, Typography } from "@/components/shared/mui";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 import LoadingBubbles from "../shared/LoadingBubbles";
@@ -69,7 +69,9 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
                 key={opt.id}
                 variant="outlined"
                 label={opt.label}
-                onClick={() => handleSendPrompt(`${IntroChips[chipSet].label}: ${opt.label}`)}
+                onClick={() =>
+                  handleSendPrompt(`${IntroChips[chipSet].label}: ${opt.label}`)
+                }
                 className={`${css.chip} ${css[`chip_${opt.id}`]}`}
               />
             ))}

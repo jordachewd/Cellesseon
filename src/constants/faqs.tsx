@@ -1,7 +1,8 @@
 export const faqs = [
   {
     id: 0,
-    question: "How does Cellesseon ensure the security of my personal information?",
+    question:
+      "How does Cellesseon ensure the security of my personal information?",
     answer:
       "Cellesseon prioritizes the protection of your personal information. " +
       "We implement advanced security protocols to safeguard your data. " +
@@ -29,8 +30,10 @@ export const faqs = [
   },
   {
     id: 4,
-    question: "Is it possible to use Cellesseon on multiple devices at the same time?",
-    answer: "Yes, Cellesseon can be accessed on multiple devices simultaneously.",
+    question:
+      "Is it possible to use Cellesseon on multiple devices at the same time?",
+    answer:
+      "Yes, Cellesseon can be accessed on multiple devices simultaneously.",
   },
   {
     id: 5,

@@ -1,3 +1,5 @@
+@reference "../tailwind-reference.css";
+
 .wrapper {
   @apply flex w-full h-dvh m-0 p-0 z-10 transition-all duration-300 relative overflow-hidden;
 }

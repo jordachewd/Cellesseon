@@ -36,7 +36,7 @@ export async function updateTask(taskId: string, task: UpdateTaskParams) {
         $inc: { usage: task.usage },
         $set: updateFields,
       },
-      { new: true }
+      { new: true },
     );
 
     if (!updatedTask) {

@@ -6,7 +6,7 @@ import {
   SlideProps,
   Snackbar,
   SnackbarCloseReason,
-} from "@mui/material";
+} from "@/components/shared/mui";
 
 import { useMemo, useState } from "react";
 

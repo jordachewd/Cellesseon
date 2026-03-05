@@ -1,6 +1,6 @@
 "use client";
 import PageWrapper from "@/components/layout/PageWrapper";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography } from "@/components/shared/mui";
 import { useRouter } from "next/navigation";
 
 const UnauthorizedPage = () => {

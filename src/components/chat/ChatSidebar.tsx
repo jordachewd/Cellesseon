@@ -2,7 +2,7 @@
 import Link from "next/link";
 import css from "@/styles/chat/ChatSidebar.module.css";
 import SidebarToggle from "../shared/SidebarToggle";
-import { Typography } from "@mui/material";
+import { Typography } from "@/components/shared/mui";
 import { useState } from "react";
 import PlanPromo from "@/components/shared/PlanPromo";
 import LogoV2 from "../shared/Logo";

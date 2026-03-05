@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { styled } from "@/components/shared/mui";
 export const UploadFileInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",

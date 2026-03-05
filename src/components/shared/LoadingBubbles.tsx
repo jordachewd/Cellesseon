@@ -30,7 +30,7 @@ export default function LoadingBubbles({
           className={classNames(
             css.bubble,
             css[`bubble${index + 1}`],
-            bubbleSize
+            bubbleSize,
           )}
         />
       ))}

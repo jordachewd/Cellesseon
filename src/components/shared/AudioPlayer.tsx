@@ -5,7 +5,7 @@ import {
   CardContent,
   Typography,
   LinearProgress,
-} from "@mui/material";
+} from "@/components/shared/mui";
 
 interface AudioPlayerProps {
   audioSrc: string | null;
@@ -101,7 +101,7 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
         margin: "0.75rem auto 0",
       }}
     >
-      <CardContent className="flex flex-1 items-center justify-between gap-4 !p-4">
+      <CardContent className="flex flex-1 items-center justify-between gap-4 p-4!">
         <Button
           size="small"
           onClick={togglePlay}
@@ -119,7 +119,7 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
           className="flex-1"
         />
 
-        <Typography variant="body2" className="!text-sm">
+        <Typography variant="body2" className="text-sm!">
           {currentTime} / {duration}
         </Typography>
       </CardContent>

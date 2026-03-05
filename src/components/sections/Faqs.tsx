@@ -3,7 +3,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Typography,
-} from "@mui/material";
+} from "@/components/shared/mui";
 import css from "@/styles/sections/Faqs.module.css";
 import { faqs } from "@/constants/faqs";
 

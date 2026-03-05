@@ -1,3 +1,5 @@
+@reference "../tailwind-reference.css";
+
 .section {
   @apply flex flex-col w-full items-center px-4 xl:px-0 sticky bottom-[env(safe-area-inset-bottom)] z-20;
 }

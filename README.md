@@ -26,6 +26,10 @@ _Smart AI Assistant powered by OpenAI_
 - Moved chat sidebar user data load to server-side rendering flow
 - Added test infrastructure: Vitest (`tests/unit`) and Playwright (`tests/e2e`)
 - Updated dependency baseline (`classnames`, `knip` in `devDependencies`)
+- Upgraded Tailwind CSS to v4.2.1 with `@tailwindcss/postcss`
+- Added MUI abstraction layer (`mui.ts`, `mui-theme.ts`) and `use-theme-mode` hook to decouple feature code from direct `@mui/*` imports
+- Fixed theme hydration regression by preserving pre-hydration `undefined` mode in `use-theme-mode`, preventing persisted user theme from being overwritten on load
+- Expanded behavior-first automated tests (route handlers, plan/date logic, chat input interactions, authenticated route E2E coverage)
 
 ### Key Features
 
@@ -59,7 +63,7 @@ _Smart AI Assistant powered by OpenAI_
 | [Next.js 16](https://nextjs.org/)                 | React framework with App Router       |
 | [React 19](https://react.dev/)                    | UI library                            |
 | [TypeScript 5.7](https://www.typescriptlang.org/) | Type-safe development                 |
-| [Tailwind CSS 3](https://tailwindcss.com/)        | Utility-first CSS                     |
+| [Tailwind CSS 4.2](https://tailwindcss.com/)      | Utility-first CSS                     |
 | [Material UI 7](https://mui.com/)                 | Legacy UI layer scheduled for removal |
 
 ### Testing & QA
@@ -260,9 +264,11 @@ cellesseon/
 │
 ├── .eslintrc.json                   # ESLint configuration
 ├── next.config.ts                   # Next.js configuration
-├── tailwind.config.ts               # Tailwind CSS configuration
+├── postcss.config.mjs               # PostCSS configuration (`@tailwindcss/postcss`)
 ├── tsconfig.json                    # TypeScript configuration
-├── postcss.config.mjs               # PostCSS configuration
+├── tests/                           # Test suites
+│   ├── unit/                        # Vitest tests
+│   └── e2e/                         # Playwright tests
 └── package.json                     # Dependencies & scripts
 ```
 
@@ -344,6 +350,11 @@ AWS_S3_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 # Optional: extra download hosts
 DOWNLOAD_URL_ALLOWLIST=assets.example.com,cdn.example.com
+
+# Optional: authenticated E2E tests (Playwright)
+E2E_TEST_USERNAME=codex-jwd
+E2E_TEST_EMAIL=codex-jwd@jwd.com
+E2E_TEST_PASSWORD=q$cuo2WR*%k$n5@oakCJPSZC
 ```
 
 > ⚠️ **Note:** Never commit your `.env.local` file to version control. Make sure it's listed in your `.gitignore`.

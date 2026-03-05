@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@mui/material";
+import { Button } from "@/components/shared/mui";
 import { checkoutPlan } from "@/lib/actions/transaction.action";
 import { CheckoutTransactionParams } from "@/types/TransactionData.d";
 import { CheckoutPlanParams, PlanStatus } from "@/types/PlanData.d";

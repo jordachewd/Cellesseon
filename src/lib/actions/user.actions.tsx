@@ -5,7 +5,6 @@ import { connectToDatabase } from "../database/mongoose";
 import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
 import { handleError } from "../utils/handleError";
 
-
 // CREATE USER
 export async function createUser(user: CreateUserParams) {
   try {
@@ -19,7 +18,7 @@ export async function createUser(user: CreateUserParams) {
           message: "User creation failed!",
           status: "Error",
           source: "createUser",
-        })
+        }),
       );
     }
 
@@ -46,7 +45,7 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
           message: "User update failed!",
           status: "Error",
           source: "updateUser",
-        })
+        }),
       );
     }
 
@@ -55,7 +54,7 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
         mongoResponse: updatedUser,
         message: "User updated successfully (user.actions.tsx)",
         status: 200,
-      })
+      }),
     );
   } catch (error) {
     return JSON.parse(JSON.stringify(error));
@@ -76,7 +75,7 @@ export async function deleteUser(clerkId: string) {
           message: "User does not exist!",
           status: "Error",
           source: "deleteUser",
-        })
+        }),
       );
     }
 
@@ -117,7 +116,7 @@ export async function getUserBySlug(slug: string) {
           status: "Error",
           source: "getUserBySlug",
           payLoad: slug,
-        })
+        }),
       );
     }
 
@@ -140,7 +139,7 @@ export async function getAllUsers() {
           message: "No users found!",
           status: "Error",
           source: "getAllUsers",
-        })
+        }),
       );
     }
 

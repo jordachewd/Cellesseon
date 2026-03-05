@@ -1,5 +1,5 @@
 import css from "@/styles/shared/PlanPromo.module.css";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography } from "@/components/shared/mui";
 import { getPlanIcon } from "@/constants/plans";
 import { PlanData, PlanName } from "@/types/PlanData.d";
 

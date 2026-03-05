@@ -1,3 +1,5 @@
+@reference "../tailwind-reference.css";
+
 .wrapper {
   @apply flex m-0 p-0;
 }

@@ -1,3 +1,5 @@
+@reference "../tailwind-reference.css";
+
 .wrapper {
   @apply flex flex-col justify-between shadow w-96 -ml-96 lg:w-64 lg:-ml-64;
   @apply z-10 fixed lg:relative transition-all duration-300 top-0 left-0;
@@ -33,4 +35,3 @@
 .promo {
   @apply flex p-4;
 }
-
