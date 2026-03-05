@@ -1,4 +1,3 @@
-import css from "@/styles/layout/PageWrapper.module.css";
 import { ReactNode } from "react";
 
 interface PageWrapperProps {
@@ -15,8 +14,17 @@ export default function PageWrapper({
   id: pageId = "PageWrapper",
 }: PageWrapperProps) {
   return (
-    <div className={`${css.wrapper} ${customCss}`} id={pageId}>
-      {scrollable ? <div className={css.content}>{children}</div> : children}
+    <div
+      className={`relative z-10 flex h-dvh w-full flex-col p-0 m-0 ${customCss}`}
+      id={pageId}
+    >
+      {scrollable ? (
+        <div className="cellesseon-scrollbar relative z-10 mt-14 flex h-full w-full flex-1 flex-col gap-10 overflow-y-auto pb-10">
+          {children}
+        </div>
+      ) : (
+        children
+      )}
     </div>
   );
 }

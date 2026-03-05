@@ -57,4 +57,14 @@ describe("ChatInput", () => {
       expect(onSend).not.toHaveBeenCalled();
     });
   });
+
+  it("exposes a keyboard-accessible media attachment button", () => {
+    const onSend = vi.fn();
+    render(<ChatInput loading={false} sendMessage={onSend} />);
+
+    const attachButton = screen.getByRole("button", { name: "Attach media" });
+
+    expect(attachButton).toBeTruthy();
+    expect(attachButton.getAttribute("type")).toBe("button");
+  });
 });

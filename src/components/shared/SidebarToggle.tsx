@@ -1,4 +1,3 @@
-import { IconButton } from "@/components/shared/mui";
 import { TooltipArrow } from "./TooltipArrow";
 
 interface SidebarToggleProps {
@@ -18,19 +17,16 @@ export default function SidebarToggle({
     <TooltipArrow
       placement="right"
       title={show ? title : null}
-      className="transition-all!"
+      className="transition-all"
     >
-      <IconButton
-        size="small"
+      <button
+        type="button"
         onClick={() => toggleSidebar()}
-        sx={{
-          padding: "4px 7px",
-          borderRadius: "8px!important",
-          lineHeight: 1,
-        }}
+        className="icon-btn"
+        aria-label={title || "Toggle sidebar"}
       >
         <i className={`bi ${icon}`}></i>
-      </IconButton>
+      </button>
     </TooltipArrow>
   ) : null;
 }

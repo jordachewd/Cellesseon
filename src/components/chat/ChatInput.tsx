@@ -1,8 +1,6 @@
-import css from "@/styles/chat/ChatInput.module.css";
 import Image from "next/image";
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent, useEffect, useRef } from "react";
 import { Message } from "@/types";
-import { IconButton, Input, Zoom } from "@/components/shared/mui";
 import { UploadFileInput } from "../shared/UploadFileInput";
 import { TooltipArrow } from "../shared/TooltipArrow";
 
@@ -20,6 +18,7 @@ export default function ChatInput({
   const [prompt, setPrompt] = useState<string>(startPrompt || "");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const convertToBase64 = async (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -52,6 +51,12 @@ export default function ChatInput({
     setSelectedFile(file);
   };
 
+  const handleOpenFilePicker = () => {
+    if (loading) return;
+
+    fileInputRef.current?.click();
+  };
+
   const handleSubmit = async () => {
     if (prompt === "" && !selectedFile) return;
 
@@ -82,19 +87,18 @@ export default function ChatInput({
   };
 
   return (
-    <section className={css.section}>
-      <div className={css.wrapper}>
-        <div className={css.FieldRow}>
-          <Input
-            fullWidth
-            multiline
+    <section className="sticky bottom-[env(safe-area-inset-bottom)] z-20 flex w-full flex-col items-center px-4 xl:px-0">
+      <div className="flex w-full max-w-screen-lg items-end justify-between space-x-2 rounded-md border border-jwdMarine-1000 bg-jwdMarine-900 p-2 shadow-md dark:border-jwdAqua-100/10 dark:bg-jwdAqua-600/10">
+        <div className="relative flex flex-1 items-end space-x-2 border-r border-dotted border-slate-300 px-2 dark:border-jwdAqua-100/20">
+          <textarea
             id="chatInput"
             name="chatInput"
             value={prompt}
             disabled={loading}
-            className="mb-[0.55rem] pb-0!"
             placeholder="Ask Cellesseon..."
             onChange={(e) => setPrompt(e.target.value)}
+            rows={2}
+            className="mb-[0.55rem] flex min-h-11 w-full resize-none rounded-md bg-transparent py-2 text-base leading-tight text-white placeholder:text-sm placeholder:text-white/65 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -105,56 +109,62 @@ export default function ChatInput({
           <TooltipArrow
             title={prompt === "" ? "No message yet" : "Send message"}
             placement="top"
-            slots={{
-              transition: Zoom,
-            }}
           >
             <span>
-              <IconButton size="small" disabled={prompt === "" || loading}>
-                <i
-                  className={`bi bi-send ${css.icon}`}
-                  onClick={handleSubmit}
-                ></i>
-              </IconButton>
+              <button
+                type="button"
+                className="icon-btn text-base"
+                disabled={prompt === "" || loading}
+                onClick={handleSubmit}
+                aria-label="Send message"
+              >
+                <i className="bi bi-send text-base"></i>
+              </button>
             </span>
           </TooltipArrow>
         </div>
-        <div className={css.Buttons}>
+        <div className="flex w-auto">
           {!selectedFile ? (
-            <TooltipArrow
-              title="Attach media"
-              placement="top"
-              slots={{
-                transition: Zoom,
-              }}
-            >
-              <IconButton component="label" size="small" disabled={loading}>
-                <i className={`bi bi-cloud-upload ${css.icon}`}></i>
-                <UploadFileInput
-                  id="addFile"
-                  type="file"
-                  accept="image/*"
-                  disabled={loading}
-                  onChange={handleImageChange}
-                />
-              </IconButton>
+            <TooltipArrow title="Attach media" placement="top">
+              <button
+                type="button"
+                className={`icon-btn text-base ${loading ? "cursor-not-allowed opacity-50" : ""}`}
+                onClick={handleOpenFilePicker}
+                aria-label="Attach media"
+                disabled={loading}
+              >
+                <i className="bi bi-cloud-upload text-base"></i>
+              </button>
             </TooltipArrow>
           ) : fileUrl ? (
-            <div className={css.image} onClick={() => setSelectedFile(null)}>
-              <i className={`bi bi-x ${css.removeImg}`}></i>
+            <button
+              type="button"
+              className="relative flex cursor-pointer"
+              onClick={() => setSelectedFile(null)}
+              aria-label="Remove selected image"
+            >
+              <i className="bi bi-x absolute -right-1.5 -top-1.5 rounded-full bg-orange-600 pt-[1px] leading-none text-white shadow-sm transition-all hover:bg-amber-600"></i>
               <Image
                 priority
                 width={40}
                 height={40}
-                className="rounded-sm max-w-[40px] max-h-[40px]"
+                className="max-h-[40px] max-w-[40px] rounded-sm"
                 alt="Selected image"
                 src={`data:image/jpeg;base64,${fileUrl}`}
               />
-            </div>
+            </button>
           ) : null}
+          <UploadFileInput
+            ref={fileInputRef}
+            id="addFile"
+            type="file"
+            accept="image/*"
+            disabled={loading}
+            onChange={handleImageChange}
+          />
         </div>
       </div>
-      <div className={css.disclaimer}>
+      <div className="flex py-1 text-xs font-light tracking-wide text-jwdAqua-900">
         Cellesseon can make mistakes. So double-check it.
       </div>
     </section>

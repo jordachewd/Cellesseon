@@ -1,8 +1,6 @@
 "use client";
 import Link from "next/link";
-import css from "@/styles/chat/ChatSidebar.module.css";
 import SidebarToggle from "../shared/SidebarToggle";
-import { Typography } from "@/components/shared/mui";
 import { useState } from "react";
 import PlanPromo from "@/components/shared/PlanPromo";
 import LogoV2 from "../shared/Logo";
@@ -30,8 +28,12 @@ export default function ChatSidebar({ userPlan }: ChatSidebarProps) {
   };
 
   return (
-    <aside className={`${css.wrapper} ${isOpen ? css.show : ""}`}>
-      <div className={css.toggle}>
+    <aside
+      className={`fixed bottom-0 left-0 top-0 z-10 flex w-96 -ml-96 flex-col justify-between bg-lightBackground-200 shadow transition-all duration-300 lg:relative lg:w-64 lg:-ml-64 dark:bg-jwdMarine-1000 ${isOpen ? "ml-0" : ""}`}
+    >
+      <div
+        className={`absolute top-2.5 -right-12 flex rounded-md p-1 transition-all duration-300 ${isOpen ? "right-2 lg:-right-12" : ""}`}
+      >
         <SidebarToggle
           icon="bi-layout-sidebar"
           title={`${isOpen ? "Hide menu" : "Show menu"}`}
@@ -39,14 +41,14 @@ export default function ChatSidebar({ userPlan }: ChatSidebarProps) {
         />
       </div>
 
-      <div className={css.topbar}>
+      <div className="flex w-full items-center gap-3 bg-lightPrimary-100 p-4 dark:bg-darkPrimary-1000">
         <LogoV2 />
       </div>
-      <nav className={`${css.navigation}`}>
-        <div className={css.history}>
-          <Typography variant="body2">History</Typography>
+      <nav className="mb-auto flex flex-col gap-8 px-4 py-6">
+        <div className="flex w-full flex-col gap-1">
+          <p className="body-2 text-sm">History</p>
 
-          <Link href="/">
+          <Link href="/" className="flex items-center py-1.5">
             <i className="bi bi-chat-dots text-lg"></i>
             <span className="ml-3">New Task</span>
           </Link>
@@ -54,7 +56,7 @@ export default function ChatSidebar({ userPlan }: ChatSidebarProps) {
       </nav>
 
       {userPlan && (
-        <div className={css.promo}>
+        <div className="flex p-4">
           <PlanPromo userPlan={userPlan} />
         </div>
       )}

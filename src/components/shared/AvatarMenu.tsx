@@ -1,22 +1,31 @@
-import {
-  IconButton,
-  Avatar,
-  Menu,
-  MenuItem,
-  Divider,
-} from "@/components/shared/mui";
 import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
-import { useState, MouseEvent } from "react";
+import {
+  MouseEvent as ReactMouseEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { TooltipArrow } from "./TooltipArrow";
 import { useUser } from "@clerk/clerk-react";
-
 import Link from "next/link";
-import LoggoutBtn from "./LoggoutBtn";
+import LogoutBtn from "./LogoutBtn";
 
 export default function AvatarMenu() {
   const { user } = useUser();
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorElUser);
+  const [open, setOpen] = useState<boolean>(false);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const onOutsideClick = (event: globalThis.MouseEvent) => {
+      if (!wrapperRef.current) return;
+      if (!wrapperRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("click", onOutsideClick);
+    return () => window.removeEventListener("click", onOutsideClick);
+  }, []);
 
   if (!user) return null;
 
@@ -26,76 +35,83 @@ export default function AvatarMenu() {
     lastName: lastName || "",
     username: username || "",
   });
+  const initials = getNameLetters(fullName).children;
 
-  const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
+  const handleToggleUserMenu = (event: ReactMouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    setOpen((prevState) => !prevState);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  const handleCloseUserMenu = () => setOpen(false);
 
   return (
-    <div className="flex">
+    <div className="relative flex" ref={wrapperRef}>
       <TooltipArrow title="Account" placement="bottom">
-        <IconButton
-          onClick={handleOpenUserMenu}
-          sx={{ p: 0, backgroundColor: "transparent!important" }}
+        <button
+          type="button"
+          onClick={handleToggleUserMenu}
+          className="inline-flex rounded-full bg-transparent p-0"
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
           aria-controls={open ? "my-account" : undefined}
+          aria-label="Account menu"
         >
-          <Avatar
-            alt={fullName}
-            src={imageUrl}
-            sx={{ width: 28, height: 28 }}
-            {...getNameLetters(fullName)}
-          />
-        </IconButton>
+          <span className="inline-flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-lightPrimary-500 text-[13px] font-semibold text-white shadow-[0px_0px_5px_0px_rgba(122,75,204,0.3)]">
+            {imageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={imageUrl}
+                alt={fullName}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              initials
+            )}
+          </span>
+        </button>
       </TooltipArrow>
 
-      <Menu
-        keepMounted
-        anchorEl={anchorElUser}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-      >
-        {publicMetadata.role === "admin" && (
-          <Link href="/dashboard">
-            <MenuItem>
+      {open && (
+        <div
+          id="my-account"
+          className="absolute right-0 top-full z-40 mt-2 min-w-[180px] rounded-lg bg-lightBackground-100 py-2 shadow-[0px_0px_6px_0px_rgba(122,75,204,0.2)] dark:bg-jwdMarine-900"
+        >
+          {publicMetadata.role === "admin" && (
+            <Link
+              href="/dashboard"
+              className="flex min-w-[180px] items-center px-5 py-2 text-sm transition-all duration-300 ease-in-out hover:text-white dark:hover:text-lightBackground-200"
+              onClick={handleCloseUserMenu}
+            >
               <i className="bi bi-speedometer2 mr-4"></i>
               <span>Dashboard</span>
-            </MenuItem>
-          </Link>
-        )}
-        <Link href="/plans">
-          <MenuItem>
+            </Link>
+          )}
+
+          <Link
+            href="/plans"
+            className="flex min-w-[180px] items-center px-5 py-2 text-sm transition-all duration-300 ease-in-out hover:text-white dark:hover:text-lightBackground-200"
+            onClick={handleCloseUserMenu}
+          >
             <i className="bi bi-graph-up mr-4"></i>
             <span>Plans</span>
-          </MenuItem>
-        </Link>
+          </Link>
 
-        <Link href="/profile">
-          <MenuItem>
+          <Link
+            href="/profile"
+            className="flex min-w-[180px] items-center px-5 py-2 text-sm transition-all duration-300 ease-in-out hover:text-white dark:hover:text-lightBackground-200"
+            onClick={handleCloseUserMenu}
+          >
             <i className="bi bi-person mr-4"></i>
             <span>Profile</span>
-          </MenuItem>
-        </Link>
+          </Link>
 
-        <Divider />
+          <hr className="my-1 border-jwdAqua-100/20" />
 
-        <MenuItem>
-          <LoggoutBtn />
-        </MenuItem>
-      </Menu>
+          <div className="flex min-w-[180px] items-center px-5 py-2 text-sm">
+            <LogoutBtn />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

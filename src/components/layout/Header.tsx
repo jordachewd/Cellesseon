@@ -1,7 +1,6 @@
 "use client";
-import css from "@/styles/layout/Header.module.css";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/shared/mui";
+import Link from "next/link";
 import ToggleTheme from "@/components/shared/ToggleTheme";
 import LogoV2 from "../shared/Logo";
 
@@ -24,15 +23,17 @@ export default function Header() {
   }, []);
 
   return (
-    <section className={`${css.section} ${scrolled && css.scrolled}`}>
-      <div className={css.content}>
-        <div className={css.left}>
+    <section
+      className={`sticky left-0 right-0 top-0 z-20 flex w-full px-4 transition-all duration-300 ease-in-out ${scrolled ? "bg-lightPrimary-100/50 shadow-sm backdrop-blur-lg dark:bg-darkPrimary-900/50" : ""}`}
+    >
+      <div className="mx-auto flex w-full max-w-screen-2xl items-center justify-between gap-4 py-3">
+        <div className="flex items-center gap-4">
           <LogoV2 />
         </div>
-        <div className={css.right}>
-          <Button size="small" href="/sign-in">
+        <div className="ml-auto flex items-center gap-4">
+          <Link className="btn btn-text btn-sm" href="/sign-in">
             login
-          </Button>
+          </Link>
 
           <ToggleTheme />
         </div>

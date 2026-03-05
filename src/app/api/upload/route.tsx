@@ -14,14 +14,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
-import { validateUploadFile } from "@/lib/utils/upload-file-validation";
-
-const MIME_TYPE_TO_EXTENSION: Record<string, string> = {
-  "image/jpeg": "jpg",
-  "image/png": "png",
-  "image/webp": "webp",
-  "image/gif": "gif",
-};
+import {
+  getUploadFileExtension,
+  validateUploadFile,
+} from "@/lib/utils/upload-file-validation";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
@@ -44,7 +40,16 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    const fileExtension = MIME_TYPE_TO_EXTENSION[safeFile.type];
+    const fileExtension = getUploadFileExtension(safeFile.type);
+    if (!fileExtension) {
+      return NextResponse.json(
+        {
+          error:
+            "Invalid file type. Allowed types: image/jpeg, image/png, image/webp, image/gif.",
+        },
+        { status: 400 },
+      );
+    }
     const fileName = `uploaded_file_${Date.now()}.${fileExtension}`;
     const filePath = path.join(uploadsDir, fileName);
 

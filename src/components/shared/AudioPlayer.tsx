@@ -1,11 +1,4 @@
 import { useState, useEffect } from "react";
-import {
-  Button,
-  Card,
-  CardContent,
-  Typography,
-  LinearProgress,
-} from "@/components/shared/mui";
 
 interface AudioPlayerProps {
   audioSrc: string | null;
@@ -94,35 +87,29 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
   };
 
   return (
-    <Card
-      sx={{
-        display: "flex",
-        width: "100%",
-        margin: "0.75rem auto 0",
-      }}
-    >
-      <CardContent className="flex flex-1 items-center justify-between gap-4 p-4!">
-        <Button
-          size="small"
+    <div className="mx-auto mt-3 flex w-full rounded-lg border border-lightBorders-500 bg-lightBackground-100 shadow dark:border-darkBorders-500 dark:bg-jwdMarine-900">
+      <div className="flex flex-1 items-center justify-between gap-4 p-4">
+        <button
+          type="button"
           onClick={togglePlay}
-          startIcon={
-            <i className={`bi bi-${isPlaying ? "pause" : "play"}`}></i>
-          }
+          className="btn btn-sm btn-outlined"
           disabled={!blobUrl}
         >
+          <i className={`bi bi-${isPlaying ? "pause" : "play"} mr-2`}></i>
           {isPlaying ? "Pause" : "Play"}
-        </Button>
+        </button>
 
-        <LinearProgress
-          variant="determinate"
-          value={progress}
-          className="flex-1"
-        />
+        <div className="flex h-2 flex-1 overflow-hidden rounded-full bg-lightBorders-500 dark:bg-darkBorders-600">
+          <div
+            className="h-full bg-darkSecondary-600 transition-all duration-150"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
 
-        <Typography variant="body2" className="text-sm!">
+        <p className="text-sm">
           {currentTime} / {duration}
-        </Typography>
-      </CardContent>
-    </Card>
+        </p>
+      </div>
+    </div>
   );
 }

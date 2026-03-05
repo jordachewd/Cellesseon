@@ -1,12 +1,14 @@
-import { styled } from "@/components/shared/mui";
-export const UploadFileInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
+import { forwardRef, InputHTMLAttributes } from "react";
+
+export const UploadFileInput = forwardRef<
+  HTMLInputElement,
+  InputHTMLAttributes<HTMLInputElement>
+>(function UploadFileInput(props, ref) {
+  return (
+    <input
+      {...props}
+      ref={ref}
+      className={`absolute bottom-0 left-0 h-px w-px overflow-hidden whitespace-nowrap [clip-path:inset(50%)] [clip:rect(0_0_0_0)] ${props.className || ""}`}
+    />
+  );
 });

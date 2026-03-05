@@ -1,8 +1,6 @@
 "use client";
-import css from "@/styles/chat/ChatHeader.module.css";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { IconButton } from "@/components/shared/mui";
 import { TooltipArrow } from "../shared/TooltipArrow";
 import ToggleTheme from "@/components/shared/ToggleTheme";
 import AvatarMenu from "@/components/shared/AvatarMenu";
@@ -20,8 +18,6 @@ export default function ChatHeader({
   isInUse,
 }: ChatHeaderProps) {
   const [scrolled, setScrolled] = useState<boolean>(false);
-  const isScrolled = scrolled ? css.scrolled : "";
-  const customCss = style ? style : "";
   const currentPath = usePathname();
   const isMainPage = currentPath === "/";
 
@@ -44,34 +40,33 @@ export default function ChatHeader({
   }, []);
 
   return (
-    <section className={`${css.section} ${isScrolled} ${customCss}`}>
-      <div className={`${css.content} ${isMainPage && "pl-8"}`}>
-        <div className={css.left}>
+    <section
+      className={`absolute left-0 right-0 top-0 z-20 flex w-full px-4 transition-all duration-300 ease-in-out ${scrolled ? "bg-lightPrimary-100/50 shadow-sm backdrop-blur-lg dark:bg-darkPrimary-900/50" : ""} ${style}`}
+    >
+      <div
+        className={`mx-auto flex w-full items-center justify-between gap-4 py-3 ${isMainPage ? "pl-8" : ""}`}
+      >
+        <div className="flex items-center gap-4">
           {!isMainPage && <LogoV2 />}
           {isMainPage && (
             <TooltipArrow
               title="New Task"
               placement="right"
-              className="transition-all!"
+              className="transition-all"
             >
-              <span>
-                <IconButton
-                  size="small"
-                  onClick={setNewTask}
-                  disabled={isInUse}
-                  sx={{
-                    padding: "4px 7px",
-                    borderRadius: "8px!important",
-                    lineHeight: 1,
-                  }}
-                >
-                  <i className="bi bi-plus-circle-dotted"></i>
-                </IconButton>
-              </span>
+              <button
+                type="button"
+                onClick={setNewTask}
+                disabled={isInUse}
+                className="icon-btn"
+                aria-label="Start new task"
+              >
+                <i className="bi bi-plus-circle-dotted"></i>
+              </button>
             </TooltipArrow>
           )}
         </div>
-        <div className={css.right}>
+        <div className="ml-auto flex items-center gap-4">
           <ToggleTheme />
           <AvatarMenu />
         </div>

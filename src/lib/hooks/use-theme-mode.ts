@@ -1,17 +1,22 @@
 "use client";
 
-import { useColorScheme } from "@/components/shared/mui-theme";
+import {
+  CellesseonThemeContext,
+  ThemeMode,
+} from "@/components/layout/CellesseonTheme";
+import { useContext } from "react";
 
-export type ThemeMode = "system" | "light" | "dark";
 export type ThemeModeState = ThemeMode | undefined;
 
 export default function useThemeMode() {
-  const { mode, setMode } = useColorScheme();
-  const safeMode: ThemeModeState =
-    mode === "light" || mode === "dark" || mode === "system" ? mode : undefined;
+  const context = useContext(CellesseonThemeContext);
 
-  return {
-    mode: safeMode,
-    setMode: (nextMode: ThemeMode) => setMode(nextMode),
-  };
+  if (!context) {
+    throw new Error("useThemeMode must be used within CellesseonTheme");
+  }
+
+  const { mode, resolvedMode, setMode } = context;
+  const safeMode: ThemeModeState = mode;
+
+  return { mode: safeMode, resolvedMode, setMode };
 }

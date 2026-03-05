@@ -1,5 +1,4 @@
-import classNames from "classnames"; // Utility for managing class strings
-import css from "@/styles/shared/LoadingBubbles.module.css";
+import classNames from "classnames";
 
 type BubbleSizes = "small" | "medium" | "large";
 
@@ -15,6 +14,12 @@ const sizeMappings = {
   large: ["w-2 h-2", "w-2.5 h-2.5", "w-3 h-3"],
 };
 
+const colorMappings = [
+  "bg-lightPrimary-600 dark:bg-darkPrimary-400/60",
+  "bg-lightPrimary-600 dark:bg-darkPrimary-400/50",
+  "bg-lightPrimary-600 dark:bg-darkPrimary-400/40",
+];
+
 export default function LoadingBubbles({
   className,
   size = "medium",
@@ -23,14 +28,21 @@ export default function LoadingBubbles({
   const bubbles = sizeMappings[size] || sizeMappings.medium;
 
   const bubbleLoader = (
-    <div className={classNames(css.wrapper, className)}>
+    <div
+      className={classNames(
+        "flex w-full items-center justify-center gap-1",
+        className,
+      )}
+    >
       {bubbles.map((bubbleSize, index) => (
         <div
           key={index}
           className={classNames(
-            css.bubble,
-            css[`bubble${index + 1}`],
+            "animate-bounce animate-duration-700 animate-ease-in animate-infinite -mb-0.5 rounded-full",
             bubbleSize,
+            colorMappings[index],
+            index === 1 && "animate-delay-100",
+            index === 2 && "animate-delay-200",
           )}
         />
       ))}
@@ -38,7 +50,11 @@ export default function LoadingBubbles({
   );
 
   if (wrapped) {
-    return <div className={css.isWrapped}>{bubbleLoader}</div>;
+    return (
+      <div className="flex h-dvh items-center justify-center">
+        {bubbleLoader}
+      </div>
+    );
   }
 
   return bubbleLoader;

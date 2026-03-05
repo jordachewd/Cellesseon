@@ -1,4 +1,3 @@
-import css from "@/styles/chat/ChatBody.module.css";
 import { Message } from "@/types";
 import { useEffect, useMemo, useRef } from "react";
 import autoAnimate from "@formkit/auto-animate";
@@ -25,7 +24,6 @@ export default function ChatBody({ messages }: ChatBodyProps) {
     }
   }, [messages]);
 
-  // Memoize messages rendering
   const listMessages = useMemo(() => {
     return messages.map((message, i) => {
       const { whois, content } = message;
@@ -34,13 +32,13 @@ export default function ChatBody({ messages }: ChatBodyProps) {
       return (
         <article
           key={i}
-          className={`${css.article} ${isBot ? css.botArticle : ""}`}
+          className={`animate-fade-up animate-once animate-duration-500 flex items-start space-x-3 ${isBot ? "animate-delay-300 flex-row space-x-3" : "flex-row-reverse space-x-reverse"}`}
         >
           <i
-            className={`bi bi-${isBot ? "robot" : "person"} ${css.avatar}`}
+            className={`bi bi-${isBot ? "robot" : "person"} rounded-full p-2 text-base leading-none shadow ${isBot ? "bg-lightPrimary-100 dark:bg-darkPrimary-500/40" : "bg-lightSecondary-200 text-lightText-500 dark:bg-darkSecondary-500 dark:text-darkText-500"}`}
           ></i>
 
-          <div className={css.content}>
+          <div className={`chat-markdown ${isBot ? "chat-markdown--bot" : ""}`}>
             {Array.isArray(content) ? (
               content.map((reply, idx) => {
                 if (reply.type === "text") {
@@ -88,10 +86,13 @@ export default function ChatBody({ messages }: ChatBodyProps) {
 
   return (
     <>
-      <div className={css.wrapper} ref={parent}>
+      <div
+        className="mx-auto flex w-full max-w-screen-lg flex-1 flex-col space-y-4 p-6 lg:px-0 lg:pb-10 lg:pt-20"
+        ref={parent}
+      >
         {listMessages}
       </div>
-      <div className={css.bottomRef} ref={bottomRef}></div>
+      <div className="flex h-2 w-full" ref={bottomRef}></div>
     </>
   );
 }

@@ -1,6 +1,3 @@
-import css from "@/styles/layout/PageHead.module.css";
-import { Typography } from "@/components/shared/mui";
-
 interface PageHeadProps {
   title: string;
   subtitle?: string | null;
@@ -8,9 +5,9 @@ interface PageHeadProps {
 }
 export default function PageHead({ title, subtitle, children }: PageHeadProps) {
   return (
-    <div className={css.section}>
-      <Typography variant="h2">{title}</Typography>
-      {subtitle && <Typography variant="body1">{subtitle}</Typography>}
+    <div className="flex flex-col items-center justify-center gap-3">
+      <h1 className="heading-2 text-center">{title}</h1>
+      {subtitle && <p className="body-1 text-center">{subtitle}</p>}
       {children}
     </div>
   );

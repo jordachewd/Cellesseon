@@ -1,8 +1,6 @@
 "use client";
-import classNames from "classnames";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Message } from "@/types";
-import css from "@/styles/chat/ChatWrapper.module.css";
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatIntro from "@/components/chat/ChatIntro";
 import ChatBody from "@/components/chat/ChatBody";
@@ -16,6 +14,7 @@ export default function ChatWrapper() {
   const [startMsg, setStartMsg] = useState<string>("");
   const [dbTaskId, setDbTaskId] = useState<string | null>(null);
   const [task, setTask] = useState<Message[]>([]);
+  const nextAlertId = useRef<number>(0);
   const isNewTask = task.length === 0;
 
   const sendMessage = async (prompt: Message) => {
@@ -70,19 +69,20 @@ export default function ChatWrapper() {
   };
 
   const showAlert = (title: string, text: string) => {
-    setAlert({ title, text });
+    nextAlertId.current += 1;
+    setAlert({ id: nextAlertId.current, title, text });
     setIsLoading(false);
     setTask((prev) => prev.slice(0, -1));
   };
 
   return (
-    <main className={css.main}>
+    <main className="relative z-0 flex h-full flex-1 flex-col">
       {alert && <AlertMessage message={alert} />}
       <ChatHeader setNewTask={() => setTask([])} />
 
       <section
         id="ChatWrapperContent"
-        className={classNames(css.content, isNewTask && css.intro)}
+        className={`cellesseon-scrollbar relative z-10 flex w-full flex-1 flex-col overflow-y-auto ${isNewTask ? "-mt-14 items-center justify-center space-y-4 px-4" : ""}`}
       >
         {isNewTask ? (
           <ChatIntro sendPrompt={(prompt) => setStartMsg(prompt)} />

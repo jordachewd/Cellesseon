@@ -1,58 +1,36 @@
-import { ButtonGroup, Button } from "@/components/shared/mui";
 import { TooltipArrow } from "./TooltipArrow";
-import { useEffect } from "react";
 import useThemeMode from "@/lib/hooks/use-theme-mode";
 
 export default function ToggleTheme() {
-  const { mode, setMode } = useThemeMode();
+  const { mode, resolvedMode, setMode } = useThemeMode();
 
-  useEffect(() => {
-    if (mode === "system") {
-      const defaultMode = window.matchMedia(
-        "(prefers-color-scheme: dark)",
-      ).matches;
-
-      if (defaultMode) {
-        setMode("dark");
-      } else {
-        setMode("light");
-      }
-    }
-  }, [mode, setMode]);
+  const lightActive =
+    mode === "light" || (mode === "system" && resolvedMode === "light");
+  const darkActive =
+    mode === "dark" || (mode === "system" && resolvedMode === "dark");
 
   return (
-    <ButtonGroup aria-label="theme-toggle">
+    <div className="inline-flex items-center rounded-lg bg-lightPrimary-100/70 p-1 dark:bg-darkPrimary-900/50">
       <TooltipArrow title="Light" placement="bottom">
-        <Button
-          size="small"
+        <button
+          type="button"
           onClick={() => setMode("light")}
-          variant={mode === "light" ? "contained" : "outlined"}
-          sx={{
-            border: "none",
-            padding: "4px 7px",
-            marginRight: "0.25rem",
-            minWidth: "0!important",
-            borderRadius: "8px!important",
-          }}
+          className={`icon-btn ${lightActive ? "bg-lightSecondary-200 dark:bg-darkSecondary-500/50" : "bg-transparent"}`}
+          aria-label="Switch to light mode"
         >
-          <i className="bi bi-sun text-sm"></i>
-        </Button>
+          <i className="bi bi-sun text-sm" />
+        </button>
       </TooltipArrow>
       <TooltipArrow title="Dark" placement="bottom">
-        <Button
-          size="small"
+        <button
+          type="button"
           onClick={() => setMode("dark")}
-          variant={mode === "dark" ? "contained" : "outlined"}
-          sx={{
-            border: "none",
-            padding: "4px 7px",
-            minWidth: "0!important",
-            borderRadius: "8px!important",
-          }}
+          className={`icon-btn ${darkActive ? "bg-lightSecondary-200 dark:bg-darkSecondary-500/50" : "bg-transparent"}`}
+          aria-label="Switch to dark mode"
         >
-          <i className="bi bi-moon-stars text-sm"></i>
-        </Button>
+          <i className="bi bi-moon-stars text-sm" />
+        </button>
       </TooltipArrow>
-    </ButtonGroup>
+    </div>
   );
 }

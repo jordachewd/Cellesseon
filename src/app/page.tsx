@@ -15,7 +15,7 @@ export default async function Home() {
     : null;
 
   return userId ? (
-    <PageWrapper id="ChatPageWrapper" className="flex-row!">
+    <PageWrapper id="ChatPageWrapper" className="!flex-row">
       <ChatSidebar userPlan={userData?.plan || null} />
       <ChatWrapper />
     </PageWrapper>

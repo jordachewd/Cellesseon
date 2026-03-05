@@ -1,7 +1,5 @@
-import css from "@/styles/shared/PlanCard.module.css";
 import { getPlanStatus } from "@/lib/utils/getPlanStatus";
 import { Plan, PlanData, PlanStatus } from "@/types/PlanData.d";
-import { Typography } from "@/components/shared/mui";
 import { UserData } from "@/types/UserData.d";
 import Checkout from "@/components/shared/Checkout";
 
@@ -37,70 +35,63 @@ export default function PlanCard({
   });
 
   const { isCurrent, isPopular } = planStatus as PlanStatus;
+  const accentStyles = isCurrent
+    ? "bg-lightAccent-500 text-darkAccent-1000 dark:bg-darkAccent-500 dark:text-darkAccent-1000"
+    : isPopular
+      ? "bg-darkSecondary-600 text-white"
+      : "bg-lightPrimary-500/50 text-lightText-500 dark:bg-darkPrimary-500/30 dark:text-darkText-500";
+
+  const titleStyles = isPopular
+    ? "text-white"
+    : isCurrent
+      ? "text-darkAccent-1000"
+      : "text-lightText-500 dark:text-darkText-500";
 
   return (
     <div
-      className={`${css.wrapper} ${
-        isCurrent ? css.current : isPopular && css.popular
-      }`}
+      className={`relative flex w-full flex-col gap-10 overflow-hidden rounded-lg px-4 py-10 shadow-xl lg:px-8 ${accentStyles}`}
     >
       {(isPopular || isCurrent) && (
-        <div className={css.planBadge}>{isCurrent ? "Current" : "Popular"}</div>
+        <div
+          className={`absolute -left-8 top-3.5 flex -rotate-45 bg-orange-600 p-1.5 px-8 text-[8px] font-bold uppercase leading-none tracking-widest text-white shadow-md ${isCurrent ? "bg-blue-600 dark:bg-green-700" : ""}`}
+        >
+          {isCurrent ? "Current" : "Popular"}
+        </div>
       )}
 
-      <div className={css.head}>
+      <div className="flex flex-col items-center justify-between">
         <i className={`${plan.icon} text-7xl`}></i>
 
-        <div className={css.title}>
-          <Typography
-            variant="h4"
-            sx={{
-              color:
-                isPopular || isCurrent
-                  ? isPopular
-                    ? "var(--mui-palette-common-white)"
-                    : "var(--mui-palette-tertiary-contrastText)"
-                  : "var(--mui-palette-text-primary)",
-            }}
-          >
-            {plan.name}
-          </Typography>
+        <div className="flex w-full items-center justify-between">
+          <h2 className={`heading-4 ${titleStyles}`}>{plan.name}</h2>
 
-          <Typography
-            variant="h5"
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              lineHeight: "1",
-              color:
-                isPopular || isCurrent
-                  ? isPopular
-                    ? "var(--mui-palette-common-white)"
-                    : "var(--mui-palette-tertiary-contrastText)"
-                  : "var(--mui-palette-text-primary)",
-            }}
+          <p
+            className={`heading-5 flex items-center leading-none ${titleStyles}`}
           >
             <span className="flex">
               {plan.price !== 0 ? "$" + planFee : "Free"}
             </span>
 
             {plan.price !== 0 && (
-              <span className="flex text-sm opacity-80 self-end">
+              <span className="flex self-end text-sm opacity-80">
                 {yearly ? "/Yr" : "/Mo"}
               </span>
             )}
-          </Typography>
+          </p>
         </div>
-        <div className={css.subtitle}>
+        <div className="flex w-full items-center justify-between pl-0.5 text-xs opacity-70">
           <span className="flex">{plan.desc}</span>
           {yearly && plan.price !== 0 && (
             <span className="flex line-through">${plan.price * 12} /Yr</span>
           )}
         </div>
       </div>
-      <div className={css.features}>
+      <div className="flex w-full flex-col gap-2.5">
         {plan.inclusions.map((incl) => (
-          <div key={plan.name + incl.label} className={css.feature}>
+          <div
+            key={plan.name + incl.label}
+            className="flex items-center gap-4 text-xs"
+          >
             <i className={`bi ${incl.isIncluded ? "bi-check2" : "bi-x"}`}></i>
             <p>{incl.label}</p>
           </div>
@@ -108,7 +99,7 @@ export default function PlanCard({
       </div>
 
       {hasUserData && (
-        <div className={css.actions}>
+        <div className="flex items-center justify-center">
           <Checkout
             plan={{
               id: plan.id,

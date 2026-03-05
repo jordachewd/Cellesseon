@@ -1,15 +1,27 @@
 import { expect, Page, test } from "@playwright/test";
 
-const E2E_TEST_EMAIL = process.env.E2E_TEST_EMAIL;
-const E2E_TEST_PASSWORD = process.env.E2E_TEST_PASSWORD;
+function getAuthCredentials() {
+  const email = process.env.E2E_TEST_EMAIL;
+  const password = process.env.E2E_TEST_PASSWORD;
+
+  if (!email || !password) {
+    throw new Error(
+      "Set E2E_TEST_EMAIL and E2E_TEST_PASSWORD to run authenticated flows.",
+    );
+  }
+
+  return { email, password };
+}
 
 async function signIn(page: Page) {
+  const { email, password } = getAuthCredentials();
+
   await page.goto("/sign-in");
 
   const emailInput = page
     .locator('input[name="identifier"], input[type="email"]')
     .first();
-  await emailInput.fill(E2E_TEST_EMAIL!);
+  await emailInput.fill(email);
   await emailInput.press("Enter");
 
   const passwordInput = page
@@ -17,18 +29,19 @@ async function signIn(page: Page) {
     .first();
 
   await passwordInput.waitFor({ state: "visible", timeout: 15_000 });
-  await passwordInput.fill(E2E_TEST_PASSWORD!);
+  await passwordInput.fill(password);
   await passwordInput.press("Enter");
 
   await page.waitForURL(/\/($|\?)/, { timeout: 45_000 });
 }
 
 test.describe("authenticated user flows", () => {
+  test.skip(
+    !process.env.E2E_TEST_EMAIL || !process.env.E2E_TEST_PASSWORD,
+    "Set E2E_TEST_EMAIL and E2E_TEST_PASSWORD to run authenticated flows.",
+  );
+
   test.beforeEach(async ({ page }) => {
-    test.skip(
-      !E2E_TEST_EMAIL || !E2E_TEST_PASSWORD,
-      "Set E2E_TEST_EMAIL and E2E_TEST_PASSWORD to run authenticated flows.",
-    );
     await signIn(page);
   });
 

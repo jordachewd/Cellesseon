@@ -1,11 +1,21 @@
-export const ALLOWED_UPLOAD_MIME_TYPES = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-]);
+export const UPLOAD_MIME_TYPE_TO_EXTENSION = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "image/gif": "gif",
+} as const;
+
+type UploadMimeType = keyof typeof UPLOAD_MIME_TYPE_TO_EXTENSION;
+
+export const ALLOWED_UPLOAD_MIME_TYPES = new Set<string>(
+  Object.keys(UPLOAD_MIME_TYPE_TO_EXTENSION),
+);
 
 export const MAX_UPLOAD_SIZE_BYTES = 5 * 1024 * 1024;
+
+function isUploadMimeType(mimeType: string): mimeType is UploadMimeType {
+  return mimeType in UPLOAD_MIME_TYPE_TO_EXTENSION;
+}
 
 type UploadFileLike = {
   size: number;
@@ -47,4 +57,12 @@ export function validateUploadFile(
   }
 
   return { isValid: true };
+}
+
+export function getUploadFileExtension(mimeType: string): string | null {
+  if (!isUploadMimeType(mimeType)) {
+    return null;
+  }
+
+  return UPLOAD_MIME_TYPE_TO_EXTENSION[mimeType];
 }

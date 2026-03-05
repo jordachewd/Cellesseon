@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  getUploadFileExtension,
   MAX_UPLOAD_SIZE_BYTES,
   validateUploadFile,
 } from "@/lib/utils/upload-file-validation";
@@ -39,5 +40,14 @@ describe("upload-file-validation", () => {
     });
 
     expect(result).toEqual({ isValid: true });
+  });
+
+  it("resolves file extensions from allowed mime types", () => {
+    expect(getUploadFileExtension("image/jpeg")).toBe("jpg");
+    expect(getUploadFileExtension("image/png")).toBe("png");
+  });
+
+  it("returns null for unknown mime types", () => {
+    expect(getUploadFileExtension("application/pdf")).toBeNull();
   });
 });

@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/shared/mui";
 import { checkoutPlan } from "@/lib/actions/transaction.action";
 import { CheckoutTransactionParams } from "@/types/TransactionData.d";
 import { CheckoutPlanParams, PlanStatus } from "@/types/PlanData.d";
@@ -23,38 +22,28 @@ const Checkout = ({ plan, planStatus, clerkUser }: CheckoutProps) => {
     await checkoutPlan(transaction);
   };
 
+  const buttonVariant =
+    (isPopular &&
+      "btn-outlined border-white text-white hover:text-white/75 hover:border-white/75") ||
+    (isIncluded && "btn-text border-transparent") ||
+    "btn-outlined";
+
+  const disabledStyle = isIncluded
+    ? isCurrent
+      ? "disabled:text-darkAccent-1000/50"
+      : "disabled:text-lightAccent-700/50 dark:disabled:text-darkAccent-500/50"
+    : "";
+
   return (
     <form action={onCheckout}>
-      <Button
+      <button
         role="link"
         type="submit"
         disabled={isIncluded}
-        sx={{
-          minWidth: 220,
-          ...(isPopular
-            ? {
-                color: "var(--mui-palette-common-white)",
-                borderColor: "var(--mui-palette-common-white)",
-                "&:hover": {
-                  color:
-                    "rgba(var(--mui-palette-error-contrastTextChannel) / 0.75)!important",
-                  borderColor:
-                    "rgba(var(--mui-palette-error-contrastTextChannel) / 0.75)",
-                },
-              }
-            : {}),
-          "&.Mui-disabled": {
-            color: isCurrent
-              ? "rgba(var(--mui-palette-tertiary-contrastTextChannel) / 0.5)"
-              : "rgba(var(--mui-palette-tertiary-mainChannel) / 0.5)",
-          },
-        }}
-        variant={
-          (isPopular && "outlined") || (isIncluded && "text") || "outlined"
-        }
+        className={`btn btn-md min-w-[220px] ${buttonVariant} ${disabledStyle}`}
       >
         {(isCurrent && "Current") || (isIncluded && "Included") || "Subscribe"}
-      </Button>
+      </button>
     </form>
   );
 };

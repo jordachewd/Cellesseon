@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import css from "@/styles/shared/PlanCountDown.module.css";
 import LoadingBubbles from "@/components/shared/LoadingBubbles";
 import {
   TimeDifference,
@@ -17,7 +16,8 @@ interface CountDownProps {
 export default function PlanCountDown({
   endDate,
   startDate = new Date(),
-  className: style = css.wrapper,
+  className:
+    style = "inline-flex items-center justify-center rounded bg-black p-1 text-xxs leading-none text-white",
   wrapped = false,
 }: CountDownProps) {
   const [countdown, setCountdown] = useState<string>("");

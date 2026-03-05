@@ -1,6 +1,4 @@
-import css from "@/styles/chat/ChatIntro.module.css";
 import { IntroChips } from "@/constants/introChipsData";
-import { Chip, Typography } from "@/components/shared/mui";
 import { useUser } from "@clerk/clerk-react";
 import { useState } from "react";
 import LoadingBubbles from "../shared/LoadingBubbles";
@@ -28,7 +26,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
 
   if (!isLoaded) {
     return (
-      <section className={css.section}>
+      <section className="flex w-full items-center justify-center">
         <LoadingBubbles size="large" />
       </section>
     );
@@ -38,48 +36,56 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
     <>
       {chipSet < 0 ? (
         <>
-          <Typography variant="h5" className={css.title}>
+          <h1 className="heading-5 animate-fade-up animate-once animate-duration-700 text-center">
             Hello {user?.firstName || "there"}!
-          </Typography>
+          </h1>
 
-          <Typography variant="h3" className={css.subtitle}>
+          <h2 className="heading-3 animate-fade-up animate-once animate-duration-700 animate-delay-[200ms] text-center">
             How can I help you?
-          </Typography>
-          <div className={css.chips}>
+          </h2>
+          <div className="!mt-8 flex w-full flex-wrap items-center justify-center">
             {IntroChips.map((chip) => (
-              <Chip
+              <button
                 key={chip.id}
-                variant="outlined"
-                label={chip.label}
+                type="button"
                 onClick={() => handleChooseChip(chip.id)}
-                className={`${css.chip} ${css[`chip_${chip.id}`]}`}
-                icon={<i className={chip.icon}></i>}
-              />
+                className={`m-2 flex items-center gap-2 rounded-lg border border-lightAccent-700 px-3 py-2 text-sm text-lightAccent-700 transition-all duration-300 ease-in-out hover:bg-lightAccent-700 hover:text-white dark:border-darkAccent-500 dark:text-darkAccent-500 dark:hover:bg-darkAccent-500 dark:hover:text-darkAccent-1000 animate-fade-up animate-once animate-duration-700`}
+                style={{ animationDelay: `${300 + chip.id * 100}ms` }}
+              >
+                <i className={chip.icon}></i>
+                <span>{chip.label}</span>
+              </button>
             ))}
           </div>
         </>
       ) : (
         <>
-          <Typography variant="h5" className={css.subtitle}>
+          <h2 className="heading-5 animate-fade-up animate-once animate-duration-700 animate-delay-[200ms] text-center">
             Here are some prompt examples...
-          </Typography>
-          <div className={css.options}>
+          </h2>
+          <div className="flex w-full flex-col items-center justify-center">
             {IntroChips[chipSet].options.map((opt) => (
-              <Chip
+              <button
                 key={opt.id}
-                variant="outlined"
-                label={opt.label}
+                type="button"
                 onClick={() =>
                   handleSendPrompt(`${IntroChips[chipSet].label}: ${opt.label}`)
                 }
-                className={`${css.chip} ${css[`chip_${opt.id}`]}`}
-              />
+                className={`m-2 flex max-w-xl items-center gap-2 rounded-lg border border-lightAccent-700 px-3 py-2 text-sm text-lightAccent-700 transition-all duration-300 ease-in-out hover:bg-lightAccent-700 hover:text-white dark:border-darkAccent-500 dark:text-darkAccent-500 dark:hover:bg-darkAccent-500 dark:hover:text-darkAccent-1000 animate-fade-up animate-once animate-duration-700`}
+                style={{ animationDelay: `${300 + opt.id * 100}ms` }}
+              >
+                {opt.label}
+              </button>
             ))}
 
-            <i
-              className={`bi bi-x-circle ${css.chip} ${css.chip_x}`}
+            <button
+              type="button"
+              className="mt-6 text-3xl text-jwdMarine-200/50 transition-all hover:text-jwdMarine-200/80 animate-fade-up animate-once animate-duration-700 animate-delay-[800ms]"
               onClick={closeIntro}
-            ></i>
+              aria-label="Close prompt suggestions"
+            >
+              <i className="bi bi-x-circle"></i>
+            </button>
           </div>
         </>
       )}

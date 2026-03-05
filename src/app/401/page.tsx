@@ -1,26 +1,29 @@
 "use client";
 import PageWrapper from "@/components/layout/PageWrapper";
-import { Button, Typography } from "@/components/shared/mui";
 import { useRouter } from "next/navigation";
 
 const UnauthorizedPage = () => {
   const router = useRouter();
   return (
-    <PageWrapper className="justify-center items-center gap-10">
-      <Typography variant="h1">Unauthorized</Typography>
-      <div className="flex flex-col items-center gap-2 bg-red-800 p-8 rounded-xl shadow-lg">
-        <Typography variant="h6">
+    <PageWrapper className="items-center justify-center gap-10">
+      <h1 className="heading-1 text-center">Unauthorized</h1>
+      <div className="flex flex-col items-center gap-2 rounded-xl bg-red-800 p-8 shadow-lg">
+        <h2 className="heading-6 text-center text-white">
           You do not have the necessary permissions to access this page.
-        </Typography>
+        </h2>
 
-        <Typography variant="body2">
+        <p className="body-2 text-center text-white">
           Please contact your administrator if you believe this is an error.
-        </Typography>
+        </p>
       </div>
 
-      <Button variant="contained" size="small" onClick={() => router.push("/")}>
+      <button
+        type="button"
+        className="btn btn-sm btn-contained"
+        onClick={() => router.push("/")}
+      >
         Go Back
-      </Button>
+      </button>
     </PageWrapper>
   );
 };

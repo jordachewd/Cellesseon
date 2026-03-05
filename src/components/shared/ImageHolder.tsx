@@ -1,8 +1,6 @@
-import css from "@/styles/shared/ImageHolder.module.css";
 import LoadingBubbles from "./LoadingBubbles";
 import { useState } from "react";
 import Image from "next/image";
-import { IconButton } from "@/components/shared/mui";
 
 interface ImageHolderProps {
   src: string;
@@ -44,30 +42,26 @@ export default function ImageHolder({
   };
 
   return (
-    <div className={css.wrapper}>
+    <div className="relative mb-2 mt-3 flex max-h-max max-w-max items-center justify-center overflow-hidden rounded bg-jwdAqua-500/10 shadow-sm transition-all">
       {isLoading ? (
         <span className="flex p-4">
           <LoadingBubbles size="small" />
         </span>
       ) : (
         hasTools && (
-          <IconButton
-            loading={isDownloading}
+          <button
+            type="button"
+            className="icon-btn absolute bottom-2 right-2 z-10 bg-black/50 text-white hover:bg-black/60"
             onClick={handleDownload}
-            size="small"
-            sx={{
-              padding: "4px 7px",
-              borderRadius: "8px!important",
-              lineHeight: 1,
-              zIndex: 10,
-              position: "absolute",
-              bottom: "0.5rem",
-              right: "0.5rem",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-            }}
+            disabled={isDownloading}
+            aria-label="Download generated image"
           >
-            <i className="bi bi-download"></i>
-          </IconButton>
+            {isDownloading ? (
+              <LoadingBubbles size="small" className="!w-auto gap-0.5" />
+            ) : (
+              <i className="bi bi-download"></i>
+            )}
+          </button>
         )
       )}
 
@@ -79,7 +73,7 @@ export default function ImageHolder({
         loading="eager"
         onLoad={() => setIsLoading(false)}
         alt={imageName}
-        className={`${isLoading ? "hidden" : css.showImg}`}
+        className={`${isLoading ? "hidden" : "animate-fade animate-once animate-duration-500 animate-delay-300 animate-ease-in-out"}`}
         sizes={`(max-width: 768px) 100vw, (max-width: 1200px) 50vw, ${width}px`}
       />
     </div>
