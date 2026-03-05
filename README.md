@@ -4,6 +4,7 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 
 ## Recent Updates (March 2026)
 
+- Moved Playwright `test-results` output under `tests/e2e/test-results` and refreshed `SPEC.md` §10 technical debt entries.
 - Strengthened test setup after dependency upgrades:
   - Playwright authenticated specs now read `E2E_TEST_*` values directly from `.env.local` (with environment-variable fallback).
   - Authenticated e2e specs now use `E2E_TEST_USERNAME` (fallback `E2E_TEST_EMAIL`) + `E2E_TEST_PASSWORD`.
