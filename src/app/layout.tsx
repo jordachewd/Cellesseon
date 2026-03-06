@@ -43,20 +43,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider
-      appearance={{
-        variables: {
-          colorPrimary: "#6A0DAD",
-          colorText: "#008080",
-        },
-      }}
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${dosis.variable} ${albertsans.variable}`}
     >
-      <html
-        lang="en"
-        suppressHydrationWarning
-        className={`${dosis.variable} ${albertsans.variable}`}
-      >
-        <body>
+      <body>
+        <ClerkProvider
+          appearance={{
+            variables: {
+              colorPrimary: "#6A0DAD",
+              colorText: "#008080",
+            },
+          }}
+        >
           <Script id="theme-init" strategy="beforeInteractive">
             {`
               (() => {
@@ -77,8 +77,8 @@ export default function RootLayout({
           <CellesseonTheme>
             <MainWrapper>{children}</MainWrapper>
           </CellesseonTheme>
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }

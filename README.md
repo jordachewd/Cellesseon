@@ -4,14 +4,11 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 
 ## Recent Updates (March 2026)
 
-- Normalized legacy component filenames to kebab-case across `src/components/**` and updated all imports/references.
-- Fixed Tailwind canonical class warnings that were causing editor `suggestCanonicalClasses` noise (for example `z-[1]` -> `z-1` and cleaned arbitrary radial-gradient value formatting).
-- Expanded behavior-first tests for critical success and failure paths:
-  - Unit: added `/api/webhooks/clerk` webhook coverage (missing headers, invalid signature, create/update/delete flows, unhandled events), plus webhook route-public access assertions in `proxy` tests.
-  - E2E: strengthened unauthenticated route protection checks across `/profile`, `/plans`, and `/dashboard`, alongside existing landing/theme/authenticated flows.
-- Re-hardened Playwright config:
-  - Enforced `tests/e2e/test-results` output directory for artifacts.
-  - Added failure-focused screenshot/video retention to improve debugging signal.
+- Migrated Clerk client hooks from `@clerk/clerk-react` to `@clerk/nextjs` in chat intro, plans section, and avatar menu to unblock production builds.
+- Updated `src/app/layout.tsx` so `ClerkProvider` is mounted inside `<body>` while preserving existing appearance customization.
+- Reworked authenticated E2E coverage to use Clerk's official testing helpers (`@clerk/testing/playwright`) with `tests/e2e/global.setup.ts` auth-state bootstrap.
+- Strengthened route-protection coverage across `/profile`, `/plans`, and `/dashboard`, alongside landing page and theme persistence flows.
+- Re-hardened Playwright output handling with scoped `tests/e2e/test-results` artifacts and failure-focused screenshot/video retention.
 
 ## Tech Stack
 

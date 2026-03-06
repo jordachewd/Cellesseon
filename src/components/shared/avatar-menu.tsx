@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 import { TooltipArrow } from "./tooltip-arrow";
-import { useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import LogoutBtn from "./logout-btn";
 

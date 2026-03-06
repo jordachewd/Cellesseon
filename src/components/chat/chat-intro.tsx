@@ -1,5 +1,5 @@
 import { IntroChips } from "@/constants/introChipsData";
-import { useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import LoadingBubbles from "../shared/loading-bubbles";
 

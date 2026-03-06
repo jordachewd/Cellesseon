@@ -56,12 +56,15 @@ SPEC.MD
 CLAUDE.md
 CLAUDE.MD
 
+skills-lock.json
+
 # Playwright
 node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+/tests/e2e/.clerk/
 /tests/**/test-results/
 /tests/**/playwright-report/
 /tests/**/blob-report/
