@@ -1,4 +1,4 @@
-export const UPLOAD_MIME_TYPE_TO_EXTENSION = {
+const UPLOAD_MIME_TYPE_TO_EXTENSION = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
@@ -7,7 +7,7 @@ export const UPLOAD_MIME_TYPE_TO_EXTENSION = {
 
 type UploadMimeType = keyof typeof UPLOAD_MIME_TYPE_TO_EXTENSION;
 
-export const ALLOWED_UPLOAD_MIME_TYPES = new Set<string>(
+const ALLOWED_UPLOAD_MIME_TYPES = new Set<string>(
   Object.keys(UPLOAD_MIME_TYPE_TO_EXTENSION),
 );
 
@@ -22,7 +22,7 @@ type UploadFileLike = {
   type: string;
 };
 
-export type UploadValidationResult = {
+type UploadValidationResult = {
   isValid: boolean;
   message?: string;
   status?: number;

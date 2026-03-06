@@ -13,7 +13,7 @@ interface ThemeProps {
 }
 
 export type ThemeMode = "system" | "light" | "dark";
-export type ResolvedThemeMode = "light" | "dark";
+type ResolvedThemeMode = "light" | "dark";
 
 interface ThemeContextValue {
   mode: ThemeMode;

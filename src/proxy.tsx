@@ -37,6 +37,7 @@ export function proxy(request: NextRequest, event: NextFetchEvent) {
   return clerkProxy(request, event);
 }
 
+/** @public Framework convention export consumed by Next.js */
 export const config = {
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params

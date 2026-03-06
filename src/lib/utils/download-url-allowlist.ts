@@ -43,4 +43,4 @@ export function isAllowedDownloadUrl(
   }
 }
 
-export { DEFAULT_ALLOWED_DOWNLOAD_HOSTS, DOWNLOAD_ALLOWLIST_ENV_KEY };
+export { DOWNLOAD_ALLOWLIST_ENV_KEY };

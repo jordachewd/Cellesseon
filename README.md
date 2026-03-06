@@ -4,11 +4,11 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 
 ## Recent Updates (March 2026)
 
-- Migrated Clerk client hooks from `@clerk/clerk-react` to `@clerk/nextjs` in chat intro, plans section, and avatar menu to unblock production builds.
-- Updated `src/app/layout.tsx` so `ClerkProvider` is mounted inside `<body>` while preserving existing appearance customization.
-- Reworked authenticated E2E coverage to use Clerk's official testing helpers (`@clerk/testing/playwright`) with `tests/e2e/global.setup.ts` auth-state bootstrap.
-- Strengthened route-protection coverage across `/profile`, `/plans`, and `/dashboard`, alongside landing page and theme persistence flows.
-- Re-hardened Playwright output handling with scoped `tests/e2e/test-results` artifacts and failure-focused screenshot/video retention.
+- Normalized Tailwind animation delay utilities to canonical classes (for example, `animate-delay-200` and `animate-delay-800`) to eliminate `suggestCanonicalClasses` warnings.
+- Audited `knip` results item by item, then removed dead server-action code and unused exports in user/task actions and shared utility modules.
+- Removed unused runtime/dev dependencies reported by `knip` (including `axios`, `mongodb`, `openapi-typescript`, `react-icons`, and unused testing/type packages).
+- Added `knip.json` to suppress validated false positives (`src/types/globals.d.tsx`, `tests/e2e/global.setup.ts`) and keep `prettier` intentionally installed.
+- Simplified `postcss.config.mjs` type annotation usage to avoid unlisted dependency noise and keep static analysis output clean.
 
 ## Tech Stack
 

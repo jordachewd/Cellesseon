@@ -1,7 +1,6 @@
 "use server";
 import { CreateTaskParams, UpdateTaskParams } from "@/types/TaskData.d";
 import { connectToDatabase } from "../database/mongoose";
-import { revalidatePath } from "next/cache";
 import { handleError } from "@/lib/utils/handleError";
 import serializeForClient from "@/lib/utils/serialize-for-client";
 import Task from "../database/models/tasks.model";
@@ -47,46 +46,5 @@ export async function updateTask(taskId: string, task: UpdateTaskParams) {
     return serializeForClient(updatedTask);
   } catch (error) {
     handleError({ error, source: "updateTask" });
-  }
-}
-
-// READ TASK by ID
-export async function getTaskById(userId: string) {
-  try {
-    await connectToDatabase();
-    const task = await Task.findOne({ clerkId: userId });
-
-    if (!task) {
-      throw new Error("Task not found!");
-    }
-
-    return serializeForClient(task);
-  } catch (error) {
-    handleError({ error, source: "getTaskById" });
-  }
-}
-
-// DELETE TASK
-export async function deleteTask(taskId: number) {
-  try {
-    await connectToDatabase();
-
-    const taskToDelete = await Task.findOne({ taskId });
-
-    if (!taskToDelete) {
-      throw new Error("Task not found!");
-    }
-
-    const deletedTask = await Task.findByIdAndDelete(taskToDelete._id);
-
-    if (!deletedTask) {
-      throw new Error("Task deletion failed!");
-    }
-
-    revalidatePath("/");
-
-    return serializeForClient(deletedTask);
-  } catch (error) {
-    handleError({ error, source: "deleteTask" });
   }
 }

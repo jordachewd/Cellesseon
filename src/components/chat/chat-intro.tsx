@@ -40,7 +40,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
             Hello {user?.firstName || "there"}!
           </h1>
 
-          <h2 className="heading-3 animate-fade-up animate-once animate-duration-700 animate-delay-[200ms] text-center">
+          <h2 className="heading-3 animate-fade-up animate-once animate-duration-700 animate-delay-200 text-center">
             How can I help you?
           </h2>
           <div className="!mt-8 flex w-full flex-wrap items-center justify-center">
@@ -60,7 +60,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
         </>
       ) : (
         <>
-          <h2 className="heading-5 animate-fade-up animate-once animate-duration-700 animate-delay-[200ms] text-center">
+          <h2 className="heading-5 animate-fade-up animate-once animate-duration-700 animate-delay-200 text-center">
             Here are some prompt examples...
           </h2>
           <div className="flex w-full flex-col items-center justify-center">
@@ -80,7 +80,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
 
             <button
               type="button"
-              className="mt-6 text-3xl text-jwdMarine-200/50 transition-all hover:text-jwdMarine-200/80 animate-fade-up animate-once animate-duration-700 animate-delay-[800ms]"
+              className="mt-6 text-3xl text-jwdMarine-200/50 transition-all hover:text-jwdMarine-200/80 animate-fade-up animate-once animate-duration-700 animate-delay-800"
               onClick={closeIntro}
               aria-label="Close prompt suggestions"
             >

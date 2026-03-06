@@ -6,8 +6,6 @@ import {
 } from "@/components/layout/cellesseon-theme";
 import { useContext } from "react";
 
-export type ThemeModeState = ThemeMode | undefined;
-
 export default function useThemeMode() {
   const context = useContext(CellesseonThemeContext);
 
@@ -16,7 +14,7 @@ export default function useThemeMode() {
   }
 
   const { mode, resolvedMode, setMode } = context;
-  const safeMode: ThemeModeState = mode;
+  const safeMode: ThemeMode | undefined = mode;
 
   return { mode: safeMode, resolvedMode, setMode };
 }
