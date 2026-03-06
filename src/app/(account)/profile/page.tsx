@@ -1,6 +1,6 @@
-import ProfileBilling from "@/components/sections/ProfileBilling";
-import ProfileHero from "@/components/sections/ProfileHero";
-import LoadingBubbles from "@/components/shared/LoadingBubbles";
+import ProfileBilling from "@/components/sections/profile-billing";
+import ProfileHero from "@/components/sections/profile-hero";
+import LoadingBubbles from "@/components/shared/loading-bubbles";
 import { getAllTransactions } from "@/lib/actions/transaction.action";
 import { getUserById } from "@/lib/actions/user.actions";
 import { Transaction } from "@/types/TransactionData.d";
@@ -14,8 +14,7 @@ export default async function ProfilePage() {
 
   if (userId) {
     userData = await getUserById(userId);
-    userTxns =
-      (userData?.plan && (await getAllTransactions(userId))) || null;
+    userTxns = (userData?.plan && (await getAllTransactions(userId))) || null;
   }
 
   const stripeId = userData?.plan?.stripeId || null;

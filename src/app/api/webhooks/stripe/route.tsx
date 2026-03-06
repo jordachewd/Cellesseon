@@ -13,7 +13,9 @@
 
 import { getExpiresOn } from "@/constants/plans";
 import { createTransaction } from "@/lib/actions/transaction.action";
-import { updateUser } from "@/lib/actions/user.actions";
+import { connectToDatabase } from "@/lib/database/mongoose";
+import Transaction from "@/lib/database/models/transaction.model";
+import User from "@/lib/database/models/user.model";
 import { BillingCycle, PlanData, PlanName } from "@/types/PlanData.d";
 import { CreateTransactionParams } from "@/types/TransactionData.d";
 import { UpdateUserParams } from "@/types/UserData.d";
@@ -22,15 +24,35 @@ import stripe from "stripe";
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body = await request.text();
-  const sig = request.headers.get("stripe-signature") as string;
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+  const sig = request.headers.get("stripe-signature");
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!sig) {
+    return NextResponse.json(
+      { message: "Webhook error", error: "Missing stripe-signature header" },
+      { status: 400 },
+    );
+  }
+
+  if (!endpointSecret) {
+    return NextResponse.json(
+      { message: "Webhook error", error: "Missing STRIPE_WEBHOOK_SECRET" },
+      { status: 500 },
+    );
+  }
 
   let event;
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
-  } catch (err) {
-    return NextResponse.json({ message: "Webhook error", error: err });
+  } catch {
+    return NextResponse.json(
+      {
+        message: "Webhook error",
+        error: "Invalid webhook signature",
+      },
+      { status: 400 },
+    );
   }
 
   // Get the ID and type
@@ -58,6 +80,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       billing: theBillingCycle,
     };
 
+    // Idempotency: check if this Stripe event was already processed
+    await connectToDatabase();
+    const existingTransaction = await Transaction.findOne({ stripeId: id });
+    if (existingTransaction) {
+      return NextResponse.json(
+        { message: "Already processed" },
+        { status: 200 },
+      );
+    }
+
     // Create transaction in database
     const newTransaction = await createTransaction(transaction);
 
@@ -76,16 +108,30 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       };
 
       // Update user in database
-      const updatedUser = await updateUser(theClerkId, newUserData);
+      const updatedUser = await User.findOneAndUpdate(
+        { clerkId: theClerkId },
+        newUserData,
+        {
+          new: true,
+          strict: false,
+          upsert: true,
+        },
+      );
 
       return NextResponse.json({ message: "OK", newTransaction, updatedUser });
     } else {
-      return NextResponse.json({
-        message: "STRIPE: Transaction failed!",
-        newTransaction,
-      });
+      return NextResponse.json(
+        {
+          message: "STRIPE: Transaction failed!",
+          newTransaction,
+        },
+        { status: 500 },
+      );
     }
   }
 
-  return NextResponse.json({ message: "STRIPE: Checkout completed!" }, { status: 200 });
+  return NextResponse.json(
+    { message: `STRIPE: Unhandled event type: ${eventType}` },
+    { status: 200 },
+  );
 }

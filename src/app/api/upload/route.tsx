@@ -12,37 +12,63 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
+import {
+  getUploadFileExtension,
+  validateUploadFile,
+} from "@/lib/utils/upload-file-validation";
+import uploadFileToAWS from "@/lib/utils/aws/uploadFileToAWS";
+import { auth } from "@clerk/nextjs/server";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Authentication required." },
+        { status: 401 },
+      );
+    }
+
     const formData = await req.formData();
 
     const file = formData.get("file") as File | null;
 
-    if (!file) {
-      return NextResponse.json({ error: "No file uploaded.", status: 400 });
+    const validation = validateUploadFile(file);
+    if (!validation.isValid) {
+      return NextResponse.json(
+        { error: validation.message },
+        { status: validation.status || 400 },
+      );
     }
 
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
+    const safeFile = file as File;
 
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
+    const fileExtension = getUploadFileExtension(safeFile.type);
+    if (!fileExtension) {
+      return NextResponse.json(
+        {
+          error:
+            "Invalid file type. Allowed types: image/jpeg, image/png, image/webp, image/gif.",
+        },
+        { status: 400 },
+      );
     }
+    const fileName = `uploaded_file_${Date.now()}.${fileExtension}`;
 
-    const fileName = `uploaded_file_${Date.now()}.png`;
-    const filePath = path.join(uploadsDir, fileName);
+    const buffer = Buffer.from(await safeFile.arrayBuffer());
+    const folder = `${userId}/uploads`;
+    const fileUrl = await uploadFileToAWS(
+      buffer,
+      fileName,
+      safeFile.type,
+      folder,
+    );
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    fs.writeFileSync(filePath, buffer);
-
-    return NextResponse.json({ fileName });
-  } catch (error) {
-    return NextResponse.json({
-      message: "Failed to upload file.",
-      status: 500,
-      error,
-    });
+    return NextResponse.json({ fileName, fileUrl });
+  } catch {
+    return NextResponse.json(
+      { message: "Failed to upload file." },
+      { status: 500 },
+    );
   }
 }

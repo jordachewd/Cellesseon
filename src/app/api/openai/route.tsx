@@ -5,6 +5,12 @@ import { generateTitle } from "@/lib/utils/openai/generateTitle";
 import { CreateTaskParams, UpdateTaskParams } from "@/types/TaskData.d";
 import { createTask, updateTask } from "@/lib/actions/task.actions";
 import { auth } from "@clerk/nextjs/server";
+import { getUserById } from "@/lib/actions/user.actions";
+import { UserData } from "@/types/UserData.d";
+import { enforceSlidingWindowRateLimit } from "@/lib/utils/rate-limit";
+
+const OPENAI_RATE_LIMIT_MAX_REQUESTS = 20;
+const OPENAI_RATE_LIMIT_WINDOW_MS = 60_000;
 
 export async function POST(req: Request): Promise<NextResponse> {
   try {
@@ -12,7 +18,45 @@ export async function POST(req: Request): Promise<NextResponse> {
     const { userId } = await auth();
 
     if (!userId) {
-      throw new Error("User not authenticated.");
+      return NextResponse.json(
+        { error: "Authentication required." },
+        { status: 401 },
+      );
+    }
+
+    const rateLimit = enforceSlidingWindowRateLimit({
+      key: `openai:${userId}`,
+      limit: OPENAI_RATE_LIMIT_MAX_REQUESTS,
+      windowMs: OPENAI_RATE_LIMIT_WINDOW_MS,
+    });
+
+    if (!rateLimit.success) {
+      return NextResponse.json(
+        {
+          error: "Too many requests. Please try again shortly.",
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(Math.ceil(rateLimit.retryAfterMs / 1000)),
+            "X-RateLimit-Limit": String(rateLimit.limit),
+            "X-RateLimit-Remaining": String(rateLimit.remaining),
+            "X-RateLimit-Reset": String(rateLimit.resetAt),
+          },
+        },
+      );
+    }
+
+    // Verify user plan is active before calling OpenAI
+    const userData = (await getUserById(userId)) as UserData | null;
+    if (userData?.plan?.expiresOn) {
+      const expiresOn = new Date(userData.plan.expiresOn);
+      if (expiresOn < new Date()) {
+        return NextResponse.json(
+          { error: "Your plan has expired. Please upgrade to continue." },
+          { status: 403 },
+        );
+      }
     }
 
     let taskId = providedTaskId;
@@ -51,13 +95,11 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     return NextResponse.json({ taskData, taskId });
   } catch (error) {
-    const errMsg = error instanceof Error && error.message;
-    const aiError = {
-      title: "AI API endpoint error!",
-      error: errMsg || "Unexpected error occurred.",
-      status: 500,
-    };
+    console.error("OpenAI route error:", error);
 
-    return NextResponse.json({ aiError });
+    return NextResponse.json(
+      { error: "An error occurred while processing your request." },
+      { status: 500 },
+    );
   }
 }

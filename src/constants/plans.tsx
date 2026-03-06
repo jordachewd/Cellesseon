@@ -13,12 +13,12 @@ export function getExpiresOn(plan: PlanName, billing?: BillingCycle): Date {
       switch (billing) {
         case "Monthly":
           expiresOn = new Date(
-            currentDate.setMonth(currentDate.getMonth() + 1)
+            currentDate.setMonth(currentDate.getMonth() + 1),
           );
           break;
         case "Yearly":
           expiresOn = new Date(
-            currentDate.setFullYear(currentDate.getFullYear() + 1)
+            currentDate.setFullYear(currentDate.getFullYear() + 1),
           );
           break;
       }
@@ -158,7 +158,7 @@ export function getPlanIcon(name: PlanName) {
   if (!name) return;
 
   const plan = plans.find(
-    (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase()
+    (plan) => plan.name.toLocaleLowerCase() === name.toLocaleLowerCase(),
   );
 
   if (!plan) {

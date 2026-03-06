@@ -1,6 +1,6 @@
-import Faqs from "@/components/sections/Faqs";
-import Plans from "@/components/sections/Plans";
-import LoadingBubbles from "@/components/shared/LoadingBubbles";
+import Faqs from "@/components/sections/faqs-section";
+import Plans from "@/components/sections/plans-section";
+import LoadingBubbles from "@/components/shared/loading-bubbles";
 import { getUserById } from "@/lib/actions/user.actions";
 import { UserData } from "@/types/UserData.d";
 import { auth } from "@clerk/nextjs/server";

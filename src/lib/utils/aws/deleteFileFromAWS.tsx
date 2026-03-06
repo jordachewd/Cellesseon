@@ -8,7 +8,7 @@ import {
 export default async function deleteFileFromAWS(
   username: string,
   fileName: string,
-  folder: string
+  folder: string,
 ): Promise<void> {
   const bucketName = process.env.AWS_S3_BUCKET as string;
   const filePath = `${username}/${folder}/${fileName}`;
@@ -20,6 +20,6 @@ export default async function deleteFileFromAWS(
   await awsS3Client.send(awsCommand);
   await waitUntilObjectNotExists(
     { client: awsS3Client, maxWaitTime: 30 },
-    { Bucket: bucketName, Key: filePath }
+    { Bucket: bucketName, Key: filePath },
   );
 }

@@ -1,8 +1,8 @@
-import PageHead from "@/components/layout/PageHead";
+import PageHead from "@/components/layout/page-head";
 
 export default async function AdminDashboard() {
   return (
-    <div className="flex flex-col w-full gap-4 justify-center max-w-screen-xl mx-auto px-6">
+    <div className="flex flex-col w-full gap-4 justify-center max-w-(--breakpoint-xl) mx-auto px-6">
       <PageHead title="Admin Dashboard" subtitle="App settings (admin only)" />
       <div className="flex w-full gap-20 justify-center mx-auto">
         <ul className="list-disc">

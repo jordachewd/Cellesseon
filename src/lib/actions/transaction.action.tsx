@@ -11,8 +11,13 @@ import {
 import { CheckoutPlanParams } from "@/types/PlanData.d";
 import { ClerkUserData } from "@/types/UserData.d";
 import getFullName from "@/lib/utils/getFullName";
+import serializeForClient from "@/lib/utils/serialize-for-client";
+import { auth } from "@clerk/nextjs/server";
 
 export async function checkoutPlan(transaction: CheckoutTransactionParams) {
+  const { userId: authedUserId } = await auth();
+  if (!authedUserId) throw new Error("Unauthorized");
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const BASEURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -75,7 +80,7 @@ export async function createTransaction(transaction: CreateTransactionParams) {
 
     const newTransaction = await Transaction.create(transaction);
 
-    return JSON.parse(JSON.stringify(newTransaction));
+    return serializeForClient(newTransaction);
   } catch (error) {
     handleError({ error, source: "createTransaction" });
   }
@@ -83,6 +88,9 @@ export async function createTransaction(transaction: CreateTransactionParams) {
 
 export async function getAllTransactions(userId: string) {
   try {
+    const { userId: authedUserId } = await auth();
+    if (!authedUserId) throw new Error("Unauthorized");
+
     await connectToDatabase();
 
     const transactions = await Transaction.find({ clerkId: userId }, null, {
@@ -91,7 +99,7 @@ export async function getAllTransactions(userId: string) {
       },
     }).exec();
 
-    return JSON.parse(JSON.stringify(transactions));
+    return serializeForClient(transactions);
   } catch (error) {
     handleError({ error, source: "getAllTransactions" });
   }
@@ -99,6 +107,10 @@ export async function getAllTransactions(userId: string) {
 
 export async function deleteAllTransactions(userId: string) {
   try {
+    const { userId: authedUserId } = await auth();
+    if (!authedUserId) throw new Error("Unauthorized");
+    if (authedUserId !== userId) throw new Error("Forbidden");
+
     await connectToDatabase();
 
     await Transaction.deleteMany({ clerkId: userId });

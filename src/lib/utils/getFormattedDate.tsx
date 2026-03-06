@@ -23,7 +23,7 @@ export interface TimeDifference {
 
 export function getExpirationCountDown(
   startDate: Date,
-  endDate: Date
+  endDate: Date,
 ): Partial<TimeDifference> {
   if (!(startDate instanceof Date) || isNaN(startDate.getTime())) {
     throw new Error("Expiration startDate is not a valid Date object");
