@@ -12,8 +12,12 @@ import { CheckoutPlanParams } from "@/types/PlanData.d";
 import { ClerkUserData } from "@/types/UserData.d";
 import getFullName from "@/lib/utils/getFullName";
 import serializeForClient from "@/lib/utils/serialize-for-client";
+import { auth } from "@clerk/nextjs/server";
 
 export async function checkoutPlan(transaction: CheckoutTransactionParams) {
+  const { userId: authedUserId } = await auth();
+  if (!authedUserId) throw new Error("Unauthorized");
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const BASEURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -84,6 +88,9 @@ export async function createTransaction(transaction: CreateTransactionParams) {
 
 export async function getAllTransactions(userId: string) {
   try {
+    const { userId: authedUserId } = await auth();
+    if (!authedUserId) throw new Error("Unauthorized");
+
     await connectToDatabase();
 
     const transactions = await Transaction.find({ clerkId: userId }, null, {

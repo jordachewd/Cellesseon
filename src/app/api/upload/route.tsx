@@ -12,15 +12,23 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import {
   getUploadFileExtension,
   validateUploadFile,
 } from "@/lib/utils/upload-file-validation";
+import uploadFileToAWS from "@/lib/utils/aws/uploadFileToAWS";
+import { auth } from "@clerk/nextjs/server";
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Authentication required." },
+        { status: 401 },
+      );
+    }
+
     const formData = await req.formData();
 
     const file = formData.get("file") as File | null;
@@ -34,11 +42,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     const safeFile = file as File;
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
 
     const fileExtension = getUploadFileExtension(safeFile.type);
     if (!fileExtension) {
@@ -51,12 +54,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       );
     }
     const fileName = `uploaded_file_${Date.now()}.${fileExtension}`;
-    const filePath = path.join(uploadsDir, fileName);
 
     const buffer = Buffer.from(await safeFile.arrayBuffer());
-    fs.writeFileSync(filePath, buffer);
+    const folder = `${userId}/uploads`;
+    const fileUrl = await uploadFileToAWS(buffer, fileName, safeFile.type, folder);
 
-    return NextResponse.json({ fileName });
+    return NextResponse.json({ fileName, fileUrl });
   } catch {
     return NextResponse.json(
       { message: "Failed to upload file." },

@@ -5,6 +5,8 @@ import { generateTitle } from "@/lib/utils/openai/generateTitle";
 import { CreateTaskParams, UpdateTaskParams } from "@/types/TaskData.d";
 import { createTask, updateTask } from "@/lib/actions/task.actions";
 import { auth } from "@clerk/nextjs/server";
+import { getUserById } from "@/lib/actions/user.actions";
+import { UserData } from "@/types/UserData.d";
 
 export async function POST(req: Request): Promise<NextResponse> {
   try {
@@ -12,7 +14,22 @@ export async function POST(req: Request): Promise<NextResponse> {
     const { userId } = await auth();
 
     if (!userId) {
-      throw new Error("User not authenticated.");
+      return NextResponse.json(
+        { error: "Authentication required." },
+        { status: 401 },
+      );
+    }
+
+    // Verify user plan is active before calling OpenAI
+    const userData = (await getUserById(userId)) as UserData | null;
+    if (userData?.plan?.expiresOn) {
+      const expiresOn = new Date(userData.plan.expiresOn);
+      if (expiresOn < new Date()) {
+        return NextResponse.json(
+          { error: "Your plan has expired. Please upgrade to continue." },
+          { status: 403 },
+        );
+      }
     }
 
     let taskId = providedTaskId;
@@ -51,13 +68,11 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     return NextResponse.json({ taskData, taskId });
   } catch (error) {
-    const errMsg = error instanceof Error && error.message;
-    const aiError = {
-      title: "AI API endpoint error!",
-      error: errMsg || "Unexpected error occurred.",
-      status: 500,
-    };
+    console.error("OpenAI route error:", error);
 
-    return NextResponse.json({ aiError });
+    return NextResponse.json(
+      { error: "An error occurred while processing your request." },
+      { status: 500 },
+    );
   }
 }

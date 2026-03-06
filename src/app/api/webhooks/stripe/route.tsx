@@ -14,6 +14,8 @@
 import { getExpiresOn } from "@/constants/plans";
 import { createTransaction } from "@/lib/actions/transaction.action";
 import { updateUser } from "@/lib/actions/user.actions";
+import { connectToDatabase } from "@/lib/database/mongoose";
+import Transaction from "@/lib/database/models/transaction.model";
 import { BillingCycle, PlanData, PlanName } from "@/types/PlanData.d";
 import { CreateTransactionParams } from "@/types/TransactionData.d";
 import { UpdateUserParams } from "@/types/UserData.d";
@@ -74,6 +76,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       plan: thePlanName,
       billing: theBillingCycle,
     };
+
+    // Idempotency: check if this Stripe event was already processed
+    await connectToDatabase();
+    const existingTransaction = await Transaction.findOne({ stripeId: id });
+    if (existingTransaction) {
+      return NextResponse.json(
+        { message: "Already processed" },
+        { status: 200 },
+      );
+    }
 
     // Create transaction in database
     const newTransaction = await createTransaction(transaction);

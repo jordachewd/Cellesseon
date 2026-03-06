@@ -4,10 +4,14 @@ import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "@/lib/utils/handleError";
 import serializeForClient from "@/lib/utils/serialize-for-client";
 import Task from "../database/models/tasks.model";
+import { auth } from "@clerk/nextjs/server";
 
 // CREATE TASK
 export async function createTask(task: CreateTaskParams) {
   try {
+    const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
+
     await connectToDatabase();
 
     const newTask = await Task.create(task);
@@ -25,6 +29,9 @@ export async function createTask(task: CreateTaskParams) {
 // UPDATE TASK
 export async function updateTask(taskId: string, task: UpdateTaskParams) {
   try {
+    const { userId } = await auth();
+    if (!userId) throw new Error("Unauthorized");
+
     await connectToDatabase();
 
     const updateFields = { ...task, updatedAt: new Date() };

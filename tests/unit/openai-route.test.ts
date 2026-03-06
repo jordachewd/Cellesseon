@@ -3,6 +3,7 @@ import { POST } from "@/app/api/openai/route";
 import { generateResponse } from "@/lib/utils/openai/generateResponse";
 import { generateTitle } from "@/lib/utils/openai/generateTitle";
 import { createTask, updateTask } from "@/lib/actions/task.actions";
+import { getUserById } from "@/lib/actions/user.actions";
 import { auth } from "@clerk/nextjs/server";
 
 vi.mock("@/lib/utils/openai/generateResponse", () => ({
@@ -22,6 +23,10 @@ vi.mock("@clerk/nextjs/server", () => ({
   auth: vi.fn(),
 }));
 
+vi.mock("@/lib/actions/user.actions", () => ({
+  getUserById: vi.fn(),
+}));
+
 function buildRequest(payload: unknown): Request {
   return new Request("http://localhost:3000/api/openai", {
     method: "POST",
@@ -34,6 +39,9 @@ describe("POST /api/openai", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(auth).mockResolvedValue({ userId: "user_123" } as never);
+    vi.mocked(getUserById).mockResolvedValue({
+      plan: { expiresOn: new Date(Date.now() + 86400000) },
+    } as never);
     vi.mocked(generateTitle).mockResolvedValue(
       JSON.stringify({ title: "Generated title", usage: 7 }),
     );
@@ -55,7 +63,7 @@ describe("POST /api/openai", () => {
     vi.restoreAllMocks();
   });
 
-  it("returns aiError payload when user is not authenticated", async () => {
+  it("returns 401 when user is not authenticated", async () => {
     vi.mocked(auth).mockResolvedValue({ userId: null } as never);
     const req = buildRequest({
       messages: [{ role: "user", whois: "user", content: "hi" }],
@@ -64,8 +72,23 @@ describe("POST /api/openai", () => {
     const response = await POST(req);
     const payload = await response.json();
 
-    expect(payload.aiError.title).toBe("AI API endpoint error!");
-    expect(payload.aiError.error).toContain("User not authenticated.");
+    expect(response.status).toBe(401);
+    expect(payload.error).toContain("Authentication required.");
+  });
+
+  it("returns 403 when user plan has expired", async () => {
+    vi.mocked(getUserById).mockResolvedValue({
+      plan: { expiresOn: new Date(Date.now() - 86400000) },
+    } as never);
+    const req = buildRequest({
+      messages: [{ role: "user", whois: "user", content: "hi" }],
+    });
+
+    const response = await POST(req);
+    const payload = await response.json();
+
+    expect(response.status).toBe(403);
+    expect(payload.error).toContain("plan has expired");
   });
 
   it("creates a new task when no taskId is provided", async () => {
@@ -116,7 +139,7 @@ describe("POST /api/openai", () => {
     expect(payload.taskId).toBe("existing-task");
   });
 
-  it("returns aiError when task creation fails", async () => {
+  it("returns 500 when task creation fails", async () => {
     vi.mocked(createTask).mockResolvedValue(null as never);
     const req = buildRequest({
       messages: [{ role: "user", whois: "user", content: "new chat" }],
@@ -125,10 +148,11 @@ describe("POST /api/openai", () => {
     const response = await POST(req);
     const payload = await response.json();
 
-    expect(payload.aiError.error).toContain("Task creation failed.");
+    expect(response.status).toBe(500);
+    expect(payload.error).toBeTypeOf("string");
   });
 
-  it("returns aiError when title generation returns malformed JSON", async () => {
+  it("returns 500 when title generation returns malformed JSON", async () => {
     vi.mocked(generateTitle).mockResolvedValue("not-json" as never);
     const req = buildRequest({
       messages: [{ role: "user", whois: "user", content: "new chat" }],
@@ -137,12 +161,12 @@ describe("POST /api/openai", () => {
     const response = await POST(req);
     const payload = await response.json();
 
-    expect(payload.aiError.title).toBe("AI API endpoint error!");
-    expect(payload.aiError.error).toBeTypeOf("string");
+    expect(response.status).toBe(500);
+    expect(payload.error).toBeTypeOf("string");
     expect(createTask).not.toHaveBeenCalled();
   });
 
-  it("returns aiError when response payload is malformed JSON", async () => {
+  it("returns 500 when response payload is malformed JSON", async () => {
     vi.mocked(generateResponse).mockResolvedValue("not-json" as never);
     const req = buildRequest({
       taskId: "existing-task",
@@ -152,12 +176,12 @@ describe("POST /api/openai", () => {
     const response = await POST(req);
     const payload = await response.json();
 
-    expect(payload.aiError.title).toBe("AI API endpoint error!");
-    expect(payload.aiError.error).toBeTypeOf("string");
+    expect(response.status).toBe(500);
+    expect(payload.error).toBeTypeOf("string");
     expect(updateTask).not.toHaveBeenCalled();
   });
 
-  it("returns aiError when response generation throws", async () => {
+  it("returns 500 when response generation throws", async () => {
     vi.mocked(generateResponse).mockRejectedValue(
       new Error("OpenAI unavailable"),
     );
@@ -169,6 +193,7 @@ describe("POST /api/openai", () => {
     const response = await POST(req);
     const payload = await response.json();
 
-    expect(payload.aiError.error).toContain("OpenAI unavailable");
+    expect(response.status).toBe(500);
+    expect(payload.error).toBeTypeOf("string");
   });
 });

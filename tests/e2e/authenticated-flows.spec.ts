@@ -24,13 +24,13 @@ test.describe("authenticated user flows", () => {
     ).toBeVisible();
   });
 
-  test("redirects non-admin users from dashboard to unauthorized screen", async ({
+  test("redirects non-admin users from dashboard to forbidden screen", async ({
     page,
   }) => {
     await page.goto("/dashboard");
-    await expect(page).toHaveURL(/\/401$/);
+    await expect(page).toHaveURL(/\/403$/);
     await expect(
-      page.getByRole("heading", { name: "Unauthorized" }),
+      page.getByRole("heading", { name: "Forbidden" }),
     ).toBeVisible();
   });
 });

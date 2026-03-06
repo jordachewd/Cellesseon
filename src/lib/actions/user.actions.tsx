@@ -5,8 +5,9 @@ import { connectToDatabase } from "../database/mongoose";
 import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
 import { handleError } from "../utils/handleError";
 import serializeForClient from "../utils/serialize-for-client";
+import { auth } from "@clerk/nextjs/server";
 
-// CREATE USER
+// CREATE USER (called from Clerk webhook — auth verified via signature)
 export async function createUser(user: CreateUserParams) {
   try {
     await connectToDatabase();
@@ -85,6 +86,9 @@ export async function deleteUser(clerkId: string) {
 // READ by id
 export async function getUserById(userId: string) {
   try {
+    const { userId: authedUserId } = await auth();
+    if (!authedUserId) throw new Error("Unauthorized");
+
     await connectToDatabase();
 
     const user = await User.findOne({ clerkId: userId });

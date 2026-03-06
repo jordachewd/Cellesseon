@@ -40,10 +40,7 @@ export async function POST(req: Request): Promise<NextResponse> {
     console.error("AWS API Error:", error);
 
     return NextResponse.json(
-      {
-        message: "File upload failed",
-        error: error instanceof Error ? error.message : "Unknown error",
-      },
+      { message: "File upload failed" },
       { status: 500 },
     );
   }
@@ -73,11 +70,10 @@ export async function DELETE(req: Request): Promise<NextResponse> {
 
     return NextResponse.json({ message: "Image deleted successfully" });
   } catch (error) {
+    console.error("AWS delete error:", error);
+
     return NextResponse.json(
-      {
-        message: "Error deleting the image",
-        error: error instanceof Error ? error.message : "Unknown error",
-      },
+      { message: "File deletion failed" },
       { status: 500 },
     );
   }

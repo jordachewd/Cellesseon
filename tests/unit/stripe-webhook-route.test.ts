@@ -3,6 +3,8 @@ import { NextRequest } from "next/server";
 import { createTransaction } from "@/lib/actions/transaction.action";
 import { updateUser } from "@/lib/actions/user.actions";
 import { getExpiresOn } from "@/constants/plans";
+import { connectToDatabase } from "@/lib/database/mongoose";
+import Transaction from "@/lib/database/models/transaction.model";
 import { POST } from "@/app/api/webhooks/stripe/route";
 
 const constructEventMock = vi.hoisted(() => vi.fn());
@@ -27,6 +29,16 @@ vi.mock("@/constants/plans", () => ({
   getExpiresOn: vi.fn(),
 }));
 
+vi.mock("@/lib/database/mongoose", () => ({
+  connectToDatabase: vi.fn(),
+}));
+
+vi.mock("@/lib/database/models/transaction.model", () => ({
+  default: {
+    findOne: vi.fn(),
+  },
+}));
+
 function buildRequest(body: string, signature?: string): NextRequest {
   const headers = new Headers();
 
@@ -45,6 +57,8 @@ describe("POST /api/webhooks/stripe", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
+    vi.mocked(connectToDatabase).mockResolvedValue(undefined as never);
+    vi.mocked(Transaction.findOne).mockResolvedValue(null);
   });
 
   it("returns 400 when stripe-signature header is missing", async () => {
@@ -162,5 +176,38 @@ describe("POST /api/webhooks/stripe", () => {
 
     expect(response.status).toBe(200);
     expect(payload.message).toContain("Unhandled event type: customer.created");
+  });
+
+  it("returns 200 without creating duplicate transaction for replayed webhook", async () => {
+    vi.mocked(getExpiresOn).mockReturnValue(
+      new Date("2026-04-05T10:00:00.000Z"),
+    );
+    constructEventMock.mockReturnValue({
+      type: "checkout.session.completed",
+      data: {
+        object: {
+          id: "cs_test_duplicate",
+          amount_total: 2900,
+          metadata: {
+            userId: "mongo_user_1",
+            clerkId: "clerk_user_1",
+            planId: "1",
+            plan: "Pro",
+            billing: "Monthly",
+          },
+        },
+      },
+    });
+    vi.mocked(Transaction.findOne).mockResolvedValue({
+      stripeId: "cs_test_duplicate",
+    } as never);
+
+    const response = await POST(buildRequest('{"valid":"payload"}', "sig_123"));
+    const payload = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(payload.message).toBe("Already processed");
+    expect(createTransaction).not.toHaveBeenCalled();
+    expect(updateUser).not.toHaveBeenCalled();
   });
 });

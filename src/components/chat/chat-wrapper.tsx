@@ -38,14 +38,28 @@ export default function ChatWrapper() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: taskMessages, taskId: dbTaskId }),
       });
+      const responseData = (await response.json().catch(() => null)) as {
+        taskData?: Message;
+        taskId?: string;
+        error?: string;
+      } | null;
 
-      if (response.status !== 200) {
-        showAlert(response.statusText, `Error status: ${response.status}`);
+      if (!response.ok) {
+        const title = response.statusText || "Request failed";
+        const text =
+          typeof responseData?.error === "string" && responseData.error !== ""
+            ? responseData.error
+            : `Error status: ${response.status}`;
+        showAlert(title, text);
         return;
       }
 
-      const responseData = await response.json();
-      const { taskData, taskId, aiError } = responseData;
+      if (!responseData) {
+        showAlert("Error", "Invalid server response.");
+        return;
+      }
+
+      const { taskData, taskId, error } = responseData;
 
       if (taskData) {
         setTask((prev) => [...prev.slice(0, -1), taskData]);
@@ -55,9 +69,8 @@ export default function ChatWrapper() {
         setDbTaskId(taskId);
       }
 
-      if (aiError) {
-        const { title, error } = aiError;
-        showAlert(title, error);
+      if (error) {
+        showAlert("Error", error);
         return;
       }
     } catch (error) {

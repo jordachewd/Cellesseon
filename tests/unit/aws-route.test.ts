@@ -95,7 +95,7 @@ describe("/api/aws route", () => {
 
     expect(response.status).toBe(500);
     expect(payload.message).toBe("File upload failed");
-    expect(payload.error).toContain("S3 unavailable");
+    expect(payload.error).toBeUndefined();
   });
 
   it("returns 401 for delete when user is not authenticated", async () => {
@@ -146,7 +146,7 @@ describe("/api/aws route", () => {
     const payload = await response.json();
 
     expect(response.status).toBe(500);
-    expect(payload.message).toBe("Error deleting the image");
-    expect(payload.error).toContain("Delete failed");
+    expect(payload.message).toBe("File deletion failed");
+    expect(payload.error).toBeUndefined();
   });
 });
