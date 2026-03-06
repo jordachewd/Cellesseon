@@ -43,3 +43,14 @@ test("redirects unauthenticated users from private routes to sign-in", async ({
     await expect(page).toHaveURL(/\/sign-in/);
   }
 });
+
+test("renders custom 404 page for unknown routes", async ({ page }) => {
+  await page.goto("/this-route-does-not-exist");
+
+  await expect(page).toHaveURL(/this-route-does-not-exist/);
+  await expect(page.getByText("HTTP 404")).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Page Not Found" }),
+  ).toBeVisible();
+  await expect(page.getByRole("link", { name: "Go Home" })).toBeVisible();
+});

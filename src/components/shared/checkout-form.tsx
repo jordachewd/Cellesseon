@@ -39,7 +39,7 @@ const Checkout = ({ plan, planStatus, clerkUser }: CheckoutProps) => {
       <button
         type="submit"
         disabled={isIncluded}
-        className={`btn btn-md min-w-[220px] ${buttonVariant} ${disabledStyle}`}
+        className={`btn btn-md w-full min-w-[12rem] sm:min-w-[220px] ${buttonVariant} ${disabledStyle}`}
       >
         {(isCurrent && "Current") || (isIncluded && "Included") || "Subscribe"}
       </button>

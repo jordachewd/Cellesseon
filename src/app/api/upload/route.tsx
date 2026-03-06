@@ -57,7 +57,12 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     const buffer = Buffer.from(await safeFile.arrayBuffer());
     const folder = `${userId}/uploads`;
-    const fileUrl = await uploadFileToAWS(buffer, fileName, safeFile.type, folder);
+    const fileUrl = await uploadFileToAWS(
+      buffer,
+      fileName,
+      safeFile.type,
+      folder,
+    );
 
     return NextResponse.json({ fileName, fileUrl });
   } catch {

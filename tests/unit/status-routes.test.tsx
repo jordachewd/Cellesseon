@@ -6,6 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import UnauthorizedPage from "@/app/401/page";
 import ForbiddenPage from "@/app/403/page";
 import InternalServerErrorPage from "@/app/500/page";
+import NotFoundPage from "@/app/not-found";
 
 vi.mock("next/link", () => ({
   default: ({
@@ -53,5 +54,17 @@ describe("status routes", () => {
         "Please try again in a few moments. If the issue persists, contact support.",
       ),
     ).toBeTruthy();
+  });
+
+  it("renders not-found page with home call to action", () => {
+    render(<NotFoundPage />);
+
+    expect(screen.getByText("HTTP 404")).toBeTruthy();
+    expect(
+      screen.getByRole("heading", { name: "Page Not Found" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("link", { name: "Go Home" }).getAttribute("href"),
+    ).toBe("/");
   });
 });

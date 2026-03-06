@@ -27,17 +27,19 @@ export default function ProfileBilling({ stripeId, userTxns }: BillingProps) {
             </TooltipArrow>
           </div>
 
-          {userTxns.map((txn) => {
+          {userTxns.map((txn, index) => {
             const payCycle = txn.billing === "Monthly" ? "Mo" : "Yr";
             const txnStatus = txn.stripeId === stripeId ? "Active" : "Inactive";
             const txnColor =
               txn.stripeId === stripeId
                 ? "inline-flex items-center justify-center rounded bg-green-700 p-1 text-xxs leading-none text-white"
                 : "inline-flex items-center justify-center rounded bg-slate-300 p-1 text-xxs leading-none text-slate-400 dark:bg-slate-300/10 dark:text-slate-400";
+            const createdAtMs = new Date(txn.createdAt).getTime();
+            const txnKey = `${txn.id}-${txn.stripeId}-${createdAtMs}-${index}`;
 
             return (
               <div
-                key={txn.id}
+                key={txnKey}
                 className="mt-1 flex items-center justify-between gap-4 rounded-md px-3 py-1 text-sm text-slate-500 transition-colors duration-200 ease-in-out hover:bg-slate-300/20 dark:text-slate-400 dark:hover:bg-slate-300/5"
               >
                 <p className="flex-1 font-medium">{txn.plan}</p>

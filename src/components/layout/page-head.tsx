@@ -6,8 +6,8 @@ interface PageHeadProps {
 export default function PageHead({ title, subtitle, children }: PageHeadProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-3">
-      <h1 className="heading-2 text-center">{title}</h1>
-      {subtitle && <p className="body-1 text-center">{subtitle}</p>}
+      <h1 className="heading-3 text-center leading-tight">{title}</h1>
+      {subtitle && <p className="body-2 text-center">{subtitle}</p>}
       {children}
     </div>
   );

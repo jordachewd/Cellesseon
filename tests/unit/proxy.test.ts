@@ -31,21 +31,18 @@ vi.mock("@clerk/nextjs/server", () => ({
     return (req: NextRequest) => {
       const pathname = req.nextUrl.pathname;
 
-      if (patterns.includes("/dashboard/:path*")) {
-        return pathname === "/dashboard" || pathname.startsWith("/dashboard/");
-      }
-
       return patterns.some((pattern) => {
+        if (pattern === "/dashboard/:path*") {
+          return pathname === "/dashboard" || pathname.startsWith("/dashboard/");
+        }
+
         if (pattern === "/") {
           return pathname === "/";
         }
 
-        if (pattern === "/sign-in(.*)") {
-          return pathname.startsWith("/sign-in");
-        }
-
-        if (pattern === "/sign-up(.*)") {
-          return pathname.startsWith("/sign-up");
+        if (pattern.endsWith("(.*)")) {
+          const basePath = pattern.slice(0, -4);
+          return pathname === basePath || pathname.startsWith(`${basePath}/`);
         }
 
         return pathname === pattern;
@@ -96,6 +93,15 @@ describe("proxy route protection", () => {
     expect(unauthResponse).toBeUndefined();
     expect(forbiddenResponse).toBeUndefined();
     expect(serverErrorResponse).toBeUndefined();
+  });
+
+  it("allows unknown unauthenticated routes so Next.js can render 404", async () => {
+    const request = new NextRequest(
+      "http://localhost:3000/this-route-does-not-exist",
+    );
+    const response = await proxy(request, {} as never);
+
+    expect(response).toBeUndefined();
   });
 
   it("redirects unauthenticated users from protected routes to /sign-in", async () => {

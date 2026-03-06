@@ -9,25 +9,27 @@ export default function LandingPage() {
       className="relative z-10 -mt-14 mb-10 flex w-full flex-1 flex-col items-center gap-10"
       id="LandingPageWrapper"
     >
-      <div className="flex w-full items-center justify-between bg-white/50 px-8 pt-14 shadow-sm dark:bg-darkPrimary-900/50">
+      <div className="flex w-full items-center justify-between bg-white/50 px-4 pt-14 shadow-sm sm:px-6 lg:px-8 dark:bg-darkPrimary-900/50">
         <div className="mx-auto mt-12 flex max-w-screen-2xl flex-col items-center justify-between lg:mt-0 lg:flex-row lg:gap-5">
           <div className="flex w-full flex-col items-center gap-12 text-center lg:w-1/2 lg:items-start lg:text-left">
-            <h1 className="heading-2">Simplify tasks and boost productivity</h1>
+            <h1 className="heading-2 leading-tight">
+              Simplify tasks and boost productivity
+            </h1>
 
-            <p className="heading-6">
+            <p className="heading-6 max-w-2xl">
               Spark creativity, organize plans, and learn something new every
               day
             </p>
 
             <Link
-              className="btn btn-lg btn-outlined min-w-[300px]"
+              className="btn btn-lg btn-outlined w-full max-w-[300px]"
               href="/sign-up"
             >
               Try it for free
             </Link>
           </div>
 
-          <div className="relative flex w-full justify-center self-end overflow-hidden lg:w-1/2 sm:min-h-[500px] xl:min-h-[600px] xxl:min-h-[700px]">
+          <div className="relative flex w-full justify-center self-end overflow-hidden sm:min-h-[420px] lg:w-1/2 lg:min-h-[500px] xl:min-h-[600px] xxl:min-h-[700px]">
             <Image
               src="/images/lp-hero-image.png"
               alt="hero"

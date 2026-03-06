@@ -2,7 +2,7 @@ import Link from "next/link";
 import PageWrapper from "@/components/layout/page-wrapper";
 
 interface HttpStatusPageProps {
-  code: 401 | 403 | 500;
+  code: 401 | 403 | 404 | 500;
   title: string;
   message: string;
   details: string;
@@ -13,6 +13,7 @@ interface HttpStatusPageProps {
 const panelClassByCode: Record<HttpStatusPageProps["code"], string> = {
   401: "bg-red-800",
   403: "bg-red-800",
+  404: "bg-slate-700",
   500: "bg-amber-700",
 };
 
