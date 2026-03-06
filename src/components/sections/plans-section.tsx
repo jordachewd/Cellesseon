@@ -80,7 +80,7 @@ export default function Plans({ userData, hasLoader = false }: PlansProps) {
       {!isSignedIn && (
         <div className="mt-8 flex items-center justify-center">
           <Link
-            className="btn btn-lg btn-outlined mt-4 w-full max-w-[280px]"
+            className="btn btn-lg btn-outlined mt-4 w-full max-w-[280px] p-4 uppercase"
             href="/sign-up"
           >
             Subscribe Now

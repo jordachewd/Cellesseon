@@ -176,18 +176,25 @@
   }
 }
 
-@layer utilities {
-  /* Cellesseon App Styles */
-
-  * {
-    margin: 0;
-    padding: 0;
+@layer base {
+  *,
+  ::before,
+  ::after {
     box-sizing: border-box;
+  }
+
+  html {
     scroll-behavior: smooth;
   }
-}
 
-@layer base {
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
   body {
     @apply scroll-smooth antialiased bg-lightBackground-500 text-lightText-500 dark:bg-jwdMarine-1000 dark:text-darkText-500;
     @apply pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)];

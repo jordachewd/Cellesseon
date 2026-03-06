@@ -22,7 +22,7 @@ export default function LandingPage() {
             </p>
 
             <Link
-              className="btn btn-lg btn-outlined w-full max-w-[300px] p-4"
+              className="btn btn-lg btn-outlined w-full max-w-[300px] p-4 uppercase"
               href="/sign-up"
             >
               Try it for free
