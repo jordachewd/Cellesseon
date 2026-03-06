@@ -1,14 +1,26 @@
-# Cellesseon
+﻿# Cellesseon
 
 Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CSS v4.2, Clerk, Stripe, MongoDB, and OpenAI.
 
 ## Recent Updates (March 2026)
 
+### Security hardening
+
+- Enforced task ownership — `updateTask` now filters by both `_id` and `userId`, preventing cross-user task overwrites.
+- Auth-gated `updateUser`, `deleteUser`, and `deleteAllTransactions` server actions. Webhook handlers (Clerk, Stripe) now perform direct DB operations under signature-verified context instead of calling the exported actions.
+- Added per-user rate limiting on `/api/openai` (in-memory sliding window, 20 req/60s) with proper `429` responses and `Retry-After` headers.
+- Stripe webhook no longer leaks the raw error object — catch block returns a generic message.
+- `/api/download` proxy route now requires Clerk authentication.
+
+### UI/UX and code quality
+
 - Fixed client/runtime boundary and accessibility regressions: added missing `"use client"` directives (`avatar-menu`, `toggle-theme`) and removed invalid `role="link"` from form submit checkout button.
-- Corrected invalid Tailwind utilities/properties in shared layout UI (`z-[1]`, `z-[100]`, and proper `[-webkit-mask-image:...]` arbitrary property usage).
-- Hardened `serializeForClient` typing with a `Jsonify<T>` return type to reflect JSON serialization semantics instead of unsafely returning `T`.
-- Moved `stripe` to runtime `dependencies` so production installs that omit dev dependencies do not break webhook/checkout flows.
-- Normalized Tailwind animation delay utilities to canonical classes (for example, `animate-delay-200` and `animate-delay-800`) to eliminate `suggestCanonicalClasses` warnings.
+- Corrected non-canonical Tailwind utilities across the codebase and silenced `suggestCanonicalClasses` in VS Code settings.
+- Removed global heading reset that was overriding brand `.heading-[x]` classes.
+- Increased `.btn-lg` padding and adjusted `.tooltip-content` padding.
+- Moved universal reset to `@layer base` so component styles are no longer overridden.
+- Hardened `serializeForClient` typing with a `Jsonify<T>` return type.
+- Moved `stripe` to runtime `dependencies` so production installs do not break webhook/checkout flows.
 
 ## Tech Stack
 
@@ -43,8 +55,8 @@ src/
     utils/
   types/
 tests/
-  unit/
-  e2e/
+  unit/                    # 21 suites, 96 tests (Vitest)
+  e2e/                     # 2 specs (Playwright)
 ```
 
 ## Validation Workflow
@@ -59,3 +71,5 @@ npm run test
 npm run test:e2e
 npm run build
 ```
+
+All six gates must pass before every commit.
