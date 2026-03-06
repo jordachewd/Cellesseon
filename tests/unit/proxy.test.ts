@@ -33,7 +33,9 @@ vi.mock("@clerk/nextjs/server", () => ({
 
       return patterns.some((pattern) => {
         if (pattern === "/dashboard/:path*") {
-          return pathname === "/dashboard" || pathname.startsWith("/dashboard/");
+          return (
+            pathname === "/dashboard" || pathname.startsWith("/dashboard/")
+          );
         }
 
         if (pattern === "/") {

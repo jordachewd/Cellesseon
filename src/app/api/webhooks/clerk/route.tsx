@@ -3,9 +3,11 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
-import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
+import { createUser } from "@/lib/actions/user.actions";
 import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
-import { deleteAllTransactions } from "@/lib/actions/transaction.action";
+import { connectToDatabase } from "@/lib/database/mongoose";
+import User from "@/lib/database/models/user.model";
+import Transaction from "@/lib/database/models/transaction.model";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
@@ -104,7 +106,13 @@ export async function POST(req: Request) {
       userimg: image_url,
     };
 
-    const updatedUser = await updateUser(id, user);
+    await connectToDatabase();
+    const updatedUser = await User.findOneAndUpdate({ clerkId: id }, user, {
+      new: true,
+      strict: false,
+      upsert: true,
+    });
+
     return NextResponse.json({ message: "OK", user: updatedUser });
   }
 
@@ -112,8 +120,13 @@ export async function POST(req: Request) {
   if (eventType === "user.deleted") {
     const { id } = evt.data;
 
-    const deletedUser = await deleteUser(id!);
-    const deletedTransactions = await deleteAllTransactions(id!);
+    await connectToDatabase();
+    const userToDelete = await User.findOne({ clerkId: id! });
+    const deletedUser = userToDelete
+      ? await User.findByIdAndDelete(userToDelete._id)
+      : null;
+    const deletedTransactions = await Transaction.deleteMany({ clerkId: id! });
+
     return NextResponse.json({
       message: "OK",
       deletedUser,

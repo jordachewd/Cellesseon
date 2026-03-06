@@ -13,9 +13,9 @@
 
 import { getExpiresOn } from "@/constants/plans";
 import { createTransaction } from "@/lib/actions/transaction.action";
-import { updateUser } from "@/lib/actions/user.actions";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import Transaction from "@/lib/database/models/transaction.model";
+import User from "@/lib/database/models/user.model";
 import { BillingCycle, PlanData, PlanName } from "@/types/PlanData.d";
 import { CreateTransactionParams } from "@/types/TransactionData.d";
 import { UpdateUserParams } from "@/types/UserData.d";
@@ -45,9 +45,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret);
-  } catch (err) {
+  } catch {
     return NextResponse.json(
-      { message: "Webhook error", error: err },
+      {
+        message: "Webhook error",
+        error: "Invalid webhook signature",
+      },
       { status: 400 },
     );
   }
@@ -105,7 +108,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       };
 
       // Update user in database
-      const updatedUser = await updateUser(theClerkId, newUserData);
+      const updatedUser = await User.findOneAndUpdate(
+        { clerkId: theClerkId },
+        newUserData,
+        {
+          new: true,
+          strict: false,
+          upsert: true,
+        },
+      );
 
       return NextResponse.json({ message: "OK", newTransaction, updatedUser });
     } else {

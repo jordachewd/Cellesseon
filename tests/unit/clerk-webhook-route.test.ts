@@ -1,9 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { POST } from "@/app/api/webhooks/clerk/route";
-import { createUser, deleteUser, updateUser } from "@/lib/actions/user.actions";
-import { deleteAllTransactions } from "@/lib/actions/transaction.action";
+import { createUser } from "@/lib/actions/user.actions";
 import { clerkClient } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
+import { connectToDatabase } from "@/lib/database/mongoose";
+import User from "@/lib/database/models/user.model";
+import Transaction from "@/lib/database/models/transaction.model";
 
 const verifyMock = vi.hoisted(() => vi.fn());
 const webhookCtorMock = vi.hoisted(() => vi.fn());
@@ -28,12 +30,24 @@ vi.mock("next/headers", () => ({
 
 vi.mock("@/lib/actions/user.actions", () => ({
   createUser: vi.fn(),
-  updateUser: vi.fn(),
-  deleteUser: vi.fn(),
 }));
 
-vi.mock("@/lib/actions/transaction.action", () => ({
-  deleteAllTransactions: vi.fn(),
+vi.mock("@/lib/database/mongoose", () => ({
+  connectToDatabase: vi.fn(),
+}));
+
+vi.mock("@/lib/database/models/user.model", () => ({
+  default: {
+    findOneAndUpdate: vi.fn(),
+    findOne: vi.fn(),
+    findByIdAndDelete: vi.fn(),
+  },
+}));
+
+vi.mock("@/lib/database/models/transaction.model", () => ({
+  default: {
+    deleteMany: vi.fn(),
+  },
 }));
 
 function buildRequest(payload: unknown): Request {
@@ -69,6 +83,13 @@ describe("POST /api/webhooks/clerk", () => {
     vi.clearAllMocks();
     process.env.CLERK_WEBHOOK_SECRET = "whsec_clerk_test";
     mockSvixHeaders({});
+    vi.mocked(connectToDatabase).mockResolvedValue(undefined as never);
+    vi.mocked(User.findOneAndUpdate).mockResolvedValue(null as never);
+    vi.mocked(User.findOne).mockResolvedValue(null as never);
+    vi.mocked(User.findByIdAndDelete).mockResolvedValue(null as never);
+    vi.mocked(Transaction.deleteMany).mockResolvedValue({
+      deletedCount: 0,
+    } as never);
     vi.mocked(clerkClient).mockResolvedValue({
       users: {
         updateUserMetadata: vi.fn(),
@@ -104,8 +125,6 @@ describe("POST /api/webhooks/clerk", () => {
     expect(response.status).toBe(400);
     await expect(response.text()).resolves.toBe("Error occured");
     expect(createUser).not.toHaveBeenCalled();
-    expect(updateUser).not.toHaveBeenCalled();
-    expect(deleteUser).not.toHaveBeenCalled();
   });
 
   it("creates a user and updates clerk metadata for user.created", async () => {
@@ -167,7 +186,7 @@ describe("POST /api/webhooks/clerk", () => {
         image_url: "https://cdn.example.com/u2.png",
       },
     });
-    vi.mocked(updateUser).mockResolvedValue({
+    vi.mocked(User.findOneAndUpdate).mockResolvedValue({
       clerkId: "clerk_user_1",
     } as never);
 
@@ -175,12 +194,18 @@ describe("POST /api/webhooks/clerk", () => {
     const payload = await response.json();
 
     expect(response.status).toBe(200);
-    expect(updateUser).toHaveBeenCalledWith(
-      "clerk_user_1",
+    expect(connectToDatabase).toHaveBeenCalledOnce();
+    expect(User.findOneAndUpdate).toHaveBeenCalledWith(
+      { clerkId: "clerk_user_1" },
       expect.objectContaining({
         firstName: "Ada",
         lastName: "Byron",
         userimg: "https://cdn.example.com/u2.png",
+      }),
+      expect.objectContaining({
+        new: true,
+        strict: false,
+        upsert: true,
       }),
     );
     expect(payload.message).toBe("OK");
@@ -193,8 +218,13 @@ describe("POST /api/webhooks/clerk", () => {
         id: "clerk_user_1",
       },
     });
-    vi.mocked(deleteUser).mockResolvedValue({ acknowledged: true } as never);
-    vi.mocked(deleteAllTransactions).mockResolvedValue({
+    vi.mocked(User.findOne).mockResolvedValue({
+      _id: "mongo_user_1",
+    } as never);
+    vi.mocked(User.findByIdAndDelete).mockResolvedValue({
+      acknowledged: true,
+    } as never);
+    vi.mocked(Transaction.deleteMany).mockResolvedValue({
       deletedCount: 3,
     } as never);
 
@@ -202,8 +232,12 @@ describe("POST /api/webhooks/clerk", () => {
     const payload = await response.json();
 
     expect(response.status).toBe(200);
-    expect(deleteUser).toHaveBeenCalledWith("clerk_user_1");
-    expect(deleteAllTransactions).toHaveBeenCalledWith("clerk_user_1");
+    expect(connectToDatabase).toHaveBeenCalledOnce();
+    expect(User.findOne).toHaveBeenCalledWith({ clerkId: "clerk_user_1" });
+    expect(User.findByIdAndDelete).toHaveBeenCalledWith("mongo_user_1");
+    expect(Transaction.deleteMany).toHaveBeenCalledWith({
+      clerkId: "clerk_user_1",
+    });
     expect(payload.message).toBe("OK");
     expect(payload.deletedTransactions.deletedCount).toBe(3);
   });

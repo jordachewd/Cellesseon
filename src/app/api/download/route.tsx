@@ -11,9 +11,15 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { isAllowedDownloadUrl } from "@/lib/utils/download-url-allowlist";
+import { auth } from "@clerk/nextjs/server";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return new NextResponse("Authentication required", { status: 401 });
+    }
+
     const imageUrl = req.nextUrl.searchParams.get("url");
     if (!imageUrl) {
       return new NextResponse("Image URL is required", { status: 400 });

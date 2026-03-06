@@ -31,6 +31,10 @@ export async function createUser(user: CreateUserParams) {
 // UPDATE
 export async function updateUser(clerkId: string, user: UpdateUserParams) {
   try {
+    const { userId: authedUserId } = await auth();
+    if (!authedUserId) throw new Error("Unauthorized");
+    if (authedUserId !== clerkId) throw new Error("Forbidden");
+
     await connectToDatabase();
 
     const updatedUser = await User.findOneAndUpdate({ clerkId }, user, {
@@ -60,6 +64,10 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
 // DELETE
 export async function deleteUser(clerkId: string) {
   try {
+    const { userId: authedUserId } = await auth();
+    if (!authedUserId) throw new Error("Unauthorized");
+    if (authedUserId !== clerkId) throw new Error("Forbidden");
+
     await connectToDatabase();
 
     // Find user to delete

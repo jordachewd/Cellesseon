@@ -38,7 +38,7 @@ export async function updateTask(taskId: string, task: UpdateTaskParams) {
     delete updateFields.usage;
 
     const updatedTask = await Task.findOneAndUpdate(
-      { _id: taskId },
+      { _id: taskId, userId },
       {
         $inc: { usage: task.usage },
         $set: updateFields,

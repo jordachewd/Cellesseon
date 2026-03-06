@@ -7,6 +7,10 @@ import { createTask, updateTask } from "@/lib/actions/task.actions";
 import { auth } from "@clerk/nextjs/server";
 import { getUserById } from "@/lib/actions/user.actions";
 import { UserData } from "@/types/UserData.d";
+import { enforceSlidingWindowRateLimit } from "@/lib/utils/rate-limit";
+
+const OPENAI_RATE_LIMIT_MAX_REQUESTS = 20;
+const OPENAI_RATE_LIMIT_WINDOW_MS = 60_000;
 
 export async function POST(req: Request): Promise<NextResponse> {
   try {
@@ -17,6 +21,29 @@ export async function POST(req: Request): Promise<NextResponse> {
       return NextResponse.json(
         { error: "Authentication required." },
         { status: 401 },
+      );
+    }
+
+    const rateLimit = enforceSlidingWindowRateLimit({
+      key: `openai:${userId}`,
+      limit: OPENAI_RATE_LIMIT_MAX_REQUESTS,
+      windowMs: OPENAI_RATE_LIMIT_WINDOW_MS,
+    });
+
+    if (!rateLimit.success) {
+      return NextResponse.json(
+        {
+          error: "Too many requests. Please try again shortly.",
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(Math.ceil(rateLimit.retryAfterMs / 1000)),
+            "X-RateLimit-Limit": String(rateLimit.limit),
+            "X-RateLimit-Remaining": String(rateLimit.remaining),
+            "X-RateLimit-Reset": String(rateLimit.resetAt),
+          },
+        },
       );
     }
 

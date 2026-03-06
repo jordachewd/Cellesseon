@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { createTransaction } from "@/lib/actions/transaction.action";
-import { updateUser } from "@/lib/actions/user.actions";
 import { getExpiresOn } from "@/constants/plans";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import Transaction from "@/lib/database/models/transaction.model";
+import User from "@/lib/database/models/user.model";
 import { POST } from "@/app/api/webhooks/stripe/route";
 
 const constructEventMock = vi.hoisted(() => vi.fn());
@@ -21,10 +21,6 @@ vi.mock("@/lib/actions/transaction.action", () => ({
   createTransaction: vi.fn(),
 }));
 
-vi.mock("@/lib/actions/user.actions", () => ({
-  updateUser: vi.fn(),
-}));
-
 vi.mock("@/constants/plans", () => ({
   getExpiresOn: vi.fn(),
 }));
@@ -36,6 +32,12 @@ vi.mock("@/lib/database/mongoose", () => ({
 vi.mock("@/lib/database/models/transaction.model", () => ({
   default: {
     findOne: vi.fn(),
+  },
+}));
+
+vi.mock("@/lib/database/models/user.model", () => ({
+  default: {
+    findOneAndUpdate: vi.fn(),
   },
 }));
 
@@ -59,6 +61,9 @@ describe("POST /api/webhooks/stripe", () => {
     process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
     vi.mocked(connectToDatabase).mockResolvedValue(undefined as never);
     vi.mocked(Transaction.findOne).mockResolvedValue(null);
+    vi.mocked(User.findOneAndUpdate).mockResolvedValue({
+      mongoResponse: {},
+    } as never);
   });
 
   it("returns 400 when stripe-signature header is missing", async () => {
@@ -80,6 +85,7 @@ describe("POST /api/webhooks/stripe", () => {
 
     expect(response.status).toBe(400);
     expect(payload.message).toBe("Webhook error");
+    expect(payload.error).toBe("Invalid webhook signature");
   });
 
   it("persists transaction and updates user plan on checkout completion", async () => {
@@ -104,7 +110,6 @@ describe("POST /api/webhooks/stripe", () => {
     });
 
     vi.mocked(createTransaction).mockResolvedValue({ _id: "txn_1" } as never);
-    vi.mocked(updateUser).mockResolvedValue({ mongoResponse: {} } as never);
 
     const response = await POST(buildRequest('{"valid":"payload"}', "sig_123"));
     const payload = await response.json();
@@ -121,8 +126,8 @@ describe("POST /api/webhooks/stripe", () => {
         billing: "Monthly",
       }),
     );
-    expect(updateUser).toHaveBeenCalledWith(
-      "clerk_user_1",
+    expect(User.findOneAndUpdate).toHaveBeenCalledWith(
+      { clerkId: "clerk_user_1" },
       expect.objectContaining({
         plan: expect.objectContaining({
           name: "Pro",
@@ -130,6 +135,11 @@ describe("POST /api/webhooks/stripe", () => {
           amount: 29,
           stripeId: "cs_test_123",
         }),
+      }),
+      expect.objectContaining({
+        new: true,
+        strict: false,
+        upsert: true,
       }),
     );
     expect(payload.message).toBe("OK");
@@ -162,7 +172,7 @@ describe("POST /api/webhooks/stripe", () => {
 
     expect(response.status).toBe(500);
     expect(payload.message).toBe("STRIPE: Transaction failed!");
-    expect(updateUser).not.toHaveBeenCalled();
+    expect(User.findOneAndUpdate).not.toHaveBeenCalled();
   });
 
   it("returns a handled response for non-checkout webhook events", async () => {
@@ -208,6 +218,6 @@ describe("POST /api/webhooks/stripe", () => {
     expect(response.status).toBe(200);
     expect(payload.message).toBe("Already processed");
     expect(createTransaction).not.toHaveBeenCalled();
-    expect(updateUser).not.toHaveBeenCalled();
+    expect(User.findOneAndUpdate).not.toHaveBeenCalled();
   });
 });
