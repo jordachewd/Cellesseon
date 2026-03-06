@@ -1,3 +1,5 @@
+"use client";
+
 import { TooltipArrow } from "./tooltip-arrow";
 import useThemeMode from "@/lib/hooks/use-theme-mode";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
 import {
   MouseEvent as ReactMouseEvent,

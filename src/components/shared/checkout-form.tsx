@@ -37,7 +37,6 @@ const Checkout = ({ plan, planStatus, clerkUser }: CheckoutProps) => {
   return (
     <form action={onCheckout}>
       <button
-        role="link"
         type="submit"
         disabled={isIncluded}
         className={`btn btn-md min-w-[220px] ${buttonVariant} ${disabledStyle}`}

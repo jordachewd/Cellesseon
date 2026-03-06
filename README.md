@@ -4,11 +4,11 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 
 ## Recent Updates (March 2026)
 
+- Fixed client/runtime boundary and accessibility regressions: added missing `"use client"` directives (`avatar-menu`, `toggle-theme`) and removed invalid `role="link"` from form submit checkout button.
+- Corrected invalid Tailwind utilities/properties in shared layout UI (`z-[1]`, `z-[100]`, and proper `[-webkit-mask-image:...]` arbitrary property usage).
+- Hardened `serializeForClient` typing with a `Jsonify<T>` return type to reflect JSON serialization semantics instead of unsafely returning `T`.
+- Moved `stripe` to runtime `dependencies` so production installs that omit dev dependencies do not break webhook/checkout flows.
 - Normalized Tailwind animation delay utilities to canonical classes (for example, `animate-delay-200` and `animate-delay-800`) to eliminate `suggestCanonicalClasses` warnings.
-- Audited `knip` results item by item, then removed dead server-action code and unused exports in user/task actions and shared utility modules.
-- Removed unused runtime/dev dependencies reported by `knip` (including `axios`, `mongodb`, `openapi-typescript`, `react-icons`, and unused testing/type packages).
-- Added `knip.json` to suppress validated false positives (`src/types/globals.d.tsx`, `tests/e2e/global.setup.ts`) and keep `prettier` intentionally installed.
-- Simplified `postcss.config.mjs` type annotation usage to avoid unlisted dependency noise and keep static analysis output clean.
 
 ## Tech Stack
 

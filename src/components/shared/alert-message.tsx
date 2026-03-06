@@ -64,7 +64,7 @@ export default function AlertMessage({ message }: AlertMessageProps) {
       : filledSeverityStyles[severity];
 
   return (
-    <div className="fixed left-1/2 top-4 z-100 w-full max-w-xl -translate-x-1/2 px-4">
+    <div className="fixed left-1/2 top-4 z-[100] w-full max-w-xl -translate-x-1/2 px-4">
       <div
         role="alert"
         className={`animate-fade-down rounded-lg border p-4 shadow-lg ${variantClass}`}
