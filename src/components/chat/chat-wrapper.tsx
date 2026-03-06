@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef, useState } from "react";
 import { Message } from "@/types";
 import ChatHeader from "@/components/chat/chat-header";

@@ -209,17 +209,6 @@ object {
   @apply block max-w-full;
 }
 
-/* reset heading style */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
-
 a {
   @apply text-lightText-600 transition-all ease-in hover:text-jwdMarine-500 dark:text-darkText-700 dark:hover:text-white;
 }
@@ -281,7 +270,7 @@ a {
   }
 
   .btn-lg {
-    @apply px-6 py-2 text-2xl leading-none;
+    @apply px-6 py-2.5 text-2xl leading-none;
   }
 
   .btn-text {
@@ -302,11 +291,11 @@ a {
   }
 
   .tooltip-content {
-    @apply pointer-events-none absolute z-50 rounded-md bg-darkSecondary-600 px-2 py-1 text-xs leading-none text-white opacity-0 shadow transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100;
+    @apply pointer-events-none absolute z-50 rounded-md bg-darkSecondary-600 p-0.5 text-[10px] leading-none text-white opacity-0 shadow transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100;
   }
 
   .chat-markdown {
-    @apply mt-6 max-w-[80%] break-words rounded-l-xl rounded-b-xl bg-lightSecondary-200 px-3 py-1 text-lightText-500 shadow dark:bg-darkSecondary-500 dark:text-darkText-500;
+    @apply mt-6 max-w-[80%] wrap-break-word rounded-l-xl rounded-b-xl bg-lightSecondary-200 px-3 py-1 text-lightText-500 shadow dark:bg-darkSecondary-500 dark:text-darkText-500;
   }
 
   .chat-markdown--bot {
@@ -437,6 +426,6 @@ a {
   }
 
   .cellesseon-scrollbar {
-    @apply [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-lightBorders-500 [&::-webkit-scrollbar-thumb]:bg-lightSecondary-800 dark:[&::-webkit-scrollbar-track]:bg-darkBorders-500 dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
+    @apply [&::-webkit-scrollbar]:w-0.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-lightBorders-500 [&::-webkit-scrollbar-thumb]:bg-lightSecondary-800 dark:[&::-webkit-scrollbar-track]:bg-darkBorders-500 dark:[&::-webkit-scrollbar-thumb]:bg-darkSecondary-500;
   }
 }

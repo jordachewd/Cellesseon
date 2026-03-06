@@ -42,7 +42,7 @@ export default function ChatSidebar({ userPlan }: ChatSidebarProps) {
 
   return (
     <>
-      <div className="fixed left-2 top-2.5 z-30 flex rounded-md p-1">
+      <div className="fixed left-52 top-2.5 z-30 flex rounded-md p-1">
         <SidebarToggle
           icon="bi-layout-sidebar"
           title={`${isOpen ? "Hide menu" : "Show menu"}`}

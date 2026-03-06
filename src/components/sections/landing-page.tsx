@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function LandingPage() {
   return (
     <section
-      className="relative z-10 -mt-14 mb-10 flex w-full flex-1 flex-col items-center gap-10"
+      className="relative z-10 -mt-16 mb-10 flex w-full flex-1 flex-col items-center gap-10"
       id="LandingPageWrapper"
     >
       <div className="flex w-full items-center justify-between bg-white/50 px-4 pt-14 shadow-sm sm:px-6 lg:px-8 dark:bg-darkPrimary-900/50">
@@ -22,7 +22,7 @@ export default function LandingPage() {
             </p>
 
             <Link
-              className="btn btn-lg btn-outlined w-full max-w-[300px]"
+              className="btn btn-lg btn-outlined w-full max-w-[300px] p-4"
               href="/sign-up"
             >
               Try it for free

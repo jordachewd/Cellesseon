@@ -31,8 +31,8 @@ export default function Header() {
           <LogoV2 />
         </div>
         <div className="ml-auto flex items-center gap-4">
-          <Link className="btn btn-text btn-sm" href="/sign-in">
-            login
+          <Link className="btn btn-text btn-sm uppercase" href="/sign-in">
+            Login
           </Link>
 
           <ToggleTheme />
