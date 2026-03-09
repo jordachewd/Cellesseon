@@ -35,10 +35,7 @@ export async function POST(req: Request): Promise<NextResponse> {
       );
     }
 
-    const normalizedImgBuffer = imgBuffer.replace(
-      /^data:[^;]+;base64,/,
-      "",
-    );
+    const normalizedImgBuffer = imgBuffer.replace(/^data:[^;]+;base64,/, "");
     const payloadSizeBytes = Buffer.byteLength(normalizedImgBuffer, "base64");
 
     if (payloadSizeBytes > MAX_BASE64_IMAGE_SIZE_BYTES) {
@@ -100,7 +97,10 @@ export async function DELETE(req: Request): Promise<NextResponse> {
 
     if (!normalizedFolder.startsWith(userOwnedPrefix)) {
       return NextResponse.json(
-        { message: "Forbidden: folder does not belong to the authenticated user." },
+        {
+          message:
+            "Forbidden: folder does not belong to the authenticated user.",
+        },
         { status: 403 },
       );
     }
