@@ -1,11 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 import ToggleTheme from "@/components/shared/toggle-theme";
+import AvatarMenu from "@/components/shared/avatar-menu";
 import Logo from "../shared/app-logo";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState<boolean>(false);
+  const { isSignedIn } = useUser();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,9 +34,13 @@ export default function Header() {
           <Logo />
         </div>
         <div className="ml-auto flex items-center gap-4">
-          <Link className="btn btn-text btn-sm uppercase" href="/sign-in">
-            Login
-          </Link>
+          {!isSignedIn && (
+            <Link className="btn btn-text btn-sm uppercase" href="/sign-in">
+              Login
+            </Link>
+          )}
+
+          {isSignedIn && <AvatarMenu />}
 
           <ToggleTheme />
         </div>

@@ -66,7 +66,7 @@ export default function ChatHeader({
               <i className="bi bi-plus-circle-dotted"></i>
             </button>
           </TooltipArrow>
-          
+
           <ToggleTheme />
           <AvatarMenu />
         </div>
