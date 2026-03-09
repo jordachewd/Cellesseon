@@ -64,7 +64,7 @@ export default function PlanCountDown({
   };
 
   return wrapped ? (
-    <div className={`${style}`}>
+    <div className={`PlanCountDown ${style}`}>
       {timeUp ? (
         "Time is up!"
       ) : countdown ? (
@@ -74,7 +74,7 @@ export default function PlanCountDown({
       )}
     </div>
   ) : (
-    <>
+    <span className="PlanCountDown">
       {timeUp ? (
         "Time is up!"
       ) : countdown ? (
@@ -85,6 +85,6 @@ export default function PlanCountDown({
           className="inline-flex items-center gap-0.5"
         />
       )}
-    </>
+    </span>
   );
 }

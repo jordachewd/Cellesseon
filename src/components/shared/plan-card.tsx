@@ -47,7 +47,7 @@ export default function PlanCard({
 
   return (
     <div
-      className={`relative flex w-full flex-col gap-10 overflow-hidden rounded-lg px-4 py-10 shadow-xl lg:px-8 ${accentStyles}`}
+      className={`PlanCard relative flex w-full flex-col gap-10 overflow-hidden rounded-lg px-4 py-10 shadow-xl lg:px-8 ${accentStyles}`}
     >
       {(isPopular || isCurrent) && (
         <div

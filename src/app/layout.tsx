@@ -74,6 +74,7 @@ export default function RootLayout({
               })();
             `}
           </Script>
+
           <CellesseonTheme>
             <MainWrapper>{children}</MainWrapper>
           </CellesseonTheme>

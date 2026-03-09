@@ -47,7 +47,7 @@ export default function AvatarMenu() {
   const handleCloseUserMenu = () => setOpen(false);
 
   return (
-    <div className="relative flex" ref={wrapperRef}>
+    <div className="AvatarMenu relative flex" ref={wrapperRef}>
       <TooltipArrow title="Account" placement="bottom">
         <button
           type="button"

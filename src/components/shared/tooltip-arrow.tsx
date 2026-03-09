@@ -34,7 +34,7 @@ export const TooltipArrow = ({
   }
 
   return (
-    <span className={`group relative inline-flex ${className}`}>
+    <span className={`TooltipArrow group relative inline-flex ${className}`}>
       {children}
       <span
         role="tooltip"

@@ -2,7 +2,7 @@ import { faqs } from "@/constants/faqs";
 
 export default function Faqs() {
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 p-4 sm:gap-10">
+    <div className="Faqs mx-auto flex w-full max-w-6xl flex-col gap-8 p-4 sm:gap-10">
       <div className="flex flex-col items-center justify-center gap-2 text-center">
         <h2 className="heading-4 leading-tight">Frequently Asked Questions</h2>
         <p className="body-2 max-w-2xl">

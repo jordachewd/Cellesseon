@@ -26,7 +26,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
 
   if (!isLoaded) {
     return (
-      <section className="flex w-full items-center justify-center">
+      <section className="ChatIntro flex w-full items-center justify-center">
         <LoadingBubbles size="large" />
       </section>
     );
@@ -36,7 +36,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
     <>
       {chipSet < 0 ? (
         <>
-          <h1 className="heading-5 animate-fade-up animate-once animate-duration-700 text-center">
+          <h1 className="ChatIntro heading-5 animate-fade-up animate-once animate-duration-700 text-center">
             Hello {user?.firstName || "there"}!
           </h1>
 
@@ -60,7 +60,7 @@ export default function ChatIntro({ sendPrompt }: ChatIntroProps) {
         </>
       ) : (
         <>
-          <h2 className="heading-5 animate-fade-up animate-once animate-duration-700 animate-delay-200 text-center">
+          <h2 className="ChatIntro heading-5 animate-fade-up animate-once animate-duration-700 animate-delay-200 text-center">
             Here are some prompt examples...
           </h2>
           <div className="flex w-full flex-col items-center justify-center">

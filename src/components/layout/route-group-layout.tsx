@@ -9,7 +9,11 @@ export default function RouteGroupLayout({ children }: RouteGroupLayoutProps) {
   return (
     <>
       <ChatHeader />
-      <PageWrapper id="PageWrapperContent" scrollable>
+      <PageWrapper
+        id="PageWrapperContent"
+        scrollable
+        className="RouteGroupLayout"
+      >
         {children}
       </PageWrapper>
     </>

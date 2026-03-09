@@ -21,7 +21,7 @@ export default function ProfileHero({ userData }: HeroProps) {
   const initials = getNameLetters(fullName).children;
 
   return (
-    <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 p-4">
+    <section className="ProfileHero mx-auto flex w-full max-w-6xl flex-col gap-8 p-4">
       <PageHead title="Profile" subtitle="Manage your account settings" />
 
       <div className="flex w-full flex-col items-center justify-between gap-8 rounded-lg border border-lightPrimary-500 bg-lightPrimary-500/50 p-6 shadow-md md:flex-row dark:border-darkPrimary-500 dark:bg-darkPrimary-500/30">

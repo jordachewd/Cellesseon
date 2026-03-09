@@ -8,11 +8,12 @@ export default function ToggleTheme() {
 
   const lightActive =
     mode === "light" || (mode === "system" && resolvedMode === "light");
+
   const darkActive =
     mode === "dark" || (mode === "system" && resolvedMode === "dark");
 
   return (
-    <div className="inline-flex items-center rounded-lg bg-lightPrimary-100/70 p-1 dark:bg-darkPrimary-900/50">
+    <div className="ToggleTheme inline-flex items-center rounded-lg bg-lightPrimary-100/70 p-1 dark:bg-darkPrimary-900/50">
       <TooltipArrow title="Light" placement="bottom">
         <button
           type="button"

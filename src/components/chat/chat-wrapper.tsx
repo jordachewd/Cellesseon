@@ -90,7 +90,7 @@ export default function ChatWrapper() {
   };
 
   return (
-    <main className="relative z-0 flex h-full flex-1 flex-col">
+    <main className="ChatWrapper relative z-0 flex h-full flex-1 flex-col">
       {alert && <AlertMessage message={alert} />}
       <ChatHeader setNewTask={() => setTask([])} />
 

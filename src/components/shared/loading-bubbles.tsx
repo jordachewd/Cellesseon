@@ -30,7 +30,7 @@ export default function LoadingBubbles({
   const bubbleLoader = (
     <div
       className={classNames(
-        "flex w-full items-center justify-center gap-1",
+        "LoadingBubbles flex w-full items-center justify-center gap-1",
         className,
       )}
     >
@@ -51,7 +51,7 @@ export default function LoadingBubbles({
 
   if (wrapped) {
     return (
-      <div className="flex h-dvh items-center justify-center">
+      <div className="LoadingBubbles flex h-dvh items-center justify-center">
         {bubbleLoader}
       </div>
     );

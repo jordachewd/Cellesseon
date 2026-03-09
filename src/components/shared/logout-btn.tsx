@@ -12,7 +12,7 @@ export default function LogoutBtn() {
   return (
     <button
       type="button"
-      className="flex flex-1 items-center"
+      className="LogoutBtn flex flex-1 items-center"
       onClick={handleLogout}
     >
       <i className="bi bi-box-arrow-right mr-4" />

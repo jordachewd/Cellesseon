@@ -15,7 +15,7 @@ export default function PageWrapper({
 }: PageWrapperProps) {
   return (
     <div
-      className={`relative z-10 flex h-dvh w-full flex-col p-0 m-0 ${customCss}`}
+      className={`PageWrapper relative z-10 flex h-dvh w-full flex-col p-0 m-0 ${customCss}`}
       id={pageId}
     >
       {scrollable ? (

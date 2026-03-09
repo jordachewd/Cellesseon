@@ -32,7 +32,7 @@ const Checkout = ({ plan, planStatus }: CheckoutProps) => {
     : "";
 
   return (
-    <form action={onCheckout}>
+    <form action={onCheckout} className="Checkout">
       <button
         type="submit"
         disabled={isIncluded}

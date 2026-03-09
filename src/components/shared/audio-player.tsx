@@ -87,7 +87,7 @@ export default function AudioPlayer({ audioSrc }: AudioPlayerProps) {
   };
 
   return (
-    <div className="mx-auto mt-3 flex w-full rounded-lg border border-lightBorders-500 bg-lightBackground-100 shadow dark:border-darkBorders-500 dark:bg-jwdMarine-900">
+    <div className="AudioPlayer mx-auto mt-3 flex w-full rounded-lg border border-lightBorders-500 bg-lightBackground-100 shadow dark:border-darkBorders-500 dark:bg-jwdMarine-900">
       <div className="flex flex-1 items-center justify-between gap-4 p-4">
         <button
           type="button"

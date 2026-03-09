@@ -26,7 +26,7 @@ export default function HttpStatusPage({
   ctaLabel,
 }: HttpStatusPageProps) {
   return (
-    <PageWrapper className="items-center justify-center gap-10 px-4">
+    <PageWrapper className="HttpStatusPage items-center justify-center gap-10 px-4">
       <p className="text-sm font-semibold uppercase tracking-[0.24em] text-lightText-600 dark:text-darkText-700">
         HTTP {code}
       </p>

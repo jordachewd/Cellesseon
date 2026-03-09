@@ -8,7 +8,7 @@ export const UploadFileInput = forwardRef<
     <input
       {...props}
       ref={ref}
-      className={`absolute bottom-0 left-0 h-px w-px overflow-hidden whitespace-nowrap [clip-path:inset(50%)] [clip:rect(0_0_0_0)] ${props.className || ""}`}
+      className={`UploadFileInput absolute bottom-0 left-0 h-px w-px overflow-hidden whitespace-nowrap [clip-path:inset(50%)] [clip:rect(0_0_0_0)] ${props.className || ""}`}
     />
   );
 });

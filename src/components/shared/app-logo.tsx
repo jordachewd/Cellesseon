@@ -18,7 +18,7 @@ export default function Logo({
   return (
     <Link
       href={href}
-      className={`text-lightText-500 dark:text-darkText-500 ${styles}`}
+      className={`Logo text-lightText-500 dark:text-darkText-500 ${styles}`}
     >
       <svg width={width || 100} height={height || 20} viewBox="0 0 100 20">
         <path

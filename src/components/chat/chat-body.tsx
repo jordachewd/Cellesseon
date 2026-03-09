@@ -87,7 +87,7 @@ export default function ChatBody({ messages }: ChatBodyProps) {
   return (
     <>
       <div
-        className="mx-auto flex w-full max-w-screen-lg flex-1 flex-col space-y-4 p-6 lg:px-0 lg:pb-10 lg:pt-20"
+        className="ChatBody mx-auto flex w-full max-w-screen-lg flex-1 flex-col space-y-4 p-6 lg:px-0 lg:pb-10 lg:pt-20"
         ref={parent}
       >
         {listMessages}

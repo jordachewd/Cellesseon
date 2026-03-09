@@ -87,7 +87,7 @@ export default function ChatInput({
   };
 
   return (
-    <section className="sticky bottom-[env(safe-area-inset-bottom)] z-20 flex w-full flex-col items-center px-4 xl:px-0">
+    <section className="ChatInput sticky bottom-[env(safe-area-inset-bottom)] z-20 flex w-full flex-col items-center px-4 xl:px-0">
       <div className="flex w-full max-w-screen-lg items-end justify-between space-x-2 rounded-md border border-jwdMarine-1000 bg-jwdMarine-900 p-2 shadow-md dark:border-jwdAqua-100/10 dark:bg-jwdAqua-600/10">
         <div className="relative flex flex-1 items-end space-x-2 border-r border-dotted border-slate-300 px-2 dark:border-jwdAqua-100/20">
           <textarea

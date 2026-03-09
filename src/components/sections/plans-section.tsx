@@ -33,13 +33,13 @@ export default function Plans({ userData, hasLoader = false }: PlansProps) {
 
   if (hasLoader && !userData)
     return (
-      <div className="flex h-96 w-full items-center justify-center">
+      <div className="Plans flex h-96 w-full items-center justify-center">
         <LoadingBubbles />
       </div>
     );
 
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4">
+    <div className="Plans mx-auto flex w-full max-w-6xl flex-col gap-6 p-4">
       <PageHead
         title={`${isSignedIn ? "Upgrade" : "Choose"} your plan`}
         subtitle="Select the plan that suits your needs!"

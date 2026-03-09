@@ -1,6 +1,3 @@
-import Header from "@/components/layout/app-header";
-import Footer from "@/components/layout/app-footer";
-import LandingPage from "@/components/sections/landing-page";
 import ChatSidebar from "@/components/chat/chat-sidebar";
 import ChatWrapper from "@/components/chat/chat-wrapper";
 import PageWrapper from "@/components/layout/page-wrapper";
@@ -20,10 +17,6 @@ export default async function Home() {
       <ChatWrapper />
     </PageWrapper>
   ) : (
-    <>
-      <Header />
-      <LandingPage />
-      <Footer />
-    </>
+    <p>NOT AUTHENTICATED</p>
   );
 }

@@ -1,10 +1,11 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { TooltipArrow } from "../shared/tooltip-arrow";
 import ToggleTheme from "@/components/shared/toggle-theme";
 import AvatarMenu from "@/components/shared/avatar-menu";
-import LogoV2 from "../shared/app-logo";
+import Logo from "../shared/app-logo";
 
 interface ChatHeaderProps {
   className?: string;
@@ -19,7 +20,7 @@ export default function ChatHeader({
 }: ChatHeaderProps) {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const currentPath = usePathname();
-  const isMainPage = currentPath === "/";
+  const isMainPage = currentPath === "/app";
 
   useEffect(() => {
     const element = document.querySelector<HTMLElement>(
@@ -41,32 +42,31 @@ export default function ChatHeader({
 
   return (
     <section
-      className={`absolute left-0 right-0 top-0 z-20 flex w-full px-4 transition-all duration-300 ease-in-out ${scrolled ? "bg-lightPrimary-100/50 shadow-sm backdrop-blur-lg dark:bg-darkPrimary-900/50" : ""} ${style}`}
+      className={`ChatHeader absolute left-0 right-0 top-0 z-20 flex w-full px-4 transition-all duration-300 ease-in-out ${scrolled ? "bg-lightPrimary-100/50 shadow-sm backdrop-blur-lg dark:bg-darkPrimary-900/50" : ""} ${style}`}
     >
       <div
         className={`mx-auto flex w-full items-center justify-between gap-4 py-3 ${isMainPage ? "pl-8" : ""}`}
       >
         <div className="flex items-center gap-4">
-          {!isMainPage && <LogoV2 />}
-          {isMainPage && (
-            <TooltipArrow
-              title="New Task"
-              placement="right"
-              className="transition-all"
-            >
-              <button
-                type="button"
-                onClick={setNewTask}
-                disabled={isInUse}
-                className="icon-btn"
-                aria-label="Start new task"
-              >
-                <i className="bi bi-plus-circle-dotted"></i>
-              </button>
-            </TooltipArrow>
-          )}
+          <Logo />
         </div>
         <div className="ml-auto flex items-center gap-4">
+          <TooltipArrow
+            title="New Task"
+            placement="right"
+            className="transition-all"
+          >
+            <button
+              type="button"
+              onClick={setNewTask}
+              disabled={isInUse}
+              className="icon-btn"
+              aria-label="Start new task"
+            >
+              <i className="bi bi-plus-circle-dotted"></i>
+            </button>
+          </TooltipArrow>
+          
           <ToggleTheme />
           <AvatarMenu />
         </div>

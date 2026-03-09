@@ -1,4 +1,5 @@
 "use client";
+
 import {
   createContext,
   ReactNode,
@@ -63,6 +64,7 @@ export default function CellesseonTheme({ children }: ThemeProps) {
   const applyTheme = useCallback((targetMode: ThemeMode) => {
     const nextResolvedMode =
       targetMode === "system" ? getSystemMode() : targetMode;
+    document.documentElement.classList.add("CellesseonTheme");
     document.documentElement.setAttribute(
       "data-cellesseon-theme",
       nextResolvedMode,

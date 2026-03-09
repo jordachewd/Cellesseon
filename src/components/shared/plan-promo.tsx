@@ -16,7 +16,7 @@ export default function PlanPromo({ userPlan }: PlanPromoProps) {
   const isPremiumFull = isPremium && name === "Premium";
 
   return (
-    <div className="relative flex w-full flex-col items-center gap-1 overflow-hidden rounded-lg bg-lightAccent-500 p-4 text-darkAccent-1000 shadow-md dark:bg-darkAccent-500 dark:text-darkAccent-1000">
+    <div className="PlanPromo relative flex w-full flex-col items-center gap-1 overflow-hidden rounded-lg bg-lightAccent-500 p-4 text-darkAccent-1000 shadow-md dark:bg-darkAccent-500 dark:text-darkAccent-1000">
       <div className="absolute -top-1/2 right-1/3 z-0 flex h-[150%] w-full -rotate-45 items-center justify-center rounded-lg bg-lightAccent-700/60 opacity-50 dark:bg-darkAccent-700/70"></div>
 
       <div className="z-10 flex w-full flex-col gap-3 text-center">

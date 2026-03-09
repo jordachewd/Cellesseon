@@ -42,7 +42,7 @@ export default function ImageHolder({
   };
 
   return (
-    <div className="relative mb-2 mt-3 flex max-h-max max-w-max items-center justify-center overflow-hidden rounded bg-jwdAqua-500/10 shadow-sm transition-all">
+    <div className="ImageHolder relative mb-2 mt-3 flex max-h-max max-w-max items-center justify-center overflow-hidden rounded bg-jwdAqua-500/10 shadow-sm transition-all">
       {isLoading ? (
         <span className="flex p-4">
           <LoadingBubbles size="small" />
