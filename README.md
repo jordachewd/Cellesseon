@@ -1,4 +1,4 @@
-﻿# Cellesseon
+# Cellesseon
 
 Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CSS v4.2, Clerk, Stripe, MongoDB, and OpenAI.
 
@@ -7,8 +7,6 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 - **Validation pipeline:** TypeScript, ESLint, Prettier, and Vitest all pass (24 suites, 103 tests).
 - **E2E:** 2 Playwright specs covering landing page and authenticated flows.
 - **Architecture:** Server Components first, Server Actions for mutations, Clerk proxy-based route protection.
-- **Spec:** See `SPEC.md` for full product specification, data models, API surface, and known technical debt.
-- **Open work:** See `TODO.md` for prioritized, granular development tasks.
 
 ## Tech Stack
 
@@ -63,9 +61,3 @@ npm run build
 ```
 
 All six gates must pass before every commit.
-
-## Environment Variables
-
-Copy `.env.local.example` to `.env.local` and populate all values. Required variables are documented in `SPEC.md` Section 12.
-
-**Never commit secrets to the repository.**

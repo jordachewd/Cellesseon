@@ -17,6 +17,7 @@ const TransactionSchema = new Schema<ITransaction>({
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true,
+    index: true,
   },
   stripeId: {
     type: String,
@@ -26,6 +27,7 @@ const TransactionSchema = new Schema<ITransaction>({
   clerkId: {
     type: String,
     required: true,
+    index: true,
   },
   createdAt: {
     type: Date,

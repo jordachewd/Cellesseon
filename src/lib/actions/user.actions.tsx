@@ -1,32 +1,11 @@
 "use server";
-import User from "../database/models/user.model";
+import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
+import { UpdateUserParams } from "@/types/UserData.d";
+import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
-import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
 import { handleError } from "../utils/handleError";
 import serializeForClient from "../utils/serialize-for-client";
-import { auth } from "@clerk/nextjs/server";
-
-// CREATE USER (called from Clerk webhook — auth verified via signature)
-export async function createUser(user: CreateUserParams) {
-  try {
-    await connectToDatabase();
-
-    const newUser = await User.create(user);
-
-    if (!newUser) {
-      return serializeForClient({
-        message: "User creation failed!",
-        status: "Error",
-        source: "createUser",
-      });
-    }
-
-    return serializeForClient(newUser);
-  } catch (error) {
-    handleError({ error, source: "createUser" });
-  }
-}
 
 // UPDATE
 export async function updateUser(clerkId: string, user: UpdateUserParams) {
@@ -39,14 +18,14 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
 
     const updatedUser = await User.findOneAndUpdate({ clerkId }, user, {
       new: true,
-      strict: false,
-      upsert: true,
+      strict: true,
+      upsert: false,
     });
 
     if (!updatedUser) {
       return serializeForClient({
         message: "User update failed!",
-        status: "Error",
+        status: 404,
         source: "updateUser",
       });
     }

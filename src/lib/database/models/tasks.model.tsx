@@ -33,7 +33,7 @@ const MessageSchema = new Schema<Message>({
 });
 
 const TaskSchema = new Schema<ITask>({
-  userId: { type: String, required: true },
+  userId: { type: String, required: true, index: true },
   title: { type: String, required: true },
   messages: { type: [MessageSchema], required: true },
   usage: { type: Number, required: true, default: 0 },

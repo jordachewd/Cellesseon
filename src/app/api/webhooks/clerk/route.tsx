@@ -3,11 +3,18 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
-import { createUser } from "@/lib/actions/user.actions";
 import { CreateUserParams, UpdateUserParams } from "@/types/UserData.d";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import User from "@/lib/database/models/user.model";
 import Transaction from "@/lib/database/models/transaction.model";
+import serializeForClient from "@/lib/utils/serialize-for-client";
+
+async function createUserFromWebhook(user: CreateUserParams) {
+  await connectToDatabase();
+  const newUser = await User.create(user);
+
+  return newUser ? serializeForClient(newUser) : null;
+}
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET;
@@ -78,19 +85,27 @@ export async function POST(req: Request) {
       registerAt: new Date(created_at),
     };
 
-    const newUser = await createUser(user);
+    const newUser = await createUserFromWebhook(user);
+
+    if (!newUser) {
+      return NextResponse.json(
+        {
+          message: "Webhook error",
+          error: "Failed to create user",
+        },
+        { status: 500 },
+      );
+    }
 
     // Set publicMetadata for Clerk user
-    if (newUser) {
-      const client = await clerkClient();
-      await client.users.updateUserMetadata(id, {
-        publicMetadata: {
-          userId: newUser._id,
-          role: newUser.role,
-          userImg: image_url,
-        },
-      });
-    }
+    const client = await clerkClient();
+    await client.users.updateUserMetadata(id, {
+      publicMetadata: {
+        userId: newUser._id,
+        role: newUser.role,
+        userImg: image_url,
+      },
+    });
 
     return NextResponse.json({ message: "OK", user: newUser });
   }
@@ -109,9 +124,19 @@ export async function POST(req: Request) {
     await connectToDatabase();
     const updatedUser = await User.findOneAndUpdate({ clerkId: id }, user, {
       new: true,
-      strict: false,
-      upsert: true,
+      strict: true,
+      upsert: false,
     });
+
+    if (!updatedUser) {
+      return NextResponse.json(
+        {
+          message: "Webhook error",
+          error: "User not found",
+        },
+        { status: 404 },
+      );
+    }
 
     return NextResponse.json({ message: "OK", user: updatedUser });
   }

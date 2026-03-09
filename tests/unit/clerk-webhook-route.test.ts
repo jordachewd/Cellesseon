@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { POST } from "@/app/api/webhooks/clerk/route";
-import { createUser } from "@/lib/actions/user.actions";
 import { clerkClient } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { connectToDatabase } from "@/lib/database/mongoose";
@@ -28,16 +27,13 @@ vi.mock("next/headers", () => ({
   headers: vi.fn(),
 }));
 
-vi.mock("@/lib/actions/user.actions", () => ({
-  createUser: vi.fn(),
-}));
-
 vi.mock("@/lib/database/mongoose", () => ({
   connectToDatabase: vi.fn(),
 }));
 
 vi.mock("@/lib/database/models/user.model", () => ({
   default: {
+    create: vi.fn(),
     findOneAndUpdate: vi.fn(),
     findOne: vi.fn(),
     findByIdAndDelete: vi.fn(),
@@ -84,6 +80,10 @@ describe("POST /api/webhooks/clerk", () => {
     process.env.CLERK_WEBHOOK_SECRET = "whsec_clerk_test";
     mockSvixHeaders({});
     vi.mocked(connectToDatabase).mockResolvedValue(undefined as never);
+    vi.mocked(User.create).mockResolvedValue({
+      _id: "mongo_user_1",
+      role: "client",
+    } as never);
     vi.mocked(User.findOneAndUpdate).mockResolvedValue(null as never);
     vi.mocked(User.findOne).mockResolvedValue(null as never);
     vi.mocked(User.findByIdAndDelete).mockResolvedValue(null as never);
@@ -124,7 +124,7 @@ describe("POST /api/webhooks/clerk", () => {
 
     expect(response.status).toBe(400);
     await expect(response.text()).resolves.toBe("Error occured");
-    expect(createUser).not.toHaveBeenCalled();
+    expect(User.create).not.toHaveBeenCalled();
   });
 
   it("creates a user and updates clerk metadata for user.created", async () => {
@@ -147,7 +147,7 @@ describe("POST /api/webhooks/clerk", () => {
         image_url: "https://cdn.example.com/u1.png",
       },
     });
-    vi.mocked(createUser).mockResolvedValue({
+    vi.mocked(User.create).mockResolvedValue({
       _id: "mongo_user_1",
       role: "client",
     } as never);
@@ -157,7 +157,7 @@ describe("POST /api/webhooks/clerk", () => {
 
     expect(response.status).toBe(200);
     expect(webhookCtorMock).toHaveBeenCalledWith("whsec_clerk_test");
-    expect(createUser).toHaveBeenCalledWith(
+    expect(User.create).toHaveBeenCalledWith(
       expect.objectContaining({
         clerkId: "clerk_user_1",
         username: "adal",
@@ -204,11 +204,32 @@ describe("POST /api/webhooks/clerk", () => {
       }),
       expect.objectContaining({
         new: true,
-        strict: false,
-        upsert: true,
+        strict: true,
+        upsert: false,
       }),
     );
     expect(payload.message).toBe("OK");
+  });
+
+  it("returns 404 for user.updated when no matching user exists", async () => {
+    verifyMock.mockReturnValue({
+      type: "user.updated",
+      data: {
+        id: "missing_user",
+        updated_at: "2026-02-01T00:00:00.000Z",
+        first_name: "Ada",
+        last_name: "Byron",
+        image_url: "https://cdn.example.com/u2.png",
+      },
+    });
+    vi.mocked(User.findOneAndUpdate).mockResolvedValue(null as never);
+
+    const response = await POST(buildRequest({ event: "user.updated" }));
+    const payload = await response.json();
+
+    expect(response.status).toBe(404);
+    expect(payload.message).toBe("Webhook error");
+    expect(payload.error).toBe("User not found");
   });
 
   it("deletes user and linked transactions for user.deleted", async () => {

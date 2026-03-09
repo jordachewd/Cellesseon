@@ -145,7 +145,7 @@ describe("POST /api/webhooks/stripe", () => {
       }),
       {
         new: true,
-        strict: false,
+        strict: true,
       },
     );
     expect(payload.message).toBe("OK");

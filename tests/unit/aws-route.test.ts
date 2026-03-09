@@ -82,6 +82,24 @@ describe("/api/aws route", () => {
     expect(payload.fileUrl).toContain("task_abc_image_rand123.png");
   });
 
+  it("returns 400 when upload payload exceeds 10MB", async () => {
+    const tooLargePayload = Buffer.alloc(10 * 1024 * 1024 + 1).toString(
+      "base64",
+    );
+
+    const response = await POST(
+      buildRequest("POST", {
+        taskId: "task_abc",
+        imgBuffer: tooLargePayload,
+      }),
+    );
+    const payload = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(payload.message).toBe("Image payload exceeds 10MB limit.");
+    expect(uploadFileToAWS).not.toHaveBeenCalled();
+  });
+
   it("returns 500 when upload fails", async () => {
     vi.mocked(uploadFileToAWS).mockRejectedValue(new Error("S3 unavailable"));
 
@@ -124,7 +142,10 @@ describe("/api/aws route", () => {
 
   it("deletes image with user id path and returns success", async () => {
     const response = await DELETE(
-      buildRequest("DELETE", { folder: "task_abc", fileName: "file.png" }),
+      buildRequest("DELETE", {
+        folder: "user_123/task_abc",
+        fileName: "file.png",
+      }),
     );
     const payload = await response.json();
 
@@ -137,11 +158,28 @@ describe("/api/aws route", () => {
     expect(payload.message).toBe("Image deleted successfully");
   });
 
+  it("returns 403 when delete folder does not belong to the authenticated user", async () => {
+    const response = await DELETE(
+      buildRequest("DELETE", {
+        folder: "other_user/task_abc",
+        fileName: "file.png",
+      }),
+    );
+    const payload = await response.json();
+
+    expect(response.status).toBe(403);
+    expect(payload.message).toContain("Forbidden");
+    expect(deleteFileFromAWS).not.toHaveBeenCalled();
+  });
+
   it("returns 500 when delete operation fails", async () => {
     vi.mocked(deleteFileFromAWS).mockRejectedValue(new Error("Delete failed"));
 
     const response = await DELETE(
-      buildRequest("DELETE", { folder: "task_abc", fileName: "file.png" }),
+      buildRequest("DELETE", {
+        folder: "user_123/task_abc",
+        fileName: "file.png",
+      }),
     );
     const payload = await response.json();
 

@@ -185,7 +185,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         newUserData,
         {
           new: true,
-          strict: false,
+          strict: true,
         },
       );
 
