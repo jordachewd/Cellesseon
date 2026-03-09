@@ -2,25 +2,12 @@
 
 Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CSS v4.2, Clerk, Stripe, MongoDB, and OpenAI.
 
-## Recent Updates (March 2026)
+## Current Status
 
-### Security hardening
-
-- Enforced task ownership — `updateTask` now filters by both `_id` and `userId`, preventing cross-user task overwrites.
-- Auth-gated `updateUser`, `deleteUser`, and `deleteAllTransactions` server actions. Webhook handlers (Clerk, Stripe) now perform direct DB operations under signature-verified context instead of calling the exported actions.
-- Added per-user rate limiting on `/api/openai` (in-memory sliding window, 20 req/60s) with proper `429` responses and `Retry-After` headers.
-- Stripe webhook no longer leaks the raw error object — catch block returns a generic message.
-- `/api/download` proxy route now requires Clerk authentication.
-
-### UI/UX and code quality
-
-- Fixed client/runtime boundary and accessibility regressions: added missing `"use client"` directives (`avatar-menu`, `toggle-theme`) and removed invalid `role="link"` from form submit checkout button.
-- Corrected non-canonical Tailwind utilities across the codebase and silenced `suggestCanonicalClasses` in VS Code settings.
-- Removed global heading reset that was overriding brand `.heading-[x]` classes.
-- Increased `.btn-lg` padding and adjusted `.tooltip-content` padding.
-- Moved universal reset to `@layer base` so component styles are no longer overridden.
-- Hardened `serializeForClient` typing with a `Jsonify<T>` return type.
-- Moved `stripe` to runtime `dependencies` so production installs do not break webhook/checkout flows.
+- **Validation pipeline:** TypeScript, ESLint, Prettier, and Vitest all pass (23 suites, 101 tests).
+- **E2E:** 2 Playwright specs covering landing page and authenticated flows.
+- **Architecture:** Server Components first, Server Actions for mutations, Clerk proxy-based route protection.
+- **Open work:** See `TODO.md` for prioritized, granular development tasks.
 
 ## Tech Stack
 
@@ -55,7 +42,7 @@ src/
     utils/
   types/
 tests/
-  unit/                    # 21 suites, 96 tests (Vitest)
+  unit/                    # 23 suites, 101 tests (Vitest)
   e2e/                     # 2 specs (Playwright)
 ```
 
