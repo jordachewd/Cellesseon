@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
-import { createTransaction } from "@/lib/actions/transaction.action";
 import { getExpiresOn } from "@/constants/plans";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import Transaction from "@/lib/database/models/transaction.model";
@@ -17,10 +16,6 @@ vi.mock("stripe", () => ({
   },
 }));
 
-vi.mock("@/lib/actions/transaction.action", () => ({
-  createTransaction: vi.fn(),
-}));
-
 vi.mock("@/constants/plans", () => ({
   getExpiresOn: vi.fn(),
 }));
@@ -32,6 +27,7 @@ vi.mock("@/lib/database/mongoose", () => ({
 vi.mock("@/lib/database/models/transaction.model", () => ({
   default: {
     findOne: vi.fn(),
+    create: vi.fn(),
   },
 }));
 
@@ -62,6 +58,9 @@ describe("POST /api/webhooks/stripe", () => {
     process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
     vi.mocked(connectToDatabase).mockResolvedValue(undefined as never);
     vi.mocked(Transaction.findOne).mockResolvedValue(null);
+    vi.mocked(Transaction.create).mockResolvedValue({
+      _id: "txn_default",
+    } as never);
     vi.mocked(User.findOne).mockResolvedValue({
       _id: "mongo_user_1",
     } as never);
@@ -113,14 +112,14 @@ describe("POST /api/webhooks/stripe", () => {
       },
     });
 
-    vi.mocked(createTransaction).mockResolvedValue({ _id: "txn_1" } as never);
+    vi.mocked(Transaction.create).mockResolvedValue({ _id: "txn_1" } as never);
 
     const response = await POST(buildRequest('{"valid":"payload"}', "sig_123"));
     const payload = await response.json();
 
     expect(response.status).toBe(200);
     expect(getExpiresOn).toHaveBeenCalledWith("Pro", "Monthly");
-    expect(createTransaction).toHaveBeenCalledWith(
+    expect(Transaction.create).toHaveBeenCalledWith(
       expect.objectContaining({
         stripeId: "cs_test_123",
         userId: "mongo_user_1",
@@ -172,7 +171,9 @@ describe("POST /api/webhooks/stripe", () => {
         },
       },
     });
-    vi.mocked(createTransaction).mockResolvedValue(null as never);
+    vi.mocked(Transaction.create).mockRejectedValue(
+      new Error("Transaction create failed"),
+    );
 
     const response = await POST(buildRequest('{"valid":"payload"}', "sig_123"));
     const payload = await response.json();
@@ -210,7 +211,7 @@ describe("POST /api/webhooks/stripe", () => {
     expect(response.status).toBe(400);
     expect(payload.message).toBe("Webhook error");
     expect(payload.error).toContain("could not be matched");
-    expect(createTransaction).not.toHaveBeenCalled();
+    expect(Transaction.create).not.toHaveBeenCalled();
     expect(User.findOneAndUpdate).not.toHaveBeenCalled();
   });
 
@@ -256,7 +257,7 @@ describe("POST /api/webhooks/stripe", () => {
 
     expect(response.status).toBe(200);
     expect(payload.message).toBe("Already processed");
-    expect(createTransaction).not.toHaveBeenCalled();
+    expect(Transaction.create).not.toHaveBeenCalled();
     expect(User.findOneAndUpdate).not.toHaveBeenCalled();
   });
 });

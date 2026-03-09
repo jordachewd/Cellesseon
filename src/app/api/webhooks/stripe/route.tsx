@@ -12,10 +12,10 @@
  */
 
 import { getExpiresOn } from "@/constants/plans";
-import { createTransaction } from "@/lib/actions/transaction.action";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import Transaction from "@/lib/database/models/transaction.model";
 import User from "@/lib/database/models/user.model";
+import serializeForClient from "@/lib/utils/serialize-for-client";
 import { BillingCycle, PlanData, PlanName } from "@/types/PlanData.d";
 import { CreateTransactionParams } from "@/types/TransactionData.d";
 import { UpdateUserParams } from "@/types/UserData.d";
@@ -24,6 +24,23 @@ import stripe from "stripe";
 
 const ALLOWED_PLAN_NAMES: readonly PlanName[] = ["Lite", "Pro", "Premium"];
 const ALLOWED_BILLING_CYCLES: readonly BillingCycle[] = ["Monthly", "Yearly"];
+
+async function createTransaction(transaction: CreateTransactionParams) {
+  try {
+    const newTransaction = await Transaction.create(transaction);
+
+    return serializeForClient(newTransaction);
+  } catch (error) {
+    console.error("Stripe webhook failed to create transaction", {
+      stripeId: transaction.stripeId,
+      clerkId: transaction.clerkId,
+      userId: transaction.userId,
+      error,
+    });
+
+    return null;
+  }
+}
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body = await request.text();

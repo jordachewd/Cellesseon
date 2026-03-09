@@ -5,10 +5,7 @@ import { handleError } from "@/lib/utils/handleError";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import Transaction from "@/lib/database/models/transaction.model";
 import User from "@/lib/database/models/user.model";
-import {
-  CheckoutTransactionParams,
-  CreateTransactionParams,
-} from "@/types/TransactionData.d";
+import { CheckoutTransactionParams } from "@/types/TransactionData.d";
 import { CheckoutPlanParams } from "@/types/PlanData.d";
 import getFullName from "@/lib/utils/getFullName";
 import serializeForClient from "@/lib/utils/serialize-for-client";
@@ -68,18 +65,6 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   });
 
   redirect(session.url!);
-}
-
-export async function createTransaction(transaction: CreateTransactionParams) {
-  try {
-    await connectToDatabase();
-
-    const newTransaction = await Transaction.create(transaction);
-
-    return serializeForClient(newTransaction);
-  } catch (error) {
-    handleError({ error, source: "createTransaction" });
-  }
 }
 
 export async function getAllTransactions(userId: string) {

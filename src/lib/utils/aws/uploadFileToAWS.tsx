@@ -31,16 +31,13 @@ export default async function uploadFileToAWS(
 
     const putObjectToAWS = new PutObjectCommand(params);
 
-    console.log("Uploading file to AWS S3:", filePath);
-
     await awsS3Client.send(putObjectToAWS);
 
     const fileUrl = `https://${bucketName}.s3.${region}.amazonaws.com/${filePath}`;
 
-    console.log("File successfully uploaded:", fileUrl);
     return fileUrl;
   } catch (error) {
     console.error("AWS S3 Upload Error:", error);
-    throw new Error(`File upload failed: ${(error as Error).message}`);
+    throw new Error("File upload failed");
   }
 }
