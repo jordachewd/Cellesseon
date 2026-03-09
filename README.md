@@ -4,9 +4,10 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 
 ## Current Status
 
-- **Validation pipeline:** TypeScript, ESLint, Prettier, and Vitest all pass (23 suites, 101 tests).
+- **Validation pipeline:** TypeScript, ESLint, Prettier, and Vitest all pass (24 suites, 103 tests).
 - **E2E:** 2 Playwright specs covering landing page and authenticated flows.
 - **Architecture:** Server Components first, Server Actions for mutations, Clerk proxy-based route protection.
+- **Spec:** See `SPEC.md` for full product specification, data models, API surface, and known technical debt.
 - **Open work:** See `TODO.md` for prioritized, granular development tasks.
 
 ## Tech Stack
@@ -15,10 +16,11 @@ Smart AI assistant SaaS built with Next.js 16, React 19, TypeScript, Tailwind CS
 - React 19
 - TypeScript 5.7 (`strict`)
 - Tailwind CSS 4.2 + `@tailwindcss/postcss`
-- Clerk authentication
+- Clerk authentication (v7)
 - Stripe payments
-- MongoDB + Mongoose
-- OpenAI SDK
+- MongoDB + Mongoose 9
+- OpenAI SDK (GPT-4o, DALL-E 3, GPT-4o Audio Preview)
+- AWS S3 (file storage)
 - Vitest + Playwright
 
 ## Project Structure
@@ -30,19 +32,20 @@ src/
     layout.tsx             # Root layout + Clerk + theme init
     api/                   # Route handlers (openai, upload, download, webhooks)
   components/
-    chat/                  # Chat UI
+    chat/                  # Chat UI (wrapper, input, body, sidebar, header, intro)
     layout/                # App shell + theme provider
     sections/              # Landing/plans/profile sections
     shared/                # Reusable UI primitives/components
-  constants/
+  constants/               # Plans, OpenAI config, AWS config
   lib/
-    actions/
-    database/
-    hooks/
-    utils/
-  types/
+    actions/               # Server actions (user, task, transaction)
+    database/              # Mongoose models and connection
+    hooks/                 # Client hooks (screen size, theme)
+    utils/                 # Utilities (OpenAI, AWS, validation, rate-limit)
+  types/                   # Shared TypeScript types
+  proxy.tsx                # Route protection (Next.js 16 proxy)
 tests/
-  unit/                    # 23 suites, 101 tests (Vitest)
+  unit/                    # 24 suites, 103 tests (Vitest)
   e2e/                     # 2 specs (Playwright)
 ```
 
@@ -60,3 +63,9 @@ npm run build
 ```
 
 All six gates must pass before every commit.
+
+## Environment Variables
+
+Copy `.env.local.example` to `.env.local` and populate all values. Required variables are documented in `SPEC.md` Section 12.
+
+**Never commit secrets to the repository.**
