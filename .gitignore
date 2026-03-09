@@ -9,6 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+.vscode
 
 # testing
 /coverage
@@ -40,5 +41,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# misc
-ToDo.txt
+# AI Data & Agents instructions must stay local
+.agents/
+.codex/
+.claude/
+skills-lock.json
+TODO.md
+AGENTS.md
+SPEC.md
+CLAUDE.md
+
