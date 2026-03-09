@@ -2,20 +2,17 @@
 import { checkoutPlan } from "@/lib/actions/transaction.action";
 import { CheckoutTransactionParams } from "@/types/TransactionData.d";
 import { CheckoutPlanParams, PlanStatus } from "@/types/PlanData.d";
-import { ClerkUserData } from "@/types/UserData.d";
 
 interface CheckoutProps {
   plan: CheckoutPlanParams;
-  clerkUser: ClerkUserData;
   planStatus: PlanStatus;
 }
 
-const Checkout = ({ plan, planStatus, clerkUser }: CheckoutProps) => {
+const Checkout = ({ plan, planStatus }: CheckoutProps) => {
   const { isIncluded, isCurrent, isPopular } = planStatus as PlanStatus;
 
   const onCheckout = async () => {
     const transaction: CheckoutTransactionParams = {
-      user: clerkUser,
       plan,
     };
 

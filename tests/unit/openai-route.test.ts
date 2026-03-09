@@ -100,7 +100,11 @@ describe("POST /api/openai", () => {
     const payload = await response.json();
 
     expect(generateTitle).toHaveBeenCalledOnce();
-    expect(createTask).toHaveBeenCalledOnce();
+    expect(createTask).toHaveBeenCalledWith({
+      title: "Generated title",
+      messages: [{ role: "user", whois: "user", content: "new chat" }],
+      usage: 7,
+    });
     expect(generateResponse).toHaveBeenCalledWith({
       messages: [{ role: "user", whois: "user", content: "new chat" }],
       taskId: "task_123",

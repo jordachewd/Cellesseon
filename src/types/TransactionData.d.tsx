@@ -1,7 +1,6 @@
 // ====== TRANSACTION Data Types
 
 import { BillingCycle, CheckoutPlanParams, PlanName } from "./PlanData.d";
-import { ClerkUserData } from "./UserData.d";
 
 export interface CreateTransactionParams {
   stripeId: string;
@@ -15,7 +14,6 @@ export interface CreateTransactionParams {
 }
 
 export interface CheckoutTransactionParams {
-  user: ClerkUserData;
   plan: CheckoutPlanParams;
 }
 

@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { NextRequest } from "next/server";
 import { GET } from "@/app/api/download/route";
 import { auth } from "@clerk/nextjs/server";
@@ -8,6 +8,15 @@ vi.mock("@clerk/nextjs/server", () => ({
 }));
 
 describe("GET /api/download", () => {
+  beforeEach(() => {
+    vi.mocked(auth).mockResolvedValue({ userId: "user_123" } as never);
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
   it("returns 401 when user is not authenticated", async () => {
     vi.mocked(auth).mockResolvedValue({ userId: null } as never);
     const req = new NextRequest("http://localhost:3000/api/download");
@@ -18,14 +27,7 @@ describe("GET /api/download", () => {
     await expect(response.text()).resolves.toContain("Authentication required");
   });
 
-  afterEach(() => {
-    vi.unstubAllGlobals();
-    vi.restoreAllMocks();
-    vi.mocked(auth).mockResolvedValue({ userId: "user_123" } as never);
-  });
-
   it("returns 400 when url query param is missing", async () => {
-    vi.mocked(auth).mockResolvedValue({ userId: "user_123" } as never);
     const req = new NextRequest("http://localhost:3000/api/download");
 
     const response = await GET(req);
@@ -35,7 +37,6 @@ describe("GET /api/download", () => {
   });
 
   it("returns 400 for disallowed hosts", async () => {
-    vi.mocked(auth).mockResolvedValue({ userId: "user_123" } as never);
     const req = new NextRequest(
       "http://localhost:3000/api/download?url=https://example.com/file.png",
     );
@@ -49,7 +50,6 @@ describe("GET /api/download", () => {
   });
 
   it("returns 500 when upstream fetch fails", async () => {
-    vi.mocked(auth).mockResolvedValue({ userId: "user_123" } as never);
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue(new Response(null, { status: 502 })),
@@ -65,7 +65,6 @@ describe("GET /api/download", () => {
   });
 
   it("streams image response with download headers for allowed URLs", async () => {
-    vi.mocked(auth).mockResolvedValue({ userId: "user_123" } as never);
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue(

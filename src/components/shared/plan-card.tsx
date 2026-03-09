@@ -18,8 +18,6 @@ export default function PlanCard({
 }: PlanCardProps) {
   const hasUserData = userData && Object.keys(userData).length > 0;
 
-  const { _id, clerkId, username, firstName, lastName, email } = userData || {};
-
   const planFee =
     plan.price === 0
       ? plan.price
@@ -108,14 +106,6 @@ export default function PlanCard({
               price: planFee,
             }}
             planStatus={planStatus}
-            clerkUser={{
-              userId: _id || "",
-              clerkId: clerkId || "",
-              username: username || "",
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-            }}
           />
         </div>
       )}

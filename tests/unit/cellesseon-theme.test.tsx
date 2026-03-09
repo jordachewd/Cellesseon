@@ -31,7 +31,7 @@ describe("CellesseonTheme", () => {
     Object.defineProperty(window, "matchMedia", {
       writable: true,
       value: vi.fn().mockImplementation((query: string) => ({
-        matches: query.includes("prefers-color-scheme: dark") ? false : false,
+        matches: false,
         media: query,
         onchange: null,
         addEventListener: vi.fn(),

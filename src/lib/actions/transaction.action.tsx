@@ -4,12 +4,12 @@ import { redirect } from "next/navigation";
 import { handleError } from "@/lib/utils/handleError";
 import { connectToDatabase } from "@/lib/database/mongoose";
 import Transaction from "@/lib/database/models/transaction.model";
+import User from "@/lib/database/models/user.model";
 import {
   CheckoutTransactionParams,
   CreateTransactionParams,
 } from "@/types/TransactionData.d";
 import { CheckoutPlanParams } from "@/types/PlanData.d";
-import { ClerkUserData } from "@/types/UserData.d";
 import getFullName from "@/lib/utils/getFullName";
 import serializeForClient from "@/lib/utils/serialize-for-client";
 import { auth } from "@clerk/nextjs/server";
@@ -18,17 +18,13 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   const { userId: authedUserId } = await auth();
   if (!authedUserId) throw new Error("Unauthorized");
 
+  await connectToDatabase();
+
+  const currentUser = await User.findOne({ clerkId: authedUserId });
+  if (!currentUser) throw new Error("User not found");
+
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   const BASEURL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-  const {
-    userId,
-    clerkId,
-    username,
-    email,
-    firstName,
-    lastName,
-  }: ClerkUserData = transaction.user;
 
   const {
     id: planId,
@@ -38,9 +34,9 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
   }: CheckoutPlanParams = transaction.plan;
 
   const fullName = getFullName({
-    firstName: firstName || "",
-    lastName: lastName || "",
-    username: username || "",
+    firstName: currentUser.firstName || "",
+    lastName: currentUser.lastName || "",
+    username: currentUser.username || "",
   });
 
   const session = await stripe.checkout.sessions.create({
@@ -58,14 +54,14 @@ export async function checkoutPlan(transaction: CheckoutTransactionParams) {
         quantity: 1,
       },
     ],
-    customer_email: email,
+    customer_email: currentUser.email,
     metadata: {
-      userId,
-      clerkId,
+      userId: currentUser._id.toString(),
+      clerkId: authedUserId,
       name: fullName,
       plan: planName,
       billing: planBilling,
-      planId,
+      planId: String(planId),
     },
     success_url: `${BASEURL}/profile`,
     cancel_url: `${BASEURL}/plans`,

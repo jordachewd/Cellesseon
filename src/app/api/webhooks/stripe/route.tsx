@@ -22,6 +22,9 @@ import { UpdateUserParams } from "@/types/UserData.d";
 import { NextRequest, NextResponse } from "next/server";
 import stripe from "stripe";
 
+const ALLOWED_PLAN_NAMES: readonly PlanName[] = ["Lite", "Pro", "Premium"];
+const ALLOWED_BILLING_CYCLES: readonly BillingCycle[] = ["Monthly", "Yearly"];
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const body = await request.text();
   const sig = request.headers.get("stripe-signature");
@@ -61,13 +64,41 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   // CREATE
   if (eventType === "checkout.session.completed") {
     const { id, amount_total, metadata } = event.data.object;
+    const theUserId = metadata?.userId;
+    const theClerkId = metadata?.clerkId;
+    const thePlanId = metadata?.planId?.toString();
+    const thePlanName = metadata?.plan;
+    const theBillingCycle = metadata?.billing;
+
+    if (
+      !theUserId ||
+      !theClerkId ||
+      !thePlanId ||
+      !thePlanName ||
+      !theBillingCycle ||
+      !ALLOWED_PLAN_NAMES.includes(thePlanName as PlanName) ||
+      !ALLOWED_BILLING_CYCLES.includes(theBillingCycle as BillingCycle)
+    ) {
+      console.error("Stripe webhook missing required checkout metadata", {
+        stripeId: id,
+      });
+
+      return NextResponse.json(
+        {
+          message: "Webhook error",
+          error: "Checkout session metadata is invalid",
+        },
+        { status: 400 },
+      );
+    }
+
+    const normalizedPlanName = thePlanName as PlanName;
+    const normalizedBillingCycle = theBillingCycle as BillingCycle;
     const theAmount = amount_total ? amount_total / 100 : 0;
-    const theUserId = metadata?.userId || "-";
-    const theClerkId = metadata?.clerkId || "-";
-    const thePlanId = metadata?.planId?.toString() || "0";
-    const thePlanName = (metadata?.plan as PlanName) || "Lite";
-    const theBillingCycle = (metadata?.billing || "Monthly") as BillingCycle;
-    const theExpireDate = getExpiresOn(thePlanName, theBillingCycle);
+    const theExpireDate = getExpiresOn(
+      normalizedPlanName,
+      normalizedBillingCycle,
+    );
 
     const transaction: CreateTransactionParams = {
       stripeId: id,
@@ -76,8 +107,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       createdAt: new Date(),
       expiresOn: theExpireDate,
       amount: theAmount,
-      plan: thePlanName,
-      billing: theBillingCycle,
+      plan: normalizedPlanName,
+      billing: normalizedBillingCycle,
     };
 
     // Idempotency: check if this Stripe event was already processed
@@ -90,6 +121,30 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       );
     }
 
+    const existingUser = await User.findOne({
+      _id: theUserId,
+      clerkId: theClerkId,
+    });
+
+    if (!existingUser) {
+      console.error(
+        "Stripe webhook could not match checkout session to a user",
+        {
+          stripeId: id,
+          clerkId: theClerkId,
+          userId: theUserId,
+        },
+      );
+
+      return NextResponse.json(
+        {
+          message: "Webhook error",
+          error: "Checkout session could not be matched to a user",
+        },
+        { status: 400 },
+      );
+    }
+
     // Create transaction in database
     const newTransaction = await createTransaction(transaction);
 
@@ -98,8 +153,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         updatedAt: new Date(),
         plan: {
           id: thePlanId,
-          name: thePlanName,
-          billing: theBillingCycle,
+          name: normalizedPlanName,
+          billing: normalizedBillingCycle,
           startedOn: new Date(),
           expiresOn: theExpireDate,
           amount: theAmount,
@@ -109,14 +164,29 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
       // Update user in database
       const updatedUser = await User.findOneAndUpdate(
-        { clerkId: theClerkId },
+        { _id: existingUser._id, clerkId: theClerkId },
         newUserData,
         {
           new: true,
           strict: false,
-          upsert: true,
         },
       );
+
+      if (!updatedUser) {
+        console.error("Stripe webhook failed to update user plan", {
+          stripeId: id,
+          clerkId: theClerkId,
+          userId: theUserId,
+        });
+
+        return NextResponse.json(
+          {
+            message: "Webhook error",
+            error: "Failed to update the checkout user",
+          },
+          { status: 500 },
+        );
+      }
 
       return NextResponse.json({ message: "OK", newTransaction, updatedUser });
     } else {

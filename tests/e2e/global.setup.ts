@@ -29,7 +29,7 @@ setup("configure Clerk Playwright helpers", async () => {
     throw new Error(clerkSetupError);
   }
 
-  clerkSetup();
+  await clerkSetup();
 });
 
 setup("authenticate E2E user and persist storage state", async ({ page }) => {

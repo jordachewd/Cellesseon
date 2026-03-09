@@ -22,6 +22,23 @@ const rateLimitStore: RateLimitStore =
   globalRateLimitStore.__rateLimitStore ??
   (globalRateLimitStore.__rateLimitStore = new Map<string, number[]>());
 
+function pruneExpiredRateLimitEntries(windowStart: number): void {
+  for (const [storedKey, timestamps] of rateLimitStore.entries()) {
+    const recentTimestamps = timestamps.filter(
+      (timestamp) => timestamp > windowStart,
+    );
+
+    if (recentTimestamps.length === 0) {
+      rateLimitStore.delete(storedKey);
+      continue;
+    }
+
+    if (recentTimestamps.length !== timestamps.length) {
+      rateLimitStore.set(storedKey, recentTimestamps);
+    }
+  }
+}
+
 export function enforceSlidingWindowRateLimit({
   key,
   limit,
@@ -29,10 +46,8 @@ export function enforceSlidingWindowRateLimit({
 }: SlidingWindowRateLimitOptions): SlidingWindowRateLimitResult {
   const now = Date.now();
   const windowStart = now - windowMs;
-  const currentRequests = rateLimitStore.get(key) ?? [];
-  const recentRequests = currentRequests.filter(
-    (timestamp) => timestamp > windowStart,
-  );
+  pruneExpiredRateLimitEntries(windowStart);
+  const recentRequests = [...(rateLimitStore.get(key) ?? [])];
 
   if (recentRequests.length >= limit) {
     const oldestRequest = recentRequests[0];

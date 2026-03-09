@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { Messages } from "@/types";
 import { generateResponse } from "@/lib/utils/openai/generateResponse";
 import { generateTitle } from "@/lib/utils/openai/generateTitle";
-import { CreateTaskParams, UpdateTaskParams } from "@/types/TaskData.d";
+import { UpdateTaskParams } from "@/types/TaskData.d";
 import { createTask, updateTask } from "@/lib/actions/task.actions";
 import { auth } from "@clerk/nextjs/server";
 import { getUserById } from "@/lib/actions/user.actions";
@@ -66,11 +66,10 @@ export async function POST(req: Request): Promise<NextResponse> {
       const { title, usage } = JSON.parse(generatedTitle as string);
 
       const newTask = await createTask({
-        userId,
         title,
         messages,
         usage,
-      } as CreateTaskParams);
+      });
 
       if (!newTask) {
         throw new Error("Task creation failed.");

@@ -37,6 +37,7 @@ vi.mock("@/lib/database/models/transaction.model", () => ({
 
 vi.mock("@/lib/database/models/user.model", () => ({
   default: {
+    findOne: vi.fn(),
     findOneAndUpdate: vi.fn(),
   },
 }));
@@ -61,6 +62,9 @@ describe("POST /api/webhooks/stripe", () => {
     process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
     vi.mocked(connectToDatabase).mockResolvedValue(undefined as never);
     vi.mocked(Transaction.findOne).mockResolvedValue(null);
+    vi.mocked(User.findOne).mockResolvedValue({
+      _id: "mongo_user_1",
+    } as never);
     vi.mocked(User.findOneAndUpdate).mockResolvedValue({
       mongoResponse: {},
     } as never);
@@ -126,8 +130,12 @@ describe("POST /api/webhooks/stripe", () => {
         billing: "Monthly",
       }),
     );
+    expect(User.findOne).toHaveBeenCalledWith({
+      _id: "mongo_user_1",
+      clerkId: "clerk_user_1",
+    });
     expect(User.findOneAndUpdate).toHaveBeenCalledWith(
-      { clerkId: "clerk_user_1" },
+      { _id: "mongo_user_1", clerkId: "clerk_user_1" },
       expect.objectContaining({
         plan: expect.objectContaining({
           name: "Pro",
@@ -136,11 +144,10 @@ describe("POST /api/webhooks/stripe", () => {
           stripeId: "cs_test_123",
         }),
       }),
-      expect.objectContaining({
+      {
         new: true,
         strict: false,
-        upsert: true,
-      }),
+      },
     );
     expect(payload.message).toBe("OK");
   });
@@ -172,6 +179,38 @@ describe("POST /api/webhooks/stripe", () => {
 
     expect(response.status).toBe(500);
     expect(payload.message).toBe("STRIPE: Transaction failed!");
+    expect(User.findOneAndUpdate).not.toHaveBeenCalled();
+  });
+
+  it("returns 400 when checkout metadata cannot be matched to a user", async () => {
+    vi.mocked(getExpiresOn).mockReturnValue(
+      new Date("2026-04-05T10:00:00.000Z"),
+    );
+    constructEventMock.mockReturnValue({
+      type: "checkout.session.completed",
+      data: {
+        object: {
+          id: "cs_test_404",
+          amount_total: 2900,
+          metadata: {
+            userId: "mongo_user_404",
+            clerkId: "clerk_user_404",
+            planId: "1",
+            plan: "Pro",
+            billing: "Monthly",
+          },
+        },
+      },
+    });
+    vi.mocked(User.findOne).mockResolvedValue(null as never);
+
+    const response = await POST(buildRequest('{"valid":"payload"}', "sig_123"));
+    const payload = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(payload.message).toBe("Webhook error");
+    expect(payload.error).toContain("could not be matched");
+    expect(createTransaction).not.toHaveBeenCalled();
     expect(User.findOneAndUpdate).not.toHaveBeenCalled();
   });
 
