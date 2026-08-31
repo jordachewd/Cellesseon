@@ -8,7 +8,7 @@ _Smart AI Assistant powered by OpenAI_
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://cellesseon.jwd-apps.com)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue)](https://www.typescriptlang.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)](https://www.typescriptlang.org/)
 [![MUI](https://img.shields.io/badge/MUI-7-007FFF)](https://mui.com/)
 
 </div>
@@ -49,10 +49,14 @@ _Smart AI Assistant powered by OpenAI_
 |------------|---------|
 | [Next.js 16](https://nextjs.org/) | React framework with App Router |
 | [React 19](https://react.dev/) | UI library |
-| [TypeScript 5.7](https://www.typescriptlang.org/) | Type-safe development |
+| [TypeScript 5.9](https://www.typescriptlang.org/) | Type-safe development |
 | [Material UI 7](https://mui.com/) | Component library |
 | [Tailwind CSS 3](https://tailwindcss.com/) | Utility-first CSS |
-| [Emotion](https://emotion.sh/) | CSS-in-JS styling |
+| [Emotion](https://emotion.sh/) | CSS-in-JS styling (MUI style engine) |
+| [classnames](https://github.com/JedWatson/classnames) | Conditional class strings |
+| [@formkit/auto-animate](https://auto-animate.formkit.com/) | List and layout transitions |
+| [react-icons](https://react-icons.github.io/react-icons/) / [bootstrap-icons](https://icons.getbootstrap.com/) | Icon sets |
+| [react-markdown](https://github.com/remarkjs/react-markdown) + [remark-gfm](https://github.com/remarkjs/remark-gfm) | Markdown rendering for chat replies |
 
 ### Backend & Services
 | Technology | Purpose |
@@ -61,6 +65,7 @@ _Smart AI Assistant powered by OpenAI_
 | [MongoDB](https://www.mongodb.com/) | Database |
 | [Mongoose](https://mongoosejs.com/) | ODM for MongoDB |
 | [AWS S3](https://aws.amazon.com/s3/) | File storage |
+| [sharp](https://sharp.pixelplumbing.com/) | Server-side image conversion |
 
 ### Authentication & Payments
 | Technology | Purpose |
@@ -73,6 +78,13 @@ _Smart AI Assistant powered by OpenAI_
 | Technology | Purpose |
 |------------|---------|
 | [Vercel](https://vercel.com/) | Hosting & deployment |
+
+### Tooling
+| Technology | Purpose |
+|------------|---------|
+| [ESLint 9](https://eslint.org/) | Linting via flat config (`eslint.config.mjs`) |
+| [knip](https://knip.dev/) | Unused file, dependency and export analysis |
+| [openapi-typescript](https://openapi-ts.dev/) | Generates TypeScript types from OpenAPI schemas |
 
 ---
 
@@ -109,7 +121,6 @@ cellesseon/
 │   │       ├── aws/                 # AWS S3 operations
 │   │       ├── download/            # File download handler
 │   │       ├── openai/              # OpenAI API integration
-│   │       ├── upload/              # File upload handler
 │   │       └── webhooks/            # Webhook handlers
 │   │           ├── clerk/           # Clerk webhooks
 │   │           └── stripe/          # Stripe webhooks
@@ -238,13 +249,17 @@ cellesseon/
 │   │   ├── TransactionData.d.tsx    # Transaction types
 │   │   └── UserData.d.tsx           # User types
 │   │
-│   └── proxy.tsx                    # Proxy configuration
+│   └── proxy.tsx                    # Route protection (Next.js 16 proxy)
 │
-├── .eslintrc.json                   # ESLint configuration
+├── eslint.config.mjs                # ESLint flat configuration
 ├── next.config.ts                   # Next.js configuration
 ├── tailwind.config.ts               # Tailwind CSS configuration
 ├── tsconfig.json                    # TypeScript configuration
 ├── postcss.config.mjs               # PostCSS configuration
+├── mui.d.ts                         # MUI theme type augmentation
+├── build-check.sh                   # Vercel branch build guard
+├── AGENTS.md                        # Contributor and agent guidelines
+├── SPEC.md                          # Full application specification
 └── package.json                     # Dependencies & scripts
 ```
 
@@ -254,7 +269,7 @@ cellesseon/
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 20.9+ (required by `sharp` 0.35)
 - npm or yarn
 - MongoDB instance
 - AWS S3 bucket
@@ -282,7 +297,8 @@ cellesseon/
 | `npm run dev` | Start development server |
 | `npm run build` | Build for production |
 | `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
+| `npm run lint` | Run ESLint (flat config, via the ESLint CLI) |
+| `npm run knip` | Report unused files, dependencies and exports |
 
 ---
 
@@ -291,37 +307,61 @@ cellesseon/
 Create a `.env.local` file in the root directory with the following variables:
 
 ```env
-# App
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+# App — base URL used for server-to-server API calls
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
 
 # MongoDB
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/cellesseon
+MONGODB_URL=
 
-# Clerk Authentication
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-CLERK_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-CLERK_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+# Clerk Authentication (read by the Clerk SDK)
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+CLERK_WEBHOOK_SECRET=
 
 # OpenAI
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_KEY=
+OPENAI_ORG=
+OPENAI_PRJ=
 
 # Stripe
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-STRIPE_WEBHOOK_SECRET=whsec_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+STRIPE_PUBLISHABLE_KEY=
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
 
 # AWS S3
-AWS_ACCESS_KEY_ID=AKIAXXXXXXXXXXXXXXXX
-AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-AWS_REGION=us-east-1
-AWS_S3_BUCKET_NAME=cellesseon-bucket
+AWS_S3_ACCESS_ID=
+AWS_S3_SECRET_KEY=
+AWS_S3_REGION=
+AWS_S3_BUCKET=
 ```
 
 > ⚠️ **Note:** Never commit your `.env.local` file to version control. Make sure it's listed in your `.gitignore`.
+
+---
+
+## Security
+
+### Minimum patched versions — do not downgrade
+
+| Package | Minimum | Why |
+|---------|---------|-----|
+| `next` | **>= 16.3.3** | [August 2026 security release](https://nextjs.org/blog/august-2026-security-release). Patches `CVE-2026-75604`, an unauthenticated RCE affecting Next.js servers running on a Windows filesystem, and stops the image optimizer from handing AVIF/HEIC input to `libheif`. |
+| `sharp` | **>= 0.35.0** | `sharp` bundles `libvips`, which bundles `libheif`. libheif <= 1.23.1 has a heap buffer overflow allowing RCE when decoding a crafted HEIC/HEIF/AVIF image (`GHSA-g89c-p67h-r497`, CVSS 9.8), fixed in 1.23.2. `sharp` 0.35.x ships `@img/sharp-libvips` 1.3.3 (libheif 1.23.2); the 0.34.x line ended at 0.34.5 with libheif 1.20.2 and received **no backport**. |
+
+The Next.js fix only covers `next/image`. Any code that calls `sharp()`
+directly — currently `src/lib/utils/openai/generateImage.tsx` — decodes
+whatever bytes it is given, because `sharp` auto-detects the input format.
+Keeping `sharp` current is therefore a separate requirement from keeping
+`next` current, not a consequence of it.
+
+Node.js **>= 20.9** is required by `sharp` 0.35 and is enforced via the
+`engines` field in `package.json`. Make sure the Vercel project’s Node
+version matches.
+
+### Reporting
+
+Run `npm audit` before releasing. Never commit `.env.local`; only
+`NEXT_PUBLIC_*` values reach the browser.
 
 ---
 
