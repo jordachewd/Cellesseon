@@ -2,7 +2,7 @@ import { IconButton, Avatar, Menu, MenuItem, Divider } from "@mui/material";
 import getFullName, { getNameLetters } from "@/lib/utils/getFullName";
 import { useState, MouseEvent } from "react";
 import { TooltipArrow } from "./TooltipArrow";
-import { useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/nextjs";
 
 import Link from "next/link";
 import LoggoutBtn from "./LoggoutBtn";

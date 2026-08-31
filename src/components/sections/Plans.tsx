@@ -3,7 +3,7 @@ import css from "@/styles/sections/Plans.module.css";
 import { plans } from "@/constants/plans";
 import { Switch, Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useUser } from "@clerk/nextjs";
 import { Plan } from "@/types/PlanData.d";
 import { UserData } from "@/types/UserData.d";
 import PageHead from "../layout/PageHead";
