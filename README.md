@@ -84,7 +84,6 @@ _Smart AI Assistant powered by OpenAI_
 |------------|---------|
 | [ESLint 9](https://eslint.org/) | Linting via flat config (`eslint.config.mjs`) |
 | [knip](https://knip.dev/) | Unused file, dependency and export analysis |
-| [openapi-typescript](https://openapi-ts.dev/) | Generates TypeScript types from OpenAPI schemas |
 
 ---
 
