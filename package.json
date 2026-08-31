@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "author": "JordacheWD",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -35,7 +38,7 @@
     "react-icons": "^5.4.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.0",
-    "sharp": "^0.34.5",
+    "sharp": "^0.35.4",
     "stripe": "^17.5.0",
     "styled-components": "^6.1.14",
     "svix": "^1.45.1",
