@@ -55,7 +55,7 @@ _Smart AI Assistant powered by OpenAI_
 | [Emotion](https://emotion.sh/) | CSS-in-JS styling (MUI style engine) |
 | [classnames](https://github.com/JedWatson/classnames) | Conditional class strings |
 | [@formkit/auto-animate](https://auto-animate.formkit.com/) | List and layout transitions |
-| [react-icons](https://react-icons.github.io/react-icons/) / [bootstrap-icons](https://icons.getbootstrap.com/) | Icon sets |
+| [bootstrap-icons](https://icons.getbootstrap.com/) | Icon font (imported in `src/app/layout.tsx`) |
 | [react-markdown](https://github.com/remarkjs/react-markdown) + [remark-gfm](https://github.com/remarkjs/remark-gfm) | Markdown rendering for chat replies |
 
 ### Backend & Services
